@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -140,7 +138,7 @@ bool CLatentEffect::Deactivate()
 
             int16 modPower = GetModPower();
 
-            if (weapon != nullptr && (weapon->isType(ITEM_ARMOR) || weapon->isType(ITEM_WEAPON)))
+            if (weapon != nullptr && (weapon->isType(ITEM_EQUIPMENT) || weapon->isType(ITEM_WEAPON)))
             {
                 if (GetModValue() == Mod::ADDITIONAL_EFFECT)
                 {

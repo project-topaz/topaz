@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -411,6 +409,8 @@ enum IMMUNITY : uint16
     IMMUNITY_POISON = 0x100, // 256
     IMMUNITY_ELEGY = 0x200, // 512
     IMMUNITY_REQUIEM = 0x400, // 1024
+    IMMUNITY_LIGHT_SLEEP = 0x800, // 2048
+    IMMUNITY_DARK_SLEEP = 01000, // 4096
 };
 
 struct apAction_t
@@ -468,7 +468,7 @@ class CParty;
 class CStatusEffectContainer;
 class CPetEntity;
 class CSpell;
-class CItemWeapon;
+class CItemEquipment;
 class CAbilityState;
 class CAttackState;
 class CWeaponSkillState;
@@ -654,7 +654,7 @@ public:
 
     uint8			m_ModelSize;			    // размер модели сущности, для расчета дальности физической атаки
     ECOSYSTEM		m_EcoSystem;			    // эко-система сущности
-    CItemWeapon*	m_Weapons[4];			    // четыре основных ячейки, используемыж для хранения оружия (только оружия)
+    CItemEquipment*	    m_Weapons[4];			    // четыре основных ячейки, используемыж для хранения оружия (только оружия)
 
     TraitList_t     TraitList;                  // список постянно активных способностей в виде указателей
 

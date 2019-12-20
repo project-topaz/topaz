@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Dangruf Wadi
---  MOB: Wadi Hare
+--  Mob: Wadi Hare
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 641, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 641, 1, tpz.regime.type.GROUNDS)
 end;

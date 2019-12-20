@@ -3,8 +3,8 @@ require("scripts/globals/zone")
 
 local this_quest = {}
 local name = "LURE_OF_THE_WILDCAT"
-local logid = dsp.quest.log.SANDORIA
-local id = dsp.quest.id.sandoria.LURE_OF_THE_WILDCAT
+local logid = tpz.quest.log.SANDORIA
+local id = tpz.quest.id.sandoria.LURE_OF_THE_WILDCAT
 
 this_quest.id = id
 this_quest.name = name
@@ -16,7 +16,7 @@ this_quest.vars =
     preserve_main_on_complete = false, -- do we keep main var on quest completion
     additional =
     {
-        ["name"] = { id = 1, type = dsp.quests.enums.var_types.LOCAL_VAR, repeatable = false, preserve_on_complete = false },
+        ["name"] = { id = 1, type = tpz.quests.enums.var_types.LOCAL_VAR, repeatable = false, preserve_on_complete = false },
     }
 }
 
@@ -26,7 +26,8 @@ this_quest.rewards =
     {
         [1] =
         {
-            title = dsp.title.NEW_ADVENTURER, keyitems = { dsp.ki.DARK_KEY },
+            title = tpz.title.NEW_ADVENTURER,
+            keyitems = { tpz.ki.DARK_KEY },
             items = { itemid = 17440, qty = 1 }
         }
     }
@@ -34,7 +35,7 @@ this_quest.rewards =
 
 this_quest.npcs =
 {
-    [dsp.zone.SOUTHERN_SAN_DORIA] =
+    [tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         ["Amutiyaal"] =
         {
@@ -50,5 +51,5 @@ this_quest.npcs =
     }
 }
 
-dsp.quests.quests[logid][name] = this_quest
+tpz.quests.quests[logid][name] = this_quest
 return this_quest

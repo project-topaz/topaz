@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: RuAun Gardens
---  MOB: Ice Elemental
+--  Mob: Ice Elemental
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 146, 1, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 146, 1, tpz.regime.type.FIELDS)
 end;

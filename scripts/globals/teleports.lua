@@ -4,8 +4,8 @@
 require("scripts/globals/settings")
 require("scripts/globals/zone")
 
-dsp = dsp or {}
-dsp.teleport = dsp.teleport or {}
+tpz = tpz or {}
+tpz.teleport = tpz.teleport or {}
 
 -----------------------------------
 -- TELEPORT IDS
@@ -70,9 +70,9 @@ local ids =
     SEA                 = 56,
     HOME_NATION         = 57,
     CHOCO_UPPER_JEUNO   = 58,
-	ZVAHL_KEEP			= 59
+    ZVAHL_KEEP          = 59
 }
-dsp.teleport.id = ids
+tpz.teleport.id = ids
 
 -----------------------------------
 -- TELEPORT TO SINGLE DESTINATION
@@ -133,34 +133,35 @@ local destinations =
     [ids.MINESHAFT]             = { -93.657, -120.000, -583.561,   0,  13}, -- (R)
     [ids.WHITEGATE]             = {  27.424,   -6.000, -123.792, 192,  50}, -- {R}
     [ids.SEA]                   = { -31.800,    0.000, -618.700, 190,  33}, -- {R}
-	[ids.ZVAHL_KEEP]			= {-555.996,  -70.100,   59.989,   0, 162}
+    [ids.ZVAHL_KEEP]            = {-555.996,  -70.100,   59.989,   0, 162}
 }
 
--- Use to call to player:getNationTeleport
--- Called nation for lack of a better name
-dsp.teleport.nation =
+tpz.teleport.type =
 {
     OUTPOST_SANDORIA   = 0,
     OUTPOST_BASTOK     = 1,
     OUTPOST_WINDURST   = 2,
     RUNIC_PORTAL       = 3,
-    MAW                = 4,
-    CAMPAIGN_SANDORIA  = 5,
-    CAMPAIGN_BASTOK    = 6,
-    CAMPAIGN_WINDURST  = 7
+    PAST_MAW           = 4,
+    ABBYSEA_MAW        = 5,
+    CAMPAIGN_SANDORIA  = 6,
+    CAMPAIGN_BASTOK    = 7,
+    CAMPAIGN_WINDURST  = 8,
+    HOMEPOINT          = 9,
+    SURVIVAL           = 10
 }
 
-dsp.teleport.runic_portal =
+tpz.teleport.runic_portal =
 {
-    AZOUPH  = 0x02,
-    DVUCCA  = 0x04,
-    MAMOOL  = 0x08,
-    HALVUNG = 0x10,
-    ILRUSI  = 0x20,
-    NYZUL   = 0x40,
+    AZOUPH  = 1,
+    DVUCCA  = 2,
+    MAMOOL  = 3,
+    HALVUNG = 4,
+    ILRUSI  = 5,
+    NYZUL   = 6,
 }
 
-dsp.teleport.to = function(player, destination)
+tpz.teleport.to = function(player, destination)
     local dest = destinations[destination]
     if dest then
         player:setPos(unpack(dest))
@@ -171,7 +172,7 @@ end
 -- TELEPORT TO PARTY LEADER
 -----------------------------------
 
-dsp.teleport.toLeader = function(player)
+tpz.teleport.toLeader = function(player)
     local leader = player:getPartyLeader()
     if leader ~= nil and not leader:isInMogHouse() then
         player:gotoPlayer(leader:getName())
@@ -206,37 +207,13 @@ local campaignDestinations =
     [20] = { 294.350, -27.500,   19.947,   0, 175}, -- {R} The Eldieme Necropolis [S]
 }
 
-dsp.teleport.toCampaign = function(player, option)
+tpz.teleport.toCampaign = function(player, option)
     local dest = campaignDestinations[option]
     if dest then
         player:setPos(unpack(dest))
     end
 end
 
------------------------------------
--- TELEPORT TO MAW
------------------------------------
-
-local mawDestinations =
-{
-    [ 1] = { -51.486,   0.371,  436.972, 128,  84}, -- {R} Batallia Downs [S]
-    [ 2] = { -51.486,   0.371,  436.972, 128, 105}, -- {R} Batallia Downs
-    [ 3] = {-196.500,   7.999,  361.192, 225,  91}, -- {R} Rolanberry Fields [S]
-    [ 4] = {-196.500,   7.999,  361.192, 225, 110}, -- {R} Rolanberry Fields
-    [ 5] = { 366.858,   8.545, -228.861,  95,  98}, -- {R} Sauromugue Champaign [S]
-    [ 6] = { 366.858,   8.545, -228.861,  95, 120}, -- {R} Sauromugue Champaign
-    [ 7] = {   2.628,  -0.150, -166.562,  32,  95}, -- {R} West Sarutabaruta [S]
-    [ 8] = {   2.628,  -0.150, -166.562,  32, 115}, -- {R} West Sarutabaruta
-    [ 9] = { 322.057, -60.059,  503.712,  64,  81}, -- {R} East Ronfaure [S]
-    [10] = { 322.057, -60.059,  503.712,  64, 101}, -- {R} East Ronfaure
-    [11] = { 469.697,  -0.050,  478.949,   0,  88}, -- {R} North Gustaberg [S]
-    [12] = { 469.697,  -0.050,  478.949,   0, 106}, -- {R} North Gustaberg
-    [13] = {-116.093,  -8.005, -520.041,   0,  82}, -- {R} Jugner Forest [S]
-    [14] = {-116.093,  -8.005, -520.041,   0, 104}, -- {R} Jugner Forest
-    [15] = { 415.945,  24.659,   25.611, 101,  90}, -- {R} Pashhow Marshlands [S]
-    [16] = { 415.945,  24.659,   25.611, 101, 109}, -- {R} Pashhow Marshlands
-    [17] = { 595.000, -32.000,  279.300,  93,  97}, -- {R} Meriphataud Mountains [S]
-    [18] = { 595.000, -32.000,  279.300,  93, 119}, -- {R} Meriphataud Mountains
     -- TODO: Abyessa Maws:
     -- Tahrongi Canyon (H-12)
     -- Konschtat Highlands (I-12)
@@ -247,14 +224,6 @@ local mawDestinations =
     -- South Gustaberg (J-10)
     -- North Gustaberg (G-6)
     -- Xarcabard (H-8)
-}
-
-dsp.teleport.toMaw = function(player, option)
-    local dest = mawDestinations[option]
-    if dest then
-        player:setPos(unpack(dest))
-    end
-end
 
 -----------------------------------
 -- TELEPORT TO REGIONAL OUTPOST
@@ -262,27 +231,27 @@ end
 
 local outpostDestinations =
 {
-    [dsp.region.RONFAURE]        = {-437.688, -20.255, -219.227, 124, 100}, -- Ronfaure {R}
-    [dsp.region.ZULKHEIM]        = { 148.231,  -7.975,   93.479, 154, 103}, -- Zulkheim {R}
-    [dsp.region.NORVALLEN]       = {  62.030,   0.463,   -2.025,  67, 104}, -- Norvallen {R}
-    [dsp.region.GUSTABERG]       = {-580.161,  39.578,   62.680,  89, 106}, -- Gustaberg {R}
-    [dsp.region.DERFLAND]        = { 465.820,  23.625,  423.164,  29, 109}, -- Derfland {R}
-    [dsp.region.SARUTABARUTA]    = { -17.921, -13.335,  318.156, 254, 115}, -- Sarutabaruta {R}
-    [dsp.region.KOLSHUSHU]       = {-480.237, -30.943,   58.079,  62, 118}, -- Kolshushu {R}
-    [dsp.region.ARAGONEU]        = {-297.047,  16.988,  418.026, 225, 119}, -- Aragoneu {R}
-    [dsp.region.FAUREGANDI]      = { -18.690, -60.048, -109.243, 100, 111}, -- Fauregandi {R}
-    [dsp.region.VALDEAUNIA]      = { 211.210, -24.016, -207.338, 160, 112}, -- Valdeaunia {R}
-    [dsp.region.QUFIMISLAND]     = {-243.049, -19.983,  306.712,  71, 126}, -- Qufim Island {R}
-    [dsp.region.LITELOR]         = { -37.669,   0.419, -141.216,  69, 121}, -- Li'Telor {R}
-    [dsp.region.KUZOTZ]          = {-249.983,   7.965, -252.976, 122, 114}, -- Kuzotz {R}
-    [dsp.region.VOLLBOW]         = {-176.360,   7.624,  -63.580, 122, 113}, -- Vollbow {R}
-    [dsp.region.ELSHIMOLOWLANDS] = {-240.860,  -0.031, -388.434,  64, 123}, -- Elshimo Lowlands {R}
-    [dsp.region.ELSHIMOUPLANDS]  = { 207.821,  -0.128,  -86.623, 159, 124}, -- Elshimo Uplands {R}
-    [dsp.region.TULIA]           = {   4.000, -54.000, -600.000, 192, 130}, -- Tu'Lia (can't acquire on retail, but exists in NCP event menu)
-    [dsp.region.TAVNAZIANARCH]   = {-535.861,  -7.149,  -53.628, 122,  24}, -- Tavnazia {R}
+    [tpz.region.RONFAURE]        = {-437.688, -20.255, -219.227, 124, 100}, -- Ronfaure {R}
+    [tpz.region.ZULKHEIM]        = { 148.231,  -7.975,   93.479, 154, 103}, -- Zulkheim {R}
+    [tpz.region.NORVALLEN]       = {  62.030,   0.463,   -2.025,  67, 104}, -- Norvallen {R}
+    [tpz.region.GUSTABERG]       = {-580.161,  39.578,   62.680,  89, 106}, -- Gustaberg {R}
+    [tpz.region.DERFLAND]        = { 465.820,  23.625,  423.164,  29, 109}, -- Derfland {R}
+    [tpz.region.SARUTABARUTA]    = { -17.921, -13.335,  318.156, 254, 115}, -- Sarutabaruta {R}
+    [tpz.region.KOLSHUSHU]       = {-480.237, -30.943,   58.079,  62, 118}, -- Kolshushu {R}
+    [tpz.region.ARAGONEU]        = {-297.047,  16.988,  418.026, 225, 119}, -- Aragoneu {R}
+    [tpz.region.FAUREGANDI]      = { -18.690, -60.048, -109.243, 100, 111}, -- Fauregandi {R}
+    [tpz.region.VALDEAUNIA]      = { 211.210, -24.016, -207.338, 160, 112}, -- Valdeaunia {R}
+    [tpz.region.QUFIMISLAND]     = {-243.049, -19.983,  306.712,  71, 126}, -- Qufim Island {R}
+    [tpz.region.LITELOR]         = { -37.669,   0.419, -141.216,  69, 121}, -- Li'Telor {R}
+    [tpz.region.KUZOTZ]          = {-249.983,   7.965, -252.976, 122, 114}, -- Kuzotz {R}
+    [tpz.region.VOLLBOW]         = {-176.360,   7.624,  -63.580, 122, 113}, -- Vollbow {R}
+    [tpz.region.ELSHIMOLOWLANDS] = {-240.860,  -0.031, -388.434,  64, 123}, -- Elshimo Lowlands {R}
+    [tpz.region.ELSHIMOUPLANDS]  = { 207.821,  -0.128,  -86.623, 159, 124}, -- Elshimo Uplands {R}
+    [tpz.region.TULIA]           = {   4.000, -54.000, -600.000, 192, 130}, -- Tu'Lia (can't acquire on retail, but exists in NCP event menu)
+    [tpz.region.TAVNAZIANARCH]   = {-535.861,  -7.149,  -53.628, 122,  24}, -- Tavnazia {R}
 }
 
-dsp.teleport.toOutpost = function(player, region)
+tpz.teleport.toOutpost = function(player, region)
     local dest = outpostDestinations[region]
     player:setPos(unpack(dest))
 end
@@ -291,11 +260,11 @@ end
 -- TELEPORT TO HOME NATION
 -----------------------------------
 
-dsp.teleport.toHomeNation = function(player)
+tpz.teleport.toHomeNation = function(player)
     local pNation = player:getNation()
-    if pNation == dsp.nation.BASTOK then
+    if pNation == tpz.nation.BASTOK then
         player:setPos(89, 0 , -66, 0, 234)
-    elseif pNation == dsp.nation.SANDORIA then
+    elseif pNation == tpz.nation.SANDORIA then
         player:setPos(49, -1 , 29, 164, 231)
     else
         player:setPos(193, -12 , 220, 64, 240)
@@ -306,7 +275,7 @@ end
 -- TELEPORT TO CHAMBER OF PASSAGE
 -----------------------------------
 
-dsp.teleport.toChamberOfPassage = function(player)
+tpz.teleport.toChamberOfPassage = function(player)
     if math.random(1,2) == 1 then
         player:setPos(133.400, 1.485, 47.427, 96, 50) -- {R} Aht Urhgan Whitegate Chamber of Passage Left
     else
@@ -318,7 +287,7 @@ end
 -- TELEPORT TO EXPLORER MOOGLE
 -----------------------------------
 
-dsp.teleport.toExplorerMoogle = function(player, zone)
+tpz.teleport.toExplorerMoogle = function(player, zone)
     if zone == 231 then
         player:setPos(39.4, -0.2, 25, 253, zone)       -- Northern_San_d'Oria
     elseif zone == 234 then
@@ -336,7 +305,7 @@ end
 -- CAST ESCAPE SPELL
 -----------------------------------
 
-dsp.teleport.escape = function(player)
+tpz.teleport.escape = function(player)
     local zone = player:getZoneID()
 
     -- Ronfaure {R}
@@ -507,34 +476,34 @@ end
 -- EXPLORER MOOGLE EVENTS
 -----------------------------------
 
-dsp.teleport.explorerMoogleOnTrigger = function(player, event)
+tpz.teleport.explorerMoogleOnTrigger = function(player, event)
     local accept = 0
 
     if player:getGil() < 300 then
         accept = 1
     end
 
-    if player:getMainLvl() < EXPLORER_MOOGLE_LEVELCAP then
+    if player:getMainLvl() < EXPLORER_MOOGLE_LV then
         event = event + 1
     end
 
     player:startEvent(event, player:getZoneID(), 0, accept)
 end
 
-dsp.teleport.explorerMoogleOnEventFinish = function(player, csid, option, event)
+tpz.teleport.explorerMoogleOnEventFinish = function(player, csid, option, event)
     local price = 300
 
     if csid == event then
         if option == 1 and player:delGil(price) then
-            dsp.teleport.toExplorerMoogle(player, 231)
+            tpz.teleport.toExplorerMoogle(player, 231)
         elseif option == 2 and player:delGil(price) then
-            dsp.teleport.toExplorerMoogle(player, 234)
+            tpz.teleport.toExplorerMoogle(player, 234)
         elseif option == 3 and player:delGil(price) then
-            dsp.teleport.toExplorerMoogle(player, 240)
+            tpz.teleport.toExplorerMoogle(player, 240)
         elseif option == 4 and player:delGil(price) then
-            dsp.teleport.toExplorerMoogle(player, 248)
+            tpz.teleport.toExplorerMoogle(player, 248)
         elseif option == 5 and player:delGil(price) then
-            dsp.teleport.toExplorerMoogle(player, 249)
+            tpz.teleport.toExplorerMoogle(player, 249)
         end
     end
 end

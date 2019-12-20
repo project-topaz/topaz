@@ -1,10 +1,10 @@
 -----------------------------------
--- Area: Toraimorai Canal
---  MOB: Lich
+-- Area: Toraimarai Canal
+--  Mob: Lich
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 619, 2, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 619, 2, tpz.regime.type.GROUNDS)
 end

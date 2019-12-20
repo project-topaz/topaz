@@ -1,5 +1,5 @@
 -----------------------------------
--- Area: Maze Of Shakhrami
+-- Area: Maze of Shakhrami
 --   NM: Wyrmfly
 -- Involved in Eco Warrior (Windurst)
 -----------------------------------
@@ -10,15 +10,15 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.ADD_EFFECT, 1)
+    mob:setMobMod(tpz.mobMod.ADD_EFFECT, 1)
 end
 
 function onAdditionalEffect(mob, target, damage)
-    return dsp.mob.onAddEffect(mob, target, damage, dsp.mob.ae.POISON)
+    return tpz.mob.onAddEffect(mob, target, damage, tpz.mob.ae.POISON)
 end
 
 function onMobDeath(mob, player, isKiller)
-    if player:getQuestStatus(WINDURST, dsp.quest.id.windurst.ECO_WARRIOR_WIN) ~= QUEST_AVAILABLE and player:getVar("ECO_WARRIOR_ACTIVE") == 238 and player:hasStatusEffect(dsp.effect.LEVEL_RESTRICTION) then
+    if player:getQuestStatus(WINDURST, tpz.quest.id.windurst.ECO_WARRIOR) ~= QUEST_AVAILABLE and player:getCharVar("ECO_WARRIOR_ACTIVE") == 238 and player:hasStatusEffect(tpz.effect.LEVEL_RESTRICTION) then
         local allFliesDead = true
         for i = ID.mob.WYRMFLY_OFFSET, ID.mob.WYRMFLY_OFFSET + 2 do
             if i ~= mob:getID() and GetMobByID(i):isAlive() then
@@ -26,7 +26,7 @@ function onMobDeath(mob, player, isKiller)
             end
         end
         if allFliesDead then
-            player:setVar("ECOR_WAR_WIN-NMs_killed", 1)
+            player:setCharVar("ECOR_WAR_WIN-NMs_killed", 1)
         end
     end
 end

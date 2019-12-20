@@ -22,14 +22,14 @@ function onZoneIn(player,prevZone)
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
         position = math.random(1,5) - 123;
         player:setPos(-257.5,-5.05,position,0);
-        if (player:getMainJob() ~= player:getVar("PlayerMainJob")) then
+        if (player:getMainJob() ~= player:getCharVar("PlayerMainJob")) then
             cs = 30004;
         end
-        player:setVar("PlayerMainJob",0);
-    elseif (ENABLE_ASA == 1 and player:getCurrentMission(ASA) == A_SHANTOTTO_ASCENSION
-        and (prevZone == dsp.zone.WINDURST_WATERS or prevZone == dsp.zone.WINDURST_WOODS) and player:getMainLvl()>=10) then
+        player:setCharVar("PlayerMainJob",0);
+    elseif (ENABLE_ASA == 1 and player:getCurrentMission(ASA) == tpz.mission.id.asa.A_SHANTOTTO_ASCENSION
+        and (prevZone == tpz.zone.WINDURST_WATERS or prevZone == tpz.zone.WINDURST_WOODS) and player:getMainLvl()>=10) then
         cs = 510;
-    elseif (player:getCurrentMission(WINDURST) == MOON_READING and player:getVar("MissionStatus") == 4) then
+    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.MOON_READING and player:getCharVar("MissionStatus") == 4) then
         cs = 443;
     end
 
@@ -37,7 +37,7 @@ function onZoneIn(player,prevZone)
 end;
 
 function onConquestUpdate(zone, updatetype)
-    dsp.conq.onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end;
 
 function onRegionEnter(player,region)
@@ -64,17 +64,17 @@ function onEventFinish(player,csid,option)
     elseif (csid == 510) then
         player:startEvent(514);
     elseif (csid == 514) then
-        player:completeMission(ASA,A_SHANTOTTO_ASCENSION);
-        player:addMission(ASA,BURGEONING_DREAD);
-        player:setVar("ASA_Status",0);
+        player:completeMission(ASA,tpz.mission.id.asa.A_SHANTOTTO_ASCENSION);
+        player:addMission(ASA,tpz.mission.id.asa.BURGEONING_DREAD);
+        player:setCharVar("ASA_Status",0);
     elseif (csid == 443) then
-        player:completeMission(WINDURST,MOON_READING);
-        player:setVar("MissionStatus",0);
+        player:completeMission(WINDURST,tpz.mission.id.windurst.MOON_READING);
+        player:setCharVar("MissionStatus",0);
         player:setRank(10);
         player:addGil(GIL_RATE*100000);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*100000);
         player:addItem(183);
         player:messageSpecial(ID.text.ITEM_OBTAINED,183);
-        player:addTitle(dsp.title.VESTAL_CHAMBERLAIN);
+        player:addTitle(tpz.title.VESTAL_CHAMBERLAIN);
     end
 end;

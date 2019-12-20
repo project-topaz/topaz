@@ -35,27 +35,40 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.crit100 = 0.0 params.crit200 = 0.0 params.crit300 = 0.0
     params.canCrit = false
     params.acc100 = 0.0 params.acc200 = 0.0 params.acc300 = 0.0
-    params.atk100 = 1; params.atk200 = 1; params.atk300 = 1;
+    params.atk100 = 1 params.atk200 = 1 params.atk300 = 1
+    params.enmityMult = 1
 
-    local tpHits = 0
-    local extraHits = 0
-    local criticalHit = false
-    local enmityMult = 1
+    local attack =
+    {
+        ['type'] = tpz.attackType.BREATH,
+        ['slot'] = tpz.slot.MAIN,
+        ['weaponType'] = player:getWeaponSkillType(tpz.slot.MAIN),
+        ['damageType'] = tpz.damageType.ELEMENTAL
+    }
+    local calcParams =
+    {
+        criticalHit = false,
+        tpHitsLanded = 0,
+        extraHitsLanded = 0,
+        shadowsAbsorbed = 0,
+        bonusTP = 0
+    }
+
     local damage = 0
 
-    if target:getObjType() ~= dsp.objType.MOB then -- this isn't correct but might as well use what was originally here if someone uses this on a non-mob
+    if target:getObjType() ~= tpz.objType.MOB then -- this isn't correct but might as well use what was originally here if someone uses this on a non-mob
         if USE_ADOULIN_WEAPON_SKILL_CHANGES then
             params.ftp100 = 1 params.ftp200 = 1.5 params.ftp300 = 2.0
         end
 
-        damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, tp, primary, action, taChar, params)
+        damage, calcParams.criticalHit, calcParams.tpHitsLanded, calcParams.extraHitsLanded = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     else
         local dmg
         if USE_ADOULIN_WEAPON_SKILL_CHANGES then
             dmg = (target:getCE(player) + target:getVE(player)) / 6
             -- tp affects enmity multiplier, 1.0 at 1k, 1.5 at 2k, 2.0 at 3k. Gorget/Belt adds 100 tp each.
-            enmityMult = enmityMult + (tp + handleWSGorgetBelt(player) * 1000 - 1000) / 2000
-            enmityMult = utils.clamp(enmityMult, 1, 2) -- necessary because of Gorget/Belt bonus
+            params.enmityMult = params.enmityMult + (tp + handleWSGorgetBelt(player) * 1000 - 1000) / 2000
+            params.enmityMult = utils.clamp(params.enmityMult, 1, 2) -- necessary because of Gorget/Belt bonus
         else
             local effectiveTP = tp + handleWSGorgetBelt(player) * 1000
             effectiveTP = utils.clamp(effectiveTP, 0, 3000) -- necessary because of Gorget/Belt bonus
@@ -66,29 +79,29 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
 
         dmg = utils.clamp(dmg, 0, player:getMainLvl() * 10) -- Damage is capped to player's level * 10, before WS damage mods
         damage = target:breathDmgTaken(dmg)
-        if player:getMod(dsp.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0 then
-            damage = damage * (100 + player:getMod(dsp.mod.WEAPONSKILL_DAMAGE_BASE + wsID)) / 100
+        if player:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID) > 0 then
+            damage = damage * (100 + player:getMod(tpz.mod.WEAPONSKILL_DAMAGE_BASE + wsID)) / 100
         end
         damage = damage * WEAPON_SKILL_POWER
+        calcParams.finalDmg = damage
 
         if damage > 0 then
             if player:getOffhandDmg() > 0 then
-                tpHits = 2
+                calcParams.tpHitsLanded = 2
             else
-                tpHits = 1
+                calcParams.tpHitsLanded = 1
             end
-            extraHits = 1 -- for whatever reason, Atonement always yields the a TP return of a 2 hit WS, unless it does 0 damage.
+            -- Atonement always yields the a TP return of a 2 hit WS (unless it does 0 damage), because if one hit lands, both hits do.
+            calcParams.extraHitsLanded = 1 
         end
 
-        local wsParams = {}
-        wsParams.enmityMult = enmityMult
-        damage = takeWeaponskillDamage(target, player, wsParams, primary, damage, dsp.attackType.BREATH, dsp.damageType.ELEMENTAL, dsp.slot.MAIN, tpHits, extraHits, 0, 0, action, nil)
+        damage = takeWeaponskillDamage(target, player, params, primary, attack, calcParams, action)
     end
 
     -- Apply aftermath
     if damage > 0 then
-        dsp.aftermath.addStatusEffect(player, tp, dsp.slot.MAIN, dsp.aftermath.type.MYTHIC)
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.MYTHIC)
     end
 
-    return tpHits, extraHits, criticalHit, damage
+    return calcParams.tpHitsLanded, calcParams.extraHitsLanded, calcParams.criticalHit, damage
 end

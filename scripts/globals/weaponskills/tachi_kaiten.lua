@@ -33,14 +33,14 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.atk100 = 1; params.atk200 = 1; params.atk300 = 1;
 
     if USE_ADOULIN_WEAPON_SKILL_CHANGES then
-        params.str_wsc = 0.75
+        params.str_wsc = 0.8
     end
 
-    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, tp, primary, action, taChar, params)
+    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
 
     -- Apply aftermath
     if damage > 0 then
-        dsp.aftermath.addStatusEffect(player, tp, dsp.slot.MAIN, dsp.aftermath.type.RELIC)
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.RELIC)
     end
 
     return tpHits, extraHits, criticalHit, damage

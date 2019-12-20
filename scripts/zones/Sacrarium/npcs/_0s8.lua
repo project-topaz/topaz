@@ -12,11 +12,11 @@ require("scripts/globals/missions");
 function onTrigger(player,npc)
 
     if (player:getXPos() > 45) then
-        if (player:getCurrentMission(COP) == THE_SECRETS_OF_WORSHIP and player:getVar("PromathiaStatus") == 2) then
+        if (player:getCurrentMission(COP) == tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP and player:getCharVar("PromathiaStatus") == 2) then
             player:startEvent(6,0,582);
-        elseif (player:getCurrentMission(COP) == THE_SECRETS_OF_WORSHIP and player:getVar("PromathiaStatus") == 4 and player:hasKeyItem(dsp.ki.RELIQUIARIUM_KEY) == true) then
+        elseif (player:getCurrentMission(COP) == tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP and player:getCharVar("PromathiaStatus") == 4 and player:hasKeyItem(tpz.ki.RELIQUIARIUM_KEY) == true) then
             player:startEvent(5);
-        elseif (player:hasKeyItem(dsp.ki.RELIQUIARIUM_KEY) == true) then
+        elseif (player:hasKeyItem(tpz.ki.RELIQUIARIUM_KEY) == true) then
             player:startEvent(110);
         end
     else
@@ -33,10 +33,10 @@ end;
 
 function onEventFinish(player,csid,option)
     if (csid == 6) then
-        player:setVar("PromathiaStatus",3);
+        player:setCharVar("PromathiaStatus",3);
     elseif (csid == 5) then
-        player:setVar("PromathiaStatus",0);
-        player:completeMission(COP,THE_SECRETS_OF_WORSHIP);
-        player:addMission(COP,SLANDEROUS_UTTERINGS);
+        player:setCharVar("PromathiaStatus",0);
+        player:completeMission(COP,tpz.mission.id.cop.THE_SECRETS_OF_WORSHIP);
+        player:addMission(COP,tpz.mission.id.cop.SLANDEROUS_UTTERINGS);
     end
 end;

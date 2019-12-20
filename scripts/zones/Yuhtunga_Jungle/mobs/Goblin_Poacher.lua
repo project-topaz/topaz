@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Yuhtunga Jungle
---  MOB: Goblin Poacher
+--  Mob: Goblin Poacher
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 125, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 125, 2, tpz.regime.type.FIELDS)
 end;

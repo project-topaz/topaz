@@ -1,11 +1,11 @@
 -----------------------------------
 -- Area: Gustav Tunnel
---  MOB: Goblin Alchemist
+--  Mob: Goblin Alchemist
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 764, 3, dsp.regime.type.GROUNDS)
-    dsp.regime.checkRegime(player, mob, 765, 3, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 764, 3, tpz.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 765, 3, tpz.regime.type.GROUNDS)
 end;

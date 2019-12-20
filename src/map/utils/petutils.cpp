@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/
 
-This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -263,7 +261,7 @@ namespace petutils
 
     void AttackTarget(CBattleEntity* PMaster, CBattleEntity* PTarget)
     {
-        DSP_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
+        TPZ_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
 
         CBattleEntity* PPet = PMaster->PPet;
 
@@ -275,7 +273,7 @@ namespace petutils
 
     void RetreatToMaster(CBattleEntity* PMaster)
     {
-        DSP_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
+        TPZ_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
 
         CBattleEntity* PPet = PMaster->PPet;
 
@@ -419,12 +417,12 @@ namespace petutils
         PMob->setModifier(Mod::ATT, GetJugBase(PMob, petStats->attRank));
         PMob->setModifier(Mod::ACC, GetJugBase(PMob, petStats->accRank));
 
-        PMob->m_Weapons[SLOT_MAIN]->setDamage(GetJugWeaponDamage(PMob));
+        ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDamage(GetJugWeaponDamage(PMob));
 
         //reduce weapon delay of MNK
         if (PMob->GetMJob() == JOB_MNK)
         {
-            PMob->m_Weapons[SLOT_MAIN]->resetDelay();
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->resetDelay();
         }
 
         uint16 fSTR = GetBaseToRank(petStats->strRank, PMob->GetMLevel());
@@ -602,12 +600,12 @@ namespace petutils
         PPet->stats.MND = fMND + mMND + sMND;
         PPet->stats.CHR = fCHR + mCHR + sCHR;
 
-        PPet->m_Weapons[SLOT_MAIN]->setSkillType(SKILL_AUTOMATON_MELEE);
-        PPet->m_Weapons[SLOT_MAIN]->setDelay((uint16)(floor(1000.0f * (petStats->cmbDelay / 60.0f)))); //every pet should use this eventually
-        PPet->m_Weapons[SLOT_MAIN]->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 3);
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setSkillType(SKILL_AUTOMATON_MELEE);
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (petStats->cmbDelay / 60.0f)))); //every pet should use this eventually
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_MELEE) / 9) * 2 + 3);
 
-        PPet->m_Weapons[SLOT_RANGED]->setSkillType(SKILL_AUTOMATON_RANGED);
-        PPet->m_Weapons[SLOT_RANGED]->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + 3);
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_RANGED])->setSkillType(SKILL_AUTOMATON_RANGED);
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_RANGED])->setDamage((PPet->GetSkill(SKILL_AUTOMATON_RANGED) / 9) * 2 + 3);
 
         CAutomatonEntity* PAutomaton = (CAutomatonEntity*)PPet;
 
@@ -969,7 +967,7 @@ namespace petutils
 
     void SpawnPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
-        DSP_DEBUG_BREAK_IF(PMaster->PPet != nullptr);
+        TPZ_DEBUG_BREAK_IF(PMaster->PPet != nullptr);
         if (PMaster->objtype == TYPE_PC && (PetID == PETID_HARLEQUINFRAME || PetID == PETID_VALOREDGEFRAME || PetID == PETID_SHARPSHOTFRAME || PetID == PETID_STORMWAKERFRAME))
         {
             puppetutils::LoadAutomaton(static_cast<CCharEntity*>(PMaster));
@@ -987,6 +985,11 @@ namespace petutils
             PMaster->StatusEffectContainer->CopyConfrontationEffect(PPet);
 
             PPet->PMaster = PMaster;
+
+            if (PMaster->PBattlefield)
+            {
+                PPet->PBattlefield = PMaster->PBattlefield;
+            }
 
             if (PMaster->PInstance)
             {
@@ -1151,8 +1154,8 @@ namespace petutils
 
     void DetachPet(CBattleEntity* PMaster)
     {
-        DSP_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
-        DSP_DEBUG_BREAK_IF(PMaster->objtype != TYPE_PC);
+        TPZ_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
+        TPZ_DEBUG_BREAK_IF(PMaster->objtype != TYPE_PC);
 
         CBattleEntity* PPet = PMaster->PPet;
         CCharEntity* PChar = (CCharEntity*)PMaster;
@@ -1245,7 +1248,7 @@ namespace petutils
 
     void DespawnPet(CBattleEntity* PMaster)
     {
-        DSP_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
+        TPZ_DEBUG_BREAK_IF(PMaster->PPet == nullptr);
 
         petutils::DetachPet(PMaster);
     }
@@ -1374,7 +1377,7 @@ namespace petutils
         {
             // increase charm duration
             // 30 mins - 1-5 mins
-            PPet->charmTime += 30min - std::chrono::milliseconds(dsprand::GetRandomNumber(300000u));
+            PPet->charmTime += 30min - std::chrono::milliseconds(tpzrand::GetRandomNumber(300000u));
         }
 
         float rate = 0.10f;
@@ -1396,7 +1399,7 @@ namespace petutils
 
     void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
-        DSP_DEBUG_BREAK_IF(PetID >= g_PPetList.size());
+        TPZ_DEBUG_BREAK_IF(PetID >= g_PPetList.size());
         if (PMaster->GetMJob() != JOB_DRG && PetID == PETID_WYVERN)
             return;
 
@@ -1583,17 +1586,17 @@ namespace petutils
             {
                 PPet->setModifier(Mod::MATT, 20);
             }
-            PPet->m_Weapons[SLOT_MAIN]->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f))));
+            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f))));
 
             if (PetID == PETID_FENRIR)
             {
-                PPet->m_Weapons[SLOT_MAIN]->setDelay((uint16)(floor(1000.0 * (280.0f / 60.0f))));
+                ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0 * (280.0f / 60.0f))));
             }
-            PPet->m_Weapons[SLOT_MAIN]->setDamage((uint16)(floor(PPet->GetMLevel() * 0.74f)));
+            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor(PPet->GetMLevel() * 0.74f)));
 
             if (PetID == PETID_CARBUNCLE)
             {
-                PPet->m_Weapons[SLOT_MAIN]->setDamage((uint16)(floor(PPet->GetMLevel() * 0.67f)));
+                ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(floor(PPet->GetMLevel() * 0.67f)));
             }
 
             //Set B+ weapon skill (assumed capped for level derp)
@@ -1637,7 +1640,7 @@ namespace petutils
         }
         else if (PPet->getPetType() == PETTYPE_JUG_PET)
         {
-            PPet->m_Weapons[SLOT_MAIN]->setDelay((uint16)(floor(1000.0f*(240.0f / 60.0f))));
+            ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f*(240.0f / 60.0f))));
 
             //Get the Jug pet cap level
             uint8 highestLvl = PPetData->maxLevel;
@@ -1653,7 +1656,7 @@ namespace petutils
             }
 
             // Randomize: 0-2 lvls lower, less Monster Gloves(+1/+2) bonus
-            highestLvl -= dsprand::GetRandomNumber(3 - std::clamp<int16>(PChar->getMod(Mod::JUG_LEVEL_RANGE), 0, 2));
+            highestLvl -= tpzrand::GetRandomNumber(3 - std::clamp<int16>(PChar->getMod(Mod::JUG_LEVEL_RANGE), 0, 2));
 
             PPet->SetMLevel(highestLvl);
             LoadJugStats(PPet, PPetData); //follow monster calcs (w/o SJ)
@@ -1719,7 +1722,7 @@ namespace petutils
 
     CTrustEntity* LoadTrust(CCharEntity* PMaster, uint32 TrustID)
     {
-        DSP_DEBUG_BREAK_IF(TrustID >= g_PPetList.size());
+        TPZ_DEBUG_BREAK_IF(TrustID >= g_PPetList.size());
         CTrustEntity* PTrust = new CTrustEntity(PMaster);
         PTrust->loc = PMaster->loc;
         PTrust->m_OwnerID.id = PMaster->id;
@@ -1774,8 +1777,8 @@ namespace petutils
         PPet->SetMLevel(PMaster->GetMLevel());
 
         LoadAvatarStats(PPet); //follows PC calcs (w/o SJ)
-        PPet->m_Weapons[SLOT_MAIN]->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f)))); //320 delay
-        PPet->m_Weapons[SLOT_MAIN]->setDamage((uint16)(1 + floor(PPet->GetMLevel() * 0.9f)));
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDelay((uint16)(floor(1000.0f * (320.0f / 60.0f)))); //320 delay
+        ((CItemWeapon*)PPet->m_Weapons[SLOT_MAIN])->setDamage((uint16)(1 + floor(PPet->GetMLevel() * 0.9f)));
         //Set A+ weapon skill
         PPet->setModifier(Mod::ATT, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, PPet->GetMLevel()));
         PPet->setModifier(Mod::ACC, battleutils::GetMaxSkill(SKILL_GREAT_AXE, JOB_WAR, PPet->GetMLevel()));

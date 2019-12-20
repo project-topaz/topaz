@@ -16,8 +16,7 @@ function onTrade(player,npc,trade)
 
     if
         npcUtil.tradeHas(trade, 1142) and
-        player:getCurrentMission(WINDURST) == SAINTLY_INVITATION and
-        player:hasKeyItem(dsp.ki.BALGA_CHAMPION_CERTIFICATE) and
+        player:hasKeyItem(tpz.ki.BALGA_CHAMPION_CERTIFICATE) and
         Z >= 80 and Z < 86
     then
         npc:openDoor(2.5)
@@ -28,7 +27,7 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    if npc:getAnimation() == dsp.anim.CLOSE_DOOR then
+    if npc:getAnimation() == tpz.anim.CLOSE_DOOR then
         player:messageSpecial(ID.text.ITS_LOCKED)
         return 1
     end

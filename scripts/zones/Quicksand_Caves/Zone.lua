@@ -14,19 +14,19 @@ require("scripts/globals/status")
 
 function onInitialize(zone)
     -- Weight Door System (RegionID, X, Radius, Z)
-    zone:registerRegion(1, -15, 5, -60, 0,0,0);   -- 17629679 Door
-    zone:registerRegion(3, 15, 5,-180, 0,0,0);    -- 17629681 Door
-    zone:registerRegion(5, -580, 5,-420, 0,0,0);  -- 17629683 Door
-    zone:registerRegion(7, -700, 5,-420, 0,0,0);  -- 17629685 Door
-    zone:registerRegion(9, -700, 5,-380, 0,0,0);  -- 17629687 Door
-    zone:registerRegion(11, -780, 5,-460, 0,0,0); -- 17629689 Door
-    zone:registerRegion(13, -820, 5,-380, 0,0,0); -- 17629691 Door
-    zone:registerRegion(15, -260, 5, 740, 0,0,0); -- 17629693 Door
-    zone:registerRegion(17, -340, 5, 660, 0,0,0); -- 17629695 Door
-    zone:registerRegion(19, -420, 5, 740, 0,0,0); -- 17629697 Door
-    zone:registerRegion(21, -340, 5, 820, 0,0,0); -- 17629699 Door
-    zone:registerRegion(23, -409, 5, 800, 0,0,0); -- 17629701 Door
-    zone:registerRegion(25, -400, 5, 670, 0,0,0); -- 17629703 Door
+    zone:registerRegion(1, -15, 5, -60, 0,0,0);
+    zone:registerRegion(3, 15, 5,-180, 0,0,0);
+    zone:registerRegion(5, -580, 5,-420, 0,0,0);
+    zone:registerRegion(7, -700, 5,-420, 0,0,0);
+    zone:registerRegion(9, -700, 5,-380, 0,0,0);
+    zone:registerRegion(11, -780, 5,-460, 0,0,0);
+    zone:registerRegion(13, -820, 5,-380, 0,0,0);
+    zone:registerRegion(15, -260, 5, 740, 0,0,0);
+    zone:registerRegion(17, -340, 5, 660, 0,0,0);
+    zone:registerRegion(19, -420, 5, 740, 0,0,0);
+    zone:registerRegion(21, -340, 5, 820, 0,0,0);
+    zone:registerRegion(23, -409, 5, 800, 0,0,0);
+    zone:registerRegion(25, -400, 5, 670, 0,0,0);
 
     -- Hole in the Sand
     zone:registerRegion(30,495,-9,-817,497,-7,-815); -- E-11 (Map 2)
@@ -35,13 +35,13 @@ function onInitialize(zone)
     zone:registerRegion(33,-297,6,415,-295,8,417);   -- E-7 (Map 6)
     zone:registerRegion(34,-137,6,-177,-135,8,-175); -- G-7 (Map 8)
 
-    dsp.treasure.initZone(zone)
+    tpz.treasure.initZone(zone)
 
     npcUtil.UpdateNPCSpawnPoint(ID.npc.ANTICAN_TAG_QM, 60, 120, ID.npc.ANTICAN_TAG_POSITIONS, "[POP]Antican_Tag");
 end;
 
 function onConquestUpdate(zone, updatetype)
-    dsp.conq.onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end;
 
 function onZoneIn(player,prevZone)
@@ -54,9 +54,9 @@ end;
 
 function getWeight(player)
     local race = player:getRace()
-    if race == dsp.race.GALKA then
+    if race == tpz.race.GALKA then
         return 3
-    elseif race == dsp.race.TARU_M or race == dsp.race.TARU_F then
+    elseif race == tpz.race.TARU_M or race == tpz.race.TARU_F then
         return 1
     else
         return 2
@@ -96,9 +96,9 @@ function onRegionEnter(player,region)
         totalWeight = totalWeight + getWeight(player);
         plate:setLocalVar("weight", totalWeight);
 
-        if (player:hasKeyItem(dsp.ki.LOADSTONE) or totalWeight >= 3) then
+        if (player:hasKeyItem(tpz.ki.LOADSTONE) or totalWeight >= 3) then
             door:openDoor(15); -- open door with a 15 second time delay.
-            plate:setAnimation(dsp.anim.OPEN_DOOR); -- this is supposed to light up the platform but it's not working. Tried other values too.
+            plate:setAnimation(tpz.anim.OPEN_DOOR); -- this is supposed to light up the platform but it's not working. Tried other values too.
         end
     end
 end;
@@ -114,8 +114,8 @@ function onRegionLeave(player,region)
         totalWeight = totalWeight - getWeight(player);
         plate:setLocalVar("weight", totalWeight);
 
-        if (plate:getAnimation() == dsp.anim.OPEN_DOOR and totalWeight < 3) then
-            plate:setAnimation(dsp.anim.CLOSE_DOOR);
+        if (plate:getAnimation() == tpz.anim.OPEN_DOOR and totalWeight < 3) then
+            plate:setAnimation(tpz.anim.CLOSE_DOOR);
         end
     end
 end;

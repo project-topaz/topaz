@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -172,7 +170,7 @@ namespace battleutils
     void                GenerateInRangeEnmity(CBattleEntity* PSource, int16 CE, int16 VE);
 
     CItemWeapon*        GetEntityWeapon(CBattleEntity* PEntity, SLOTTYPE Slot);
-    CItemArmor*         GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot);
+    CItemEquipment*         GetEntityArmor(CBattleEntity* PEntity, SLOTTYPE Slot);
 
     void                MakeEntityStandUp(CBattleEntity* PEntity);
     CBattleEntity*      getAvailableTrickAttackChar(CBattleEntity* taUser, CBattleEntity* PMob);
@@ -242,7 +240,7 @@ namespace battleutils
     bool                RemoveAmmo(CCharEntity*, int quantity = 1);
     int32               GetMeritValue(CBattleEntity*, MERIT_TYPE);
 
-    int32               GetScaledItemModifier(CBattleEntity*, CItemArmor*, Mod);
+    int32               GetScaledItemModifier(CBattleEntity*, CItemEquipment*, Mod);
     DAMAGETYPE          GetSpikesDamageType(SUBEFFECT spikesType);
     DAMAGETYPE          GetEnspellDamageType(ENSPELL enspellType);
 };

@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -131,6 +129,11 @@ CActionPacket::CActionPacket(action_t& action)
         ref<uint8>(0x0E) = 0x1D;
 
         ActionType = ACTION_ITEM_START;
+    }
+    break;
+    case ACTION_ITEM_FINISH:
+    {
+        packBitsBE(data, action.actionid, 86, 16);
     }
     break;
     case ACTION_RANGED_START:

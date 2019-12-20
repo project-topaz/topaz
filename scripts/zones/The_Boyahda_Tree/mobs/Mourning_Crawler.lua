@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: The Boyahda Tree
---  MOB: Mourning Crawler
+--  Mob: Mourning Crawler
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 726, 3, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 726, 3, tpz.regime.type.GROUNDS)
 end

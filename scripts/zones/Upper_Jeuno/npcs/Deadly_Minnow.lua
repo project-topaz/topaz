@@ -13,9 +13,9 @@ end
 
 function onTrigger(player,npc)
 
-    if player:getVar("BorghertzHandsFirstTime") == 1 then
+    if player:getCharVar("BorghertzHandsFirstTime") == 1 then
         player:startEvent(24)
-        player:setVar("BorghertzHandsFirstTime", 2)
+        player:setCharVar("BorghertzHandsFirstTime", 2)
     else
         local stock =
         {
@@ -32,7 +32,7 @@ function onTrigger(player,npc)
         }
 
         player:showText(npc, ID.text.DEADLYMINNOW_SHOP_DIALOG)
-        dsp.shop.general(player, stock)
+        tpz.shop.general(player, stock)
     end
 end
 

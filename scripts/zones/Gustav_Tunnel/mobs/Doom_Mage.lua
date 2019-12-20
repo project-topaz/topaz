@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Gustav Tunnel
---  MOB: Doom Mage
+--  Mob: Doom Mage
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 765, 2, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 765, 2, tpz.regime.type.GROUNDS)
 end;

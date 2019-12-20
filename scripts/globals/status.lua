@@ -4,13 +4,13 @@
 --
 -- Contains variable-ized definitions of things like core enums for use in lua scripts.
 ------------------------------------
-dsp = dsp or {}
+tpz = tpz or {}
 
 ------------------------------------
 -- Zone Misc Flags
 ------------------------------------
 
-dsp.zoneMisc =
+tpz.zoneMisc =
 {
     NONE       = 0x0000, -- Able to be used in any area
     ESCAPE     = 0x0001, -- Ability to use Escape Spell
@@ -30,7 +30,7 @@ dsp.zoneMisc =
 -- Job IDs
 ------------------------------------
 
-dsp.job =
+tpz.job =
 {
     NONE            =  0,
     WAR             =  1,
@@ -56,13 +56,13 @@ dsp.job =
     GEO             = 21,
     RUN             = 22,
 }
-dsp.MAX_JOB_TYPE = 23
+tpz.MAX_JOB_TYPE = 23
 
 ------------------------------------
 -- Race IDs
 ------------------------------------
 
-dsp.race =
+tpz.race =
 {
     HUME_M   = 1,
     HUME_F   = 2,
@@ -78,7 +78,7 @@ dsp.race =
 -- STATUSES
 ------------------------------------
 
-dsp.status =
+tpz.status =
 {
     NORMAL          =  0,
     UPDATE          =  1,
@@ -95,7 +95,7 @@ dsp.status =
 -- additional effects animations from battleentity.h
 ------------------------------------
 
-dsp.subEffect =
+tpz.subEffect =
 {
     -- ATTACKS
     FIRE_DAMAGE         = 1,   -- 110000        3
@@ -168,7 +168,7 @@ dsp.subEffect =
 -- They are simply for convenience.
 ------------------------------------
 
-dsp.effect =
+tpz.effect =
 {
     KO                       = 0,
     WEAKNESS                 = 1,
@@ -801,7 +801,7 @@ dsp.effect =
     -- End GoV Prowess fakery
     FIELD_SUPPORT_FOOD       = 789, -- Used by Fov/GoV food buff.
     MARK_OF_SEED             = 790, -- Tracks 30 min timer in ACP mission "Those Who Lurk in Shadows (II)"
-    ALL_MISS                 = 791,
+    TOO_HIGH                 = 791, -- Indicates a target is airborne and unable to be hit by normal melee attacks
     SUPER_BUFF               = 792,
     NINJUTSU_ELE_DEBUFF      = 793,
     HEALING                  = 794,
@@ -833,7 +833,7 @@ dsp.effect =
 -- Effect Flags
 ------------------------------------
 
-dsp.effectFlag =
+tpz.effectFlag =
 {
     NONE            = 0x0000,
     DISPELABLE      = 0x0001,
@@ -865,13 +865,13 @@ dsp.effectFlag =
 ------------------------------------
 
 function removeSleepEffects(target)
-    target:delStatusEffect(dsp.effect.SLEEP_I)
-    target:delStatusEffect(dsp.effect.SLEEP_II)
-    target:delStatusEffect(dsp.effect.LULLABY)
+    target:delStatusEffect(tpz.effect.SLEEP_I)
+    target:delStatusEffect(tpz.effect.SLEEP_II)
+    target:delStatusEffect(tpz.effect.LULLABY)
 end
 
 function hasSleepEffects(target)
-    return target:hasStatusEffect(dsp.effect.SLEEP_I) or target:hasStatusEffect(dsp.effect.SLEEP_II) or target:hasStatusEffect(dsp.effect.LULLABY)
+    return target:hasStatusEffect(tpz.effect.SLEEP_I) or target:hasStatusEffect(tpz.effect.SLEEP_II) or target:hasStatusEffect(tpz.effect.LULLABY)
 end
 
 ------------------------------------
@@ -881,11 +881,11 @@ end
 --
 -- Even if the particular mod is not completely (or at all) implemented yet, you can still script the effects using these codes.
 --
--- Example: target:getMod(dsp.mod.STR) will get the sum of STR bonuses/penalties from gear, food, STR Etude, Absorb-STR, and any other STR-related buff/debuff.
+-- Example: target:getMod(tpz.mod.STR) will get the sum of STR bonuses/penalties from gear, food, STR Etude, Absorb-STR, and any other STR-related buff/debuff.
 -- Note that the above will ignore base statistics, and that getStat() should be used for stats, Attack, and Defense, while getACC(), getRACC(), and getEVA() also exist.
 ------------------------------------
 
-dsp.mod =
+tpz.mod =
 {
     NONE                            = 0,
     DEF                             = 1,
@@ -1105,7 +1105,7 @@ dsp.mod =
     DEATHRES                        = 255,
     AFTERMATH                       = 256,
     PARALYZE                        = 257,
-    MIJIN_GAKURE                    = 258,
+    MIJIN_RERAISE                   = 258,
     DUAL_WIELD                      = 259,
     DOUBLE_ATTACK                   = 288,
     SUBTLE_BLOW                     = 289,
@@ -1131,7 +1131,8 @@ dsp.mod =
     UTSUSEMI                        = 307,
     UTSUSEMI_BONUS                  = 900, -- Extra shadows from gear
     NINJA_TOOL                      = 308,
-    BLUE_POINTS                     = 309,
+    BLUE_POINTS                     = 309, -- Tracks extra blue points
+    BLUE_LEARN_CHANCE               = 945, -- Additional chance to learn blue magic
     DMG_REFLECT                     = 316,
     ROLL_ROGUES                     = 317,
     ROLL_GALLANTS                   = 318,
@@ -1320,7 +1321,6 @@ dsp.mod =
     QUICK_DRAW_MACC                 = 191, -- Quick draw magic accuracy
     QUAD_ATTACK                     = 430, -- Quadruple attack chance.
 
-    ADDITIONAL_EFFECT               = 431, -- All additional effects
     ENSPELL_DMG_BONUS               = 432,
 
     FIRE_ABSORB                     = 459, -- Occasionally absorbs fire elemental damage, in percents
@@ -1359,9 +1359,18 @@ dsp.mod =
     RERAISE_II                      = 457, -- Reraise II.
     RERAISE_III                     = 458, -- Reraise III.
 
+    ADDITIONAL_EFFECT               = 431, -- All additional effects
     ITEM_SPIKES_TYPE                = 499, -- Type spikes an item has
     ITEM_SPIKES_DMG                 = 500, -- Damage of an items spikes
     ITEM_SPIKES_CHANCE              = 501, -- Chance of an items spike proc
+    -- ITEM_ADDEFFECT_TYPE     = 431, -- 1 = Status Effect/DMG/HP Drain, 2 = MP Drain, 3 = TP Drain, 4 = Dispel, 5 = Self-Buff, 6 = Instant Death
+    -- ITEM_SUBEFFECT          = 499, -- Animation ID of Spikes and Additional Effects
+    -- ITEM_ADDEFFECT_DMG      = 500, -- Damage of an items Additional Effect or Spikes
+    -- ITEM_ADDEFFECT_CHANCE   = 501, -- Chance of an items Additional Effect or Spikes
+    -- ITEM_ADDEFFECT_ELEMENT  = 950, -- Element of the Additional Effect or Spikes, for resist purposes
+    -- ITEM_ADDEFFECT_STATUS   = 951, -- Status Effect ID to try to apply via Additional Effect or Spikes
+    -- ITEM_ADDEFFECT_POWER    = 952, -- Base Power for effect in MOD_ITEM_ADDEFFECT_STATUS
+    -- ITEM_ADDEFFECT_DURATION = 953, -- Base Duration for effect in MOD_ITEM_ADDEFFECT_STATUS
 
     FERAL_HOWL_DURATION             = 503, -- +20% duration per merit when wearing augmented Monster Jackcoat +2
     MANEUVER_BONUS                  = 504, -- Maneuver Stat Bonus
@@ -1507,6 +1516,8 @@ dsp.mod =
     ALL_WSDMG_ALL_HITS              = 840, -- Generic (all Weaponskills) damage, on all hits.
     -- Per https://www.bg-wiki.com/bg/Weapon_Skill_Damage we need all 3..
     ALL_WSDMG_FIRST_HIT             = 841, -- Generic (all Weaponskills) damage, first hit only.
+    WS_NO_DEPLETE                   = 949, -- % chance a Weaponskill depletes no TP.
+    WS_DEX_BONUS                    = 957, -- % bonus to dex_wsc.
 
     -- Circle Abilities Extended Duration from AF/AF+1
     HOLY_CIRCLE_DURATION            = 857,
@@ -1522,15 +1533,21 @@ dsp.mod =
     FENCER_TP_BONUS                 = 903, -- TP Bonus to weapon skills from Fencer Trait
     FENCER_CRITHITRATE              = 904, -- Increased Crit chance from Fencer Trait
     SHIELD_DEF_BONUS                = 905, -- Shield Defense Bonus
+    SNEAK_DURATION                  = 946, -- Additional duration in seconds
+    INVISIBLE_DURATION              = 947, -- Additional duration in seconds
+    BERSERK_EFFECT                  = 948, -- Conqueror Berserk Effect
+    BERSERK_DURATION                = 954, -- Berserk Duration
+    AGGRESSOR_DURATION              = 955, -- Aggressor Duration
+    DEFENDER_DURATION               = 956, -- Defender Duration
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 - 825 used by WS DMG mods these are not spares.
-    -- SPARE = 944, -- stuff
-    -- SPARE = 945, -- stuff
-    -- SPARE = 946, -- stuff
+    -- SPARE = 958, -- stuff
+    -- SPARE = 959, -- stuff
+    -- SPARE = 960, -- stuff
 };
 
-dsp.latent =
+tpz.latent =
 {
     HP_UNDER_PERCENT         = 0,  -- hp less than or equal to % - PARAM: HP PERCENT
     HP_OVER_PERCENT          = 1,  -- hp more than % - PARAM: HP PERCENT
@@ -1654,7 +1671,7 @@ local MCATEGORY_SCH_2 = 0x0CC0
 local MCATEGORY_START = 0x0040
 local MCATEGORY_COUNT = 0x0D00
 
-dsp.merit =
+tpz.merit =
 {
     -- HP
     MAX_HP                      = MCATEGORY_HP_MP + 0x00,
@@ -2015,7 +2032,7 @@ dsp.merit =
 -- Inventory locations
 ------------------------------------
 
-dsp.inventoryLocation =
+tpz.inventoryLocation =
 {
     INVENTORY       = 0,
     MOGSAFE         = 1,
@@ -2031,13 +2048,13 @@ dsp.inventoryLocation =
     WARDROBE3       = 11,
     WARDROBE4       = 12,
 }
-dsp.inv = dsp.inventoryLocation
+tpz.inv = tpz.inventoryLocation
 
 ------------------------------------
 -- Equipment Slots
 ------------------------------------
 
-dsp.slot =
+tpz.slot =
 {
     MAIN   = 0,
     SUB    = 1,
@@ -2056,13 +2073,13 @@ dsp.slot =
     RING2  = 14,
     BACK   = 15,
 }
-dsp.MAX_SLOTID  = 15
+tpz.MAX_SLOTID  = 15
 
 ----------------------------------
 -- Objtype Definitions
 ----------------------------------
 
-dsp.objType =
+tpz.objType =
 {
     PC   = 0x01,
     NPC  = 0x02,
@@ -2075,7 +2092,7 @@ dsp.objType =
 -- Attack Type
 ----------------------------------
 
-dsp.attackType =
+tpz.attackType =
 {
     NONE     = 0,
     PHYSICAL = 1,
@@ -2089,7 +2106,7 @@ dsp.attackType =
 -- Damage Type
 ----------------------------------
 
-dsp.damageType =
+tpz.damageType =
 {
     NONE      = 0,
     PIERCING  = 1,
@@ -2130,7 +2147,7 @@ dsp.damageType =
 -- MOBMODs
 ------------------------------------
 
-dsp.mobMod =
+tpz.mobMod =
 {
     NONE                = 0,
     GIL_MIN             = 1,  -- minimum gil drop -- spawn mod only
@@ -2199,14 +2216,15 @@ dsp.mobMod =
     CHARMABLE           = 64, -- mob is charmable
     NO_MOVE             = 65, -- Mob will not be able to move
     MULTI_HIT           = 66, -- Mob will have as many swings as defined.
-    NO_AGGRO            = 67  -- If set, mob cannot aggro until unset.
+    NO_AGGRO            = 67, -- If set, mob cannot aggro until unset.
+    ALLI_HATE           = 68  -- Range around target to add alliance member to enmity list.
 }
 
 ------------------------------------
 -- Job Specials (1hr / 2hr moves)
 ------------------------------------
 
-dsp.jobSpecialAbility =
+tpz.jobSpecialAbility =
 {
     MIGHTY_STRIKES      = 688,
     MIGHTY_STRIKES_MAAT = 1008,
@@ -2309,13 +2327,13 @@ dsp.jobSpecialAbility =
     -- ELEMENTAL_SFORZO     = 3479,
     -- BOLSTER              = 3482,
 }
-dsp.jsa = dsp.jobSpecialAbility
+tpz.jsa = tpz.jobSpecialAbility
 
 ------------------------------------
 -- Skills
 ------------------------------------
 
-dsp.skill =
+tpz.skill =
 {
     -- Combat Skills
     NONE = 0,
@@ -2385,7 +2403,7 @@ dsp.skill =
 -- Craft Skill Ranks
 ------------------------------------
 
-dsp.craftRank =
+tpz.craftRank =
 {
     AMATEUR     = 0,
     RECRUIT     = 1,
@@ -2410,7 +2428,7 @@ dsp.craftRank =
 -- Recast IDs
 ------------------------------------
 
-dsp.recast =
+tpz.recast =
 {
     ITEM     = 0,
     MAGIC    = 1,
@@ -2421,7 +2439,7 @@ dsp.recast =
 -- ACTION IDs
 ------------------------------------
 
-dsp.action =
+tpz.action =
 {
     NONE                 = 0,
     ATTACK               = 1,
@@ -2461,13 +2479,13 @@ dsp.action =
     MOBABILITY_INTERRUPT = 35,
     LEAVE                = 36,
 }
-dsp.act = dsp.action
+tpz.act = tpz.action
 
 ------------------------------------
 -- ECOSYSTEM IDs
 ------------------------------------
 
-dsp.ecosystem =
+tpz.ecosystem =
 {
     ERROR          = 0,
     AMORPH         = 1,
@@ -2492,13 +2510,13 @@ dsp.ecosystem =
     VERMIN         = 20,
     VORAGEAN       = 21,
 }
-dsp.eco = dsp.ecosystem
+tpz.eco = tpz.ecosystem
 
 ------------------------------------
 -- Behavior bits
 ------------------------------------
 
-dsp.behavior =
+tpz.behavior =
 {
     NONE         = 0x000,
     NO_DESPAWN   = 0x001, -- mob does not despawn on death
@@ -2512,7 +2530,7 @@ dsp.behavior =
 -- Elevator IDs
 ------------------------------------
 
-dsp.elevator =
+tpz.elevator =
 {
     TIMED_AUTOMATIC           = 0,
     DAVOI_LIFT                = 1,
@@ -2524,7 +2542,7 @@ dsp.elevator =
 -- Item Type
 -----------------------------------
 
-dsp.itemType =
+tpz.itemType =
 {
     BASIC       = 0x00,
     GENERAL     = 0x01,
@@ -2541,7 +2559,7 @@ dsp.itemType =
 -- Animations
 ------------------------------------
 
-dsp.animation =
+tpz.animation =
 {
     NONE                    = 0,
     ATTACK                  = 1,
@@ -2580,13 +2598,13 @@ dsp.animation =
     MOUNT                   = 85,
     -- TRUST                = 90, -- This is the animation for a trust NPC spawning in.
 }
-dsp.anim = dsp.animation
+tpz.anim = tpz.animation
 
 ------------------------------------
 -- Mounts
 ------------------------------------
 
-dsp.mount =
+tpz.mount =
 {
     CHOCOBO        = 0,
     QUEST_RAPTOR   = 1,
@@ -2615,7 +2633,7 @@ dsp.mount =
 -- Automaton Frame IDs
 ------------------------------------
 
-dsp.frames =
+tpz.frames =
 {
     HARLEQUIN  = 0x20,
     VALOREDGE  = 0x21,
@@ -2627,7 +2645,7 @@ dsp.frames =
 -- Item Check Params
 ------------------------------------
 
-dsp.itemCheck =
+tpz.itemCheck =
 {
     NONE    = 0,
     EQUIP   = 1,
@@ -2637,7 +2655,7 @@ dsp.itemCheck =
 ------------------------------------
 -- Emote Values
 ------------------------------------
-dsp.emote =
+tpz.emote =
 {
     POINT = 0,
     BOW = 1,
@@ -2690,7 +2708,7 @@ dsp.emote =
     JOB = 74
 }
 
-dsp.emoteMode =
+tpz.emoteMode =
 {
     ALL = 0,
     TEXT = 1,

@@ -1,16 +1,8 @@
 -----------------------------------
 -- Area: Temenos W T
--- NPC: Enhanced_Vulture
-
+--  Mob: Enhanced Vulture
 -----------------------------------
 require("scripts/globals/limbus");
-
------------------------------------
--- onMobSpawn Action
------------------------------------
-
------------------------------------
--- onMobEngaged
 -----------------------------------
 
 function onMobEngaged(mob,target)
@@ -22,10 +14,6 @@ function onMobEngaged(mob,target)
         GetMobByID(16928964):updateEnmity(target);
 end;
 
------------------------------------
--- onMobDeath
------------------------------------
-
 function onMobDeath(mob, player, isKiller)
 
     local mobX = mob:getXPos();
@@ -34,7 +22,7 @@ function onMobDeath(mob, player, isKiller)
    if (IsMobDead(16928959)==true and IsMobDead(16928960)==true  and IsMobDead(16928961)==true
    and IsMobDead(16928962)==true  and IsMobDead(16928963)==true and IsMobDead(16928964)==true) then
        GetNPCByID(16928768+17):setPos(mobX,mobY,mobZ);
-    GetNPCByID(16928768+17):setStatus(dsp.status.NORMAL);
-    GetNPCByID(16928770+470):setStatus(dsp.status.NORMAL);
+    GetNPCByID(16928768+17):setStatus(tpz.status.NORMAL);
+    GetNPCByID(16928770+470):setStatus(tpz.status.NORMAL);
   end
 end;

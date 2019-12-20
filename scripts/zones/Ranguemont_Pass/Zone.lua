@@ -1,6 +1,6 @@
 -----------------------------------
 --
--- Zone: Ranguemont_Pass (166)
+-- Zone: Ranguemont Pass (166)
 --
 -----------------------------------
 local ID = require("scripts/zones/Ranguemont_Pass/IDs")
@@ -16,7 +16,7 @@ function onInitialize(zone)
 end;
 
 function onConquestUpdate(zone, updatetype)
-    dsp.conq.onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end;
 
 function onZoneIn(player,prevZone)

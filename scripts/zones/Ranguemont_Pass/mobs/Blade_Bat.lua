@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Ranguemont Pass
---  MOB: Blade Bat
+--  Mob: Blade Bat
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 602, 2, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 602, 2, tpz.regime.type.GROUNDS)
 end;

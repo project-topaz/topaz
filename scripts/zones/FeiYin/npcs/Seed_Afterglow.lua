@@ -27,34 +27,34 @@ function onTrigger(player,npc)
     local ACP           = player:getCurrentMission(ACP)
     local currentDay    = tonumber(os.date("%j"))
     local needToZone    = player:needToZone()
-    local progressMask  = player:getVar("SEED_AFTERGLOW_MASK")
-    local intensity     = player:getVar("SEED_AFTERGLOW_INTENSITY")
+    local progressMask  = player:getCharVar("SEED_AFTERGLOW_MASK")
+    local intensity     = player:getCharVar("SEED_AFTERGLOW_INTENSITY")
 
     if (
-        player:hasKeyItem(dsp.ki.MARK_OF_SEED) or
-        player:hasKeyItem(dsp.ki.AZURE_KEY) or
-        player:hasKeyItem(dsp.ki.IVORY_KEY) or
-        CurrentDay == player:getVar("LastAzureKey") or
-        CurrentDay == player:getVar("LastIvoryKey") or
-        ACP < THOSE_WHO_LURK_IN_SHADOWS_II
+        player:hasKeyItem(tpz.ki.MARK_OF_SEED) or
+        player:hasKeyItem(tpz.ki.AZURE_KEY) or
+        player:hasKeyItem(tpz.ki.IVORY_KEY) or
+        CurrentDay == player:getCharVar("LastAzureKey") or
+        CurrentDay == player:getCharVar("LastIvoryKey") or
+        ACP < tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II
     ) then
         player:messageSpecial(ID.text.SOFTLY_SHIMMERING_LIGHT)
 
-    elseif (needToZone and not player:hasStatusEffect(dsp.effect.MARK_OF_SEED)) then
+    elseif (needToZone and not player:hasStatusEffect(tpz.effect.MARK_OF_SEED)) then
         player:messageSpecial(ID.text.YOU_REACH_FOR_THE_LIGHT)
-    elseif (ACP >= THOSE_WHO_LURK_IN_SHADOWS_II and not player:getMaskBit(progressMask, offset)) then
+    elseif (ACP >= tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II and not player:getMaskBit(progressMask, offset)) then
         player:setMaskBit(progressMask, "SEED_AFTERGLOW_MASK", offset, true)
         intensity = intensity + 1
         if (intensity == 9) then
             player:startEvent(28)
-        elseif (not needToZone and not player:hasStatusEffect(dsp.effect.MARK_OF_SEED)) then
-            player:setVar("SEED_AFTERGLOW_INTENSITY", intensity)
+        elseif (not needToZone and not player:hasStatusEffect(tpz.effect.MARK_OF_SEED)) then
+            player:setCharVar("SEED_AFTERGLOW_INTENSITY", intensity)
             player:messageSpecial(ID.text.YOU_REACH_OUT_TO_THE_LIGHT, 0)
-            player:addStatusEffectEx(dsp.effect.MARK_OF_SEED, 0, 0, 30, 1800)
+            player:addStatusEffectEx(tpz.effect.MARK_OF_SEED, 0, 0, 30, 1800)
             player:needToZone(true)
             player:messageSpecial(ID.text.THE_LIGHT_DWINDLES, 0)
         else
-            player:setVar("SEED_AFTERGLOW_INTENSITY", intensity)
+            player:setCharVar("SEED_AFTERGLOW_INTENSITY", intensity)
             player:messageSpecial(ID.text.EVEN_GREATER_INTENSITY, offset)
         end
 
@@ -68,13 +68,13 @@ end
 
 function onEventFinish(player,csid,option)
     if csid == 28 then
-        player:delStatusEffectSilent(dsp.effect.MARK_OF_SEED)
+        player:delStatusEffectSilent(tpz.effect.MARK_OF_SEED)
 
         if option == 100 then
             player:messageSpecial(ID.text.SCINTILLATING_BURST_OF_LIGHT)
-            npcUtil.giveKeyItem(player, dsp.ki.MARK_OF_SEED)
+            npcUtil.giveKeyItem(player, tpz.ki.MARK_OF_SEED)
         elseif option == 200 then
-            npcUtil.giveKeyItem(player, dsp.ki.AZURE_KEY)
+            npcUtil.giveKeyItem(player, tpz.ki.AZURE_KEY)
         end
     end
 end

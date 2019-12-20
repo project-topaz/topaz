@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.CASTLE_OZTROJA] =
+zones[tpz.zone.CASTLE_OZTROJA] =
 {
     text =
     {
@@ -34,6 +34,7 @@ zones[dsp.zone.CASTLE_OZTROJA] =
         YAGUDO_AVATAR_DEATH                = 7446, -- Our lord, Tzee Xicu the Manifest!  Even should our bodies be crushed and broken, may our souls endure into eternity...
         YAGUDO_KING_ENGAGE                 = 7447, -- You are not here as sacrifices, are you? Could you possibly be committing this affront in the face of a deity?  Very well, I will personally mete out your divine punishment, kyah!
         YAGUDO_KING_DEATH                  = 7448, -- You have...bested me... However, I...am...a god... I will never die...never rot...never fade...never...
+        COMMON_SENSE_SURVIVAL              = 8293, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
@@ -90,4 +91,4 @@ zones[dsp.zone.CASTLE_OZTROJA] =
     },
 }
 
-return zones[dsp.zone.CASTLE_OZTROJA]
+return zones[tpz.zone.CASTLE_OZTROJA]

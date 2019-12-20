@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.LALOFF_AMPHITHEATER] =
+zones[tpz.zone.LALOFF_AMPHITHEATER] =
 {
     text =
     {
@@ -21,7 +21,8 @@ zones[dsp.zone.LALOFF_AMPHITHEATER] =
     },
     npc =
     {
+        SHIMMERING_CIRCLE_OFFSET = 17514791, -- used by scripts/globals/bcnm.lua
     },
 }
 
-return zones[dsp.zone.LALOFF_AMPHITHEATER]
+return zones[tpz.zone.LALOFF_AMPHITHEATER]

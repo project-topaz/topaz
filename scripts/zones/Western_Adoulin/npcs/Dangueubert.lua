@@ -7,7 +7,7 @@
 require("scripts/globals/missions")
 require("scripts/globals/quests")
 
-local quests = dsp.quest.involvedQuests({
+local quests = tpz.quest.involvedQuests({
     require("scripts/quests/adoulin/a_certain_substitute_patrolman")
 })
 -----------------------------------
@@ -17,7 +17,7 @@ end
 
 function onTrigger(player,npc)
     if not quests.onTrigger(player, npc) then
-        if player:getCurrentMission(SOA) >= LIFE_ON_THE_FRONTIER then
+        if player:getCurrentMission(SOA) >= tpz.mission.id.soa.LIFE_ON_THE_FRONTIER then
             -- Standard dialogue
             player:startEvent(546, 0, 1)
         else

@@ -1,5 +1,5 @@
 -----------------------------------
--- Area: Wajoam Woodlands
+-- Area: Wajaom Woodlands
 --  ZNM: Iriz Ima
 -----------------------------------
 mixins = {require("scripts/mixins/rage")}
@@ -7,7 +7,7 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.IDLE_DESPAWN, 300)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 300)
 end
 
 function onMobSpawn(mob)

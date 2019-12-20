@@ -8,7 +8,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `dspdb`
+-- Base de données: `tpzdb`
 --
 
 -- --------------------------------------------------------
@@ -28,5 +28,7 @@ CREATE TABLE IF NOT EXISTS `char_effects` (
   `subid` smallint(5) unsigned NOT NULL DEFAULT '0',
   `subpower` smallint(5) NOT NULL DEFAULT '0',
   `tier` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `flags` int(8) unsigned NOT NULL DEFAULT '0',
+  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
   KEY `charid` (`charid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

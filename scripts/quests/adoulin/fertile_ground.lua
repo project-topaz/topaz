@@ -1,12 +1,12 @@
 require("scripts/globals/missions")
 require("scripts/globals/quests")
 
-local thisQuest = dsp.quest.newQuest()
+local thisQuest = tpz.quest.newQuest()
 
 thisQuest.name = "Fertile Ground"
-thisQuest.log = dsp.quest.log.ADOULIN
-thisQuest.quest_id = dsp.quest.id.adoulin.FERTILE_GROUND
-thisQuest.string_key = dsp.quest.string.adoulin[thisQuest.quest_id]
+thisQuest.log = tpz.quest.log.ADOULIN
+thisQuest.quest_id = tpz.quest.id.adoulin.FERTILE_GROUND
+thisQuest.string_key = tpz.quest.string.adoulin[thisQuest.quest_id]
 
 thisQuest.repeatable = false
 thisQuest.var_prefix = "[Q]["..thisQuest.log.."]["..thisQuest.quest_id.."]"
@@ -21,13 +21,13 @@ thisQuest.requirements =
     quests =
     {
         {
-            log = dsp.quest.log.ADOULIN,
-            quest_id = dsp.quest.id.adoulin.THE_OLD_MAN_AND_THE_HARPOON
+            log = tpz.quest.log.ADOULIN,
+            quest_id = tpz.quest.id.adoulin.THE_OLD_MAN_AND_THE_HARPOON
         }
     },
     fame =
     {
-        area = dsp.quest.fame.ADOULIN,
+        area = tpz.quest.fame.ADOULIN,
         level = 2
     }
 }
@@ -36,13 +36,13 @@ thisQuest.rewards =
 {
     exp = 500,
     bayld = 300,
-    fame_area = dsp.quest.fame.ADOULIN
+    fame_area = tpz.quest.fame.ADOULIN
 }
 
 thisQuest.temporary =
 {
     items = {},
-    key_items = {dsp.ki.BOTTLE_OF_FERTILIZER_X}
+    key_items = {tpz.ki.BOTTLE_OF_FERTILIZER_X}
 }
 
 -----------------------------------
@@ -51,9 +51,9 @@ thisQuest.temporary =
 thisQuest.stages =
 {
     -- [TODO] Stage 0: Talk to Chalvava, Rala Waterways, to begin the quest
-    [dsp.quest.stage.STAGE0] =
+    [tpz.quest.stage.STAGE0] =
     {
-        [dsp.zone.RALA_WATERWAYS] =
+        [tpz.zone.RALA_WATERWAYS] =
         {
             onTrigger =
             {
@@ -69,9 +69,9 @@ thisQuest.stages =
         }
     },
     -- Stage 1: Talk to Shipilolo, Western Adoulin, to get Bottle of Fertilizer X KI
-    [dsp.quest.stage.STAGE1] =
+    [tpz.quest.stage.STAGE1] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -83,13 +83,13 @@ thisQuest.stages =
             {
                 [2850] = function(player, option)
                     -- Shipilolo, giving Bottle of Fertilizer X
-                    if thisQuest.giveKeyItem(player, dsp.ki.BOTTLE_OF_FERTILIZER_X) then
+                    if thisQuest.giveKeyItem(player, tpz.ki.BOTTLE_OF_FERTILIZER_X) then
                         return thisQuest.advanceStage(player)
                     end
                 end
             }
         },
-        [dsp.zone.RALA_WATERWAYS] =
+        [tpz.zone.RALA_WATERWAYS] =
         {
             onTrigger =
             {
@@ -101,9 +101,9 @@ thisQuest.stages =
         }
     },
     -- [TODO] Stage 2: Talk to Chalvava again, quest complete
-    [dsp.quest.stage.STAGE2] =
+    [tpz.quest.stage.STAGE2] =
     {
-        [dsp.zone.RALA_WATERWAYS] =
+        [tpz.zone.RALA_WATERWAYS] =
         {
             onTrigger =
             {

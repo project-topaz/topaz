@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Korroloka Tunnel
---  MOB: Gigas Stonegrinder
+--  Mob: Gigas Stonegrinder
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 733, 1, dsp.regime.type.GROUNDS)
-end;
+    tpz.regime.checkRegime(player, mob, 733, 1, tpz.regime.type.GROUNDS)
+end

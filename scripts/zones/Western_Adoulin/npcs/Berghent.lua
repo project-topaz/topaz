@@ -15,9 +15,9 @@ function onTrade(player,npc,trade)
 end;
 
 function onTrigger(player,npc)
-    local FOOL = player:getQuestStatus(ADOULIN, dsp.quest.id.adoulin.FLAVORS_OF_OUR_LIVES);
+    local FOOL = player:getQuestStatus(ADOULIN, tpz.quest.id.adoulin.FLAVORS_OF_OUR_LIVES);
     if (FOOL == QUEST_ACCEPTED) then
-        if (player:hasKeyItem(dsp.ki.BLIGHTBERRY)) then
+        if (player:hasKeyItem(tpz.ki.BLIGHTBERRY)) then
             -- Finishes Quest: 'Flavors of Our Lives'
             player:startEvent(87);
         else
@@ -25,7 +25,7 @@ function onTrigger(player,npc)
             player:startEvent(82);
         end
     elseif (FOOL == QUEST_AVAILABLE) then
-        if (player:getVar("FOOL_Refused_Once") == 1) then
+        if (player:getCharVar("FOOL_Refused_Once") == 1) then
             -- Starts Quest: 'Flavors of Our Lives' after player refused once
             player:startEvent(81);
         else
@@ -45,27 +45,27 @@ function onEventFinish(player,csid,option)
     if (csid == 80) then
         if (option == 1) then
             -- Starts Quest: 'Flavors of Our Lives'
-            player:addQuest(ADOULIN, dsp.quest.id.adoulin.FLAVORS_OF_OUR_LIVES);
-            player:setVar("FOOL_Refused_Once", 0);
+            player:addQuest(ADOULIN, tpz.quest.id.adoulin.FLAVORS_OF_OUR_LIVES);
+            player:setCharVar("FOOL_Refused_Once", 0);
         else
             -- Refuses Quest: 'Flavors of Our Lives'
-            player:setVar("FOOL_Refused_Once", 1);
+            player:setCharVar("FOOL_Refused_Once", 1);
         end
         --
     elseif (csid == 81) then
         if (option == 1) then
             -- Starts Quest: 'Flavors of Our Lives'
-            player:addQuest(ADOULIN, dsp.quest.id.adoulin.FLAVORS_OF_OUR_LIVES);
-            player:setVar("FOOL_Refused_Once", 0);
+            player:addQuest(ADOULIN, tpz.quest.id.adoulin.FLAVORS_OF_OUR_LIVES);
+            player:setCharVar("FOOL_Refused_Once", 0);
         end
     elseif (csid == 87) then
         -- Finishing Quest: 'Flavors of Our Lives'
-        player:delKeyItem(dsp.ki.BLIGHTBERRY);
-        player:completeQuest(ADOULIN, dsp.quest.id.adoulin.FLAVORS_OF_OUR_LIVES);
+        player:delKeyItem(tpz.ki.BLIGHTBERRY);
+        player:completeQuest(ADOULIN, tpz.quest.id.adoulin.FLAVORS_OF_OUR_LIVES);
         player:addExp(500 * EXP_RATE);
         player:addCurrency('bayld', 300 * BAYLD_RATE);
         player:messageSpecial(ID.text.BAYLD_OBTAINED, 300 * BAYLD_RATE);
-        player:addTitle(dsp.title.POTATION_PATHFINDER);
+        player:addTitle(tpz.title.POTATION_PATHFINDER);
         player:addFame(ADOULIN);
     end
 end;

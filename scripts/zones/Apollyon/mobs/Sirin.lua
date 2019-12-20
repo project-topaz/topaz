@@ -1,7 +1,6 @@
 -----------------------------------
 -- Area: Apollyon NE
---  NPC: Sirin
-
+--  Mob: Sirin
 -----------------------------------
 require("scripts/globals/limbus");
 -----------------------------------
@@ -19,9 +18,9 @@ function onMobDespawn(mob)
 
     if (mobID ==16933072) then -- time T1
        GetNPCByID(16932864+125):setPos(mobX,mobY,mobZ);
-    GetNPCByID(16932864+125):setStatus(dsp.status.NORMAL);
+    GetNPCByID(16932864+125):setStatus(tpz.status.NORMAL);
     elseif (mobID ==16933071) then -- time T2
     GetNPCByID(16932864+83):setPos(mobX,mobY,mobZ);
-    GetNPCByID(16932864+83):setStatus(dsp.status.NORMAL);
+    GetNPCByID(16932864+83):setStatus(tpz.status.NORMAL);
     end
 end;

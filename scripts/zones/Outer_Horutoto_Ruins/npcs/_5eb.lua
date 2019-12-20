@@ -14,12 +14,12 @@ end
 
 function onTrigger(player, npc)
     local currentMission = player:getCurrentMission(WINDURST)
-    local missionStatus = player:getVar("MissionStatus")
+    local missionStatus = player:getCharVar("MissionStatus")
 
     if
-        currentMission == FULL_MOON_FOUNTAIN and
+        currentMission == tpz.mission.id.windurst.FULL_MOON_FOUNTAIN and
         missionStatus == 1 and
-        player:hasKeyItem(dsp.ki.SOUTHWESTERN_STAR_CHARM) and
+        player:hasKeyItem(tpz.ki.SOUTHWESTERN_STAR_CHARM) and
         not GetMobByID(ID.mob.FULL_MOON_FOUNTAIN_OFFSET + 0):isSpawned() and
         not GetMobByID(ID.mob.FULL_MOON_FOUNTAIN_OFFSET + 1):isSpawned() and
         not GetMobByID(ID.mob.FULL_MOON_FOUNTAIN_OFFSET + 2):isSpawned() and
@@ -30,7 +30,7 @@ function onTrigger(player, npc)
         end
 
     elseif
-        currentMission == FULL_MOON_FOUNTAIN and
+        currentMission == tpz.mission.id.windurst.FULL_MOON_FOUNTAIN and
         missionStatus == 2 and
         GetMobByID(ID.mob.FULL_MOON_FOUNTAIN_OFFSET + 0):isDead() and
         GetMobByID(ID.mob.FULL_MOON_FOUNTAIN_OFFSET + 1):isDead() and
@@ -51,7 +51,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 68 then
-        player:setVar("MissionStatus", 3)
-        player:delKeyItem(dsp.ki.SOUTHWESTERN_STAR_CHARM)
+        player:setCharVar("MissionStatus", 3)
+        player:delKeyItem(tpz.ki.SOUTHWESTERN_STAR_CHARM)
     end
 end

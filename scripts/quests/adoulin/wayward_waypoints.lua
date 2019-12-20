@@ -1,12 +1,12 @@
 require("scripts/globals/missions")
 require("scripts/globals/quests")
 
-local thisQuest = dsp.quest.newQuest()
+local thisQuest = tpz.quest.newQuest()
 
 thisQuest.name = "Wayward Waypoints"
-thisQuest.log = dsp.quest.log.ADOULIN
-thisQuest.quest_id = dsp.quest.id.adoulin.WAYWARD_WAYPOINTS
-thisQuest.string_key = dsp.quest.string.adoulin[thisQuest.quest_id]
+thisQuest.log = tpz.quest.log.ADOULIN
+thisQuest.quest_id = tpz.quest.id.adoulin.WAYWARD_WAYPOINTS
+thisQuest.string_key = tpz.quest.string.adoulin[thisQuest.quest_id]
 
 thisQuest.repeatable = false
 thisQuest.var_prefix = "[Q]["..thisQuest.log.."]["..thisQuest.quest_id.."]"
@@ -16,7 +16,7 @@ thisQuest.vars =
     additional =
     {
         -- Bitmask of waypoints calibrated during the second stage.
-        ["waypoints"] = { type = dsp.quest.var.CHAR, preserve = false, db_name = 'waypoints' },
+        ["waypoints"] = { type = tpz.quest.var.CHAR, preserve = false, db_name = 'waypoints' },
     }
 }
 
@@ -25,13 +25,13 @@ thisQuest.requirements =
     quests =
     { 
         {
-            log = dsp.quest.log.ADOULIN,
-            quest_id = dsp.quest.id.adoulin.MEGALOMANIAC
+            log = tpz.quest.log.ADOULIN,
+            quest_id = tpz.quest.id.adoulin.MEGALOMANIAC
         } 
     },
     fame =
     {
-        area = dsp.quest.fame.ADOULIN,
+        area = tpz.quest.fame.ADOULIN,
         level = 4
     }
 }
@@ -41,7 +41,7 @@ thisQuest.rewards =
     exp = 1000,
     bayld = 500,
     -- TODO: kinetic_units = 3000, -- Kinetic units need to be implemented before we reward them.
-    fame_area = dsp.quest.fame.ADOULIN
+    fame_area = tpz.quest.fame.ADOULIN
 }
 
 thisQuest.temporary =
@@ -49,8 +49,8 @@ thisQuest.temporary =
     items = {},
     key_items =
     {
-        dsp.ki.WAYPOINT_SCANNER_KIT,
-        dsp.ki.WAYPOINT_RECALIBRATION_KIT
+        tpz.ki.WAYPOINT_SCANNER_KIT,
+        tpz.ki.WAYPOINT_RECALIBRATION_KIT
     }
 }
 
@@ -69,9 +69,9 @@ end
 thisQuest.stages =
 {
     -- [TODO] Stage 0: Speak to Sharuru in Eastern Adoulin to start the quest and receive a Waypoint Scanner Kit KI
-    [dsp.quest.stage.STAGE0] =
+    [tpz.quest.stage.STAGE0] =
     {
-        [dsp.zone.EASTERN_ADOULIN] =
+        [tpz.zone.EASTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -86,21 +86,21 @@ thisQuest.stages =
         }
     },
     -- [TODO] Stage 1: Adjust waypoints at Frontier Stations in Ceizak, Yahse, Foret, Morimar, Yorcia, Marjami, and Kamihr
-    [dsp.quest.stage.STAGE1] =
+    [tpz.quest.stage.STAGE1] =
     {
         -- TODO: Find/implement the onTriggers for the Adoulin waypoints
         -- TODO: Implement the event onFinishes for the Adoulin waypoints, just call waypointEventFinish() with their number
     },
     -- [TODO] Stage 2: Try adjusting waypoint in Lower Jeuno
-    [dsp.quest.stage.STAGE2] =
+    [tpz.quest.stage.STAGE2] =
     {
         -- TODO: Find/implement the onTriggers for the Lower Jeuno waypoint
         -- TODO: Implement the Lower Jeuno waypoint onFinish events
     },
     -- [TODO] Stage 3: Talk to Sharuru again.
-    [dsp.quest.stage.STAGE3] =
+    [tpz.quest.stage.STAGE3] =
     {
-        [dsp.zone.EASTERN_ADOULIN] =
+        [tpz.zone.EASTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -115,9 +115,9 @@ thisQuest.stages =
         }
     },
     -- Stage 4: Talk to Shipilolo in Western Adoulin and get Waypoint Recalibration Kit KI
-    [dsp.quest.stage.STAGE4] =
+    [tpz.quest.stage.STAGE4] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -128,8 +128,8 @@ thisQuest.stages =
             onEventFinish =
             {
                 [79] = function(player, option) -- Shipilolo upgrading waypoint kit
-                    if thisQuest.giveKeyItem(player, dsp.ki.WAYPOINT_RECALIBRATION_KIT) then
-                        thisQuest.delKeyItem(dsp.ki.WAYPOINT_SCANNER_KIT)
+                    if thisQuest.giveKeyItem(player, tpz.ki.WAYPOINT_RECALIBRATION_KIT) then
+                        thisQuest.delKeyItem(tpz.ki.WAYPOINT_SCANNER_KIT)
                         return thisQuest.advanceStage(player)
                     end
                 end
@@ -137,15 +137,15 @@ thisQuest.stages =
         }
     },
     -- [TODO] Stage 5: Try Lower Jeuno waypoint again
-    [dsp.quest.stage.STAGE5] =
+    [tpz.quest.stage.STAGE5] =
     {
         -- TODO: Find/implement the onTriggers for the Lower Jeuno waypoint
         -- TODO: Implement the Lower Jeuno waypoint onFinish events
     },
     -- [TODO] Stage 6: Return to Sharuru, quest complete
-    [dsp.quest.stage.STAGE6] =
+    [tpz.quest.stage.STAGE6] =
     {
-        [dsp.zone.EASTERN_ADOULIN] =
+        [tpz.zone.EASTERN_ADOULIN] =
         {
             onTrigger =
             {

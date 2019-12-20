@@ -1,6 +1,6 @@
 -----------------------------------
 --
--- Zone: Inner_Horutoto_Ruins (192)
+-- Zone: Inner Horutoto Ruins (192)
 --
 -----------------------------------
 local ID = require("scripts/zones/Inner_Horutoto_Ruins/IDs")
@@ -15,59 +15,61 @@ function onInitialize(zone)
     zone:registerRegion(3, -257.8, 0, -24.9, -256.1, 1, -23.5) -- Black
     zone:registerRegion(4, -261, -3, 182, -257, -1, 186) -- Teleport at H-6
 
-    dsp.treasure.initZone(zone)
+    tpz.treasure.initZone(zone)
 end
 
-function onZoneIn(player,prevZone)
+function onZoneIn(player, prevZone)
     local cs = -1
+
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
-        player:setPos(-259.996,6.399,242.859,67)
+        player:setPos(-259.996, 6.399, 242.859, 67)
     end
+
     return cs
 end
 
 function onConquestUpdate(zone, updatetype)
-    dsp.conq.onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
-function onRegionEnter(player,region)
-    local circle= ID.npc.PORTAL_CIRCLE_BASE
-    local red   = GetNPCByID(circle)
-    local white = GetNPCByID(circle+1)
-    local black = GetNPCByID(circle+2)
+function onRegionEnter(player, region)
+    local circle = ID.npc.PORTAL_CIRCLE_BASE
+    local red    = GetNPCByID(circle)
+    local white  = GetNPCByID(circle+1)
+    local black  = GetNPCByID(circle+2)
 
     -- Prevent negatives..
     if region:GetCount() < 0 then
-        region:AddCount( math.abs( region:GetCount() ) )
+        region:AddCount(math.abs(region:GetCount()))
     end
 
     switch (region:GetRegionID()): caseof
     {
         [1] = function (x)  -- Red Circle
-            if player:getMainJob() == dsp.job.RDM and region:AddCount(1) == 1 then
-                red:setAnimation(dsp.anim.OPEN_DOOR)
+            if player:getMainJob() == tpz.job.RDM and region:AddCount(1) == 1 then
+                red:setAnimation(tpz.anim.OPEN_DOOR)
                 red:entityAnimationPacket("smin")
-                if white:getAnimation() == dsp.anim.OPEN_DOOR and black:getAnimation() == dsp.anim.OPEN_DOOR then
+                if white:getAnimation() == tpz.anim.OPEN_DOOR and black:getAnimation() == tpz.anim.OPEN_DOOR then
                     GetNPCByID(circle+3):openDoor(30)
                     GetNPCByID(circle+4):openDoor(30)
                 end
             end
         end,
         [2] = function (x)  -- White Circle
-            if player:getMainJob() == dsp.job.WHM and region:AddCount(1) == 1 then
-                white:setAnimation(dsp.anim.OPEN_DOOR)
+            if player:getMainJob() == tpz.job.WHM and region:AddCount(1) == 1 then
+                white:setAnimation(tpz.anim.OPEN_DOOR)
                 white:entityAnimationPacket("smin")
-                if red:getAnimation() == dsp.anim.OPEN_DOOR and black:getAnimation() == dsp.anim.OPEN_DOOR then
+                if red:getAnimation() == tpz.anim.OPEN_DOOR and black:getAnimation() == tpz.anim.OPEN_DOOR then
                     GetNPCByID(circle+3):openDoor(30)
                     GetNPCByID(circle+4):openDoor(30)
                 end
             end
         end,
         [3] = function (x)  -- Black Circle
-            if player:getMainJob() == dsp.job.BLM and region:AddCount(1) == 1 then
-                black:setAnimation(dsp.anim.OPEN_DOOR)
+            if player:getMainJob() == tpz.job.BLM and region:AddCount(1) == 1 then
+                black:setAnimation(tpz.anim.OPEN_DOOR)
                 black:entityAnimationPacket("smin")
-                if red:getAnimation() == dsp.anim.OPEN_DOOR and white:getAnimation() == dsp.anim.OPEN_DOOR then
+                if red:getAnimation() == tpz.anim.OPEN_DOOR and white:getAnimation() == tpz.anim.OPEN_DOOR then
                     GetNPCByID(circle+3):openDoor(30)
                     GetNPCByID(circle+4):openDoor(30)
                 end
@@ -80,42 +82,42 @@ function onRegionEnter(player,region)
 
 end
 
-function onRegionLeave(player,region)
-    local circle= ID.npc.PORTAL_CIRCLE_BASE
-    local red   = GetNPCByID(circle)
-    local white = GetNPCByID(circle+1)
-    local black = GetNPCByID(circle+2)
+function onRegionLeave(player, region)
+    local circle = ID.npc.PORTAL_CIRCLE_BASE
+    local red    = GetNPCByID(circle)
+    local white  = GetNPCByID(circle+1)
+    local black  = GetNPCByID(circle+2)
 
     switch (region:GetRegionID()): caseof
     {
         [1] = function (x)  -- Red Circle
-            if player:getMainJob() == dsp.job.RDM and region:DelCount(1) == 0 then
-                red:setAnimation(dsp.anim.CLOSE_DOOR)
+            if player:getMainJob() == tpz.job.RDM and region:DelCount(1) == 0 then
+                red:setAnimation(tpz.anim.CLOSE_DOOR)
                 red:entityAnimationPacket("kmin")
             end
         end,
         [2] = function (x)  -- White Circle
-            if player:getMainJob() == dsp.job.WHM and region:DelCount(1) == 0 then
-                white:setAnimation(dsp.anim.CLOSE_DOOR)
+            if player:getMainJob() == tpz.job.WHM and region:DelCount(1) == 0 then
+                white:setAnimation(tpz.anim.CLOSE_DOOR)
                 white:entityAnimationPacket("kmin")
             end
         end,
         [3] = function (x)  -- Black Circle
-            if player:getMainJob() == dsp.job.BLM and region:DelCount(1) == 0 then
-                black:setAnimation(dsp.anim.CLOSE_DOOR)
+            if player:getMainJob() == tpz.job.BLM and region:DelCount(1) == 0 then
+                black:setAnimation(tpz.anim.CLOSE_DOOR)
                 black:entityAnimationPacket("kmin")
             end
         end,
     }
 
     -- Prevent negatives..
-    if (region:GetCount() < 0) then
-        region:AddCount( math.abs( region:GetCount() ) )
+    if region:GetCount() < 0 then
+        region:AddCount(math.abs(region:GetCount()))
     end
 end
 
-function onEventUpdate(player,csid,option)
+function onEventUpdate(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+function onEventFinish(player, csid, option)
 end

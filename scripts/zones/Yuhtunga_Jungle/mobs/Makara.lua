@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Yuhtunga Jungle
---  MOB: Makara
+--  Mob: Makara
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 127, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 127, 2, tpz.regime.type.FIELDS)
 end;

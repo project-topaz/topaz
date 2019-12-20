@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: La Theine Plateau
---  MOB: Huge Wasp
+--  Mob: Huge Wasp
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 5, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 5, 2, tpz.regime.type.FIELDS)
 end;

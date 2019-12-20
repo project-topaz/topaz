@@ -9,15 +9,15 @@ require("scripts/globals/quests")
 -----------------------------------
 
 function onTrade(player, npc, trade)
-    if player:getQuestStatus(SANDORIA, dsp.quest.id.sandoria.FLYERS_FOR_REGINE) == QUEST_ACCEPTED and npcUtil.tradeHas(trade, 532) then
+    if player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.FLYERS_FOR_REGINE) == QUEST_ACCEPTED and npcUtil.tradeHas(trade, 532) then
         player:messageSpecial(ID.text.FLYER_REFUSED)
     end
 end
 
 function onTrigger(player, npc)
-    if player:getVar("thePickpocket") == 1 and not player:getMaskBit(player:getVar("thePickpocketSkipNPC"), 0) then
+    if player:getCharVar("thePickpocket") == 1 and not player:getMaskBit(player:getCharVar("thePickpocketSkipNPC"), 0) then
         player:showText(npc, ID.text.PICKPOCKET_MEINEMELLE)
-        player:setMaskBit(player:getVar("thePickpocketSkipNPC"), "thePickpocketSkipNPC", 0, true)
+        player:setMaskBit(player:getCharVar("thePickpocketSkipNPC"), "thePickpocketSkipNPC", 0, true)
     else
         player:showText(npc, ID.text.ITEM_DELIVERY_DIALOG)
         player:openSendBox()

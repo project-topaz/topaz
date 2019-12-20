@@ -5,16 +5,16 @@
 require("scripts/globals/helm")
 -----------------------------------
 
-function onTrade(player,npc,trade)
-    dsp.helm.onTrade(player, npc, trade, dsp.helm.type.EXCAVATION, 0)
+function onTrade(player, npc, trade)
+    tpz.helm.onTrade(player, npc, trade, tpz.helm.type.EXCAVATION, 0)
 end
 
-function onTrigger(player,npc)
-    dsp.helm.onTrigger(player, dsp.helm.type.EXCAVATION)
+function onTrigger(player, npc)
+    tpz.helm.onTrigger(player, tpz.helm.type.EXCAVATION)
 end
 
-function onEventUpdate(player,csid,option)
+function onEventUpdate(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+function onEventFinish(player, csid, option)
 end

@@ -15,8 +15,8 @@ end;
 function onTrigger(player,npc)
 
     -- Check if we are on Windurst Mission 1-2
-    if (player:getCurrentMission(WINDURST) == THE_HEART_OF_THE_MATTER) then
-        MissionStatus = player:getVar("MissionStatus");
+    if (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.THE_HEART_OF_THE_MATTER) then
+        MissionStatus = player:getCharVar("MissionStatus");
         if (MissionStatus == 1) then
             player:startEvent(46);
         elseif (MissionStatus == 2) then
@@ -32,9 +32,9 @@ end;
 function onEventFinish(player,csid,option)
 
     if (csid == 46) then
-        player:setVar("MissionStatus",2);
-        player:addKeyItem(dsp.ki.SOUTHEASTERN_STAR_CHARM);
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED,dsp.ki.SOUTHEASTERN_STAR_CHARM);
+        player:setCharVar("MissionStatus",2);
+        player:addKeyItem(tpz.ki.SOUTHEASTERN_STAR_CHARM);
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.SOUTHEASTERN_STAR_CHARM);
     end
 
 end;

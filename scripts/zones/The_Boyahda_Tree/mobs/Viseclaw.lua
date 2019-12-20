@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: The Boyahda Tree
---  MOB: Viseclaw
+--  Mob: Viseclaw
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 726, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 726, 1, tpz.regime.type.GROUNDS)
 end

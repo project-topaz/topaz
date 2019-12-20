@@ -17,18 +17,18 @@ function onTrigger(player,npc)
 
     if X < 21.6 and X > 18 and Z > -15.6 and Z < -12.4 then
         if VanadielDayOfTheYear() % 2 == 0 then
-            if brassDoor:getAnimation() == dsp.anim.CLOSE_DOOR and npc:getAnimation() == dsp.anim.CLOSE_DOOR then
+            if brassDoor:getAnimation() == tpz.anim.CLOSE_DOOR and npc:getAnimation() == tpz.anim.CLOSE_DOOR then
                 npc:openDoor(8)
                 -- wait 1 second delay goes here
                 brassDoor:openDoor(6)
             end
         else
-            if trapDoor:getAnimation() == dsp.anim.CLOSE_DOOR and npc:getAnimation() == dsp.anim.CLOSE_DOOR then
+            if trapDoor:getAnimation() == tpz.anim.CLOSE_DOOR and npc:getAnimation() == tpz.anim.CLOSE_DOOR then
                 npc:openDoor(8)
                 -- wait 1 second delay goes here
                 trapDoor:openDoor(6)
             end
-            if player:getCurrentMission(WINDURST) == TO_EACH_HIS_OWN_RIGHT and player:getVar("MissionStatus") == 3 then
+            if player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.TO_EACH_HIS_OWN_RIGHT and player:getCharVar("MissionStatus") == 3 then
                 player:startEvent(43)
             end
         end
@@ -43,6 +43,6 @@ end
 
 function onEventFinish(player,csid,option)
     if csid == 43 then
-        player:setVar("MissionStatus", 4)
+        player:setCharVar("MissionStatus", 4)
     end
 end

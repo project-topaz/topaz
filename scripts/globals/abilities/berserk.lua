@@ -14,7 +14,7 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(dsp.effect.BERSERK,1,0,180)
+    player:addStatusEffect(tpz.effect.BERSERK,25 + player:getMod(tpz.mod.BERSERK_EFFECT),0,180 + player:getMod(tpz.mod.BERSERK_DURATION))
 
-    return dsp.effect.BERSERK
+    return tpz.effect.BERSERK
 end

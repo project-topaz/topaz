@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Fei'Yin
---  NM:  Goliath
+--   NM: Goliath
 -----------------------------------
 require("scripts/globals/titles");
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(dsp.title.GOLIATH_KILLER);
+    player:addTitle(tpz.title.GOLIATH_KILLER);
 end;

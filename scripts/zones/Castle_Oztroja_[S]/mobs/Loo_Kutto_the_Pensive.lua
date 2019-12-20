@@ -1,5 +1,5 @@
 -----------------------------------
--- Area: Castle Oztroja (S)
+-- Area: Castle Oztroja [S]
 --   NM: Loo Kutto the Pensive
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
@@ -16,7 +16,7 @@ function onMobFight(mob, target)
         25% HP, 200 storeTP (caps here - this is about 50% TP per greatsword swing)
     --]]
     local power = 20 + math.floor(utils.clamp(100 - mob:getHPP(), 0, 75) * 2.4)
-    mob:setMod(dsp.mod.STORETP, power)
+    mob:setMod(tpz.mod.STORETP, power)
 end
 
 function onMobDeath(mob, player, isKiller)

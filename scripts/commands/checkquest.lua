@@ -28,7 +28,7 @@ function onTrigger(player,logId,questId,target)
     logId = questLog.quest_log;
 
     -- validate questId
-    local areaQuestIds = dsp.quest.id[dsp.quest.area[logId]];
+    local areaQuestIds = tpz.quest.id[tpz.quest.area[logId]];
     if (questId ~= nil) then
         questId = tonumber(questId) or areaQuestIds[string.upper(questId)];
     end
@@ -62,7 +62,7 @@ function onTrigger(player,logId,questId,target)
     }
 
     -- fetch a quest table if there is one
-    local quest = dsp.quest.getQuest(logId, questId)
+    local quest = tpz.quest.getQuest(logId, questId)
 
     local quest_status_string = ''
 

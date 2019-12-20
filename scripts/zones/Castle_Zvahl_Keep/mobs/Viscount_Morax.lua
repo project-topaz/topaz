@@ -1,9 +1,9 @@
 -----------------------------------
 -- Area: Castle Zvahl Keep (162)
---  MOB: Viscount_Morax
+--  Mob: Viscount Morax
 -----------------------------------
 require("scripts/globals/titles");
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(dsp.title.HELLSBANE);
+    player:addTitle(tpz.title.HELLSBANE);
 end;

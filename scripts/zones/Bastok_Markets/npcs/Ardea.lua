@@ -14,11 +14,11 @@ end;
 
 function onTrigger(player,npc)
 
-    local RockRacketeer = player:getQuestStatus(WINDURST,dsp.quest.id.windurst.ROCK_RACKETEER);
-    local Quotas_Status = player:getVar("ChasingQuotas_Progress");
+    local RockRacketeer = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.ROCK_RACKETEER);
+    local Quotas_Status = player:getCharVar("ChasingQuotas_Progress");
 
     -- Rock Racketeer
-    if (RockRacketeer == QUEST_ACCEPTED and player:hasKeyItem(dsp.ki.SHARP_GRAY_STONE)) then
+    if (RockRacketeer == QUEST_ACCEPTED and player:hasKeyItem(tpz.ki.SHARP_GRAY_STONE)) then
         player:startEvent(261);
 
     elseif (Quotas_Status == 3) then
@@ -38,14 +38,14 @@ function onEventFinish(player,csid,option)
 
     -- Rock Racketeer
     if (csid == 261 and option ~= 1) then
-        player:delKeyItem(dsp.ki.SHARP_GRAY_STONE);
+        player:delKeyItem(tpz.ki.SHARP_GRAY_STONE);
         player:addGil(GIL_RATE*10);
-        player:setVar("rockracketeer_sold",1);
+        player:setCharVar("rockracketeer_sold",1);
     elseif (csid == 261 and option ~= 2) then
-        player:setVar("rockracketeer_sold",2);
+        player:setCharVar("rockracketeer_sold",2);
 
     elseif (csid == 264) then
-        player:setVar("ChasingQuotas_Progress",4);
+        player:setCharVar("ChasingQuotas_Progress",4);
     end
 
 end;

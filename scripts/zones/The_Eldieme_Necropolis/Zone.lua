@@ -1,6 +1,6 @@
 -----------------------------------
 --
--- Zone: The_Eldieme_Necropolis (195)
+-- Zone: The Eldieme Necropolis (195)
 --
 -----------------------------------
 local ID = require("scripts/zones/The_Eldieme_Necropolis/IDs")
@@ -9,12 +9,12 @@ require("scripts/globals/treasure")
 -----------------------------------
 
 function onInitialize(zone)
-    dsp.treasure.initZone(zone)
+    tpz.treasure.initZone(zone)
 end
 
 function onZoneIn(player,prevZone)
     -- rng af2
-    if player:getVar("fireAndBrimstone") == 2 then
+    if player:getCharVar("fireAndBrimstone") == 2 then
         return 4
     end
 
@@ -28,7 +28,7 @@ function onZoneIn(player,prevZone)
 end
 
 function onConquestUpdate(zone, updatetype)
-    dsp.conq.onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player,region)
@@ -39,6 +39,6 @@ end
 
 function onEventFinish(player,csid,option)
     if csid == 4 then
-        player:setVar("fireAndBrimstone", 3)
+        player:setCharVar("fireAndBrimstone", 3)
     end
 end

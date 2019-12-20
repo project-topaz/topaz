@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: The Garden of Ru'Hmet
---  MOB: Ix'aern (drg)'s Wynav
+--  Mob: Ix'aern DRG's Wynav
 -----------------------------------
 require("scripts/globals/status");
 -----------------------------------
@@ -30,7 +30,7 @@ function onMonsterMagicPrepare(mob,target)
         [8] = 462,
         [9] = 466 -- Virelai (charm)
     };
-    if (mob:hasStatusEffect(dsp.effect.SOUL_VOICE)) then
+    if (mob:hasStatusEffect(tpz.effect.SOUL_VOICE)) then
         return spellList[math.random(1,9)]; -- Virelai possible.
     else
         return spellList[math.random(1,8)]; -- No Virelai!

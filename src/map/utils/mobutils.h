@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -39,7 +37,7 @@ typedef struct
   std::vector<CModifier*> mobMods;
 } ModsList_t;
 
-enum class WeaknessType {YELLOW, BLUE, RED, WHITE};
+enum class WeaknessType {BLUE = 0, YELLOW = 1, RED = 2, WHITE = 3};
 
 typedef std::unordered_map<uint32,ModsList_t*> ModsMap_t;
 

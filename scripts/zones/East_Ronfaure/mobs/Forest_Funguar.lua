@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: East Ronfaure
---  MOB: Forest Funguar
+--  Mob: Forest Funguar
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 67, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 67, 2, tpz.regime.type.FIELDS)
 end;

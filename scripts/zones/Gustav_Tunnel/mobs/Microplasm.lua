@@ -1,13 +1,14 @@
-----------------------------------
+-----------------------------------
 -- Area: Gustav Tunnel
 --   NM: Microplasm
 -- Note: Part of mission "The Salt of the Earth"
 -----------------------------------
 local ID = require("scripts/zones/Gustav_Tunnel/IDs");
+require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.IDLE_DESPAWN, 180)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
 end
 
 function onMobDeath(mob, player, isKiller)

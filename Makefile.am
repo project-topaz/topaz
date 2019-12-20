@@ -5,12 +5,12 @@ AUTOMAKE_OPTIONS=foreign
 include sources.am
 
 ## Set up all of our dependency flags
-SRC_ALL                 = $(SRC_DARKSTAR)
-CFLAGS_ALL              = $(DARKSTAR_CFLAGS) -fsigned-char
-CPPFLAGS_ALL            = $(DARKSTAR_CPPFLAGS) -fsigned-char -DFMT_HEADER_ONLY
-CXXFLAGS_ALL            = $(DARKSTAR_CXXFLAGS) -fsigned-char
-LIBS_ALL                = $(DARKSTAR_LIBS)
-LDFLAGS_ALL             = $(DARKSTAR_LDFLAGS)
+SRC_ALL                 = $(SRC_TOPAZ)
+CFLAGS_ALL              = $(TOPAZ_CFLAGS) -fsigned-char
+CPPFLAGS_ALL            = $(TOPAZ_CPPFLAGS) -fsigned-char -DFMT_HEADER_ONLY
+CXXFLAGS_ALL            = $(TOPAZ_CXXFLAGS) -fsigned-char
+LIBS_ALL                = $(TOPAZ_LIBS)
+LDFLAGS_ALL             = $(TOPAZ_LDFLAGS)
 CXX                     = g++ -std=c++17
 
 CFLAGS_ALL              += $(LUA_CFLAGS)
@@ -21,46 +21,50 @@ LIBS_ALL                += $(MYSQL_LDFLAGS)
 LIBS_ALL                += -lzmq
 
 ## Add Architecture-specific stuff
-if DARKSTAR_ARCH_LINUX
+if TOPAZ_ARCH_LINUX
 LIBS_ALL                += -ldl
 endif
 
-if DARKSTAR_ARCH_SOLARIS
+if TOPAZ_ARCH_SOLARIS
 LIBS_ALL                += -lsocket -lnsl -ldl
 endif
 
-if DARKSTAR_ARCH_FREEBSD
+if TOPAZ_ARCH_FREEBSD
 CPPFLAGS_ALL            += -D__FREEBSD__
 endif
 
-if DARKSTAR_ARCH_NETBSD
+if TOPAZ_ARCH_NETBSD
 CPPFLAGS_ALL            += -D__NETBSD__
 endif
 
-if DARKSTAR_ARCH_WIN32
+if TOPAZ_ARCH_WIN32
 CPPFLAGS_ALL            += -DFD_SETSIZE=4096 -DCYGWIN
 endif
 
+if TOPAZ_ARCH_OSX
+LDFLAGS_ALL             += -pagezero_size 10000 -image_base 100000000
+endif
+
 ## Targets
-bin_PROGRAMS          = dsgame dsconnect dssearch
+bin_PROGRAMS          = topaz-game topaz-connect topaz-search
 
-dsgame_SOURCES        = $(SRC_ALL) $(SRC_MAP)
-dsgame_CXXFLAGS       = $(CFLAGS_ALL) $(CXXFLAGS_ALL)
-dsgame_CPPFLAGS       = $(CPPFLAGS_ALL)
-dsgame_CFLAGS         = $(CFLAGS_ALL)
-dsgame_LDFLAGS        = $(LDFLAGS_ALL)
-dsgame_LDADD          = $(LIBS_ALL)
+topaz-game_SOURCES        = $(SRC_ALL) $(SRC_MAP)
+topaz-game_CXXFLAGS       = $(CFLAGS_ALL) $(CXXFLAGS_ALL)
+topaz-game_CPPFLAGS       = $(CPPFLAGS_ALL)
+topaz-game_CFLAGS         = $(CFLAGS_ALL)
+topaz-game_LDFLAGS        = $(LDFLAGS_ALL)
+topaz-game_LDADD          = $(LIBS_ALL)
 
-dsconnect_SOURCES     = $(SRC_ALL) $(SRC_LOGIN)
-dsconnect_CXXFLAGS    = $(CFLAGS_ALL) $(CXXFLAGS_ALL)
-dsconnect_CPPFLAGS    = $(CPPFLAGS_ALL)
-dsconnect_CFLAGS      = $(CFLAGS_ALL)
-dsconnect_LDFLAGS     = $(LDFLAGS_ALL)
-dsconnect_LDADD       = $(LIBS_ALL)
+topaz-connect_SOURCES     = $(SRC_ALL) $(SRC_LOGIN)
+topaz-connect_CXXFLAGS    = $(CFLAGS_ALL) $(CXXFLAGS_ALL)
+topaz-connect_CPPFLAGS    = $(CPPFLAGS_ALL)
+topaz-connect_CFLAGS      = $(CFLAGS_ALL)
+topaz-connect_LDFLAGS     = $(LDFLAGS_ALL)
+topaz-connect_LDADD       = $(LIBS_ALL)
 
-dssearch_SOURCES     = $(SRC_SEARCH_COMMON) $(SRC_SEARCH)
-dssearch_CXXFLAGS    = $(CFLAGS_ALL) $(CXXFLAGS_ALL)
-dssearch_CPPFLAGS    = $(CPPFLAGS_ALL)
-dssearch_CFLAGS      = $(CFLAGS_ALL)
-dssearch_LDFLAGS     = $(LDFLAGS_ALL)
-dssearch_LDADD       = $(LIBS_ALL)
+topaz-search_SOURCES     = $(SRC_SEARCH_COMMON) $(SRC_SEARCH)
+topaz-search_CXXFLAGS    = $(CFLAGS_ALL) $(CXXFLAGS_ALL)
+topaz-search_CPPFLAGS    = $(CPPFLAGS_ALL)
+topaz-search_CFLAGS      = $(CFLAGS_ALL)
+topaz-search_LDFLAGS     = $(LDFLAGS_ALL)
+topaz-search_LDADD       = $(LIBS_ALL)

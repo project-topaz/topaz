@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Wajaom Woodlands
---  MOB: Hydra
+--  Mob: Hydra
 -- !pos -282 -24 -1 51
 -----------------------------------
 require("scripts/globals/titles");
@@ -37,7 +37,7 @@ end;
 
 function onMobDeath(mob, player, isKiller)
 
-    player:addTitle(dsp.title.HYDRA_HEADHUNTER);
+    player:addTitle(tpz.title.HYDRA_HEADHUNTER);
 
 end;
 

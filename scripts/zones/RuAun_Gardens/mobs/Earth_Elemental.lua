@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: RuAun Gardens
---  MOB: Earth Elemental
+--  Mob: Earth Elemental
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 146, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 146, 2, tpz.regime.type.FIELDS)
 end;

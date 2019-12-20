@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Eastern Altepa Desert
---  MOB: Goblin Reaper
+--  Mob: Goblin Reaper
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 113, 3, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 113, 3, tpz.regime.type.FIELDS)
 end;

@@ -31,11 +31,11 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
     params.overrideCE = 160
     params.overrideVE = 480
 
-    local damage, criticalHit, tpHits, extraHits = doRangedWeaponskill(player, target, wsID, params, tp, primary, action)
+    local damage, criticalHit, tpHits, extraHits = doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
 
     -- Apply aftermath
     if damage > 0 then
-        dsp.aftermath.addStatusEffect(player, tp, dsp.slot.RANGED, dsp.aftermath.type.RELIC)
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.RANGED, tpz.aftermath.type.RELIC)
     end
 
     return tpHits, extraHits, criticalHit, damage

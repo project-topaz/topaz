@@ -11,7 +11,8 @@ require("scripts/globals/zone")
 -----------------------------------
 
 function onTrade(player,npc,trade)
-    if (TradeBCNM(player,player:getZoneID(),trade,npc)) then
+
+    if (TradeBCNM(player,npc,trade)) then
         return;
     end
 end;
@@ -22,9 +23,9 @@ function onTrigger(player,npc)
     local Z = player:getZPos();
 
     if (X > 12.934 and X < 24.934) then
-        if (player:getPreviousZone() == dsp.zone.RIVERNE_SITE_A01) then
+        if (player:getPreviousZone() == tpz.zone.RIVERNE_SITE_A01) then
             player:startEvent(11); -- To Riv Site A
-        elseif (player:getPreviousZone() == dsp.zone.RIVERNE_SITE_B01) then
+        elseif (player:getPreviousZone() == tpz.zone.RIVERNE_SITE_B01) then
             player:startEvent(10); -- To Riv Site B
         end
     elseif ((X > -524.521 and X < -512.521) or (X > 75.524 and X < 87.524) or (X > 675.271 and X < 687.271)) then
@@ -38,10 +39,8 @@ function onTrigger(player,npc)
     end
 end;
 
-function onEventUpdate(player,csid,option)
-    if (EventUpdateBCNM(player,csid,option)) then
-        return;
-    end
+function onEventUpdate(player,csid,option,extras)
+    EventUpdateBCNM(player,csid,option,extras);
 end;
 
 function onEventFinish(player,csid,option)

@@ -10,10 +10,11 @@ require("scripts/globals/conquest")
 require("scripts/globals/chocobo")
 require("scripts/globals/helm")
 require("scripts/globals/zone")
+require("scripts/globals/beastmentreasure")
 -----------------------------------
 
 function onChocoboDig(player, precheck)
-    return dsp.chocoboDig.start(player, precheck)
+    return tpz.chocoboDig.start(player, precheck)
 end
 
 function onInitialize(zone)
@@ -29,15 +30,21 @@ function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.BRIGHT_HANDED_KUNBERRY)
     GetMobByID(ID.mob.BRIGHT_HANDED_KUNBERRY):setRespawnTime(math.random(900, 10800))
 
-    dsp.conq.setRegionalConquestOverseers(zone:getRegionID())
+    tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
 
-    dsp.helm.initZone(zone, dsp.helm.type.HARVESTING)
-    dsp.helm.initZone(zone, dsp.helm.type.LOGGING)
-    dsp.chocobo.initZone(zone)
+    tpz.helm.initZone(zone, tpz.helm.type.HARVESTING)
+    tpz.helm.initZone(zone, tpz.helm.type.LOGGING)
+    tpz.chocobo.initZone(zone)
+
+    tpz.bmt.updatePeddlestox(tpz.zone.YUHTUNGA_JUNGLE, ID.npc.PEDDLESTOX)
+end
+
+function onGameDay()
+    tpz.bmt.updatePeddlestox(tpz.zone.YHOATOR_JUNGLE, ID.npc.PEDDLESTOX)
 end
 
 function onConquestUpdate(zone, updatetype)
-    dsp.conq.onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
 function onZoneIn( player, prevZone)

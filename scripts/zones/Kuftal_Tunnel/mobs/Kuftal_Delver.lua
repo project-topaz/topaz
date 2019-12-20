@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Kuftal Tunnel
---  MOB: Kuftal Delver
+--  Mob: Kuftal Delver
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 742, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 742, 1, tpz.regime.type.GROUNDS)
 end

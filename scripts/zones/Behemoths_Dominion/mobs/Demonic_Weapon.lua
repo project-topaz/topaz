@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Behemoths Dominion
---  MOB: Demonic Weapon
+--  Mob: Demonic Weapon
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 102, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 102, 2, tpz.regime.type.FIELDS)
 end;

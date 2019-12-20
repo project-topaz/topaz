@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/
 
-This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 #include <string.h>
@@ -103,7 +101,7 @@ std::vector<ahItem*> CDataLoader::GetAHItemsToCategory(uint8 AHCategoryID, int8*
     const char* fmtQuery = "SELECT item_basic.itemid, item_basic.stackSize, COUNT(*)-SUM(stack), SUM(stack) "
         "FROM item_basic "
         "LEFT JOIN auction_house ON item_basic.itemId = auction_house.itemid AND auction_house.buyer_name IS NULL "
-        "LEFT JOIN item_armor ON item_basic.itemid = item_armor.itemid "
+        "LEFT JOIN item_equipment ON item_basic.itemid = item_equipment.itemid "
         "LEFT JOIN item_weapon ON item_basic.itemid = item_weapon.itemid "
         "WHERE aH = %u "
         "GROUP BY item_basic.itemid "

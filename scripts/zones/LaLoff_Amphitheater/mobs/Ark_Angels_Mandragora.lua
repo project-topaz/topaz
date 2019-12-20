@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: LaLoff Amphitheater
---  MOB: Ark Angel's Mandragora
+--  Mob: Ark Angel's Mandragora
 -----------------------------------
 require("scripts/globals/status");
 -----------------------------------
@@ -13,7 +13,7 @@ function onMobEngaged(mob,target)
 
     for member = mobid-3, mobid+4 do
         local m = GetMobByID(member)
-        if m:getCurrentAction() == dsp.act.ROAMING then
+        if m:getCurrentAction() == tpz.act.ROAMING then
             m:updateEnmity(target)
         end
     end

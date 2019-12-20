@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Gustav Tunnel
---  MOB: Makara
+--  Mob: Makara
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 764, 2, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 764, 2, tpz.regime.type.GROUNDS)
 end;

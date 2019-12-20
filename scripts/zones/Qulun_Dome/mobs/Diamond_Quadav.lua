@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Qulun_Dome
---   NM: Diamond_Quadav
+--   NM: Diamond Quadav
 -- Note: PH for Za Dha Adamantking PH
 -- TODO: messages should be zone-wide
 -----------------------------------
@@ -12,7 +12,7 @@ require("scripts/globals/status")
 function onMobInitialize(mob)
     -- the quest version of this NM doesn't drop gil
     if mob:getID() >= ID.mob.AFFABLE_ADAMANTKING_OFFSET then
-        mob:setMobMod(dsp.mobMod.GIL_MAX, -1)
+        mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
     end
 end
 

@@ -1,14 +1,14 @@
 -----------------------------------
 -- Area: Sealions Den
---  Mob: Mammet-22_Zeta
+--  Mob: Mammet-22 Zeta
 -----------------------------------
 local ID = require("scripts/zones/Sealions_Den/IDs")
 require("scripts/globals/titles")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.EXP_BONUS, -100)
-    mob:setMobMod(dsp.mobMod.GIL_MAX, -1)
+    mob:setMobMod(tpz.mobMod.EXP_BONUS, -100)
+    mob:setMobMod(tpz.mobMod.GIL_MAX, -1)
 end
 
 function onMobDeath(mob, player, isKiller)
@@ -32,11 +32,11 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 11 then
-        local inst = player:getVar("bcnm_instanceid")
+        local inst = player:getCharVar("bcnm_instanceid")
 
         if inst >= 1 and inst <= 3 then
             -- players are healed in between fights, but their TP is set to 0
-            player:addTitle(dsp.title.BRANDED_BY_LIGHTNING)
+            player:addTitle(tpz.title.BRANDED_BY_LIGHTNING)
             player:setHP(player:getMaxHP())
             player:setMP(player:getMaxMP())
             player:setTP(0)

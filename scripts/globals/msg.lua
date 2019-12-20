@@ -1,14 +1,14 @@
 ------------------------------------------------------------------------
 -- This file holds all global (not zone specific) text references
 ------------------------------------------------------------------------
-dsp = dsp or {}
-dsp.msg = dsp.msg or {}
+tpz = tpz or {}
+tpz.msg = tpz.msg or {}
 
 ------------------------------------
 -- Message Channels
 ------------------------------------
 
-dsp.msg.channel =
+tpz.msg.channel =
 {
     SAY            = 0,
     SHOUT          = 1,
@@ -44,7 +44,7 @@ dsp.msg.channel =
 }
 
 -- used by PrintToArea
-dsp.msg.area =
+tpz.msg.area =
 {
     SYSTEM      = 0, -- Server wide like the purple stuff :)
     SAY         = 1, -- Will display in small area around player
@@ -57,7 +57,7 @@ dsp.msg.area =
 -- Message Basic
 ------------------------------------
 
-dsp.msg.basic =
+tpz.msg.basic =
 {
     NONE    = 0, -- Display nothing
     HIT_DMG = 1, -- <actor> hits <target> for <amount> points of damage.
@@ -256,6 +256,13 @@ dsp.msg.basic =
     ABOUT_TO_WEAR_OFF       = 251,  -- The effect of ${status} is about to wear off.
     ALL_ABILITIES_RECHARGED = 361,  -- All of ${target}'s abilities are recharged.
 
+    -- Battlefield
+    UNABLE_TO_ACCESS_SJ     = 107, -- <player> is temporarily unable to access support job abilities
+    TIME_LEFT               = 202,  -- Time left: (0:00:00)
+
+    -- Dynamis
+    TIME_DYNAMIS_EXTENDED  = 448, -- Time allowed in Dynamis has been extended by <param> minutes
+    TIME_DYNAMIS_REMAINING = 449, -- ----== WARNING ==----Time remaining in Dynamis: <param> minutes.
     -- Charm
     CANNOT_CHARM           = 210, -- <actor> cannot charm <target>!
     VERY_DIFFICULT_CHARM   = 211, -- It would be very difficult for <actor> to charm <target>.

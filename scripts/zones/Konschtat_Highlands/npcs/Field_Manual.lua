@@ -5,17 +5,17 @@
 require("scripts/globals/regimes")
 -----------------------------------
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
 end
 
-function onTrigger(player,npc)
-    dsp.regime.bookOnTrigger(player, dsp.regime.type.FIELDS)
+function onTrigger(player, npc)
+    tpz.regime.bookOnTrigger(player, tpz.regime.type.FIELDS)
 end
 
-function onEventUpdate(player,csid,option)
-    dsp.regime.bookOnEventUpdate(player, option, dsp.regime.type.FIELDS)
+function onEventUpdate(player, csid, option)
+    tpz.regime.bookOnEventUpdate(player, option, tpz.regime.type.FIELDS)
 end
 
-function onEventFinish(player,csid,option)
-    dsp.regime.bookOnEventFinish(player, option, dsp.regime.type.FIELDS)
+function onEventFinish(player, csid, option)
+    tpz.regime.bookOnEventFinish(player, option, tpz.regime.type.FIELDS)
 end

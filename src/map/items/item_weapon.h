@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -26,10 +24,10 @@
 
 #include "../../common/cbasetypes.h"
 
-#include "item_armor.h"
+#include "item_equipment.h"
 
 
-class CItemWeapon : public CItemArmor
+class CItemWeapon : public CItemEquipment
 {
 public:
 

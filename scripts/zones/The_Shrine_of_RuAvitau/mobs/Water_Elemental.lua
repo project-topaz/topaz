@@ -1,10 +1,10 @@
 -----------------------------------
--- Area: Shrine of Ru'Avitau
---  MOB: Water Elemental
+-- Area: The Shrine of Ru'Avitau
+--  Mob: Water Elemental
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 750, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 750, 1, tpz.regime.type.GROUNDS)
 end;

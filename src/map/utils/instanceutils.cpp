@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/
 
-This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -28,7 +26,7 @@ This file is part of DarkStar-server source code.
 
 #include "../lua/luautils.h"
 
-CInstanceLoader* Loader = nullptr;
+std::unique_ptr<CInstanceLoader> Loader;
 
 namespace instanceutils
 {
@@ -38,8 +36,8 @@ namespace instanceutils
 		{
 			if (Loader->Check())
 			{
-				delete Loader;
-				Loader = nullptr;
+                // instance load finished
+                Loader.reset();
 			}
 		}
 	}
@@ -49,7 +47,7 @@ namespace instanceutils
         CZone* PZone = zoneutils::GetZone(zoneid);
 		if (!Loader && PZone)
 		{
-			Loader = new CInstanceLoader(instanceid, PZone, PRequester);
+			Loader = std::make_unique<CInstanceLoader>(instanceid, PZone, PRequester);
 		}
 		else
 		{

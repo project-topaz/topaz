@@ -1,11 +1,11 @@
 -----------------------------------
 -- Area: Garlaige Citadel
---  MOB: Over Weapon
+--  Mob: Over Weapon
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 705, 1, dsp.regime.type.GROUNDS)
-    dsp.regime.checkRegime(player, mob, 708, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 705, 1, tpz.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 708, 1, tpz.regime.type.GROUNDS)
 end;

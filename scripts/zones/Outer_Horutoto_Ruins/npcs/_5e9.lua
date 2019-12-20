@@ -14,9 +14,9 @@ end
 
 function onTrigger(player, npc)
     if
-        player:getCurrentMission(WINDURST) == THE_HEART_OF_THE_MATTER and
-        player:getVar("MissionStatus") == 3 and
-        player:hasKeyItem(dsp.ki.SOUTHEASTERN_STAR_CHARM)
+        player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.THE_HEART_OF_THE_MATTER and
+        player:getCharVar("MissionStatus") == 3 and
+        player:hasKeyItem(tpz.ki.SOUTHEASTERN_STAR_CHARM)
     then
         player:startEvent(44)
     else
@@ -31,8 +31,8 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 44 then
-        player:setVar("MissionStatus", 4)
+        player:setCharVar("MissionStatus", 4)
         player:messageSpecial(ID.text.ALL_G_ORBS_ENERGIZED)
-        player:delKeyItem(dsp.ki.SOUTHEASTERN_STAR_CHARM)
+        player:delKeyItem(tpz.ki.SOUTHEASTERN_STAR_CHARM)
     end
 end

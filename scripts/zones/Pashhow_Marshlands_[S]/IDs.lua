@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.PASHHOW_MARSHLANDS_S] =
+zones[tpz.zone.PASHHOW_MARSHLANDS_S] =
 {
     text =
     {
@@ -17,6 +17,7 @@ zones[dsp.zone.PASHHOW_MARSHLANDS_S] =
         NOTHING_OUT_OF_ORDINARY = 6402, -- There is nothing out of the ordinary here.
         FISHING_MESSAGE_OFFSET  = 7146, -- You can't fish here.
         ALREADY_OBTAINED_TELE   = 7691, -- You already possess the gate crystal for this telepoint.
+        COMMON_SENSE_SURVIVAL   = 9071, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
@@ -41,4 +42,4 @@ zones[dsp.zone.PASHHOW_MARSHLANDS_S] =
     },
 }
 
-return zones[dsp.zone.PASHHOW_MARSHLANDS_S]
+return zones[tpz.zone.PASHHOW_MARSHLANDS_S]

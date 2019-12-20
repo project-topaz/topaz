@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Monastic Cavern
---  MOB: Overlord Bakgodek
+--  Mob: Overlord Bakgodek
 -- TODO: messages should be zone-wide
 -----------------------------------
 local ID = require("scripts/zones/Monastic_Cavern/IDs")
@@ -13,7 +13,7 @@ function onMobEngaged(mob, target)
 end
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(dsp.title.OVERLORD_OVERTHROWER)
+    player:addTitle(tpz.title.OVERLORD_OVERTHROWER)
     if isKiller then
         mob:showText(mob, ID.text.ORC_KING_DEATH)
     end

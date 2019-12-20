@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: The Sanctuary of ZiTah
---  MOB: Rock Golem
+--  Mob: Rock Golem
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 118, 1, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 118, 1, tpz.regime.type.FIELDS)
 end

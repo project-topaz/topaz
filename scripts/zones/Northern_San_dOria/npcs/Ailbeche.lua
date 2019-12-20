@@ -15,15 +15,15 @@ require("scripts/globals/shop")
 
 function onTrade(player,npc,trade)
     -- "Flyers for Regine" conditional script
-    local FlyerForRegine = player:getQuestStatus(SANDORIA,dsp.quest.id.sandoria.FLYERS_FOR_REGINE);
+    local FlyerForRegine = player:getQuestStatus(SANDORIA,tpz.quest.id.sandoria.FLYERS_FOR_REGINE);
 
-    if (player:getQuestStatus(SANDORIA, dsp.quest.id.sandoria.FATHER_AND_SON) == QUEST_COMPLETED and player:getVar("returnedAilbecheRod") ~= 1) then
+    if (player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.FATHER_AND_SON) == QUEST_COMPLETED and player:getCharVar("returnedAilbecheRod") ~= 1) then
         if (trade:hasItemQty(17391,1) == true and trade:getItemCount() == 1) then
             player:startEvent(61); -- Finish Quest "Father and Son" (part2) (trading fishing rod)
         end
     end
 
-    if (player:getVar("aBoysDreamCS") >= 3) then
+    if (player:getCharVar("aBoysDreamCS") >= 3) then
         if (trade:hasItemQty(17001,1) == true and trade:getItemCount() == 1 and player:hasItem(4562) == false) then
             player:startEvent(15); -- During Quest "A Boy's Dream" (trading bug) madame ?
         elseif (trade:hasItemQty(4562,1) == true and trade:getItemCount() == 1) then
@@ -41,30 +41,30 @@ function onTrade(player,npc,trade)
 end;
 
 function onTrigger(player,npc)
-    fatherAndSon = player:getQuestStatus(SANDORIA, dsp.quest.id.sandoria.FATHER_AND_SON);
-    sharpeningTheSword = player:getQuestStatus(SANDORIA, dsp.quest.id.sandoria.SHARPENING_THE_SWORD);
-    aBoysDream = player:getQuestStatus(SANDORIA, dsp.quest.id.sandoria.A_BOY_S_DREAM);
+    fatherAndSon = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.FATHER_AND_SON);
+    sharpeningTheSword = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.SHARPENING_THE_SWORD);
+    aBoysDream = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.A_BOY_S_DREAM);
 
     -- Checking levels and jobs for af quest
     mLvl = player:getMainLvl();
     mJob = player:getMainJob();
     -- Check if they have key item "Ordelle whetStone"
-    OrdelleWhetstone = player:hasKeyItem(dsp.ki.ORDELLE_WHETSTONE);
-    sharpeningTheSwordCS = player:getVar("sharpeningTheSwordCS");
-    aBoysDreamCS = player:getVar("aBoysDreamCS");
+    OrdelleWhetstone = player:hasKeyItem(tpz.ki.ORDELLE_WHETSTONE);
+    sharpeningTheSwordCS = player:getCharVar("sharpeningTheSwordCS");
+    aBoysDreamCS = player:getCharVar("aBoysDreamCS");
 
     -- "Father and Son" Event Dialogs
     if (fatherAndSon == QUEST_AVAILABLE) then
         player:startEvent(508); -- Start Quest "Father and Son"
-    elseif (fatherAndSon == QUEST_ACCEPTED and player:getVar("QuestfatherAndSonVar") == 1) then
+    elseif (fatherAndSon == QUEST_ACCEPTED and player:getCharVar("QuestfatherAndSonVar") == 1) then
         player:startEvent(509); -- Finish Quest "Father and Son" (part1)
-    elseif (sharpeningTheSword == QUEST_AVAILABLE and player:getVar("returnedAilbecheRod") == 1) then
-        if (mJob == dsp.job.PLD and mLvl < 40 or mJob ~= dsp.job.PLD) then
+    elseif (sharpeningTheSword == QUEST_AVAILABLE and player:getCharVar("returnedAilbecheRod") == 1) then
+        if (mJob == tpz.job.PLD and mLvl < 40 or mJob ~= tpz.job.PLD) then
             player:startEvent(12); -- Dialog after "Father and Son" (part2)
     -- "Sharpening the Sword" Quest Dialogs
-        elseif (mJob == dsp.job.PLD and mLvl >= 40 and sharpeningTheSwordCS == 0) then
+        elseif (mJob == tpz.job.PLD and mLvl >= 40 and sharpeningTheSwordCS == 0) then
             player:startEvent(45); -- Start Quest "Sharpening the Sword" with thank you for the rod
-        elseif (mJob == dsp.job.PLD and mLvl >= 40 and sharpeningTheSwordCS == 1) then
+        elseif (mJob == tpz.job.PLD and mLvl >= 40 and sharpeningTheSwordCS == 1) then
             player:startEvent(43); -- Start Quest "Sharpening the Sword"
         end
     elseif (sharpeningTheSword == QUEST_ACCEPTED and OrdelleWhetstone == false) then
@@ -72,7 +72,7 @@ function onTrigger(player,npc)
     elseif (sharpeningTheSword == QUEST_ACCEPTED and OrdelleWhetstone == true) then
         player:startEvent(44); -- Finish Quest "Sharpening the Sword"
     -- "A Boy's Dream" Quest Dialogs
-    elseif (aBoysDream == QUEST_AVAILABLE and mJob == dsp.job.PLD and mLvl >= 50) then
+    elseif (aBoysDream == QUEST_AVAILABLE and mJob == tpz.job.PLD and mLvl >= 50) then
         if (aBoysDreamCS == 0) then
             player:startEvent(41); -- Start Quest "A Boy's Dream" (long cs)
         else
@@ -88,9 +88,9 @@ function onTrigger(player,npc)
         player:startEvent(47); -- During Quest "A Boy's Dream" (after trading odontotyrannus)
     elseif (aBoysDreamCS >= 6) then
         player:startEvent(25); -- During Quest "A Boy's Dream" (after Zaldon CS)
-    elseif (player:hasKeyItem(dsp.ki.KNIGHTS_CONFESSION) and player:getVar("UnderOathCS") == 6) then
+    elseif (player:hasKeyItem(tpz.ki.KNIGHTS_CONFESSION) and player:getCharVar("UnderOathCS") == 6) then
         player:startEvent(59); -- During Quest "Under Oath" (he's going fishing in Jugner)
-    elseif (player:getVar("UnderOathCS") == 8) then
+    elseif (player:getCharVar("UnderOathCS") == 8) then
         player:startEvent(13); -- During Quest "Under Oath" (After jugner CS)
     else
         player:startEvent(868); -- Standard dialog
@@ -104,53 +104,53 @@ function onEventFinish(player,csid,option)
 
     -- "Father and Son"
     if (csid == 508) then
-        player:addQuest(SANDORIA,dsp.quest.id.sandoria.FATHER_AND_SON);
+        player:addQuest(SANDORIA,tpz.quest.id.sandoria.FATHER_AND_SON);
     elseif (csid == 509) then
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,17391);
         else
             player:addItem(17391);
             player:messageSpecial(ID.text.ITEM_OBTAINED, 17391); -- Willow Fishing Rod
-            player:addTitle(dsp.title.LOST_CHILD_OFFICER);
-            player:setVar("QuestfatherAndSonVar",0);
+            player:addTitle(tpz.title.LOST_CHILD_OFFICER);
+            player:setCharVar("QuestfatherAndSonVar",0);
             player:addFame(SANDORIA,30);
-            player:completeQuest(SANDORIA,dsp.quest.id.sandoria.FATHER_AND_SON);
+            player:completeQuest(SANDORIA,tpz.quest.id.sandoria.FATHER_AND_SON);
         end
     elseif (csid == 61) then
-        player:setVar("returnedAilbecheRod",1);
-        player:addTitle(dsp.title.FAMILY_COUNSELOR);
+        player:setCharVar("returnedAilbecheRod",1);
+        player:addTitle(tpz.title.FAMILY_COUNSELOR);
         player:tradeComplete();
     -- "Sharpening the Sword"
     elseif ((csid == 45 or csid == 43) and option == 1) then
-        player:addQuest(SANDORIA,dsp.quest.id.sandoria.SHARPENING_THE_SWORD);
-        player:setVar("sharpeningTheSwordCS",2);
-        player:setVar("returnedAilbecheRod",0);
+        player:addQuest(SANDORIA,tpz.quest.id.sandoria.SHARPENING_THE_SWORD);
+        player:setCharVar("sharpeningTheSwordCS",2);
+        player:setCharVar("returnedAilbecheRod",0);
     elseif (csid == 45 and option == 0) then
-        player:setVar("sharpeningTheSwordCS",1);
+        player:setCharVar("sharpeningTheSwordCS",1);
     elseif (csid == 44) then
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,17643);
         else
-            player:delKeyItem(dsp.ki.ORDELLE_WHETSTONE);
+            player:delKeyItem(tpz.ki.ORDELLE_WHETSTONE);
             player:addItem(17643);
             player:messageSpecial(ID.text.ITEM_OBTAINED, 17643); -- Honor Sword
-            player:setVar("sharpeningTheSwordCS",0);
+            player:setCharVar("sharpeningTheSwordCS",0);
             player:addFame(SANDORIA,30);
-            player:completeQuest(SANDORIA,dsp.quest.id.sandoria.SHARPENING_THE_SWORD);
+            player:completeQuest(SANDORIA,tpz.quest.id.sandoria.SHARPENING_THE_SWORD);
         end
     -- "A Boy's Dream"
     elseif ((csid == 41 or csid == 40) and option == 1) then
-        player:addQuest(SANDORIA,dsp.quest.id.sandoria.A_BOY_S_DREAM);
-        player:setVar("aBoysDreamCS",2);
+        player:addQuest(SANDORIA,tpz.quest.id.sandoria.A_BOY_S_DREAM);
+        player:setCharVar("aBoysDreamCS",2);
     elseif (csid == 41 and option == 0) then
-        player:setVar("aBoysDreamCS",1);
-    elseif (csid == 15 and player:getVar("aBoysDreamCS") == 3) then
-        player:setVar("aBoysDreamCS",4);
-    elseif (csid == 47 and player:getVar("aBoysDreamCS") == 4) then
-        player:setVar("aBoysDreamCS",5);
-    elseif (csid == 25 and player:getVar("aBoysDreamCS") == 6) then
-        player:setVar("aBoysDreamCS",7);
+        player:setCharVar("aBoysDreamCS",1);
+    elseif (csid == 15 and player:getCharVar("aBoysDreamCS") == 3) then
+        player:setCharVar("aBoysDreamCS",4);
+    elseif (csid == 47 and player:getCharVar("aBoysDreamCS") == 4) then
+        player:setCharVar("aBoysDreamCS",5);
+    elseif (csid == 25 and player:getCharVar("aBoysDreamCS") == 6) then
+        player:setCharVar("aBoysDreamCS",7);
     elseif (csid == 59) then
-        player:setVar("UnderOathCS", 7);
+        player:setCharVar("UnderOathCS", 7);
     end
 end;

@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Batallia Downs
---  MOB: Suparna Fledgling
+--  Mob: Suparna Fledgling
 -- Involved in Mission: San d'Orian 9-1
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")};
@@ -9,7 +9,7 @@ require("scripts/globals/missions");
 require("scripts/globals/status");
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.IDLE_DESPAWN, 180);
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180);
 end;
 
 function onMobSpawn(mob)
@@ -17,9 +17,9 @@ function onMobSpawn(mob)
 end;
 
 function onMobDeath(mob, player, isKiller)
-    if (player:getCurrentMission(SANDORIA) == BREAKING_BARRIERS and player:getVar("MissionStatus") == 3
+    if (player:getCurrentMission(SANDORIA) == tpz.mission.id.sandoria.BREAKING_BARRIERS and player:getCharVar("MissionStatus") == 3
         and GetMobByID(ID.mob.SUPARNA):isDead() and GetMobByID(ID.mob.SUPARNA_FLEDGLING):isDead()
     ) then
-        player:setVar("Mission9-1Kills", 1);
+        player:setCharVar("Mission9-1Kills", 1);
     end
 end;

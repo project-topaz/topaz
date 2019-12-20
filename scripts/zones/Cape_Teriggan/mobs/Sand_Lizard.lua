@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Cape Teriggan
---  MOB: Sand Lizard
+--  Mob: Sand Lizard
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 104, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 104, 2, tpz.regime.type.FIELDS)
 end;

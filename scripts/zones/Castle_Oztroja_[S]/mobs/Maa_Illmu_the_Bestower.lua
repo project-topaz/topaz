@@ -1,5 +1,5 @@
 -----------------------------------
--- Area: Castle Oztroja (S)
+-- Area: Castle Oztroja [S]
 --   NM: Maa Illmu the Bestower
 -- TODO:
 --  Test what spells it casts at what HPP.
@@ -10,8 +10,8 @@ mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.MAGIC_COOL, 6)
-    mob:setMod(dsp.mod.SILENCERES, 100)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 6)
+    mob:setMod(tpz.mod.SILENCERES, 100)
 end
 
 function onMobDeath(mob, player, isKiller)

@@ -1,13 +1,13 @@
 -----------------------------------
--- Area: Castle Oztroja (S)
+-- Area: Castle Oztroja [S]
 --   NM: Dee Zelko the Esoteric
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")}
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.MAGIC_COOL, 14)
-    mob:setMod(dsp.mod.UFASTCAST, 100)
+    mob:setMobMod(tpz.mobMod.MAGIC_COOL, 14)
+    mob:setMod(tpz.mod.UFASTCAST, 100)
 end
 
 function onMobFight(mob, target)

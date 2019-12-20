@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.MONARCH_LINN] =
+zones[tpz.zone.MONARCH_LINN] =
 {
     text =
     {
@@ -15,7 +15,7 @@ zones[dsp.zone.MONARCH_LINN] =
         GIL_OBTAINED            = 6389, -- Obtained <number> gil.
         KEYITEM_OBTAINED        = 6391, -- Obtained key item: <keyitem>.
         GLOWING_MIST            = 7126, -- A glowing mist of ever-changing proportions floats before you...
-        CONQUEST_BASE           = 7461, -- Tallying conquest results...
+        CONQUEST_BASE           = 7462, -- Tallying conquest results...
     },
     mob =
     {
@@ -25,4 +25,4 @@ zones[dsp.zone.MONARCH_LINN] =
     },
 }
 
-return zones[dsp.zone.MONARCH_LINN]
+return zones[tpz.zone.MONARCH_LINN]

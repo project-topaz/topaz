@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -29,7 +27,7 @@
 
 #include "latent_effect.h"
 #include "entities/petentity.h"
-#include "items/item_armor.h"
+#include "items/item_equipment.h"
 
 /************************************************************************
 *                                                                       *
@@ -67,7 +65,7 @@ public:
     void CheckLatentsWeather(uint16 weather);
     void CheckLatentsTargetChange();
 
-	void AddLatentEffects(std::vector<CItemArmor::itemLatent>& latentList, uint8 reqLvl, uint8 slot);
+	void AddLatentEffects(std::vector<CItemEquipment::itemLatent>& latentList, uint8 reqLvl, uint8 slot);
     void DelLatentEffects(uint8 reqLvl, uint8 slot);
 
     void AddLatentEffect(LATENT conditionID, uint16 conditionValue, Mod modID, int16 modValue);

@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: The Garden of Ru'Hmet
---   NM: Ix'aern (drk)
+--   NM: Ix'aern DRK
 -- !pos -240 5.00 440 35
 -- !pos -280 5.00 240 35
 -- !pos -560 5.00 239 35
@@ -23,7 +23,7 @@ function onMobInitialize(mob)
             if target then
                 targetid = target:getShortID();
             end;
-            mob:setMobMod(dsp.mobMod.NO_DROPS, 1);
+            mob:setMobMod(tpz.mobMod.NO_DROPS, 1);
             mob:timer(9000, function(mob)
                 mob:setHP(mob:getMaxHP());
                 mob:AnimationSub(3);
@@ -38,7 +38,7 @@ function onMobInitialize(mob)
             end)
         else
             -- death
-            mob:setMobMod(dsp.mobMod.NO_DROPS, 0);
+            mob:setMobMod(tpz.mobMod.NO_DROPS, 0);
             DespawnMob(QnAernA);
             DespawnMob(QnAernB);
         end
@@ -54,11 +54,11 @@ end;
 function onMobSpawn(mob)
     mob:AnimationSub(1);
 
-    dsp.mix.jobSpecial.config(mob, {
+    tpz.mix.jobSpecial.config(mob, {
         specials =
         {
             {
-                id = dsp.jsa.BLOOD_WEAPON_IXDRK,
+                id = tpz.jsa.BLOOD_WEAPON_IXDRK,
                 hpp = math.random(90, 95),
                 cooldown = 120,
                 endCode = function(mob)

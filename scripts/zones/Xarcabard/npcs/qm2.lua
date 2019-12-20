@@ -10,14 +10,14 @@ require("scripts/globals/settings")
 require("scripts/globals/quests")
 -----------------------------------
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
 end
 
-function onTrigger(player,npc)
+function onTrigger(player, npc)
     if not OldSchoolG2 or GetMobByID(ID.mob.BOREAL_TIGER):isDead() then
-        if player:getQuestStatus(JEUNO,dsp.quest.id.jeuno.ATOP_THE_HIGHEST_MOUNTAINS) == QUEST_ACCEPTED and not player:hasKeyItem(dsp.ki.ROUND_FRIGICITE) then
-            player:addKeyItem(dsp.ki.ROUND_FRIGICITE)
-            player:messageSpecial(ID.text.KEYITEM_OBTAINED, dsp.ki.ROUND_FRIGICITE)
+        if player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.ATOP_THE_HIGHEST_MOUNTAINS) == QUEST_ACCEPTED and not player:hasKeyItem(tpz.ki.ROUND_FRIGICITE) then
+            player:addKeyItem(tpz.ki.ROUND_FRIGICITE)
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.ROUND_FRIGICITE)
         else
             player:messageSpecial(ID.text.ONLY_SHARDS)
         end
@@ -26,8 +26,8 @@ function onTrigger(player,npc)
     end
 end
 
-function onEventUpdate(player,csid,option)
+function onEventUpdate(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+function onEventFinish(player, csid, option)
 end

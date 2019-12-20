@@ -30,10 +30,10 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         params.agi_wsc = 0.7
     end
 
-    local damage, criticalHit, tpHits, extraHits = doRangedWeaponskill(player, target, wsID, params, tp, primary, action)
+    local damage, criticalHit, tpHits, extraHits = doRangedWeaponskill(player, target, wsID, params, tp, action, primary)
 
-    if (damage > 0 and target:hasStatusEffect(dsp.effect.INT_DOWN) == false) then
-        target:addStatusEffect(dsp.effect.INT_DOWN, 10, 0, 140)
+    if (damage > 0 and target:hasStatusEffect(tpz.effect.INT_DOWN) == false) then
+        target:addStatusEffect(tpz.effect.INT_DOWN, 10, 0, 140)
     end
     return tpHits, extraHits, criticalHit, damage
 

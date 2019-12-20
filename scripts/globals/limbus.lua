@@ -6,10 +6,10 @@ require("scripts/globals/status")
 APOLLYON_SE_NE = 1 -- out 557 -1 441 128
 APOLLYON_NW_SW = 2 -- out -561 0 443 242
 TEMENOS = 3
--- dsp.ki.WHITE_CARD = 349
--- dsp.ki.RED_CARD = 350
--- dsp.ki.BLACK_CARD = 351
--- dsp.ki.COSMOCLEANSE = 734
+-- tpz.ki.WHITE_CARD = 349
+-- tpz.ki.RED_CARD = 350
+-- tpz.ki.BLACK_CARD = 351
+-- tpz.ki.COSMOCLEANSE = 734
 
  --  REGION
 NW_Apollyon = 1
@@ -318,8 +318,8 @@ function LimbusEntrance(player, entrance)
 end
 
 function ResetPlayerLimbusVariable(player)
-    player:setVar("characterLimbusKey", 0)
-    player:setVar("LimbusID", 0)
+    player:setCharVar("characterLimbusKey", 0)
+    player:setCharVar("LimbusID", 0)
 end
 
 function GenerateLimbusKey()
@@ -336,13 +336,13 @@ function HideArmouryCrates(Region, Zone)
     if (Zone == APOLLYON_SE_NE or Zone == APOLLYON_NW_SW) then
         for X = 1, #ARMOURY_CRATES_LIST_APOLLYON, 2 do
             if (ARMOURY_CRATES_LIST_APOLLYON[X+1][2] == Region) then
-                GetNPCByID((ARMOURY_CRATES_LIST_APOLLYON[X])+16932864):setStatus(dsp.status.DISAPPEAR)
+                GetNPCByID((ARMOURY_CRATES_LIST_APOLLYON[X])+16932864):setStatus(tpz.status.DISAPPEAR)
             end
         end
     elseif (Zone == TEMENOS) then
         for X = 1, #ARMOURY_CRATES_LIST_TEMENOS, 2 do
             if (ARMOURY_CRATES_LIST_TEMENOS[X+1][2] == Region) then
-                GetNPCByID((ARMOURY_CRATES_LIST_TEMENOS[X])+16928768):setStatus(dsp.status.DISAPPEAR)
+                GetNPCByID((ARMOURY_CRATES_LIST_TEMENOS[X])+16928768):setStatus(tpz.status.DISAPPEAR)
             end
         end
     end
@@ -350,39 +350,39 @@ end
 
 function HideTemenosDoor(Region)
     if (Region == Temenos_Northern_Tower) then
-        GetNPCByID((450)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((451)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((452)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((453)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((454)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((455)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((456)+16928770):setStatus(dsp.status.DISAPPEAR)
+        GetNPCByID((450)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((451)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((452)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((453)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((454)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((455)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((456)+16928770):setStatus(tpz.status.DISAPPEAR)
     elseif (Region == Temenos_Eastern_Tower) then
-        GetNPCByID((457)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((458)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((459)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((460)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((461)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((462)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((463)+16928770):setStatus(dsp.status.DISAPPEAR)
+        GetNPCByID((457)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((458)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((459)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((460)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((461)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((462)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((463)+16928770):setStatus(tpz.status.DISAPPEAR)
     elseif (Region == Temenos_Western_Tower) then
-        GetNPCByID((464)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((465)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((466)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((467)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((468)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((469)+16928770):setStatus(dsp.status.DISAPPEAR)
-        GetNPCByID((470)+16928770):setStatus(dsp.status.DISAPPEAR)
+        GetNPCByID((464)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((465)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((466)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((467)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((468)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((469)+16928770):setStatus(tpz.status.DISAPPEAR)
+        GetNPCByID((470)+16928770):setStatus(tpz.status.DISAPPEAR)
     elseif (Region == Central_Temenos_1st_Floor) then
-        GetNPCByID((471)+16928770):setStatus(dsp.status.DISAPPEAR)
+        GetNPCByID((471)+16928770):setStatus(tpz.status.DISAPPEAR)
     elseif (Region == Central_Temenos_2nd_Floor) then
-        GetNPCByID((472)+16928770):setStatus(dsp.status.DISAPPEAR)
+        GetNPCByID((472)+16928770):setStatus(tpz.status.DISAPPEAR)
     elseif (Region == Central_Temenos_3rd_Floor) then
-        GetNPCByID((473)+16928770):setStatus(dsp.status.DISAPPEAR)
+        GetNPCByID((473)+16928770):setStatus(tpz.status.DISAPPEAR)
     elseif (Region == Central_Temenos_4th_Floor) then
-        GetNPCByID((474)+16928770):setStatus(dsp.status.DISAPPEAR)
+        GetNPCByID((474)+16928770):setStatus(tpz.status.DISAPPEAR)
     elseif (Region == Central_Temenos_Basement) then
-        GetNPCByID((475)+16928770):setStatus(dsp.status.DISAPPEAR)
+        GetNPCByID((475)+16928770):setStatus(tpz.status.DISAPPEAR)
     end
 end
 
@@ -601,64 +601,64 @@ end
 function SpawnCofferSWfloor3()
     --  print("spawn_coffer")
     GetNPCByID(16932864+210):setPos(MIMICPOSITION[2][1], MIMICPOSITION[2][2], MIMICPOSITION[2][3])
-    GetNPCByID(16932864+210):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16932864+210):setStatus(tpz.status.NORMAL)
     GetNPCByID(16932864+211):setPos(MIMICPOSITION[4][1], MIMICPOSITION[4][2], MIMICPOSITION[4][3])
-    GetNPCByID(16932864+211):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16932864+211):setStatus(tpz.status.NORMAL)
     GetNPCByID(16932864+212):setPos(MIMICPOSITION[6][1], MIMICPOSITION[6][2], MIMICPOSITION[6][3])
-    GetNPCByID(16932864+212):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16932864+212):setStatus(tpz.status.NORMAL)
     GetNPCByID(16932864+213):setPos(MIMICPOSITION[8][1], MIMICPOSITION[8][2], MIMICPOSITION[8][3])
-    GetNPCByID(16932864+213):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16932864+213):setStatus(tpz.status.NORMAL)
     GetNPCByID(16932864+214):setPos(MIMICPOSITION[10][1], MIMICPOSITION[10][2], MIMICPOSITION[10][3])
-    GetNPCByID(16932864+214):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16932864+214):setStatus(tpz.status.NORMAL)
     GetNPCByID(16932864+215):setPos(MIMICPOSITION[12][1], MIMICPOSITION[12][2], MIMICPOSITION[12][3])
-    GetNPCByID(16932864+215):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16932864+215):setStatus(tpz.status.NORMAL)
     GetNPCByID(16932864+216):setPos(MIMICPOSITION[14][1], MIMICPOSITION[14][2], MIMICPOSITION[14][3])
-    GetNPCByID(16932864+216):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16932864+216):setStatus(tpz.status.NORMAL)
     SetServerVariable("[SW_Apollyon]MimicTrigger", 1)
 end
 
 function SpawnCofferTemenosCFloor4()
     --  print("spawn_coffer")
     GetNPCByID(16928768+80):setPos(-560, -6, -459)
-    GetNPCByID(16928768+80):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+80):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+86):setPos(-540, -6, -459)
-    GetNPCByID(16928768+86):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+86):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+87):setPos(-576, -6, -459)
-    GetNPCByID(16928768+87):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+87):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+88):setPos(-528, -6, -459)
-    GetNPCByID(16928768+88):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+88):setStatus(tpz.status.NORMAL)
 
     GetNPCByID(16928768+89):setPos(-592, -6, -487)
-    GetNPCByID(16928768+89):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+89):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+95):setPos(-566, -6, -486)
-    GetNPCByID(16928768+95):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+95):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+96):setPos(-566, -6, -513)
-    GetNPCByID(16928768+96):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+96):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+97):setPos(-592, -6, -513)
-    GetNPCByID(16928768+97):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+97):setStatus(tpz.status.NORMAL)
 
     GetNPCByID(16928768+98):setPos(-531, -0.5, -501)
-    GetNPCByID(16928768+98):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+98):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+104):setPos(-527, -6, -512)
-    GetNPCByID(16928768+104):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+104):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+105):setPos(-552, -6, -512)
-    GetNPCByID(16928768+105):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+105):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+106):setPos(-552, -6, -488)
-    GetNPCByID(16928768+106):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+106):setStatus(tpz.status.NORMAL)
 
     GetNPCByID(16928768+107):setPos(-488, 2, -510)
-    GetNPCByID(16928768+107):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+107):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+113):setPos(-486, 2, -491)
-    GetNPCByID(16928768+113):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+113):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+114):setPos(-508, 2, -513)
-    GetNPCByID(16928768+114):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+114):setStatus(tpz.status.NORMAL)
 
     GetNPCByID(16928768+115):setPos(-488, 2, -408)
-    GetNPCByID(16928768+115):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+115):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+116):setPos(-485, 2, -423)
-    GetNPCByID(16928768+116):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+116):setStatus(tpz.status.NORMAL)
     GetNPCByID(16928768+122):setPos(-506, 2, -406)
-    GetNPCByID(16928768+122):setStatus(dsp.status.NORMAL)
+    GetNPCByID(16928768+122):setStatus(tpz.status.NORMAL)
 end
 
 function Randomcoffer(Floor, region)
@@ -759,75 +759,57 @@ function ResetKeyForEmptyLimbus(player, instanceID)
         {
             [1290] = function (x)
                 SetServerVariable("[NW_Apollyon]UniqueID", 0)
-                print("[NW_Apollyon]KeyDelete")
             end,
             [1291] = function (x)
                 SetServerVariable("[SW_Apollyon]UniqueID", 0)
-                print("[SW_Apollyon]KeyDelete")
             end,
             [1292] = function (x)
                 SetServerVariable("[NE_Apollyon]UniqueID", 0)
-                print("[NE_Apollyon]KeyDelete")
             end,
             [1293] = function (x)
                 SetServerVariable("[SE_Apollyon]UniqueID", 0)
-                print("[SE_Apollyon]KeyDelete")
             end,
             [1294] = function (x)
                 SetServerVariable("[CS_Apollyon]UniqueID", 0)
-                print("[CS_Apollyon]KeyDelete")
             end,
             [1295] = function (x)
                 SetServerVariable("[CS_Apollyon_II]UniqueID", 0)
-                print("[CS_Apollyon_II]KeyDelete")
             end,
             [1296] = function (x)
                 SetServerVariable("[Central_Apollyon]UniqueID", 0)
-                print("[Central_Apollyon]KeyDelete")
             end,
             [1297] = function (x)
                 SetServerVariable("[Central_Apollyon_II]UniqueID", 0)
-                print("[Central_Apollyon_II]KeyDelete")
             end,
             [1298] = function (x)
                 SetServerVariable("[Temenos_W_Tower]UniqueID", 0)
-                print("[Temenos_W_Tower]KeyDelete")
             end,
             [1299] = function (x)
                 SetServerVariable("[Temenos_N_Tower]UniqueID", 0)
-                print("[Temenos_N_Tower]KeyDelete")
             end,
             [1300] = function (x)
                 SetServerVariable("[Temenos_E_Tower]UniqueID", 0)
-                print("[Temenos_E_Tower]KeyDelete")
             end,
             [1301] = function (x)
                 SetServerVariable("[C_Temenos_Base]UniqueID", 0)
-                print("[C_Temenos_Base]KeyDelete")
             end,
             [1302] = function (x)
                 SetServerVariable("[C_Temenos_Base_II]UniqueID", 0)
-                print("[C_Temenos_Base_II]KeyDelete")
             end,
             [1303] = function (x)
                 SetServerVariable("[C_Temenos_1st]UniqueID", 0)
-                print("[C_Temenos_1st]KeyDelete")
             end,
             [1304] = function (x)
                 SetServerVariable("[C_Temenos_2nd]UniqueID", 0)
-                print("[C_Temenos_2nd]KeyDelete")
             end,
             [1305] = function (x)
                 SetServerVariable("[C_Temenos_3rd]UniqueID", 0)
-                print("[C_Temenos_3rd]KeyDelete")
             end,
             [1306] = function (x)
                 SetServerVariable("[C_Temenos_4th]UniqueID", 0)
-                print("[C_Temenos_4th]KeyDelete")
             end,
             [1307] = function (x)
                 SetServerVariable("[C_Temenos_4th_II]UniqueID", 0)
-                print("[C_Temenos_4th_II]KeyDelete")
             end,
         }
     end
@@ -858,8 +840,8 @@ function GetInstanceRegion(instanceID)
 end
 
 function RegisterLimbusInstance(player, instanceID)
-    local playerLimbusKeyID  = player:getVar("characterLimbusKey")
-    local playerLimbusID  = player:getVar("LimbusID")
+    local playerLimbusKeyID  = player:getCharVar("characterLimbusKey")
+    local playerLimbusID  = player:getCharVar("LimbusID")
     local inst = 0
 
     ResetKeyForEmptyLimbus(player, instanceID)  --  instancekey will be reset if this instance is empty
@@ -871,11 +853,8 @@ function RegisterLimbusInstance(player, instanceID)
     if (playerLimbusID ~= 0) then
         if (GetLimbusKeyFromInstance(playerLimbusID) == 0 and playerLimbusKeyID == 0) then
             inst = player:bcnmRegister(playerLimbusID)    --  Build Limbus
-            printf("Regionfound: %u", inst)
-
             if (inst == GetInstanceRegion(playerLimbusID)) then
                 player:bcnmEnter(playerLimbusID)
-                printf("BCNM_CREATE_WITH_REGION: %u", inst)
             else
                 if (playerLimbusID == 1290 or playerLimbusID == 1291
                 or playerLimbusID == 1294 or playerLimbusID == 1295
@@ -895,8 +874,8 @@ end
 
 function TryTobackOnCurrentLimbus(player)
     local currentlimbus = 0
-    local playerLimbusID = player:getVar("LimbusID")
-    local playerLimbusKeyID = player:getVar("characterLimbusKey")
+    local playerLimbusID = player:getCharVar("LimbusID")
+    local playerLimbusKeyID = player:getCharVar("characterLimbusKey")
     --  print("Player_:_instanceID_"..playerLimbusID.." Playerkey "..playerLimbusKeyID)
     if (GetLimbusKeyFromInstance(playerLimbusID) == playerLimbusKeyID
     and player:isSpecialBattlefieldEmpty(GetInstanceRegion(playerLimbusID)) == 1) then   --  player deco and back

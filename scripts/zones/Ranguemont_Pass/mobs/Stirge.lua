@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Ranguemont Pass
---  MOB: Stirge
+--  Mob: Stirge
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 606, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 606, 1, tpz.regime.type.GROUNDS)
 end;

@@ -28,7 +28,7 @@ function onTrigger(player,logId,questId,target)
     logId = questLog.quest_log;
 
     -- validate questId
-    local areaQuestIds = dsp.quest.id[dsp.quest.area[logId]];
+    local areaQuestIds = tpz.quest.id[tpz.quest.area[logId]];
     if (questId ~= nil) then
         questId = tonumber(questId) or areaQuestIds[string.upper(questId)];
     end
@@ -53,12 +53,12 @@ function onTrigger(player,logId,questId,target)
     end
 
     -- fetch the quest table
-    local quest = dsp.quest.getQuest(logId, questId)
+    local quest = tpz.quest.getQuest(logId, questId)
 
     if quest then
         -- Begin resetting all quest progress to the best of our ability
         targ:delQuest(logId, questId) -- Delete quest status
-        targ:setVar(quest.vars.stage, 0) -- Reset stage var
+        targ:setCharVar(quest.vars.stage, 0) -- Reset stage var
         if quest.vars.additional then -- Purge any additional quest vars
             for name, var in pairs(quest.vars.additional) do
                 quest.setVar(targ, name, 0, "resetquest: ")
@@ -69,10 +69,10 @@ function onTrigger(player,logId,questId,target)
                 player:delKeyItem(ki)
             end
         end
-        -- Clear all char_vars from having seen dsp.quest.eventType.ONCE type events
+        -- Clear all char_vars from having seen tpz.quest.eventType.ONCE type events
         if quest.temporary and quest.temporary.seen_events then
             for _, seen_event in pairs(quest.temporary.seen_events) do
-                player:setVar('[QE][Z'.. seen_event[1] ..']'.. seen_event[2], 0)
+                player:setCharVar('[QE][Z'.. seen_event[1] ..']'.. seen_event[2], 0)
             end
         end
 
@@ -80,7 +80,7 @@ function onTrigger(player,logId,questId,target)
         local held_item = quest.holdingItem(player)
         local stack = 1
         while held_item and held_item > 0 do
-            player:setVar(quest.var_prefix .. "[I][".. stack .."]", 0)
+            player:setCharVar(quest.var_prefix .. "[I][".. stack .."]", 0)
             stack = stack + 1
             held_item = quest.holdingItem(player, stack)
         end

@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -71,10 +69,10 @@ CCheckPacket::CCheckPacket(CCharEntity* PChar, CCharEntity* PTarget)
             {
                 ref<uint8>(size * 2 + 0x04) = 0x02;
 
-                ref<uint16>(size * 2 + 0x06) = ((CItemArmor*)PItem)->getAugment(0);
-                ref<uint16>(size * 2 + 0x08) = ((CItemArmor*)PItem)->getAugment(1);
-                ref<uint16>(size * 2 + 0x0A) = ((CItemArmor*)PItem)->getAugment(2);
-                ref<uint16>(size * 2 + 0x0C) = ((CItemArmor*)PItem)->getAugment(3);
+                ref<uint16>(size * 2 + 0x06) = ((CItemEquipment*)PItem)->getAugment(0);
+                ref<uint16>(size * 2 + 0x08) = ((CItemEquipment*)PItem)->getAugment(1);
+                ref<uint16>(size * 2 + 0x0A) = ((CItemEquipment*)PItem)->getAugment(2);
+                ref<uint16>(size * 2 + 0x0C) = ((CItemEquipment*)PItem)->getAugment(3);
             }
 
 			memcpy(data+(size*2+0x10), PItem->getSignature(), std::clamp<size_t>(strlen((const char*)PItem->getSignature()), 0, 12));

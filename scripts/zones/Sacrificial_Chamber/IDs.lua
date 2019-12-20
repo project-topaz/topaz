@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.SACRIFICIAL_CHAMBER] =
+zones[tpz.zone.SACRIFICIAL_CHAMBER] =
 {
     text =
     {
@@ -15,7 +15,7 @@ zones[dsp.zone.SACRIFICIAL_CHAMBER] =
         GIL_OBTAINED            = 6389, -- Obtained <number> gil.
         KEYITEM_OBTAINED        = 6391, -- Obtained key item: <keyitem>.
         CONQUEST_BASE           = 7049, -- Tallying conquest results...
-        DOOR_SHUT               = 7689, -- The door is firmly shut.
+        DOOR_SHUT               = 7690, -- The door is firmly shut.
     },
     mob =
     {
@@ -25,4 +25,4 @@ zones[dsp.zone.SACRIFICIAL_CHAMBER] =
     },
 }
 
-return zones[dsp.zone.SACRIFICIAL_CHAMBER]
+return zones[tpz.zone.SACRIFICIAL_CHAMBER]

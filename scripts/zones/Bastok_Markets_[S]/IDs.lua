@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.BASTOK_MARKETS_S] =
+zones[tpz.zone.BASTOK_MARKETS_S] =
 {
     text =
     {
@@ -23,6 +23,7 @@ zones[dsp.zone.BASTOK_MARKETS_S] =
         ALLIED_SIGIL             = 12350, -- You have received the Allied Sigil!
         SILKE_SHOP_DIALOG        = 12802, -- You wouldn't happen to be a fellow scholar, by any chance? The contents of these pages are beyond me, but perhaps you might glean something from them. They could be yours...for a nominal fee.
         RETRIEVE_DIALOG_ID       = 14714, -- You retrieve <item> from the porter moogle's care.
+        COMMON_SENSE_SURVIVAL    = 14783, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
@@ -32,4 +33,4 @@ zones[dsp.zone.BASTOK_MARKETS_S] =
     },
 }
 
-return zones[dsp.zone.BASTOK_MARKETS_S]
+return zones[tpz.zone.BASTOK_MARKETS_S]

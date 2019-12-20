@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Valkurm Dunes
---  MOB: Onryo
+--  Mob: Onryo
 -- Involved in Quest: Yomi Okuri
 -----------------------------------
 require("scripts/globals/keyitems");
@@ -8,8 +8,8 @@ require("scripts/globals/keyitems");
 
 function onMobDeath(mob, player, isKiller)
 
-    if (player:hasKeyItem(dsp.ki.YOMOTSU_HIRASAKA)) then
-        player:addVar("OkuriNMKilled", 1);
+    if (player:hasKeyItem(tpz.ki.YOMOTSU_HIRASAKA)) then
+        player:addCharVar("OkuriNMKilled", 1);
     end
 
 end;

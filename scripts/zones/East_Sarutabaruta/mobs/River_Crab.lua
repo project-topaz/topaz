@@ -1,11 +1,11 @@
 -----------------------------------
 -- Area: East Sarutabaruta
---  MOB: River Crab
+--  Mob: River Crab
 -- Note: PH for Duke Decapod
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 92, 1, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 92, 1, tpz.regime.type.FIELDS)
 end;

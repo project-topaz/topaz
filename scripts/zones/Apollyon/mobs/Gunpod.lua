@@ -1,7 +1,6 @@
 -----------------------------------
 -- Area: Apollyon Central
---  NPC: Gunpod
-
+--  Mob: Gunpod
 -----------------------------------
 require("scripts/globals/limbus");
 -----------------------------------
@@ -14,5 +13,5 @@ function onMobDespawn(mob)
     local mobY = mob:getYPos();
     local mobZ = mob:getZPos();
     GetNPCByID(16932864+259):setPos(mobX,mobY,mobZ);
-    GetNPCByID(16932864+259):setStatus(dsp.status.NORMAL);
+    GetNPCByID(16932864+259):setStatus(tpz.status.NORMAL);
 end;

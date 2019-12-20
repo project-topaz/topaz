@@ -19,9 +19,9 @@ end;
 
 function onTrigger(player,npc)
 
-    local MiasmaFilterCD = player:getVar("[ENM]MiasmaFilter");
+    local MiasmaFilterCD = player:getCharVar("[ENM]MiasmaFilter");
 
-    if (player:hasKeyItem(dsp.ki.MIASMA_FILTER)) then
+    if (player:hasKeyItem(tpz.ki.MIASMA_FILTER)) then
         player:startEvent(11);
     else
         if (MiasmaFilterCD >= os.time()) then
@@ -42,9 +42,9 @@ end;
 
 function onEventFinish(player,csid,option)
     if (csid == 12) then
-        player:addKeyItem(dsp.ki.MIASMA_FILTER);
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED,dsp.ki.MIASMA_FILTER);
-        player:setVar("[ENM]MiasmaFilter",os.time()+(ENM_COOLDOWN*3600)); -- Current time + (ENM_COOLDOWN*1hr in seconds)
+        player:addKeyItem(tpz.ki.MIASMA_FILTER);
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.MIASMA_FILTER);
+        player:setCharVar("[ENM]MiasmaFilter",os.time()+(ENM_COOLDOWN*3600)); -- Current time + (ENM_COOLDOWN*1hr in seconds)
     elseif (csid == 13) then
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 1777); -- Flaxen Pouch

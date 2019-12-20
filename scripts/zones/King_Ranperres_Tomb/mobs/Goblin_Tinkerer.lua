@@ -1,11 +1,11 @@
 -----------------------------------
 -- Area: King Ranperres Tomb
---  MOB: Goblin Tinkerer
+--  Mob: Goblin Tinkerer
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 631, 2, dsp.regime.type.GROUNDS)
-    dsp.regime.checkRegime(player, mob, 633, 2, dsp.regime.type.GROUNDS)
-end;
+    tpz.regime.checkRegime(player, mob, 631, 2, tpz.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 633, 2, tpz.regime.type.GROUNDS)
+end

@@ -4,8 +4,8 @@ require("scripts/globals/npc_util")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
 
-dsp = dsp or {}
-dsp.quest = dsp.quest or {} -- "Solid" enum definitions which are currently in use by master
+tpz = tpz or {}
+tpz.quest = tpz.quest or {} -- "Solid" enum definitions which are currently in use by master
 
 -- These should be tabled enums for rewritten quests, but
 -- these globals are kept so old-style quests will work
@@ -20,7 +20,7 @@ QUEST_COMPLETED = 2;
 
 -- These integers are the ones used by the client
 -- to diffierentiate different quest log update packets
-dsp.quest.log =
+tpz.quest.log =
 {
     SANDORIA    =  0,
     BASTOK      =  1,
@@ -40,33 +40,33 @@ dsp.quest.log =
 -- These areas are keyed by the area's quest log ID to facilitate
 -- fetching the area's quests.
 -- Ex: If all you have is a quest log ID, you can pull all
--- quest IDs for that area by: dsp.quest.id[dsp.quest.area[log]]
+-- quest IDs for that area by: tpz.quest.id[tpz.quest.area[log]]
 -- These can also be tied into quest file directories later.
-dsp.quest.area =
+tpz.quest.area =
 {
-    [dsp.quest.log.SANDORIA]    = 'sandoria',
-    [dsp.quest.log.BASTOK]      = 'bastok',
-    [dsp.quest.log.WINDURST]    = 'windurst',
-    [dsp.quest.log.JEUNO]       = 'jeuno',
-    [dsp.quest.log.OTHER_AREAS] = 'otherAreas',
-    [dsp.quest.log.OUTLANDS]    = 'outlands',
-    [dsp.quest.log.AHT_URHGAN]  = 'ahtUrhgan',
-    [dsp.quest.log.CRYSTAL_WAR] = 'crystalWar',
-    [dsp.quest.log.ABYSSEA]     = 'abyssea',
-    [dsp.quest.log.ADOULIN]     = 'adoulin',
-    [dsp.quest.log.COALITION]   = 'coalition'
+    [tpz.quest.log.SANDORIA]    = 'sandoria',
+    [tpz.quest.log.BASTOK]      = 'bastok',
+    [tpz.quest.log.WINDURST]    = 'windurst',
+    [tpz.quest.log.JEUNO]       = 'jeuno',
+    [tpz.quest.log.OTHER_AREAS] = 'otherAreas',
+    [tpz.quest.log.OUTLANDS]    = 'outlands',
+    [tpz.quest.log.AHT_URHGAN]  = 'ahtUrhgan',
+    [tpz.quest.log.CRYSTAL_WAR] = 'crystalWar',
+    [tpz.quest.log.ABYSSEA]     = 'abyssea',
+    [tpz.quest.log.ADOULIN]     = 'adoulin',
+    [tpz.quest.log.COALITION]   = 'coalition'
 }
 
 -----------------------------------
 --  QUEST IDS
 -----------------------------------
 
-dsp.quest.id =
+tpz.quest.id =
 {
     -----------------------------------
     --  San d'Oria
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.SANDORIA]] =
+    [tpz.quest.area[tpz.quest.log.SANDORIA]] =
     {
         A_SENTRY_S_PERIL                = 0,  -- ± --
         WATER_OF_THE_CHEVAL             = 1,  -- ± --
@@ -130,14 +130,14 @@ dsp.quest.id =
         A_CRAFTSMAN_S_WORK              = 94, -- ± --
         CHASING_QUOTAS                  = 95, -- + --
         KNIGHT_STALKER                  = 96, -- + --
-        ECO_WARRIOR_SAN                 = 97,
+        ECO_WARRIOR                     = 97,
         METHODS_CREATE_MADNESS          = 98,
         SOULS_IN_SHADOW                 = 99,
         A_TASTE_FOR_MEAT                = 100, -- ± --
         EXIT_THE_GAMBLER                = 101, -- ± --
         OLD_WOUNDS                      = 102,
-        ESCORT_FOR_HIRE_SAN_D_ORIA      = 103,
-        A_DISCERNING_EYE_SAN_D_ORIA     = 104,
+        ESCORT_FOR_HIRE                 = 103,
+        A_DISCERNING_EYE                = 104,
         A_TIMELY_VISIT                  = 105,
         FIT_FOR_A_PRINCE                = 106,
         TRIAL_SIZE_TRIAL_BY_ICE         = 107, -- + --
@@ -145,7 +145,7 @@ dsp.quest.id =
         TEA_WITH_A_TONBERRY             = 109,
         SPICE_GALS                      = 110,
         OVER_THE_HILLS_AND_FAR_AWAY     = 112,
-        LURE_OF_THE_WILDCAT_SAN_D_ORIA  = 113, -- ± --
+        LURE_OF_THE_WILDCAT             = 113, -- ± --
         ATELLOUNE_S_LAMENT              = 114,
         THICK_SHELLS                    = 117, -- ± --
         FOREST_FOR_THE_TREES            = 118,
@@ -154,7 +154,7 @@ dsp.quest.id =
     -----------------------------------
     --  Bastok
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.BASTOK]] =
+    [tpz.quest.area[tpz.quest.log.BASTOK]] =
     {
         THE_SIREN_S_TEAR                = 0,  -- ± --
         BEAUTY_AND_THE_GALKA            = 1,  -- ± --
@@ -221,13 +221,13 @@ dsp.quest.id =
         A_TEST_OF_TRUE_LOVE             = 62, -- ± --
         LOVERS_IN_THE_DUSK              = 63, -- ± --
         WISH_UPON_A_STAR                = 64,
-        ECO_WARRIOR_BAS                 = 65,
+        ECO_WARRIOR                     = 65,
         THE_WEIGHT_OF_YOUR_LIMITS       = 66,
         SHOOT_FIRST_ASK_QUESTIONS_LATER = 67,
         INHERITANCE                     = 68,
         THE_WALLS_OF_YOUR_MIND          = 69,
-        ESCORT_FOR_HIRE_BASTOK          = 70,
-        A_DISCERNING_EYE_BASTOK         = 71,
+        ESCORT_FOR_HIRE                 = 70,
+        A_DISCERNING_EYE                = 71,
         TRIAL_SIZE_TRIAL_BY_EARTH       = 72, -- + --
         FADED_PROMISES                  = 73,
         BRYGID_THE_STYLIST_RETURNS      = 74, -- ± --
@@ -240,7 +240,7 @@ dsp.quest.id =
         THE_NAMING_GAME                 = 81,
         CHIPS                           = 82,
         BAIT_AND_SWITCH                 = 83,
-        LURE_OF_THE_WILDCAT_BASTOK      = 84,
+        LURE_OF_THE_WILDCAT             = 84,
         ACHIEVING_TRUE_POWER            = 85,
         TOO_MANY_CHEFS                  = 86,
         A_PROPER_BURIAL                 = 87,
@@ -252,7 +252,7 @@ dsp.quest.id =
     -----------------------------------
     --  Windurst
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.WINDURST]] =
+    [tpz.quest.area[tpz.quest.log.WINDURST]] =
     {
         HAT_IN_HAND                     = 0,  -- + --
         A_FEATHER_IN_ONE_S_CAP          = 1,  -- + --
@@ -331,24 +331,24 @@ dsp.quest.id =
         THE_PUPPET_MASTER               = 81, -- + --
         CLASS_REUNION                   = 82, -- + --
         CARBUNCLE_DEBACLE               = 83, -- + --
-        ECO_WARRIOR_WIN                 = 84, -- + --
+        ECO_WARRIOR                     = 84, -- + --
         FROM_SAPLINGS_GROW              = 85,
         ORASTERY_WOES                   = 86,
         BLOOD_AND_GLORY                 = 87,
-        ESCORT_FOR_HIRE_WINDURST        = 88,
-        A_DISCERNING_EYE_WINDURST       = 89,
+        ESCORT_FOR_HIRE                 = 88,
+        A_DISCERNING_EYE                = 89,
         TUNING_IN                       = 90,
         TUNING_OUT                      = 91,
         ONE_GOOD_DEED                   = 92,
         WAKING_DREAMS                   = 93, -- + --
-        LURE_OF_THE_WILDCAT_WINDURST    = 94,
+        LURE_OF_THE_WILDCAT             = 94, -- + --
         BABBAN_NY_MHEILLEA              = 95,
     },
 
     -----------------------------------
     --  Jeuno
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.JEUNO]] =
+    [tpz.quest.area[tpz.quest.log.JEUNO]] =
     {
         CREST_OF_DAVOI                  = 0,  -- + --
         SAVE_MY_SISTER                  = 1,  -- + --
@@ -440,7 +440,7 @@ dsp.quest.id =
         MIXED_SIGNALS                   = 87,
         SHADOWS_OF_THE_DEPARTED         = 88,
         APOCALYPSE_NIGH                 = 89,
-        LURE_OF_THE_WILDCAT_JEUNO       = 90, -- ± --
+        LURE_OF_THE_WILDCAT             = 90, -- ± --
         THE_ROAD_TO_AHT_URHGAN          = 91, -- + --
         CHOCOBO_ON_THE_LOOSE            = 92,
         THE_GOBBIEBAG_PART_VII          = 93, -- + --
@@ -499,7 +499,7 @@ dsp.quest.id =
     -----------------------------------
     --  Other Areas
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.OTHER_AREAS]] =
+    [tpz.quest.area[tpz.quest.log.OTHER_AREAS]] =
     {
         RYCHARDE_THE_CHEF               = 0,  -- + --
         WAY_OF_THE_COOK                 = 1,  -- + --
@@ -555,9 +555,9 @@ dsp.quest.id =
         VW_OP_004_BIBIKI_BOMBARDMENT    = 85,
         BOMBS_AWAY                      = 96,
         MITHRAN_DELICACIES              = 97,
-        GIVE_A_MOOGLE_A_BREAK           = 100,
-        THE_MOOGLE_PICNIC               = 101,
-        MOOGLE_IN_THE_WILD              = 102,
+        GIVE_A_MOOGLE_A_BREAK           = 100, -- ± --
+        THE_MOOGLE_PICNIC               = 101, -- ± --
+        MOOGLES_IN_THE_WILD             = 102, -- ± --
         MISSIONARY_MOBLIN               = 103,
         FOR_THE_BIRDS                   = 104,
         BETTER_THE_DEMON_YOU_KNOW       = 105,
@@ -572,7 +572,7 @@ dsp.quest.id =
     -----------------------------------
     --  Outlands
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.OUTLANDS]] =
+    [tpz.quest.area[tpz.quest.log.OUTLANDS]] =
     {
         -- Kazham (1-15)
         THE_FIREBLOOM_TREE              = 1,
@@ -587,7 +587,7 @@ dsp.quest.id =
         THE_OPO_OPO_AND_I               = 11, -- + --
         TRIAL_BY_FIRE                   = 12, -- ± --
         CLOAK_AND_DAGGER                = 13,
-        A_DISCERNING_EYE_KAZHAM         = 14,
+        A_DISCERNING_EYE                = 14,
         TRIAL_SIZE_TRIAL_BY_FIRE        = 15, -- + --
 
         -- Voidwatch (100-105)
@@ -644,7 +644,7 @@ dsp.quest.id =
     -----------------------------------
     --  Aht Urhgan
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.AHT_URHGAN]] =
+    [tpz.quest.area[tpz.quest.log.AHT_URHGAN]] =
     {
         KEEPING_NOTES                   = 0,
         ARTS_AND_CRAFTS                 = 1,
@@ -657,7 +657,7 @@ dsp.quest.id =
         FINDING_FAULTS                  = 8,
         GIVE_PEACE_A_CHANCE             = 9,
         THE_ART_OF_WAR                  = 10,
-        na                              = 11,
+        -- AT QUEST 00                  = 11,
         A_TASTE_OF_HONEY                = 12,
         SUCH_SWEET_SORROW               = 13,
         FEAR_OF_THE_DARK_II             = 14, -- + --
@@ -702,9 +702,9 @@ dsp.quest.id =
     -----------------------------------
     --  Crystal War
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.CRYSTAL_WAR]] =
+    [tpz.quest.area[tpz.quest.log.CRYSTAL_WAR]] =
     {
-        LOST_IN_TRANSLOCATION            = 0,
+        LOST_IN_TRANSLOCATION            = 0, -- + --
         MESSAGE_ON_THE_WINDS             = 1,
         THE_WEEKLY_ADVENTURER            = 2,
         HEALING_HERBS                    = 3,
@@ -745,7 +745,7 @@ dsp.quest.id =
         IN_A_HAZE_OF_GLORY               = 38,
         WHEN_ONE_MAN_IS_NOT_ENOUGH       = 39,
         A_FEAST_FOR_GNATS                = 40,
-        SAY_IT_WITH_A_HANDBAG            = 41,
+        SAY_IT_WITH_A_HANDBAG            = 41, -- Can be completed, but reward latent not implemented
         QUELLING_THE_STORM               = 42,
         HONOR_UNDER_FIRE                 = 43,
         THE_PRICE_OF_VALOR               = 44,
@@ -801,7 +801,7 @@ dsp.quest.id =
     -----------------------------------
     --  Abyssea
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.ABYSSEA]] =
+    [tpz.quest.area[tpz.quest.log.ABYSSEA]] =
     {
         -- For some reason these did not match dat file order,
         -- had to adjust IDs >120 after using @addquest
@@ -1002,7 +1002,7 @@ dsp.quest.id =
     -----------------------------------
     --  Adoulin
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.ADOULIN]] =
+    [tpz.quest.area[tpz.quest.log.ADOULIN]] =
     {
         -- These also do not match the DAT file order, had
         -- discrepencies and swapped orders from the start.
@@ -1108,7 +1108,7 @@ dsp.quest.id =
     -----------------------------------
     --  Coalition
     -----------------------------------
-    [dsp.quest.area[dsp.quest.log.COALITION]] =
+    [tpz.quest.area[tpz.quest.log.COALITION]] =
     {
         -- Also slightly incongruent with DAT file order
         PROCURE_CEIZAK_BATTLEGROUNDS    = 0,
@@ -1215,12 +1215,12 @@ dsp.quest.id =
 -----------------------------------
 
 -- These are the string key counterparts for a quest, and can be used to find the string
--- key/path that DSP uses for a given quest when all you have is the quest's ID and its area.
--- Filepaths can be built using "(AREA_FOLDER)/".. dsp.quest.string.(AREA)[(QUEST_ID)],
--- Where (AREA) is dsp.quest.area[AREAS_LOG_ID] (a string), _not_ the default integer log ID
-local function buildQuestStringTable(dspQuestIDtable)
+-- key/path that Topaz uses for a given quest when all you have is the quest's ID and its area.
+-- Filepaths can be built using "(AREA_FOLDER)/".. tpz.quest.string.(AREA)[(QUEST_ID)],
+-- Where (AREA) is tpz.quest.area[AREAS_LOG_ID] (a string), _not_ the default integer log ID
+local function buildQuestStringTable(tpzQuestIDtable)
     local questStringTable = {}
-    for areaKey, areaQuestTable in pairs(dspQuestIDtable) do
+    for areaKey, areaQuestTable in pairs(tpzQuestIDtable) do
         local areaQuestStringTable = {}
         for questStringKey, questID in pairs(areaQuestTable) do
             areaQuestStringTable[questID] = questStringKey
@@ -1230,33 +1230,33 @@ local function buildQuestStringTable(dspQuestIDtable)
     return questStringTable
 end
 
-dsp.quest.string = buildQuestStringTable(dsp.quest.id)
+tpz.quest.string = buildQuestStringTable(tpz.quest.id)
 
 -----------------------------------
 --  QUEST OBJECTS TABLE
 -----------------------------------
 
 -- Quest objects inside these tables will be loaded/reloaded as required by NPC scripts and GM commands
-dsp.quest.object =
+tpz.quest.object =
 {
-    [dsp.quest.area[dsp.quest.log.SANDORIA]] = {},
-    [dsp.quest.area[dsp.quest.log.BASTOK]] = {},
-    [dsp.quest.area[dsp.quest.log.WINDURST]] = {},
-    [dsp.quest.area[dsp.quest.log.JEUNO]] = {},
-    [dsp.quest.area[dsp.quest.log.OTHER_AREAS]] = {},
-    [dsp.quest.area[dsp.quest.log.OUTLANDS]] = {},
-    [dsp.quest.area[dsp.quest.log.AHT_URHGAN]] = {},
-    [dsp.quest.area[dsp.quest.log.CRYSTAL_WAR]] = {},
-    [dsp.quest.area[dsp.quest.log.ABYSSEA]] = {},
-    [dsp.quest.area[dsp.quest.log.ADOULIN]] = {},
-    [dsp.quest.area[dsp.quest.log.COALITION]] = {}
+    [tpz.quest.area[tpz.quest.log.SANDORIA]] = {},
+    [tpz.quest.area[tpz.quest.log.BASTOK]] = {},
+    [tpz.quest.area[tpz.quest.log.WINDURST]] = {},
+    [tpz.quest.area[tpz.quest.log.JEUNO]] = {},
+    [tpz.quest.area[tpz.quest.log.OTHER_AREAS]] = {},
+    [tpz.quest.area[tpz.quest.log.OUTLANDS]] = {},
+    [tpz.quest.area[tpz.quest.log.AHT_URHGAN]] = {},
+    [tpz.quest.area[tpz.quest.log.CRYSTAL_WAR]] = {},
+    [tpz.quest.area[tpz.quest.log.ABYSSEA]] = {},
+    [tpz.quest.area[tpz.quest.log.ADOULIN]] = {},
+    [tpz.quest.area[tpz.quest.log.COALITION]] = {}
 }
 
 -----------------------------------
---  DSP QUEST SYSTEM CONSTANTS
+--  TOPAZ QUEST SYSTEM CONSTANTS
 -----------------------------------
 
-dsp.quest.stage =
+tpz.quest.stage =
 {
     STAGE0   =  0, STAGE1  =  1, STAGE2  =  2, STAGE3   =  3, STAGE4   =  4,
     STAGE5   =  5, STAGE6  =  6, STAGE7  =  7, STAGE8   =  8, STAGE9   =  9,
@@ -1264,7 +1264,7 @@ dsp.quest.stage =
     COMPLETE = 255
 }
 
-dsp.quest.fame =
+tpz.quest.fame =
 {
     SANDORIA          =  0, BASTOK           =  1, WINDURST           =  2,
     JEUNO             =  3, SELBINA          =  4, MHAURA             =  2,
@@ -1275,21 +1275,21 @@ dsp.quest.fame =
     ADOULIN = 15
 }
 
-dsp.quest.status =
+tpz.quest.status =
 {
     AVAILABLE = 0,
     ACCEPTED  = 1,
     COMPLETED = 2,
 }
 
-dsp.quest.var =
+tpz.quest.var =
 {
     CHAR   = 1,
     ENTITY = 2,
     SERVER = 3,
 }
 
-dsp.quest.event =
+tpz.quest.event =
 {
     TRIGGER   = 1,
     TRADE     = 2,
@@ -1299,7 +1299,7 @@ dsp.quest.event =
     ZONE_IN   = 6
 }
 
-dsp.quest.eventType =
+tpz.quest.eventType =
 {
     NEVER     = 0, -- Never displayed; can be used to disable quests (set this on starting event)
     DEFAULT   = 1, -- Becomes NPC's "default dialogue" if nothing else takes precendence
@@ -1314,7 +1314,7 @@ dsp.quest.eventType =
 --  QUEST OBJECT
 -----------------------------------
 
-dsp.quest.newQuest = function()
+tpz.quest.newQuest = function()
     local this = {}
 
     ---------------------------------------------------------------
@@ -1346,7 +1346,7 @@ dsp.quest.newQuest = function()
         local var, vartype, db_name
         if quest.vars.stage == varname then
             var = quest.vars.stage
-            vartype = dsp.quest.var.CHAR
+            vartype = tpz.quest.var.CHAR
             db_name = quest.vars.stage
         else
             var = quest.vars.additional[varname]
@@ -1359,19 +1359,19 @@ dsp.quest.newQuest = function()
         if not var then
             ret.message = " unable to find "..varname.." for quest: "..quest.name.." (log: "..quest.log..")"
         else
-            if vartype == dsp.quest.var.CHAR then
+            if vartype == tpz.quest.var.CHAR then
                 if get then
-                    ret.val = entity:getVar(db_name)
+                    ret.val = entity:getCharVar(db_name)
                 else
-                    entity:setVar(db_name, val)
+                    entity:setCharVar(db_name, val)
                 end
-            elseif vartype == dsp.quest.var.LOCAL then
+            elseif vartype == tpz.quest.var.LOCAL then
                 if get then
                     ret.val = entity:getLocalVar(db_name)
                 else
                     entity:setLocalVar(db_name, val)
                 end
-            elseif vartype == dsp.quest.var.SERVER then
+            elseif vartype == tpz.quest.var.SERVER then
                 if get then
                     ret.val = GetServerVariable(db_name)
                 else
@@ -1430,8 +1430,8 @@ dsp.quest.newQuest = function()
         local stage = this.getVar(entity, this.vars.stage, message)
         if stage > 0 then
             return stage
-        elseif entity:getQuestStatus(this.log, this.quest_id) == dsp.quest.status.COMPLETED then
-            return dsp.quest.stage.COMPLETE
+        elseif entity:getQuestStatus(this.log, this.quest_id) == tpz.quest.status.COMPLETED then
+            return tpz.quest.stage.COMPLETE
         else
             return 0
         end
@@ -1451,14 +1451,14 @@ dsp.quest.newQuest = function()
     this.checkRequirements = function(player)
         local questStatusCheck = player:getQuestStatus(this.log, this.quest_id)
 
-        if questStatusCheck == dsp.quest.status.AVAILABLE
-        or (questStatusCheck == dsp.quest.status.COMPLETED and this.repeatable) then
+        if questStatusCheck == tpz.quest.status.AVAILABLE
+        or (questStatusCheck == tpz.quest.status.COMPLETED and this.repeatable) then
             -- Check all required quests
             if this.requirements.quests then
                 for i, requiredQuest in ipairs(this.requirements.quests) do
                     local requiredQuestStatus = player:getQuestStatus(requiredQuest.log, requiredQuest.quest_id)
                     if requiredQuest.stage then
-                        local quest = dsp.quest.getQuest(requiredQuest.log, requiredQuest.quest_id)
+                        local quest = tpz.quest.getQuest(requiredQuest.log, requiredQuest.quest_id)
                         if quest then
                             if quest.getStage(player) < requiredQuest.stage then
                                 return false
@@ -1466,7 +1466,7 @@ dsp.quest.newQuest = function()
                         else
                             return false
                         end
-                    elseif requiredQuestStatus ~= dsp.quest.status.COMPLETED then
+                    elseif requiredQuestStatus ~= tpz.quest.status.COMPLETED then
                         return false
                     end
                 end
@@ -1475,7 +1475,7 @@ dsp.quest.newQuest = function()
             if this.requirements.missions then
                 for i, requiredMission in ipairs(this.requirements.missions) do
                     if player:getCurrentMission(requiredMission.mission_log) < requiredMission.mission_id then
-                    -- or (required_mission.stage and (dsp.quests.getStage(player, required_mission) < required_mission.stage)) then -- getStage requires a full quest table
+                    -- or (required_mission.stage and (tpz.quests.getStage(player, required_mission) < required_mission.stage)) then -- getStage requires a full quest table
                         return false
                     end
                 end
@@ -1536,7 +1536,7 @@ dsp.quest.newQuest = function()
     ---------------------------------------------------------------
     this.startEvent = function(player, event, params, type)
         if not params then params = {} end
-        if not type then type = dsp.quest.eventType.DEFAULT end
+        if not type then type = tpz.quest.eventType.DEFAULT end
         return {['id'] = event, ['params'] = params, ['type'] = type}
     end
 
@@ -1563,7 +1563,7 @@ dsp.quest.newQuest = function()
         if not stack then
             stack = 1
         end
-        local item = player:getVar(this.var_prefix .. "[I][".. stack .."]")
+        local item = player:getCharVar(this.var_prefix .. "[I][".. stack .."]")
 
         if item > 0 then
             return item
@@ -1583,7 +1583,7 @@ dsp.quest.newQuest = function()
         if this.holdingItem(player, stack) then
             return this.holdItem(player, item, stack + 1)
         else
-            player:setVar(this.var_prefix .. "[I][".. stack .."]", item)
+            player:setCharVar(this.var_prefix .. "[I][".. stack .."]", item)
             return true
         end
     end
@@ -1611,7 +1611,7 @@ dsp.quest.newQuest = function()
             if npcUtil.giveItem(player, items, silent_fail) then
                 stack = 1
                 while stack <= items_held do
-                    player:setVar(this.var_prefix .. "[I][".. stack .."]", 0)
+                    player:setCharVar(this.var_prefix .. "[I][".. stack .."]", 0)
                     stack = stack + 1
                 end
                 return true
@@ -1723,10 +1723,10 @@ dsp.quest.newQuest = function()
                 end
             end
 
-            -- Clear all char_vars from having seen dsp.quest.eventType.ONCE type events
+            -- Clear all char_vars from having seen tpz.quest.eventType.ONCE type events
             if this.temporary and this.temporary.seen_events then
                 for _, seen_event in pairs(this.temporary.seen_events) do
-                    player:setVar('[QE][Z'.. seen_event[1] ..']'.. seen_event[2], 0)
+                    player:setCharVar('[QE][Z'.. seen_event[1] ..']'.. seen_event[2], 0)
                 end
             end
             return true
@@ -1739,7 +1739,7 @@ end
 -----------------------------------
 --  INVOLVED QUESTS OBJECT
 -----------------------------------
-dsp.quest.involvedQuests = function(involvedQuests)
+tpz.quest.involvedQuests = function(involvedQuests)
     local this = {}
     this.involvedQuests = involvedQuests
 
@@ -1749,10 +1749,10 @@ dsp.quest.involvedQuests = function(involvedQuests)
 
     -- Helper function returning if a player has seen an event of a given type
     local hasSeen = function(player, trackingTag, eventType)
-        if (eventType >= dsp.quest.eventType.CYCLE) and (eventType <= dsp.quest.eventType.ZONE) then
+        if (eventType >= tpz.quest.eventType.CYCLE) and (eventType <= tpz.quest.eventType.ZONE) then
             return player:getLocalVar(trackingTag) == 1
-        elseif eventType == dsp.quest.eventType.ONCE then
-            return player:getVar(trackingTag) == 1
+        elseif eventType == tpz.quest.eventType.ONCE then
+            return player:getCharVar(trackingTag) == 1
         else
             return false
         end
@@ -1766,7 +1766,7 @@ dsp.quest.involvedQuests = function(involvedQuests)
 
         local result = false
         local highestEvent = {}
-        highestEvent.type = dsp.quest.eventType.NEVER
+        highestEvent.type = tpz.quest.eventType.NEVER
 
         local hasCycleEvents = false
         local isLastCycleEvent = false
@@ -1786,7 +1786,7 @@ dsp.quest.involvedQuests = function(involvedQuests)
                         local sawEvent = hasSeen(player, trackingTag, result.type)
 
 
-                        if result.type == dsp.quest.eventType.CYCLE then
+                        if result.type == tpz.quest.eventType.CYCLE then
                             -- If player just viewed the final cycle event, we need to mark all as unseen
                             if wasLastCycleEvent then
                                 player:setLocalVar(trackingTag, 0)
@@ -1807,7 +1807,7 @@ dsp.quest.involvedQuests = function(involvedQuests)
                                     isLastCycleEvent = false -- ..and then on the SECOND unseen event, mark our assumption false
                                 end
                             end
-                        elseif result.type == dsp.quest.eventType.TOGGLE then
+                        elseif result.type == tpz.quest.eventType.TOGGLE then
                             if sawEvent then
                                 -- Go ahead an mark the toggle event as unseen (but we won't
                                 -- select it until next time because sawEvent is still false)
@@ -1816,11 +1816,11 @@ dsp.quest.involvedQuests = function(involvedQuests)
                         end
 
                         if result.type > highestEvent.type then
-                            if result.type == dsp.quest.eventType.ONCE and not sawEvent then
+                            if result.type == tpz.quest.eventType.ONCE and not sawEvent then
                                 highestEvent = result
-                            elseif ((result.type >= dsp.quest.eventType.CYCLE) and (result.type <= dsp.quest.eventType.ZONE)) and not sawEvent then
+                            elseif ((result.type >= tpz.quest.eventType.CYCLE) and (result.type <= tpz.quest.eventType.ZONE)) and not sawEvent then
                                 highestEvent = result
-                            elseif (result.type == dsp.quest.eventType.ALWAYS) or (result.type == dsp.quest.eventType.DEFAULT) then
+                            elseif (result.type == tpz.quest.eventType.ALWAYS) or (result.type == tpz.quest.eventType.DEFAULT) then
                                 highestEvent = result
                             end
                         end
@@ -1835,7 +1835,7 @@ dsp.quest.involvedQuests = function(involvedQuests)
             player:setLocalVar('[QE][WLC]'.. target, 1)
         end
 
-        if highestEvent.type > dsp.quest.eventType.NEVER then  -- We figured out an onTrigger to play
+        if highestEvent.type > tpz.quest.eventType.NEVER then  -- We figured out an onTrigger to play
             player:startEvent(highestEvent.id, unpack(highestEvent.params)) -- Invoke our thunked highest event
             -- We're only going to mark what kind of event we have, so we can check later during an onEventFinish
             -- We don't want to mark the event as "seen" _now_ because the event might get interupted before finishing
@@ -1846,9 +1846,9 @@ dsp.quest.involvedQuests = function(involvedQuests)
             if checkType == 'onEventFinish' then
                 if player:getLocalVar('[QE][SI]') == target then -- "target" is our CS ID during onEventFinish checks
                     local trackingType = player:getLocalVar('[QE][ST]')
-                    if trackingType == dsp.quest.eventType.ONCE then
-                        player:setVar(trackingName(player, target), 1)
-                    elseif (trackingType >= dsp.quest.eventType.CYCLE) and (trackingType <= dsp.quest.eventType.ZONE) then
+                    if trackingType == tpz.quest.eventType.ONCE then
+                        player:setCharVar(trackingName(player, target), 1)
+                    elseif (trackingType >= tpz.quest.eventType.CYCLE) and (trackingType <= tpz.quest.eventType.ZONE) then
                         player:setLocalVar(trackingName(player, target), 1)
                     end
                     player:setLocalVar('[QE][SI]', 0)
@@ -1900,43 +1900,43 @@ end
 --  OTHER QUEST FUNCTIONS
 -----------------------------------
 
-dsp.quest.getQuest = function(area_log_id, quest_id)
-    local area = dsp.quest.area[area_log_id]
+tpz.quest.getQuest = function(area_log_id, quest_id)
+    local area = tpz.quest.area[area_log_id]
     if area then
-        local quest_string = dsp.quest.string[area][quest_id]
+        local quest_string = tpz.quest.string[area][quest_id]
         if quest_string then -- Verify the quest ID is one we expect
-            if dsp.quest.object[area][quest_id] then
+            if tpz.quest.object[area][quest_id] then
                 -- If we already have the quest loaded, just return it!
-                return dsp.quest.object[area][quest_id]
+                return tpz.quest.object[area][quest_id]
             else
                 local quest_filename = 'scripts/quests/'
                 local area_dirs =
                 {
-                    [dsp.quest.log.SANDORIA]    = 'sandoria',
-                    [dsp.quest.log.BASTOK]      = 'bastok',
-                    [dsp.quest.log.WINDURST]    = 'windurst',
-                    [dsp.quest.log.JEUNO]       = 'jeuno',
-                    [dsp.quest.log.OTHER_AREAS] = 'other_areas',
-                    [dsp.quest.log.OUTLANDS]    = 'outlands',
-                    [dsp.quest.log.AHT_URHGAN]  = 'aht_urhgan',
-                    [dsp.quest.log.CRYSTAL_WAR] = 'crystal_war',
-                    [dsp.quest.log.ABYSSEA]     = 'abyssea',
-                    [dsp.quest.log.ADOULIN]     = 'adoulin',
-                    [dsp.quest.log.COALITION]   = 'coalition'
+                    [tpz.quest.log.SANDORIA]    = 'sandoria',
+                    [tpz.quest.log.BASTOK]      = 'bastok',
+                    [tpz.quest.log.WINDURST]    = 'windurst',
+                    [tpz.quest.log.JEUNO]       = 'jeuno',
+                    [tpz.quest.log.OTHER_AREAS] = 'other_areas',
+                    [tpz.quest.log.OUTLANDS]    = 'outlands',
+                    [tpz.quest.log.AHT_URHGAN]  = 'aht_urhgan',
+                    [tpz.quest.log.CRYSTAL_WAR] = 'crystal_war',
+                    [tpz.quest.log.ABYSSEA]     = 'abyssea',
+                    [tpz.quest.log.ADOULIN]     = 'adoulin',
+                    [tpz.quest.log.COALITION]   = 'coalition'
                 }
                 quest_filename = quest_filename .. area_dirs[area_log_id] .. '/' .. string.lower(quest_string)
                 local quest = require(quest_filename)
                 if (quest) then
-                    dsp.quest.object[area][quest_id] = quest -- Stash our quest away for others to use!
+                    tpz.quest.object[area][quest_id] = quest -- Stash our quest away for others to use!
                     return quest
                 else
-                    print("dsp.quest.getQuest: Unable to include designated file '".. quest_filename .."'")
+                    print("tpz.quest.getQuest: Unable to include designated file '".. quest_filename .."'")
                 end
             end
         else
-            print("dsp.quest.getQuest: Unknown quest ID: ".. quest_id.. " for area: ".. area)
+            print("tpz.quest.getQuest: Unknown quest ID: ".. quest_id.. " for area: ".. area)
         end
     else
-        print("dsp.quest.getQuest: Unknown area log ID: ".. area_log_id)
+        print("tpz.quest.getQuest: Unknown area log ID: ".. area_log_id)
     end
 end

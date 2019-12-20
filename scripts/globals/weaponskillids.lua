@@ -3,13 +3,13 @@
 --
 -- Contains readable values for Weaponskill IDs
 ------------------------------------
-dsp = dsp or {}
+tpz = tpz or {}
 
 ------------------------------------
 -- Weaponskill IDs
 ------------------------------------
 
-dsp.weaponskill =
+tpz.weaponskill =
 {
     ------------------------------------
     -- H2H
@@ -29,6 +29,7 @@ dsp.weaponskill =
     TORNADO_KICK        = 13,
     VICTORY_SMITE       = 14,
     SHIJIN_SPIRAL       = 15,
+    FINAL_PARADISE      = 228,
 
     ------------------------------------
     -- DAGGER
@@ -199,6 +200,7 @@ dsp.weaponskill =
     TACHI_AGEHA         = 155,
     TACHI_FUDO          = 156,
     TACHI_SHOHA         = 157,
+    TACHI_SUIKAWARI     = 158,
 
     ------------------------------------
     -- CLUB
@@ -272,13 +274,13 @@ dsp.weaponskill =
     WILDFIRE            = 220,
     LAST_STAND          = 221,
 }
-dsp.ws = dsp.weaponskill
+tpz.ws = tpz.weaponskill
 
 ------------------------------------
 -- Weaponskill Unlock IDs
 ------------------------------------
 
-dsp.ws_unlock = 
+tpz.ws_unlock = 
 {
     ASURAN_FISTS        = 1,
     EVISCERATION        = 2,

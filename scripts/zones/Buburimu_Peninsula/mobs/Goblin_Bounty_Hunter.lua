@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Buburimu Peninsula
---  MOB: Goblin Bounty Hunter
+--  Mob: Goblin Bounty Hunter
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 62, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 62, 2, tpz.regime.type.FIELDS)
 end;

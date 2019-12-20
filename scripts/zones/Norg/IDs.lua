@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.NORG] =
+zones[tpz.zone.NORG] =
 {
     text =
     {
@@ -35,6 +35,7 @@ zones[dsp.zone.NORG] =
         TACHI_KASHA_LEARNED          = 10798, -- You have learned the weapon skill Tachi: Kasha!
         BLADE_KU_LEARNED             = 10823, -- You have learned the weapon skill Blade: Ku!
         RETRIEVE_DIALOG_ID           = 11276, -- You retrieve <item> from the porter moogle's care.
+        COMMON_SENSE_SURVIVAL        = 12286, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
@@ -44,4 +45,4 @@ zones[dsp.zone.NORG] =
     },
 }
 
-return zones[dsp.zone.NORG]
+return zones[tpz.zone.NORG]

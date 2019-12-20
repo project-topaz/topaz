@@ -37,15 +37,15 @@ function onUseWeaponSkill(player, target, wsID, tp, primary, action, taChar)
         params.str_wsc = 0.8
     end
 
-    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, tp, primary, action, taChar, params)
+    local damage, criticalHit, tpHits, extraHits = doPhysicalWeaponskill(player, target, wsID, params, tp, action, primary, taChar)
     if damage > 0 then
-        if not target:hasStatusEffect(dsp.effect.ATTACK_DOWN) then
-            local duration = tp / 1000 * 20 * applyResistanceAddEffect(player, target, dsp.magic.ele.WIND, 0)
-            target:addStatusEffect(dsp.effect.DEFENSE_DOWN, 19, 0, duration)
+        if not target:hasStatusEffect(tpz.effect.ATTACK_DOWN) then
+            local duration = tp / 1000 * 20 * applyResistanceAddEffect(player, target, tpz.magic.ele.WIND, 0)
+            target:addStatusEffect(tpz.effect.DEFENSE_DOWN, 19, 0, duration)
         end
 
         -- Apply aftermath
-        dsp.aftermath.addStatusEffect(player, tp, dsp.slot.MAIN, dsp.aftermath.type.RELIC)
+        tpz.aftermath.addStatusEffect(player, tp, tpz.slot.MAIN, tpz.aftermath.type.RELIC)
     end
 
     return tpHits, extraHits, criticalHit, damage

@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -116,6 +114,7 @@ private:
 
     // void ReplaceStatusEffect(EFFECT effect); //this needs to be implemented
     void RemoveStatusEffect(uint32 id, bool silent = false);	// удаляем эффект по его номеру в контейнере
+    void RemoveStatusEffect(CStatusEffect* PEffect, bool silent = false);	// удаляем эффект по его номеру в контейнере
     void DeleteStatusEffects();
     void SetEffectParams(CStatusEffect* StatusEffect);			// устанавливаем имя эффекта
 

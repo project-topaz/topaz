@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 #ifndef _CMOBMODIFIER_H
@@ -96,7 +94,8 @@ enum MOBMODIFIER : int
     MOBMOD_CHARMABLE          = 64, // mob is charmable
     MOBMOD_NO_MOVE            = 65, // Mob will not be able to move
     MOBMOD_MULTI_HIT          = 66, // Mob will have as many swings as defined.
-    MOBMOD_NO_AGGRO           = 67  // If set, mob cannot aggro until unset.
+    MOBMOD_NO_AGGRO           = 67, // If set, mob cannot aggro until unset.
+    MOBMOD_ALLI_HATE          = 68  // Range around target to add alliance member to enmity list.
 };
 
 #endif

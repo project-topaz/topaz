@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Yhoator Jungle
---  MOB: Worker Crawler
+--  Mob: Worker Crawler
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 132, 1, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 132, 1, tpz.regime.type.FIELDS)
 end

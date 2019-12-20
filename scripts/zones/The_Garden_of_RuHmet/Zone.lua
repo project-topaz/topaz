@@ -106,7 +106,7 @@ function onGameHour(zone)
     end
 
     -- Ix'DRK spawn randomiser
-    if (VanadielHour % 12 == 0 and qm2:getStatus() ~= dsp.status.DISAPPEAR) then -- Change ??? position every 12 hours Vana'diel time (30 mins)
+    if (VanadielHour % 12 == 0 and qm2:getStatus() ~= tpz.status.DISAPPEAR) then -- Change ??? position every 12 hours Vana'diel time (30 mins)
         qm2:hideNPC(30);
         local qm2position = math.random(1,4);
         qm2:setLocalVar("position",qm2position);
@@ -115,7 +115,7 @@ function onGameHour(zone)
 end;
 
 function onConquestUpdate(zone, updatetype)
-    dsp.conq.onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end;
 
 function onZoneIn(player,prevZone)
@@ -123,19 +123,19 @@ function onZoneIn(player,prevZone)
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
         player:setPos(-351.136,-2.25,-380,253);
     end
-    if (player:getCurrentMission(COP) == WHEN_ANGELS_FALL and player:getVar("PromathiaStatus") == 0) then
+    if (player:getCurrentMission(COP) == tpz.mission.id.cop.WHEN_ANGELS_FALL and player:getCharVar("PromathiaStatus") == 0) then
         cs = 201 ;
     end
-    player:setVar("Ru-Hmet-TP",0);
+    player:setCharVar("Ru-Hmet-TP",0);
     return cs;
 end;
 
 function onRegionEnter(player,region)
-    if (player:getVar("Ru-Hmet-TP") == 0 and player:getAnimation() == 0) then
+    if (player:getCharVar("Ru-Hmet-TP") == 0 and player:getAnimation() == 0) then
         switch (region:GetRegionID()): caseof
         {
             [1] = function (x)
-                if (player:getCurrentMission(COP)==DAWN or player:hasCompletedMission(COP,DAWN) or player:hasCompletedMission(COP,THE_LAST_VERSE) ) then
+                if (player:getCurrentMission(COP)==tpz.mission.id.cop.DAWN or player:hasCompletedMission(COP,tpz.mission.id.cop.DAWN) or player:hasCompletedMission(COP,tpz.mission.id.cop.THE_LAST_VERSE) ) then
                    player:startEvent(101);
                 else
                    player:startEvent(155);
@@ -143,7 +143,7 @@ function onRegionEnter(player,region)
             end, --101
 
             [2] = function (x)
-                if (player:hasKeyItem(dsp.ki.BRAND_OF_DAWN) and player:hasKeyItem(dsp.ki.BRAND_OF_TWILIGHT)) then
+                if (player:hasKeyItem(tpz.ki.BRAND_OF_DAWN) and player:hasKeyItem(tpz.ki.BRAND_OF_TWILIGHT)) then
                     player:startEvent(156);
                 else
                     player:startEvent(183);
@@ -198,7 +198,7 @@ end;
 function onEventUpdate(player,csid,option)
 
     if ((csid >149 and csid < 184) or csid == 102 or csid == 103 or csid == 101) then
-        player:setVar("Ru-Hmet-TP",1);
+        player:setCharVar("Ru-Hmet-TP",1);
     end
 end;
 
@@ -206,11 +206,11 @@ function onEventFinish(player,csid,option)
 
     if (csid == 101 and option == 1) then
         player:setPos(540,-1,-499.900,62,36);
-        player:setVar("Ru-Hmet-TP",0);
+        player:setCharVar("Ru-Hmet-TP",0);
     elseif ((csid > 149 and csid < 184) or csid == 102 or csid == 103 or csid == 101) then
-        player:setVar("Ru-Hmet-TP",0);
+        player:setCharVar("Ru-Hmet-TP",0);
     elseif (csid == 201) then
-        player:setVar("PromathiaStatus",1);
+        player:setCharVar("PromathiaStatus",1);
     elseif (csid == 32000 and option==1) then
         player:setPos(420,0,398,68);
     end

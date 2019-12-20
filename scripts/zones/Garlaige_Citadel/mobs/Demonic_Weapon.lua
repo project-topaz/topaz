@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Garlaige Citadel
---  MOB: Demonic Weapon
+--  Mob: Demonic Weapon
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 705, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 705, 1, tpz.regime.type.GROUNDS)
 end;

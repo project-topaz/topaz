@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -867,8 +865,6 @@ int32 lobby_createchar(login_session_data_t *loginsd, int8 *buf)
 
         CharID = (uint32)Sql_GetUIntData(SqlHandle, 0) + 1;
     }
-
-    CharID = (CharID < 21828 ? 21828 : CharID);
 
     if (lobby_createchar_save(loginsd->accid, CharID, &createchar) == -1)
         return -1;

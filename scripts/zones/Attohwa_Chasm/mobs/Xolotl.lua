@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Attohwa Chasm
---  MOB: Xolotl
+--  Mob: Xolotl
 -----------------------------------
 require("scripts/globals/titles");
 -----------------------------------
@@ -10,7 +10,7 @@ function onMobSpawn(mob)
 end;
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(dsp.title.XOLOTL_XTRAPOLATOR);
+    player:addTitle(tpz.title.XOLOTL_XTRAPOLATOR);
 end;
 
 function onMobDespawn(mob)

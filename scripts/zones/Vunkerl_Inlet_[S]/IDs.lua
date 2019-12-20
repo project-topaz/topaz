@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.VUNKERL_INLET_S] =
+zones[tpz.zone.VUNKERL_INLET_S] =
 {
     text =
     {
@@ -16,6 +16,7 @@ zones[dsp.zone.VUNKERL_INLET_S] =
         KEYITEM_OBTAINED        = 6391, -- Obtained key item: <keyitem>.
         NOTHING_OUT_OF_ORDINARY = 6402, -- There is nothing out of the ordinary here.
         FISHING_MESSAGE_OFFSET  = 7049, -- You can't fish here.
+        COMMON_SENSE_SURVIVAL   = 9018, -- It appears that you have arrived at a new survival guide provided by the Servicemen's Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
@@ -31,4 +32,4 @@ zones[dsp.zone.VUNKERL_INLET_S] =
     },
 }
 
-return zones[dsp.zone.VUNKERL_INLET_S]
+return zones[tpz.zone.VUNKERL_INLET_S]

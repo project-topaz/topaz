@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Garlaige Citadel
---  MOB: Fortalice Bats
+--  Mob: Fortalice Bats
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 710, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 710, 1, tpz.regime.type.GROUNDS)
 end;

@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Cape Teriggan
---  MOB: Goblin Alchemist
+--  Mob: Goblin Alchemist
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 105, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 105, 2, tpz.regime.type.FIELDS)
 end;

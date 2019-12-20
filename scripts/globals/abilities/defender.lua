@@ -14,5 +14,5 @@ function onAbilityCheck(player,target,ability)
 end
 
 function onUseAbility(player,target,ability)
-    player:addStatusEffect(dsp.effect.DEFENDER,1,0,180)
+    player:addStatusEffect(tpz.effect.DEFENDER,1,0,180 + player:getMod(tpz.mod.DEFENDER_DURATION))
 end

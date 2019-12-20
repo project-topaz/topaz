@@ -8,11 +8,11 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.IDLE_DESPAWN, 180)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
 end
 
 function onMobDeath(mob, player, isKiller)
-    if player:getVar("sharpeningTheSwordCS") == 3 then
-        player:setVar("PolevikKilled", 1)
+    if player:getCharVar("sharpeningTheSwordCS") == 3 then
+        player:setCharVar("PolevikKilled", 1)
     end
 end

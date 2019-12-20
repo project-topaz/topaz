@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.RABAO] =
+zones[tpz.zone.RABAO] =
 {
     text =
     {
@@ -28,6 +28,7 @@ zones[dsp.zone.RABAO] =
         NOMAD_MOOGLE_DIALOG     = 10179, -- I'm a traveling moogle, kupo. I help adventurers in the Outlands access items they have stored in a Mog House elsewhere, kupo.
         GENEROIT_SHOP_DIALOG    = 10297, -- Ho there! I am called Generoit. I have everything here for the chocobo enthusiast, and other rare items galore.
         RETRIEVE_DIALOG_ID      = 10753, -- You retrieve <item> from the porter moogle's care.
+        COMMON_SENSE_SURVIVAL   = 11831, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
@@ -37,4 +38,4 @@ zones[dsp.zone.RABAO] =
     },
 }
 
-return zones[dsp.zone.RABAO]
+return zones[tpz.zone.RABAO]

@@ -28,7 +28,7 @@ function onTrigger(player, logId, questId, var, value, target)
     logId = questLog.quest_log;
 
     -- validate questId
-    local areaQuestIds = dsp.quest.id[dsp.quest.area[logId]];
+    local areaQuestIds = tpz.quest.id[tpz.quest.area[logId]];
     if (questId ~= nil) then
         questId = tonumber(questId) or areaQuestIds[string.upper(questId)];
     end
@@ -38,7 +38,7 @@ function onTrigger(player, logId, questId, var, value, target)
     end
 
     -- validate quest
-    local quest = dsp.quest.getQuest(logId, questId)
+    local quest = tpz.quest.getQuest(logId, questId)
     if not quest then
         error(player, "Unable to load quest file!")
         return
@@ -79,6 +79,6 @@ function onTrigger(player, logId, questId, var, value, target)
         return
     end
 
-    targ:setVar(db_name, value);
+    targ:setCharVar(db_name, value);
     player:PrintToPlayer( string.format( "Set %s's quest variable '%s' for '%s' to %i.", targ:getName(), var, quest.name, value ) );
 end

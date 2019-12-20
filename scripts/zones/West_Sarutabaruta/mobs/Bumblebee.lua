@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: West Sarutabaruta
---  MOB: Bumblebee
+--  Mob: Bumblebee
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 61, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 61, 2, tpz.regime.type.FIELDS)
 end

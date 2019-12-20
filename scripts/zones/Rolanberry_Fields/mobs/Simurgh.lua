@@ -1,13 +1,13 @@
 -----------------------------------
 -- Area: Rolanberry Fields (110)
---  HMN: Simurgh
+--  HNM: Simurgh
 -----------------------------------
 mixins = {require("scripts/mixins/rage")}
 require("scripts/globals/titles")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(dsp.title.SIMURGH_POACHER)
+    player:addTitle(tpz.title.SIMURGH_POACHER)
 end
 
 function onMobDespawn(mob)

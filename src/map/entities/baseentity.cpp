@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 #include <string.h>
@@ -27,6 +25,7 @@
 #include "../zone.h"
 #include "../ai/ai_container.h"
 #include "../instance.h"
+#include "../battlefield.h"
 
 CBaseEntity::CBaseEntity()
 {
@@ -46,12 +45,14 @@ CBaseEntity::CBaseEntity()
     allegiance = 0;
     updatemask = 0;
     PAI = nullptr;
-	PBCNM = nullptr;
+	PBattlefield = nullptr;
 	PInstance = nullptr;
 }
 
 CBaseEntity::~CBaseEntity()
 {
+    if (PBattlefield)
+        PBattlefield->RemoveEntity(this, BATTLEFIELD_LEAVE_CODE_WARPDC);
 }
 
 void CBaseEntity::Spawn()

@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Castle Zvahl Keep (162)
---  MOB: Baron_Vapula
+--  Mob: Baron Vapula
 -----------------------------------
 require("scripts/globals/titles");
 
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(dsp.title.HELLSBANE);
+    player:addTitle(tpz.title.HELLSBANE);
 end;

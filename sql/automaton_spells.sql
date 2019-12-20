@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
--- Host: localhost    Database: dspdb
+-- Host: localhost    Database: tpzdb
 -- ------------------------------------------------------
 -- Server version	5.6.16
 
@@ -109,7 +109,7 @@ INSERT INTO `automaton_spells` VALUES (173,313,32,0,0,0);
 INSERT INTO `automaton_spells` VALUES (220,18,61,3,256,0);
 INSERT INTO `automaton_spells` VALUES (221,141,57,3,256,0);
 INSERT INTO `automaton_spells` VALUES (230,33,61,135,0,0);
-INSERT INTO `automaton_spells` VALUES (231,107,61,135,0,0);
+INSERT INTO `automaton_spells` VALUES (231,111,61,135,0,0);
 INSERT INTO `automaton_spells` VALUES (245,45,32,0,0,0);
 INSERT INTO `automaton_spells` VALUES (247,78,32,0,0,0);
 INSERT INTO `automaton_spells` VALUES (248,331,32,0,0,0);

@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -32,7 +30,7 @@
 #include "../common/sql.h"
 #include "../common/mmo.h"
 #include "../common/taskmgr.h"
-#include "../common/dsprand.h"
+#include "../common/tpzrand.h"
 
 #include <map>
 #include <list>
@@ -67,7 +65,7 @@ struct map_config_t
     uint16 mysql_port;              // mysql port     -> 3306
     std::string mysql_login;        // mysql login    -> default root
     std::string mysql_password;     // mysql pass     -> default nullptr
-    std::string mysql_database;     // mysql database -> default dspdb
+    std::string mysql_database;     // mysql database -> default tpzdb
 
     std::string server_message;
     std::string server_message_fr;
@@ -136,6 +134,8 @@ struct map_config_t
     uint16 msg_server_port;           // central message server port
     std::string msg_server_ip;        // central message server IP
     bool   skillup_bloodpact;         // Enable/disable skillups for bloodpacts
+    bool   anticheat_enabled;         // Is the anti-cheating system enabled
+    bool   anticheat_jail_disable;    // Globally disable auto-jailing by the anti-cheat system
 };
 
 /************************************************************************

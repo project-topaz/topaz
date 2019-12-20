@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.MISAREAUX_COAST] =
+zones[tpz.zone.MISAREAUX_COAST] =
 {
     text =
     {
@@ -19,6 +19,7 @@ zones[dsp.zone.MISAREAUX_COAST] =
         CONQUEST_BASE            = 7171, -- Tallying conquest results...
         DOOR_CLOSED              = 7347, -- The door is locked tight.
         LOGGING_IS_POSSIBLE_HERE = 7601, -- Logging is possible here if you have <item>.
+        COMMON_SENSE_SURVIVAL    = 8635, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
         HOMEPOINT_SET            = 8858, -- Home point set!
     },
     mob =
@@ -45,4 +46,4 @@ zones[dsp.zone.MISAREAUX_COAST] =
     },
 }
 
-return zones[dsp.zone.MISAREAUX_COAST]
+return zones[tpz.zone.MISAREAUX_COAST]

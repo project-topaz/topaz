@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -45,7 +43,7 @@ public:
         return m_PLuaMobSkill;
     }
     int32 getTP(lua_State*);
-    int32 getHPP(lua_State*);
+    int32 getMobHPP(lua_State*);
     int32 getID(lua_State*);
     int32 getParam(lua_State*);
     int32 isAoE(lua_State*);

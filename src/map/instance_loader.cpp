@@ -16,8 +16,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/
 
-This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -38,7 +36,7 @@ This file is part of DarkStar-server source code.
 
 CInstanceLoader::CInstanceLoader(uint8 instanceid, CZone* PZone, CCharEntity* PRequester)
 {
-    DSP_DEBUG_BREAK_IF(PZone->GetType() != ZONETYPE_DUNGEON_INSTANCED);
+    TPZ_DEBUG_BREAK_IF(PZone->GetType() != ZONETYPE_DUNGEON_INSTANCED);
 
     requester = PRequester;
     zone = PZone;
@@ -151,11 +149,11 @@ CInstance* CInstanceLoader::LoadInstance(CInstance* instance)
             PMob->SetMJob(Sql_GetIntData(SqlInstanceHandle, 14));
             PMob->SetSJob(Sql_GetIntData(SqlInstanceHandle, 15));
 
-            PMob->m_Weapons[SLOT_MAIN]->setMaxHit(1);
-            PMob->m_Weapons[SLOT_MAIN]->setSkillType(Sql_GetIntData(SqlInstanceHandle, 16));
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setMaxHit(1);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setSkillType(Sql_GetIntData(SqlInstanceHandle, 16));
             PMob->m_dmgMult = Sql_GetUIntData(SqlInstanceHandle, 17);
-            PMob->m_Weapons[SLOT_MAIN]->setDelay((Sql_GetIntData(SqlInstanceHandle, 18) * 1000) / 60);
-            PMob->m_Weapons[SLOT_MAIN]->setBaseDelay((Sql_GetIntData(SqlInstanceHandle, 18) * 1000) / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setDelay((Sql_GetIntData(SqlInstanceHandle, 18) * 1000) / 60);
+            ((CItemWeapon*)PMob->m_Weapons[SLOT_MAIN])->setBaseDelay((Sql_GetIntData(SqlInstanceHandle, 18) * 1000) / 60);
 
             PMob->m_Behaviour = (uint16)Sql_GetIntData(SqlInstanceHandle, 19);
             PMob->m_Link = (uint8)Sql_GetIntData(SqlInstanceHandle, 20);

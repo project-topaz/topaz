@@ -1,13 +1,13 @@
 -----------------------------------
 -- Area: Qu'Bia Arena
---  NM:  Archlich Taber'quoan
+--   NM: Archlich Taber'quoan
 -- Mission 5-1 BCNM Fight
 -----------------------------------
 mixins = {require("scripts/mixins/job_special")};
 require("scripts/globals/status");
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.SOUND_RANGE, 32);
+    mob:setMobMod(tpz.mobMod.SOUND_RANGE, 32);
 end;
 
 function onMobFight(mob, target)
@@ -29,5 +29,5 @@ function onMobFight(mob, target)
 end;
 
 function onMobDeath(mob, player, isKiller)
-    player:addTitle(dsp.title.ARCHMAGE_ASSASSIN);
+    player:addTitle(tpz.title.ARCHMAGE_ASSASSIN);
 end;

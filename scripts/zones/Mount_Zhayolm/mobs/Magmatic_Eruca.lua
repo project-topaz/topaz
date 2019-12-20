@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Mount Zhayolm
---  MOB: Magmatic Eruca
+--  Mob: Magmatic Eruca
 -- Note: Place Holder Energetic Eruca
 -----------------------------------
 local ID = require("scripts/zones/Mount_Zhayolm/IDs")
@@ -11,5 +11,5 @@ function onMobDeath(mob, player, isKiller)
 end
 
 function onMobDespawn(mob)
-    dsp.mob.phOnDespawn(mob, ID.mob.ENERGETIC_ERUCA_PH, 10, 86400) -- 24 hours
+    tpz.mob.phOnDespawn(mob, ID.mob.ENERGETIC_ERUCA_PH, 10, 86400) -- 24 hours
 end

@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Gusgen Mines
---  MOB: Fly Agaric
+--  Mob: Fly Agaric
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 680, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 680, 1, tpz.regime.type.GROUNDS)
 end;

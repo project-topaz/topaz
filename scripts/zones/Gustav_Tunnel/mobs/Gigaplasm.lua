@@ -1,11 +1,13 @@
-----------------------------------
+-----------------------------------
 -- Area: Gustav Tunnel
 --   NM: Gigaplasm
 -- Note: Part of mission "The Salt of the Earth"
 -----------------------------------
+require("scripts/globals/status")
+-----------------------------------
 
 function onMobInitialize(mob)
-    mob:setMobMod(dsp.mobMod.IDLE_DESPAWN, 180)
+    mob:setMobMod(tpz.mobMod.IDLE_DESPAWN, 180)
 end
 
 function onMobDeath(mob, player, isKiller)

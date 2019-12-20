@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Korroloka Tunnel
---  MOB: Land Worm
+--  Mob: Land Worm
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 727, 1, dsp.regime.type.GROUNDS)
-end;
+    tpz.regime.checkRegime(player, mob, 727, 1, tpz.regime.type.GROUNDS)
+end

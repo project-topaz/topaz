@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -41,22 +39,22 @@ CAttackRound::CAttackRound(CBattleEntity* attacker, CBattleEntity* defender)
     m_sataOccured = false;
     m_subWeaponType = 0;
 
-    if (attacker->m_Weapons[SLOT_SUB]->isType(ITEM_WEAPON))
+    if (auto weapon = dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_SUB]))
     {
-        m_subWeaponType = attacker->m_Weapons[SLOT_SUB]->getDmgType();
+        m_subWeaponType = weapon->getDmgType();
     }
 
     // Grab a trick attack assistant.
     m_taEntity = battleutils::getAvailableTrickAttackChar(attacker, attacker->GetBattleTarget());
 
     // Build main weapon attacks.
-    CreateAttacks(attacker->m_Weapons[SLOT_MAIN], RIGHTATTACK);
+    CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), RIGHTATTACK);
 
     // Build dual wield off hand weapon attacks.
     if (IsH2H())
     {
         // Build left hand H2H attacks.
-        CreateAttacks(attacker->m_Weapons[SLOT_MAIN], LEFTATTACK);
+        CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_MAIN]), LEFTATTACK);
 
         // Build kick attacks.
         CreateKickAttacks();
@@ -65,7 +63,7 @@ CAttackRound::CAttackRound(CBattleEntity* attacker, CBattleEntity* defender)
     else if ((m_subWeaponType > 0 && m_subWeaponType < 4) ||
         (attacker->objtype == TYPE_MOB && static_cast<CMobEntity*>(attacker)->getMobMod(MOBMOD_DUAL_WIELD)))
     {
-        CreateAttacks(attacker->m_Weapons[SLOT_SUB], LEFTATTACK);
+        CreateAttacks(dynamic_cast<CItemWeapon*>(attacker->m_Weapons[SLOT_SUB]), LEFTATTACK);
     }
 
     // Build Daken throw
@@ -158,7 +156,9 @@ CBattleEntity*	CAttackRound::GetTAEntity()
 ************************************************************************/
 bool CAttackRound::IsH2H()
 {
-    return m_attacker->m_Weapons[SLOT_MAIN]->getSkillType() == SKILL_HAND_TO_HAND ? true : false;
+    if (auto weapon = dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[SLOT_MAIN]))
+        return weapon->getSkillType() == SKILL_HAND_TO_HAND;
+    return false;
 }
 
 /************************************************************************
@@ -200,6 +200,9 @@ void CAttackRound::DeleteAttackSwing()
 ************************************************************************/
 void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION direction)
 {
+    if (!PWeapon)
+        return;
+
     uint8 num = 1;
 
     bool isPC = m_attacker->objtype == TYPE_PC;
@@ -255,13 +258,13 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
         //ShowDebug(CL_CYAN"Create Attacks: Mikage Active, Rolling Attack Chance for %d Shadowss...\n" CL_RESET, shadows);
         AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, direction, shadows);
     }
-    else if (num == 1 && dsprand::GetRandomNumber(100) < quadAttack)
+    else if (num == 1 && tpzrand::GetRandomNumber(100) < quadAttack)
         AddAttackSwing(PHYSICAL_ATTACK_TYPE::QUAD, direction, 3);
 
-    else if (num == 1 && dsprand::GetRandomNumber(100) < tripleAttack)
+    else if (num == 1 && tpzrand::GetRandomNumber(100) < tripleAttack)
         AddAttackSwing(PHYSICAL_ATTACK_TYPE::TRIPLE, direction, 2);
 
-    else if (num == 1 && dsprand::GetRandomNumber(100) < doubleAttack)
+    else if (num == 1 && tpzrand::GetRandomNumber(100) < doubleAttack)
         AddAttackSwing(PHYSICAL_ATTACK_TYPE::DOUBLE, direction, 1);
 
     // Apply Mythic OAT mods (mainhand only)
@@ -269,11 +272,11 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
     {
         int16 occAttThriceRate = std::clamp<int16>(m_attacker->getMod(Mod::MYTHIC_OCC_ATT_THRICE), 0, 100);
         int16 occAttTwiceRate = std::clamp<int16>(m_attacker->getMod(Mod::MYTHIC_OCC_ATT_TWICE), 0, 100);
-        if (num == 1 && dsprand::GetRandomNumber(100) < occAttThriceRate)
+        if (num == 1 && tpzrand::GetRandomNumber(100) < occAttThriceRate)
         {
             AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, direction, 2);
         }
-        else if (num == 1 && dsprand::GetRandomNumber(100) < occAttTwiceRate)
+        else if (num == 1 && tpzrand::GetRandomNumber(100) < occAttTwiceRate)
         {
             AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, direction, 1);
         }
@@ -284,16 +287,16 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
     {
         // Check for ammo
         CCharEntity* PChar = (CCharEntity*)m_attacker;
-        CItemArmor* PAmmo = PChar->getEquip(SLOT_AMMO);
-        CItemArmor* PMain = PChar->getEquip(SLOT_MAIN);
-        CItemArmor* PSub = PChar->getEquip(SLOT_SUB);
+        CItemEquipment* PAmmo = PChar->getEquip(SLOT_AMMO);
+        CItemEquipment* PMain = PChar->getEquip(SLOT_MAIN);
+        CItemEquipment* PSub = PChar->getEquip(SLOT_SUB);
         uint8 slot = PChar->equip[SLOT_AMMO];
         uint8 loc = PChar->equipLoc[SLOT_AMMO];
         uint8 ammoCount = 0;
 
         // Handedness check, checking mod of the weapon for the purposes of level scaling
         if (battleutils::GetScaledItemModifier(PChar, PMain, Mod::AMMO_SWING_TYPE) == 2 &&
-            dsprand::GetRandomNumber(100) < m_attacker->getMod(Mod::AMMO_SWING) && PAmmo != nullptr && ammoCount < PAmmo->getQuantity())
+            tpzrand::GetRandomNumber(100) < m_attacker->getMod(Mod::AMMO_SWING) && PAmmo != nullptr && ammoCount < PAmmo->getQuantity())
         {
             AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, direction, 1);
             ammoCount += 1;
@@ -301,13 +304,13 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
         else
         {
             if (direction == RIGHTATTACK && battleutils::GetScaledItemModifier(PChar, PMain, Mod::AMMO_SWING_TYPE) == 1 &&
-                dsprand::GetRandomNumber(100) < m_attacker->getMod(Mod::AMMO_SWING) && PAmmo != nullptr && ammoCount < PAmmo->getQuantity())
+                tpzrand::GetRandomNumber(100) < m_attacker->getMod(Mod::AMMO_SWING) && PAmmo != nullptr && ammoCount < PAmmo->getQuantity())
             {
                 AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, RIGHTATTACK, 1);
                 ammoCount += 1;
             }
             if (direction == LEFTATTACK && PSub != nullptr && battleutils::GetScaledItemModifier(PChar, PSub, Mod::AMMO_SWING_TYPE) == 1 &&
-                dsprand::GetRandomNumber(100) < m_attacker->getMod(Mod::AMMO_SWING) && PAmmo != nullptr && ammoCount < PAmmo->getQuantity())
+                tpzrand::GetRandomNumber(100) < m_attacker->getMod(Mod::AMMO_SWING) && PAmmo != nullptr && ammoCount < PAmmo->getQuantity())
             {
                 AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, LEFTATTACK, 1);
                 ammoCount += 1;
@@ -330,7 +333,7 @@ void CAttackRound::CreateAttacks(CItemWeapon* PWeapon, PHYSICAL_ATTACK_DIRECTION
     // TODO: Possible Lua function for the nitty gritty stuff below.
 
     // Iga mod: Extra attack chance whilst dual wield is on.
-    if (direction == LEFTATTACK && dsprand::GetRandomNumber(100) < m_attacker->getMod(Mod::EXTRA_DUAL_WIELD_ATTACK))
+    if (direction == LEFTATTACK && tpzrand::GetRandomNumber(100) < m_attacker->getMod(Mod::EXTRA_DUAL_WIELD_ATTACK))
         AddAttackSwing(PHYSICAL_ATTACK_TYPE::NORMAL, RIGHTATTACK, 1);
 
 }
@@ -354,14 +357,14 @@ void CAttackRound::CreateKickAttacks()
 
         kickAttack = std::clamp<uint16>(kickAttack, 0, 100);
 
-        if (dsprand::GetRandomNumber(100) < kickAttack)
+        if (tpzrand::GetRandomNumber(100) < kickAttack)
         {
             AddAttackSwing(PHYSICAL_ATTACK_TYPE::KICK, RIGHTATTACK, 1);
             m_kickAttackOccured = true;
         }
 
         // Tantra set mod: Try an extra left kick attack.
-        if (m_kickAttackOccured && dsprand::GetRandomNumber(100) < m_attacker->getMod(Mod::EXTRA_KICK_ATTACK))
+        if (m_kickAttackOccured && tpzrand::GetRandomNumber(100) < m_attacker->getMod(Mod::EXTRA_KICK_ATTACK))
         {
             AddAttackSwing(PHYSICAL_ATTACK_TYPE::KICK, LEFTATTACK, 1);
         }
@@ -377,11 +380,11 @@ void CAttackRound::CreateDakenAttack()
 {
     if (m_attacker->objtype == TYPE_PC)
     {
-        CItemWeapon* PAmmo = m_attacker->m_Weapons[SLOT_AMMO];
+        auto PAmmo = dynamic_cast<CItemWeapon*>(m_attacker->m_Weapons[SLOT_AMMO]);
         if (PAmmo && PAmmo->isShuriken())
         {
             uint16 daken = m_attacker->getMod(Mod::DAKEN);
-             if (dsprand::GetRandomNumber(100) < daken)
+             if (tpzrand::GetRandomNumber(100) < daken)
              {
                 AddAttackSwing(PHYSICAL_ATTACK_TYPE::DAKEN, RIGHTATTACK, 1);
              }

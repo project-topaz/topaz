@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Western Altepa Desert
---  MOB: Antican Essedarius
+--  Mob: Antican Essedarius
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 134, 2, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 134, 2, tpz.regime.type.FIELDS)
 end

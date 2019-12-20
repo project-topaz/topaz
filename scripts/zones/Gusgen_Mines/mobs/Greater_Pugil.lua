@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Gusgen Mines
---  MOB: Greater Pugil
+--  Mob: Greater Pugil
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 682, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 682, 1, tpz.regime.type.GROUNDS)
 end;

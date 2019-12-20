@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Ranguemont Pass
---  MOB: Goblin Artificer
+--  Mob: Goblin Artificer
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 609, 2, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 609, 2, tpz.regime.type.GROUNDS)
 end;

@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: The Boyahda Tree
---  MOB: Bark Tarantula
+--  Mob: Bark Tarantula
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 725, 2, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 725, 2, tpz.regime.type.GROUNDS)
 end

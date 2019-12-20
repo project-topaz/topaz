@@ -14,19 +14,19 @@ function onInitialize(zone)
 end;
 
 function onConquestUpdate(zone, updatetype)
-    dsp.conq.onConquestUpdate(zone, updatetype)
+    tpz.conq.onConquestUpdate(zone, updatetype)
 end;
 
 function onZoneIn(player,prevZone)
     local CurrentMission = player:getCurrentMission(WINDURST);
-    local MissionStatus = player:getVar("MissionStatus");
+    local MissionStatus = player:getCharVar("MissionStatus");
     local cs = -1;
 
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
         player:setPos(-177.804,-2.765,-37.893,179);
     end
 
-    if (prevZone == dsp.zone.QUICKSAND_CAVES and CurrentMission == MOON_READING and MissionStatus >= 1) then
+    if (prevZone == tpz.zone.QUICKSAND_CAVES and CurrentMission == tpz.mission.id.windurst.MOON_READING and MissionStatus >= 1) then
         cs = 3;
     end
 
@@ -41,7 +41,7 @@ end;
 
 function onEventFinish(player,csid,option)
     if (csid == 3) then
-        player:addKeyItem(dsp.ki.ANCIENT_VERSE_OF_ALTEPA);
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED,dsp.ki.ANCIENT_VERSE_OF_ALTEPA);
+        player:addKeyItem(tpz.ki.ANCIENT_VERSE_OF_ALTEPA);
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.ANCIENT_VERSE_OF_ALTEPA);
     end
 end;

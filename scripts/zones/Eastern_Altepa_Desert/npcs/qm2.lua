@@ -12,18 +12,18 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    local twentyInPirateYearsCS = player:getVar("twentyInPirateYearsCS")
-    local tsuchigumoKilled = player:getVar("TsuchigumoKilled")
+    local twentyInPirateYearsCS = player:getCharVar("twentyInPirateYearsCS")
+    local tsuchigumoKilled = player:getCharVar("TsuchigumoKilled")
 
     if twentyInPirateYearsCS == 3 and tsuchigumoKilled <= 1 and not GetMobByID(ID.mob.TSUCHIGUMO_OFFSET):isSpawned() and not GetMobByID(ID.mob.TSUCHIGUMO_OFFSET + 1):isSpawned() then
         player:messageSpecial(ID.text.SENSE_OF_FOREBODING)
         SpawnMob(ID.mob.TSUCHIGUMO_OFFSET):updateClaim(player)
         SpawnMob(ID.mob.TSUCHIGUMO_OFFSET + 1):updateClaim(player)
     elseif twentyInPirateYearsCS == 3 and tsuchigumoKilled >= 2 then
-        player:addKeyItem(dsp.ki.TRICK_BOX)
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED, dsp.ki.TRICK_BOX)
-        player:setVar("twentyInPirateYearsCS", 4)
-        player:setVar("TsuchigumoKilled", 0)
+        player:addKeyItem(tpz.ki.TRICK_BOX)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.TRICK_BOX)
+        player:setCharVar("twentyInPirateYearsCS", 4)
+        player:setCharVar("TsuchigumoKilled", 0)
     else
         player:messageSpecial(ID.text.NOTHING_OUT_OF_ORDINARY)
     end

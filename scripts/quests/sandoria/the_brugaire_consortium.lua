@@ -1,11 +1,11 @@
 require("scripts/globals/quests")
 
-local thisQuest = dsp.quest.newQuest()
+local thisQuest = tpz.quest.newQuest()
 
 thisQuest.name = "The Brugaire Consortium"
-thisQuest.log = dsp.quest.log.SANDORIA
-thisQuest.quest_id = dsp.quest.id.sandoria.THE_BRUGAIRE_CONSORTIUM
-thisQuest.string_key = dsp.quest.string.sandoria[thisQuest.quest_id]
+thisQuest.log = tpz.quest.log.SANDORIA
+thisQuest.quest_id = tpz.quest.id.sandoria.THE_BRUGAIRE_CONSORTIUM
+thisQuest.string_key = tpz.quest.string.sandoria[thisQuest.quest_id]
 
 thisQuest.repeatable = false
 thisQuest.var_prefix = "[Q]["..thisQuest.log.."]["..thisQuest.quest_id.."]"
@@ -19,7 +19,7 @@ thisQuest.requirements =
 {
     fame =
     {
-        area = dsp.quest.fame.SANDORIA,
+        area = tpz.quest.fame.SANDORIA,
         level = 1
     }
 }
@@ -27,8 +27,8 @@ thisQuest.requirements =
 thisQuest.rewards =
 {
     items = 12289, -- Lauan Shield
-    title = dsp.title.COURIER_EXTRAORDINAIRE,
-    fame_area = dsp.quest.fame.SANDORIA
+    title = tpz.title.COURIER_EXTRAORDINAIRE,
+    fame_area = tpz.quest.fame.SANDORIA
 }
 
 thisQuest.temporary =
@@ -79,9 +79,9 @@ end
 thisQuest.stages =
 {
     -- Stage 0: Talk to Fontoumant, Port San d'Oria, to receive the first parcel and begin the quest
-    [dsp.quest.stage.STAGE0] =
+    [tpz.quest.stage.STAGE0] =
     {
-        [dsp.zone.PORT_SAN_DORIA] =
+        [tpz.zone.PORT_SAN_DORIA] =
         {
             onTrigger =
             {
@@ -112,9 +112,9 @@ thisQuest.stages =
         }
     },
     -- Stage 1: Deliver the first parcel to Regine, Port San d'Oria
-    [dsp.quest.stage.STAGE1] =
+    [tpz.quest.stage.STAGE1] =
     {
-        [dsp.zone.PORT_SAN_DORIA] =
+        [tpz.zone.PORT_SAN_DORIA] =
         {
             onTrade =
             {
@@ -142,9 +142,9 @@ thisQuest.stages =
         }
     },
     -- Stage 2: Return to Fontoumant to receive the next parcel
-    [dsp.quest.stage.STAGE2] =
+    [tpz.quest.stage.STAGE2] =
     {
-        [dsp.zone.PORT_SAN_DORIA] =
+        [tpz.zone.PORT_SAN_DORIA] =
         {
             onTrigger =
             {
@@ -164,9 +164,9 @@ thisQuest.stages =
         }
     },
     -- Stage 3: Deliver the second parcel to Apstaule, Port San d'Oria
-    [dsp.quest.stage.STAGE3] =
+    [tpz.quest.stage.STAGE3] =
     {
-        [dsp.zone.PORT_SAN_DORIA] =
+        [tpz.zone.PORT_SAN_DORIA] =
         {
             onTrade =
             {
@@ -194,9 +194,9 @@ thisQuest.stages =
         }
     },
     -- Stage 4: Return to Fontoumant to receive the next parcel
-    [dsp.quest.stage.STAGE4] =
+    [tpz.quest.stage.STAGE4] =
     {
-        [dsp.zone.PORT_SAN_DORIA] =
+        [tpz.zone.PORT_SAN_DORIA] =
         {
             onTrigger =
             {
@@ -216,9 +216,9 @@ thisQuest.stages =
         }
     },
     -- Stage 5: Deliver the third parcel to Thierride, Port San d'Oria
-    [dsp.quest.stage.STAGE5] =
+    [tpz.quest.stage.STAGE5] =
     {
-        [dsp.zone.PORT_SAN_DORIA] =
+        [tpz.zone.PORT_SAN_DORIA] =
         {
             onTrade =
             {
@@ -246,9 +246,9 @@ thisQuest.stages =
         }
     },
     -- Stage 6: Speak to Fontoumant to finish quest and receive reward
-    [dsp.quest.stage.STAGE6] =
+    [tpz.quest.stage.STAGE6] =
     {
-        [dsp.zone.PORT_SAN_DORIA] =
+        [tpz.zone.PORT_SAN_DORIA] =
         {
             onTrigger =
             {

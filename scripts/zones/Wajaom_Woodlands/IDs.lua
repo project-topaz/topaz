@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.WAJAOM_WOODLANDS] =
+zones[tpz.zone.WAJAOM_WOODLANDS] =
 {
     text =
     {
@@ -27,6 +27,7 @@ zones[dsp.zone.WAJAOM_WOODLANDS] =
         PAMAMA_PEELS                = 8489, -- Piles of pamama peels litter the ground...
         BROKEN_SHARDS               = 8492, -- Broken shards of insect wing are scattered all over...
         DRAWS_NEAR                  = 8515, -- Something draws near!
+        COMMON_SENSE_SURVIVAL       = 9633, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
     mob =
     {
@@ -65,4 +66,4 @@ zones[dsp.zone.WAJAOM_WOODLANDS] =
     },
 }
 
-return zones[dsp.zone.WAJAOM_WOODLANDS]
+return zones[tpz.zone.WAJAOM_WOODLANDS]

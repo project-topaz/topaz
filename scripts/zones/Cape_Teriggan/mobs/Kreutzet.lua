@@ -1,12 +1,12 @@
-----------------------------------
+-----------------------------------
 -- Area: Cape Teriggan
---  NM:  Kreutzet
+--   NM: Kreutzet
 -----------------------------------
 require("scripts/globals/weather")
 -----------------------------------
 
 function onMobRoam(mob)
-    if not (mob:getWeather() == dsp.weather.WIND or mob:getWeather() == dsp.weather.GALES) then
+    if not (mob:getWeather() == tpz.weather.WIND or mob:getWeather() == tpz.weather.GALES) then
         DespawnMob(mob:getID())
     end
 end
@@ -28,7 +28,7 @@ function onMobWeaponSkill(target, mob, skill)
 end
 
 function onMobDisengage(mob, weather)
-    if not (mob:getWeather() == dsp.weather.WIND or mob:getWeather() == dsp.weather.GALES) then
+    if not (mob:getWeather() == tpz.weather.WIND or mob:getWeather() == tpz.weather.GALES) then
         DespawnMob(mob:getID())
     end
 end

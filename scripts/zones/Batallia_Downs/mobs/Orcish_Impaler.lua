@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Batallia Downs
---  MOB: Orcish Impaler
+--  Mob: Orcish Impaler
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 74, 3, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 74, 3, tpz.regime.type.FIELDS)
 end;

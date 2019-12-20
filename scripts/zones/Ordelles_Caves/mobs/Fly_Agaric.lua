@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Ordelle's Caves
---  MOB: Fly Agaric
+--  Mob: Fly Agaric
 -- Note: PH for Donggu
 -----------------------------------
 local ID = require("scripts/zones/Ordelles_Caves/IDs")
@@ -9,9 +9,9 @@ require("scripts/globals/mobs")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 656, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 656, 1, tpz.regime.type.GROUNDS)
 end
 
 function onMobDespawn(mob)
-    dsp.mob.phOnDespawn(mob, ID.mob.DONGGU_PH, 10, 3600) -- 1 hour
+    tpz.mob.phOnDespawn(mob, ID.mob.DONGGU_PH, 10, 3600) -- 1 hour
 end

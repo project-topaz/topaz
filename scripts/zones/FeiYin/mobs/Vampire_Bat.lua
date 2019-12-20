@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Fei'Yin
---  MOB: Vampire Bat
+--  Mob: Vampire Bat
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 711, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 711, 1, tpz.regime.type.GROUNDS)
 end;

@@ -1,7 +1,6 @@
 -----------------------------------
 -- Area: Apollyon NE
---  NPC: Thiazi
-
+--  Mob: Thiazi
 -----------------------------------
 require("scripts/globals/limbus");
 -----------------------------------
@@ -19,6 +18,6 @@ function onMobDespawn(mob)
 
     if (mobID ==16933063) then -- item
        GetNPCByID(16932864+126):setPos(mobX,mobY,mobZ);
-    GetNPCByID(16932864+126):setStatus(dsp.status.NORMAL);
+    GetNPCByID(16932864+126):setStatus(tpz.status.NORMAL);
  end
 end;

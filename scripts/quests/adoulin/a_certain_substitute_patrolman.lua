@@ -1,12 +1,12 @@
 require("scripts/globals/missions")
 require("scripts/globals/quests")
 
-local thisQuest = dsp.quest.newQuest()
+local thisQuest = tpz.quest.newQuest()
 
 thisQuest.name = "A Certain Substitute Patrolman"
-thisQuest.log = dsp.quest.log.ADOULIN
-thisQuest.quest_id = dsp.quest.id.adoulin.A_CERTAIN_SUBSTITUTE_PATROLMAN
-thisQuest.string_key = dsp.quest.string.adoulin[thisQuest.quest_id]
+thisQuest.log = tpz.quest.log.ADOULIN
+thisQuest.quest_id = tpz.quest.id.adoulin.A_CERTAIN_SUBSTITUTE_PATROLMAN
+thisQuest.string_key = tpz.quest.string.adoulin[thisQuest.quest_id]
 
 thisQuest.repeatable = false
 thisQuest.var_prefix = "[Q]["..thisQuest.log.."]["..thisQuest.quest_id.."]"
@@ -15,7 +15,7 @@ thisQuest.vars =
     stage = thisQuest.var_prefix,
     additional =
     {
-        --['name'] = { type = dsp.quest.var.CHAR, preserve = false, db_name = 'some_var' },
+        --['name'] = { type = tpz.quest.var.CHAR, preserve = false, db_name = 'some_var' },
     }
 }
 
@@ -25,12 +25,12 @@ thisQuest.requirements =
     {
         {
             mission_log = ADOULIN,
-            mission_id = LIFE_ON_THE_FRONTIER
+            mission_id = tpz.mission.id.soa.LIFE_ON_THE_FRONTIER
         }
     },
     fame =
     {
-        area = dsp.quest.fame.ADOULIN,
+        area = tpz.quest.fame.ADOULIN,
         level = 1
     }
 }
@@ -39,13 +39,13 @@ thisQuest.rewards =
 {
     exp = 1000,
     bayld = 500,
-    fame_area = dsp.quest.fame.ADOULIN
+    fame_area = tpz.quest.fame.ADOULIN
 }
 
 thisQuest.temporary =
 {
     items = {},
-    key_items = {dsp.ki.WESTERN_ADOULIN_PATROL_ROUTE}
+    key_items = {tpz.ki.WESTERN_ADOULIN_PATROL_ROUTE}
 }
 
 -- Additional quest functions
@@ -61,9 +61,9 @@ end
 thisQuest.stages =
 {
     -- Stage 0: Talk to Rising Solstice, Western Adoulin, to begin the quest
-    [dsp.quest.stage.STAGE0] =
+    [tpz.quest.stage.STAGE0] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -76,7 +76,7 @@ thisQuest.stages =
             onEventFinish =
             {
                 [2550] = function(player, option) -- Rising Solstice starting quest
-                    if thisQuest.giveKeyItem(player, dsp.ki.WESTERN_ADOULIN_PATROL_ROUTE) then
+                    if thisQuest.giveKeyItem(player, tpz.ki.WESTERN_ADOULIN_PATROL_ROUTE) then
                         return thisQuest.begin(player)
                     end
                 end
@@ -84,9 +84,9 @@ thisQuest.stages =
         }
     },
     -- Stage 1: Talk to Zaoso, Western Adoulin
-    [dsp.quest.stage.STAGE1] =
+    [tpz.quest.stage.STAGE1] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -104,9 +104,9 @@ thisQuest.stages =
         }
     },
     -- Stage 2: Talk to Clemmar, Western Adoulin
-    [dsp.quest.stage.STAGE2] =
+    [tpz.quest.stage.STAGE2] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -124,9 +124,9 @@ thisQuest.stages =
         }
     },
     -- Stage 3: Talk to Kongramm, Western Adoulin
-    [dsp.quest.stage.STAGE3] =
+    [tpz.quest.stage.STAGE3] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -144,9 +144,9 @@ thisQuest.stages =
         }
     },
     -- Stage 4: Talk to Virsaint, Western Adoulin
-    [dsp.quest.stage.STAGE4] =
+    [tpz.quest.stage.STAGE4] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -164,9 +164,9 @@ thisQuest.stages =
         }
     },
     -- Stage 5: Talk to Shipilolo, Western Adoulin
-    [dsp.quest.stage.STAGE5] =
+    [tpz.quest.stage.STAGE5] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -184,9 +184,9 @@ thisQuest.stages =
         }
     },
     -- Stage 6: Talk to Dangueubert, Western Adoulin
-    [dsp.quest.stage.STAGE6] =
+    [tpz.quest.stage.STAGE6] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -204,9 +204,9 @@ thisQuest.stages =
         }
     },
     -- Stage 7: Talk to Nylene, Western Adoulin
-    [dsp.quest.stage.STAGE7] =
+    [tpz.quest.stage.STAGE7] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -224,9 +224,9 @@ thisQuest.stages =
         }
     },
     -- Stage 8: Talk to Rising Solstice again, quest complete
-    [dsp.quest.stage.STAGE8] =
+    [tpz.quest.stage.STAGE8] =
     {
-        [dsp.zone.WESTERN_ADOULIN] =
+        [tpz.zone.WESTERN_ADOULIN] =
         {
             onTrigger =
             {
@@ -238,7 +238,7 @@ thisQuest.stages =
             {
                 [2552] = function(player, option) -- Rising Solstice finishing quest
                     if thisQuest.complete(player) then
-                        return thisQuest.delKeyItem(dsp.ki.WESTERN_ADOULIN_PATROL_ROUTE)
+                        return thisQuest.delKeyItem(tpz.ki.WESTERN_ADOULIN_PATROL_ROUTE)
                     end
                 end
             }

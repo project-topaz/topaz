@@ -15,13 +15,13 @@
 // define a break macro for debugging.
 #if defined(DEBUG)
 #if defined(_MSC_VER)
-#define DSP_DEBUG_BREAK_IF(_CONDITION_) if (_CONDITION_) {__debugbreak();}
+#define TPZ_DEBUG_BREAK_IF(_CONDITION_) if (_CONDITION_) {__debugbreak();}
 #else
 #include "assert.h"
-#define DSP_DEBUG_BREAK_IF(_CONDITION_) assert(!(_CONDITION_));
+#define TPZ_DEBUG_BREAK_IF(_CONDITION_) assert(!(_CONDITION_));
 #endif
 #else
-#define DSP_DEBUG_BREAK_IF(_CONDITION_)
+#define TPZ_DEBUG_BREAK_IF(_CONDITION_)
 #endif
 
 // typedef/using
@@ -44,7 +44,7 @@ using uint64 = std::uint64_t;
 #include <chrono>
 
 using namespace std::literals::chrono_literals;
-using server_clock = std::chrono::steady_clock;
+using server_clock = std::chrono::system_clock;
 using time_point = server_clock::time_point;
 using duration = server_clock::duration;
 

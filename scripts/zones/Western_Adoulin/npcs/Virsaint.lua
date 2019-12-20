@@ -6,7 +6,7 @@
 -----------------------------------
 require("scripts/globals/quests")
 
-local quests = dsp.quest.involvedQuests({
+local quests = tpz.quest.involvedQuests({
     require("scripts/quests/adoulin/a_certain_substitute_patrolman")
 })
 -----------------------------------

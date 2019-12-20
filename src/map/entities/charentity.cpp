@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -116,7 +114,6 @@ CCharEntity::CCharEntity()
     memset(&equip, 0, sizeof(equip));
     memset(&equipLoc, 0, sizeof(equipLoc));
     memset(&RealSkills, 0, sizeof(RealSkills));
-    memset(&nationtp, 0, sizeof(nationtp));
     memset(&expChain, 0, sizeof(expChain));
     memset(&nameflags, 0, sizeof(nameflags));
     memset(&menuConfigFlags, 0, sizeof(menuConfigFlags));
@@ -136,6 +133,10 @@ CCharEntity::CCharEntity()
     memset(&m_missionLog, 0, sizeof(m_missionLog));
     memset(&m_assaultLog, 0, sizeof(m_assaultLog));
     memset(&m_campaignLog, 0, sizeof(m_campaignLog));
+
+    memset(&teleport, 0, sizeof(teleport));
+    memset(&teleport.homepoint.menu, -1, sizeof(teleport.homepoint.menu));
+    memset(&teleport.survival.menu,  -1, sizeof(teleport.survival.menu));
 
     for (uint8 i = 0; i <= 3; ++i)
     {
@@ -341,13 +342,13 @@ CItemContainer* CCharEntity::getStorage(uint8 LocationID)
         case LOC_WARDROBE4:  return m_Wardrobe4.get();
     }
 
-    DSP_DEBUG_BREAK_IF(LocationID >= MAX_CONTAINER_ID);	// неразрешенный ID хранилища
+    TPZ_DEBUG_BREAK_IF(LocationID >= MAX_CONTAINER_ID);	// неразрешенный ID хранилища
     return 0;
 }
 
 int8 CCharEntity::getShieldSize()
 {
-    CItemArmor* PItem = (CItemArmor*)(getEquip(SLOT_SUB));
+    CItemEquipment* PItem = (CItemEquipment*)(getEquip(SLOT_SUB));
 
     if (PItem == nullptr) {
         return 0;
@@ -441,15 +442,15 @@ uint32 CCharEntity::GetPlayTime(bool needUpdate)
     return m_PlayTime;
 }
 
-CItemArmor* CCharEntity::getEquip(SLOTTYPE slot)
+CItemEquipment* CCharEntity::getEquip(SLOTTYPE slot)
 {
     uint8 loc = equip[slot];
     uint8 est = equipLoc[slot];
-    CItemArmor* item = nullptr;
+    CItemEquipment* item = nullptr;
 
     if (loc != 0)
     {
-        item = (CItemArmor*)getStorage(est)->GetItem(loc);
+        item = (CItemEquipment*)getStorage(est)->GetItem(loc);
     }
     return item;
 }
@@ -746,7 +747,7 @@ void CCharEntity::OnCastFinished(CMagicState& state, action_t& action)
         if (PSpell->getSkillType() == SKILL_SINGING)
         {
             CItemWeapon* PItem = static_cast<CItemWeapon*>(getEquip(SLOT_RANGED));
-            if (PItem && PItem->isType(ITEM_ARMOR))
+            if (PItem && PItem->isType(ITEM_EQUIPMENT))
             {
                 SKILLTYPE Skilltype = (SKILLTYPE)PItem->getSkillType();
                 if (Skilltype == SKILL_STRING_INSTRUMENT || Skilltype == SKILL_WIND_INSTRUMENT || Skilltype == SKILL_SINGING)
@@ -846,7 +847,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                         StatusEffectContainer->DelStatusEffect(EFFECT_UNLIMITED_SHOT);
                         recycleChance = 100;
                     }
-                    if (dsprand::GetRandomNumber(100) > recycleChance)
+                    if (tpzrand::GetRandomNumber(100) > recycleChance)
                     {
                         battleutils::RemoveAmmo(this);
                     }
@@ -1040,9 +1041,9 @@ void CCharEntity::OnAbility(CAbilityState& state, action_t& action)
                     if ((PAbility->getAddType() & ADDTYPE_ASTRAL_FLOW) == 0)
                     {
                         int16 bloodBoonRate = getMod(Mod::BLOOD_BOON);
-                        if (dsprand::GetRandomNumber(100) < bloodBoonRate)
+                        if (tpzrand::GetRandomNumber(100) < bloodBoonRate)
                         {
-                            mpCost *= dsprand::GetRandomNumber(8.f, 16.f) / 16.f;
+                            mpCost *= tpzrand::GetRandomNumber(8.f, 16.f) / 16.f;
                         }
                     }
 
@@ -1262,7 +1263,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             actionTarget.speceffect = SPECEFFECT_NONE;
             hitCount = i; // end barrage, shot missed
         }
-        else if (dsprand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
+        else if (tpzrand::GetRandomNumber(100) < battleutils::GetRangedHitRate(this, PTarget, isBarrage)) // hit!
         {
             // absorbed by shadow
             if (battleutils::IsAbsorbByShadow(PTarget))
@@ -1271,7 +1272,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             }
             else
             {
-                bool isCritical = dsprand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true);
+                bool isCritical = tpzrand::GetRandomNumber(100) < battleutils::GetCritHitRate(this, PTarget, true);
                 float pdif = battleutils::GetRangedDamageRatio(this, PTarget, isCritical);
 
                 if (isCritical)
@@ -1339,7 +1340,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             recycleChance = 100;
         }
 
-        if (PAmmo != nullptr && dsprand::GetRandomNumber(100) > recycleChance)
+        if (PAmmo != nullptr && tpzrand::GetRandomNumber(100) > recycleChance)
         {
             ++ammoConsumed;
             TrackArrowUsageForScavenge(PAmmo);
@@ -1406,7 +1407,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         uint16 power = StatusEffectContainer->GetStatusEffect(EFFECT_SANGE)->GetPower();
 
         // remove shadows
-        while (realHits-- && dsprand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(this));
+        while (realHits-- && tpzrand::GetRandomNumber(100) <= power && battleutils::IsAbsorbByShadow(this));
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
     }
@@ -1420,7 +1421,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
     //if (this->StatusEffectContainer->HasStatusEffect(EFFECT_DOUBLE_SHOT, 0) && !this->secondDoubleShotTaken &&	!isBarrage && !isSange)
     //{
     //    uint16 doubleShotChance = getMod(Mod::DOUBLE_SHOT_RATE);
-    //    if (dsprand::GetRandomNumber(100) < doubleShotChance)
+    //    if (tpzrand::GetRandomNumber(100) < doubleShotChance)
     //    {
     //        this->secondDoubleShotTaken = true;
     //        m_ActionType = ACTION_RANGED_FINISH;
@@ -1432,7 +1433,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
 bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
 {
-    DSP_DEBUG_BREAK_IF(PBattleTarget == nullptr);
+    TPZ_DEBUG_BREAK_IF(PBattleTarget == nullptr);
 
     if (PBattleTarget->m_OwnerID.id == 0 || PBattleTarget->m_OwnerID.id == this->id || PBattleTarget->objtype == TYPE_PC)
     {
@@ -1491,7 +1492,13 @@ void CCharEntity::OnRaise()
         auto& actionTarget = list.getNewActionTarget();
 
         list.ActionTargetID = id;
-        if (m_hasRaise == 1)
+        // Mijin Gakure used with MIJIN_RERAISE MOD
+        if (GetLocalVar("MijinGakure") != 0 && getMod(Mod::MIJIN_RERAISE) != 0)
+        {
+            actionTarget.animation = 511;
+            hpReturned = (uint16)(GetMaxHP());
+        }
+        else if (m_hasRaise == 1)
         {
             actionTarget.animation = 511;
             hpReturned = (uint16)((GetLocalVar("MijinGakure") != 0) ? GetMaxHP() * 0.5 : GetMaxHP() * 0.1);
@@ -1563,6 +1570,7 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
 
     action.id = this->id;
     action.actiontype = ACTION_ITEM_FINISH;
+    action.actionid = PItem->getID();
 
     actionList_t& actionList = action.getNewActionList();
     actionList.ActionTargetID = PTarget->id;
@@ -1570,7 +1578,7 @@ void CCharEntity::OnItemFinish(CItemState& state, action_t& action)
     actionTarget_t& actionTarget = actionList.getNewActionTarget();
     actionTarget.animation = PItem->getAnimationID();
 
-    if (PItem->isType(ITEM_ARMOR))
+    if (PItem->isType(ITEM_EQUIPMENT))
     {
         if (PItem->getMaxCharges() > 1)
         {
@@ -1672,6 +1680,10 @@ void CCharEntity::Die(duration _duration)
 
     if (this->getMod(Mod::RERAISE_III) > 0)
         m_hasRaise = 3;
+    // MIJIN_RERAISE checks
+    if (m_hasRaise == 0 && this->getMod(Mod::MIJIN_RERAISE) > 0)
+        m_hasRaise = 1;
+
     CBattleEntity::Die();
 }
 

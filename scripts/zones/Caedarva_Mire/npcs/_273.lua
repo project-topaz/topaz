@@ -13,14 +13,14 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    if player:hasKeyItem(dsp.ki.PERIQIA_ASSAULT_AREA_ENTRY_PERMIT) then
-        player:setVar("ShadesOfVengeance",1)
+    if player:hasKeyItem(tpz.ki.PERIQIA_ASSAULT_AREA_ENTRY_PERMIT) then
+        player:setCharVar("ShadesOfVengeance",1)
         player:startEvent(143,79,-6,0,99,3,0)
-    elseif player:hasKeyItem(dsp.ki.PERIQIA_ASSAULT_ORDERS) then
+    elseif player:hasKeyItem(tpz.ki.PERIQIA_ASSAULT_ORDERS) then
         local assaultid = player:getCurrentAssault()
         local recommendedLevel = getRecommendedAssaultLevel(assaultid)
         local armband = 0
-        if player:hasKeyItem(dsp.ki.ASSAULT_ARMBAND) then
+        if player:hasKeyItem(tpz.ki.ASSAULT_ARMBAND) then
             armband = 1
         end
         player:startEvent(143, assaultid, -4, 0, recommendedLevel, 3, armband)
@@ -44,14 +44,14 @@ function onEventUpdate(player,csid,option,target)
         cap = 50
     end
 
-    player:setVar("AssaultCap", cap)
+    player:setCharVar("AssaultCap", cap)
 
     local party = player:getParty()
 
-    if player:getVar("ShadesOfVengeance") == 1 then
+    if player:getCharVar("ShadesOfVengeance") == 1 then
         if (party ~= nil) then
             for i,v in ipairs(party) do
-                if v:getCurrentMission(TOAU) < SHADES_OF_VENGEANCE then
+                if v:getCurrentMission(TOAU) < tpz.mission.id.toau.SHADES_OF_VENGEANCE then
                     player:messageText(target,ID.text.MEMBER_NO_REQS, false)
                     player:instanceEntry(target,1)
                 elseif v:getZoneID() == player:getZoneID() and v:checkDistance(player) > 50 then
@@ -66,7 +66,7 @@ function onEventUpdate(player,csid,option,target)
     else
         if party ~= nil then
             for i,v in ipairs(party) do
-                if (not (v:hasKeyItem(dsp.ki.PERIQIA_ASSAULT_ORDERS) and v:getCurrentAssault() == assaultid)) then
+                if (not (v:hasKeyItem(tpz.ki.PERIQIA_ASSAULT_ORDERS) and v:getCurrentAssault() == assaultid)) then
                     player:messageText(target,ID.text.MEMBER_NO_REQS, false)
                     player:instanceEntry(target,1)
                     return
@@ -91,12 +91,12 @@ function onEventFinish(player,csid,option,target)
 end
 
 function onInstanceCreated(player,target,instance)
-    if instance and player:getVar("ShadesOfVengeance") == 1 then
+    if instance and player:getCharVar("ShadesOfVengeance") == 1 then
         player:setInstance(instance)
         player:instanceEntry(target,4)
 
-        player:setVar("ShadesOfVengeance", 0)
-        player:delKeyItem(dsp.ki.PERIQIA_ASSAULT_AREA_ENTRY_PERMIT)
+        player:setCharVar("ShadesOfVengeance", 0)
+        player:delKeyItem(tpz.ki.PERIQIA_ASSAULT_AREA_ENTRY_PERMIT)
 
         local party = player:getParty()
         if party ~= nil then
@@ -104,17 +104,17 @@ function onInstanceCreated(player,target,instance)
                 if (v:getID() ~= player:getID() and v:getZoneID() == player:getZoneID()) then
                     v:setInstance(instance)
                     v:startEvent(133)
-                    v:delKeyItem(dsp.ki.PERIQIA_ASSAULT_AREA_ENTRY_PERMIT)
+                    v:delKeyItem(tpz.ki.PERIQIA_ASSAULT_AREA_ENTRY_PERMIT)
                 end
             end
         end
     elseif (instance) then
-        instance:setLevelCap(player:getVar("AssaultCap"))
-        player:setVar("AssaultCap", 0)
+        instance:setLevelCap(player:getCharVar("AssaultCap"))
+        player:setCharVar("AssaultCap", 0)
         player:setInstance(instance)
         player:instanceEntry(target,4)
-        player:delKeyItem(dsp.ki.PERIQIA_ASSAULT_ORDERS)
-        player:delKeyItem(dsp.ki.ASSAULT_ARMBAND)
+        player:delKeyItem(tpz.ki.PERIQIA_ASSAULT_ORDERS)
+        player:delKeyItem(tpz.ki.ASSAULT_ARMBAND)
 
         local party = player:getParty()
         if party ~= nil then
@@ -122,7 +122,7 @@ function onInstanceCreated(player,target,instance)
                 if v:getID() ~= player:getID() and v:getZoneID() == player:getZoneID() then
                     v:setInstance(instance)
                     v:startEvent(133, 3)
-                    v:delKeyItem(dsp.ki.PERIQIA_ASSAULT_ORDERS)
+                    v:delKeyItem(tpz.ki.PERIQIA_ASSAULT_ORDERS)
                 end
             end
         end

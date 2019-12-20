@@ -1,6 +1,7 @@
 -----------------------------------
 -- Area: The Garden of Ru'Hmet
---  MOB: Aw_aern PH (Ix'Aern DRK and DRG)
+--  Mob: Aw'aern
+-- Note: PH for Ix'Aern DRK and DRG
 -----------------------------------
 local ID = require("scripts/zones/The_Garden_of_RuHmet/IDs");
 -----------------------------------
@@ -23,7 +24,7 @@ function onMobDeath(mob, player, isKiller)
         local hatedPlayer = qm2:getLocalVar("hatedPlayer");
         local isInTime = qm2:getLocalVar("hateTimer") > os.time();
 
-        if (qm2:getStatus() ~= dsp.status.DISAPPEAR and (hatedPlayer == 0 or not isInTime)) then
+        if (qm2:getStatus() ~= tpz.status.DISAPPEAR and (hatedPlayer == 0 or not isInTime)) then
             -- if hated player took too long, reset
             if (hatedPlayer ~= 0) then
                 qm2:setLocalVar("hatedPlayer",0);

@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -28,8 +26,8 @@
 #include "status_effect_container.h"
 
 
-CStatusEffect::CStatusEffect(EFFECT id, uint16 icon, uint16 power, uint32 tick, uint32 duration, uint32 subid, uint16 subPower, uint16 tier) :
-    m_StatusID(id), m_SubID(subid), m_Icon(icon), m_Power(power), m_SubPower(subPower), m_Tier(tier), m_TickTime(tick * 1000), m_Duration(duration * 1000)
+CStatusEffect::CStatusEffect(EFFECT id, uint16 icon, uint16 power, uint32 tick, uint32 duration, uint32 subid, uint16 subPower, uint16 tier, uint32 flags) :
+    m_StatusID(id), m_SubID(subid), m_Icon(icon), m_Power(power), m_SubPower(subPower), m_Tier(tier), m_Flag(flags), m_TickTime(tick * 1000), m_Duration(duration * 1000)
 {
     if (m_TickTime < 3000 && m_TickTime != 0)
     {
@@ -128,7 +126,7 @@ void CStatusEffect::UnsetFlag(uint32 flag)
 
 void CStatusEffect::SetIcon(uint16 Icon)
 {
-    DSP_DEBUG_BREAK_IF(m_POwner == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_POwner == nullptr);
 
 	m_Icon = Icon;
     m_POwner->StatusEffectContainer->UpdateStatusIcons();

@@ -1,12 +1,12 @@
 -----------------------------------
 -- Area: Attohwa Chasm
---  MOB: Feeler Antlion
+--  Mob: Feeler Antlion
 -----------------------------------
 require("scripts/globals/status");
 
 function onMobInitialize(mob)
-    mob:addMod(dsp.mod.REGAIN, 40); -- Don't know exact value
-    mob:addMod(dsp.mod.REGEN, 30);
+    mob:addMod(tpz.mod.REGAIN, 40); -- Don't know exact value
+    mob:addMod(tpz.mod.REGEN, 30);
 end;
 
 function onMobSpawn(mob)

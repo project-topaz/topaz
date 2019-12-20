@@ -12,13 +12,13 @@ end;
 
 function onTrigger(player,npc)
 
-    local new_nation = dsp.nation.BASTOK;
+    local new_nation = tpz.nation.BASTOK;
     local old_nation = player:getNation();
     local rank = getNationRank(new_nation);
 
     if (old_nation == new_nation) then
         player:startEvent(362,0,0,0,old_nation);
-    elseif (player:getCurrentMission(old_nation) ~= 255 or player:getVar("MissionStatus") ~= 0) then
+    elseif (player:getCurrentMission(old_nation) ~= 255 or player:getCharVar("MissionStatus") ~= 0) then
         player:startEvent(361,0,0,0,new_nation);
     elseif (old_nation ~= new_nation) then
         local has_gil = 0;
@@ -47,7 +47,7 @@ end;
 function onEventFinish(player,csid,option)
 
     if (csid == 360 and option == 1) then
-        local new_nation = dsp.nation.BASTOK;
+        local new_nation = tpz.nation.BASTOK;
         local rank = getNationRank(new_nation);
         local cost = 0;
 

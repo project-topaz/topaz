@@ -16,7 +16,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données: `dspdb`
+-- Base de données: `tpzdb`
 --
 
 -- --------------------------------------------------------
@@ -55,15 +55,15 @@ INSERT INTO `item_puppet` VALUES (8452, 'tension_spring_ii', 3, 2);
 INSERT INTO `item_puppet` VALUES (8453, 'attuner', 3, 2);
 INSERT INTO `item_puppet` VALUES (8454, 'reactive_shield', 3, 1);
 INSERT INTO `item_puppet` VALUES (8455, 'flame_holder', 3, 1);
-INSERT INTO `item_puppet` VALUES (8456, 'heat_capacitor', 3, 2);
+INSERT INTO `item_puppet` VALUES (8456, 'heat_capacitor', 3, 1);
 INSERT INTO `item_puppet` VALUES (8457, 'strobe_ii', 3, 2);
 INSERT INTO `item_puppet` VALUES (8458, 'tension_spring_iii', 3, 3);
 INSERT INTO `item_puppet` VALUES (8459, 'inhibitor_ii', 3, 2);
 INSERT INTO `item_puppet` VALUES (8460, 'tension_spring_iv', 3, 4);
-INSERT INTO `item_puppet` VALUES (8461, 'heat_capacitor_ii', 3, 3);
+INSERT INTO `item_puppet` VALUES (8461, 'heat_capacitor_ii', 3, 2);
 INSERT INTO `item_puppet` VALUES (8462, 'speedloader', 3, 1);
 INSERT INTO `item_puppet` VALUES (8463, 'speedloader_ii', 3, 2);
-INSERT INTO `item_puppet` VALUES (8464, 'tension_spring_v', 3, 5);
+INSERT INTO `item_puppet` VALUES (8464, 'ten._spring_v', 3, 5);
 INSERT INTO `item_puppet` VALUES (8465, 'magniplug', 3, 1);
 INSERT INTO `item_puppet` VALUES (8466, 'magniplug_ii', 3, 2);
 INSERT INTO `item_puppet` VALUES (8481, 'mana_booster', 3, 32);
@@ -91,14 +91,14 @@ INSERT INTO `item_puppet` VALUES (8516, 'accelerator_ii', 3, 768);
 INSERT INTO `item_puppet` VALUES (8517, 'drum_magazine', 3, 512);
 INSERT INTO `item_puppet` VALUES (8518, 'turbo_charger', 3, 512);
 INSERT INTO `item_puppet` VALUES (8519, 'replicator', 3, 256);
-INSERT INTO `item_puppet` VALUES (8520, 'barrage_turbine', 3, 768);
+INSERT INTO `item_puppet` VALUES (8520, 'barrage_turbine', 3, 512);
 INSERT INTO `item_puppet` VALUES (8521, 'turbo_charger_ii', 3, 768);
 INSERT INTO `item_puppet` VALUES (8522, 'accelerator_iii', 3, 1024);
 INSERT INTO `item_puppet` VALUES (8523, 'scope_ii', 3, 512);
 INSERT INTO `item_puppet` VALUES (8524, 'repeater', 3, 512);
 INSERT INTO `item_puppet` VALUES (8525, 'accelerator_iv', 3, 1280);
 INSERT INTO `item_puppet` VALUES (8526, 'scope_iii', 3, 768);
-INSERT INTO `item_puppet` VALUES (8527, 'scope_ii', 3, 1024);
+INSERT INTO `item_puppet` VALUES (8527, 'scope_iv', 3, 1024);
 INSERT INTO `item_puppet` VALUES (8528, 'truesights', 3, 256);
 INSERT INTO `item_puppet` VALUES (8545, 'shock_absorber', 3, 4096);
 INSERT INTO `item_puppet` VALUES (8546, 'armor_plate', 3, 8192);
@@ -107,10 +107,10 @@ INSERT INTO `item_puppet` VALUES (8548, 'armor_plate_ii', 3, 12288);
 INSERT INTO `item_puppet` VALUES (8549, 'equalizer', 3, 8192);
 INSERT INTO `item_puppet` VALUES (8550, 'schurzen', 3, 4096);
 INSERT INTO `item_puppet` VALUES (8551, 'hammermill', 3, 4096);
-INSERT INTO `item_puppet` VALUES (8552, 'barrier_module_ii', 3, 12288);
+INSERT INTO `item_puppet` VALUES (8552, 'barrier_module_ii', 3, 8192);
 INSERT INTO `item_puppet` VALUES (8553, 'shock_absorber_ii', 3, 8192);
 INSERT INTO `item_puppet` VALUES (8554, 'armor_plate_iii', 3, 16384);
-INSERT INTO `item_puppet` VALUES (8555, 'barrier_module', 3, 8192);
+INSERT INTO `item_puppet` VALUES (8555, 'barrier_module', 3, 4096);
 INSERT INTO `item_puppet` VALUES (8556, 'barrier_module', 3, 20480);
 INSERT INTO `item_puppet` VALUES (8557, 'shock_absorber_iii', 3, 12288);
 INSERT INTO `item_puppet` VALUES (8577, 'stabilizer', 3, 65536);

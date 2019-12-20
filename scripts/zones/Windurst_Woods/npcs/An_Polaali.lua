@@ -10,9 +10,9 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    if player:hasKeyItem(dsp.ki.A_SONG_OF_LOVE) then
+    if player:hasKeyItem(tpz.ki.A_SONG_OF_LOVE) then
         player:startEvent(407)
-    elseif player:getVar("CHASING_TALES_TRACK_BOOK") == 1 then
+    elseif player:getCharVar("CHASING_TALES_TRACK_BOOK") == 1 then
         player:startEvent(404) -- Neeed CS here
     else
         player:startEvent(44)

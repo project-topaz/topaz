@@ -13,7 +13,7 @@ local ID = require("scripts/zones/Port_Jeuno/IDs");
 -----------------------------------
 
 function onTrade(player,npc,trade)
-    local theAntiqueCollector = player:getQuestStatus(JEUNO,dsp.quest.id.jeuno.THE_ANTIQUE_COLLECTOR);
+    local theAntiqueCollector = player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.THE_ANTIQUE_COLLECTOR);
 
     -- THE ANTIQUE COLLECTOR (kaiser sword)
     if (theAntiqueCollector == QUEST_ACCEPTED and trade:hasItemQty(16631,1) and trade:getItemCount() == 1) then
@@ -22,9 +22,9 @@ function onTrade(player,npc,trade)
 end;
 
 function onTrigger(player,npc)
-    local circleOfTime = player:getQuestStatus(JEUNO,dsp.quest.id.jeuno.THE_CIRCLE_OF_TIME);
-    local theAntiqueCollector = player:getQuestStatus(JEUNO,dsp.quest.id.jeuno.THE_ANTIQUE_COLLECTOR);
-    local circleProgress = player:getVar("circleTime");
+    local circleOfTime = player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.THE_CIRCLE_OF_TIME);
+    local theAntiqueCollector = player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.THE_ANTIQUE_COLLECTOR);
+    local circleProgress = player:getCharVar("circleTime");
 
     -- CIRCLE OF TIME
     if (circleOfTime == QUEST_ACCEPTED) then
@@ -58,12 +58,12 @@ end;
 function onEventFinish(player,csid,option)
     -- THE ANTIQUE COLLECTOR
     if (csid == 13 and option == 1) then
-        player:addQuest(JEUNO,dsp.quest.id.jeuno.THE_ANTIQUE_COLLECTOR);
+        player:addQuest(JEUNO,tpz.quest.id.jeuno.THE_ANTIQUE_COLLECTOR);
     elseif (csid == 15) then
-        player:addTitle(dsp.title.TRADER_OF_ANTIQUITIES);
-        if (player:hasKeyItem(dsp.ki.MAP_OF_DELKFUTTS_TOWER) == false) then
-            player:addKeyItem(dsp.ki.MAP_OF_DELKFUTTS_TOWER);
-            player:messageSpecial(ID.text.KEYITEM_OBTAINED,dsp.ki.MAP_OF_DELKFUTTS_TOWER);
+        player:addTitle(tpz.title.TRADER_OF_ANTIQUITIES);
+        if (player:hasKeyItem(tpz.ki.MAP_OF_DELKFUTTS_TOWER) == false) then
+            player:addKeyItem(tpz.ki.MAP_OF_DELKFUTTS_TOWER);
+            player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.MAP_OF_DELKFUTTS_TOWER);
         else
             player:addGil(2000 * GIL_RATE);
             player:messageSpecial(ID.text.GIL_OBTAINED, 2000 * GIL_RATE);
@@ -71,16 +71,16 @@ function onEventFinish(player,csid,option)
         end
         player:addFame(JEUNO, 30);
         player:tradeComplete(trade);
-        player:completeQuest(JEUNO,dsp.quest.id.jeuno.THE_ANTIQUE_COLLECTOR);
+        player:completeQuest(JEUNO,tpz.quest.id.jeuno.THE_ANTIQUE_COLLECTOR);
 
     -- CIRCLE OF TIME
     elseif (csid == 29 and option == 1) then
-        player:setVar("circleTime",3);
+        player:setCharVar("circleTime",3);
     elseif (csid == 30 and option == 1) then
-        player:setVar("circleTime",3);
+        player:setCharVar("circleTime",3);
     elseif (csid == 30 and option == 0) then
-        player:setVar("circleTime",2);
+        player:setCharVar("circleTime",2);
     elseif (csid == 33) then
-        player:setVar("circleTime",5);
+        player:setCharVar("circleTime",5);
     end;
 end;

@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Yuhtunga Jungle
---  MOB: Stream Sahagin
+--  Mob: Stream Sahagin
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 127, 1, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 127, 1, tpz.regime.type.FIELDS)
 end;

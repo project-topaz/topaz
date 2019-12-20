@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Buburimu Peninsula
---  MOB: Poison Leech
+--  Mob: Poison Leech
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 35, 1, dsp.regime.type.FIELDS)
+    tpz.regime.checkRegime(player, mob, 35, 1, tpz.regime.type.FIELDS)
 end;

@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: Temenos
---  NPC: Temenos_Ghrah
+--  Mob: Temenos Ghrah
 -----------------------------------
 require("scripts/globals/limbus");
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    GetNPCByID(16928770+475):setStatus(dsp.status.NORMAL);
+    GetNPCByID(16928770+475):setStatus(tpz.status.NORMAL);
 end;

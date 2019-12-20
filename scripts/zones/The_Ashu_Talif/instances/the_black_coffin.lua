@@ -10,8 +10,8 @@ local ID = require("scripts/zones/The_Ashu_Talif/IDs")
 
 function afterInstanceRegister(player)
     local instance = player:getInstance()
-    player:messageSpecial(ID.text.FADES_INTO_NOTHINGNESS, dsp.ki.EPHRAMADIAN_GOLD_COIN)
-    player:delKeyItem(dsp.ki.EPHRAMADIAN_GOLD_COIN)
+    player:messageSpecial(ID.text.FADES_INTO_NOTHINGNESS, tpz.ki.EPHRAMADIAN_GOLD_COIN)
+    player:delKeyItem(tpz.ki.EPHRAMADIAN_GOLD_COIN)
     player:messageSpecial(ID.text.TIME_TO_COMPLETE, instance:getTimeLimit())
 end
 
@@ -65,8 +65,8 @@ function onInstanceComplete(instance)
     local chars = instance:getChars()
 
     for i,v in pairs(chars) do
-        if (v:getCurrentMission(TOAU) == THE_BLACK_COFFIN and v:getVar("AhtUrganStatus") == 1) then
-            v:setVar("AhtUrganStatus", 2)
+        if (v:getCurrentMission(TOAU) == tpz.mission.id.toau.THE_BLACK_COFFIN and v:getCharVar("AhtUrganStatus") == 1) then
+            v:setCharVar("AhtUrganStatus", 2)
             v:startEvent(101)
         else
             v:startEvent(102)

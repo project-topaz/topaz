@@ -1,10 +1,10 @@
 -----------------------------------
 -- Area: The Boyahda Tree
---  MOB: Snaggletooth Peapuk
+--  Mob: Snaggletooth Peapuk
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 726, 2, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 726, 2, tpz.regime.type.GROUNDS)
 end

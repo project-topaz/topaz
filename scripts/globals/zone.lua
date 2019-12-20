@@ -7,9 +7,9 @@
 require('scripts/globals/settings')
 ------------------------------------
 
-dsp = dsp or {}
+tpz = tpz or {}
 
-dsp.zoneType =
+tpz.zoneType =
 {
     NONE           = 0,
     CITY           = 1,
@@ -20,7 +20,7 @@ dsp.zoneType =
     INSTANCED      = 6,
 }
 
-dsp.continent =
+tpz.continent =
 {
     THE_MIDDLE_LANDS        = 1,
     THE_ARADJIAH_CONTINENT  = 2,
@@ -28,7 +28,7 @@ dsp.continent =
     OTHER_AREAS             = 4,
 }
 
-dsp.region =
+tpz.region =
 {
     RONFAURE         = 0,
     ZULKHEIM         = 1,
@@ -79,7 +79,7 @@ dsp.region =
     UNKNOWN          = 255,
 }
 
-dsp.nation =
+tpz.nation =
 {
     SANDORIA = 0,
     BASTOK   = 1,
@@ -88,7 +88,7 @@ dsp.nation =
     OTHER    = 4,
 }
 
-dsp.zone =
+tpz.zone =
 {
     UNKNOWN                         = 0,
     PHANAUET_CHANNEL                = 1,
@@ -271,7 +271,7 @@ dsp.zone =
     LALOFF_AMPHITHEATER             = 180,
     THE_CELESTIAL_NEXUS             = 181,
     WALK_OF_ECHOES                  = 182,
-    MAQUETTE_ABDHALJS_LEGION        = 183,
+    MAQUETTE_ABDHALJS_LEGION_A      = 183,
     LOWER_DELKFUTTS_TOWER           = 184,
     DYNAMIS_SAN_DORIA               = 185,
     DYNAMIS_BASTOK                  = 186,
@@ -371,6 +371,7 @@ dsp.zone =
     SILVER_KNIFE                    = 283,
     CELENNIA_MEMORIAL_LIBRARY       = 284,
     FERETORY                        = 285,
+    MAQUETTE_ABDHALJS_LEGION_B      = 287,
     ESCHA_ZITAH                     = 288,
     ESCHA_RUAUN                     = 289,
     DESUETIA_EMPYREAL_PARADOX       = 290,
@@ -381,6 +382,36 @@ dsp.zone =
     DYNAMIS_BASTOK_D                = 295,
     DYNAMIS_WINDURST_D              = 296,
     DYNAMIS_JEUNO_D                 = 297,
+    WALK_OF_ECHOES_P                = 298,
+
+    -- Increment this when adding new zones
+    MAX_ZONE                        = 299
+}
+
+tpz.expansionRegion = tpz.expansionRegion or {}
+tpz.expansionRegion.ORIGINAL_ROTZ =
+{
+    [tpz.region.RONFAURE]        = true,
+    [tpz.region.ZULKHEIM]        = true,
+    [tpz.region.NORVALLEN]       = true,
+    [tpz.region.GUSTABERG]       = true,
+    [tpz.region.DERFLAND]        = true,
+    [tpz.region.SARUTABARUTA]    = true,
+    [tpz.region.KOLSHUSHU]       = true,
+    [tpz.region.ARAGONEU]        = true,
+    [tpz.region.FAUREGANDI]      = true,
+    [tpz.region.VALDEAUNIA]      = true,
+    [tpz.region.QUFIMISLAND]     = true,
+    [tpz.region.LITELOR]         = true,
+    [tpz.region.KUZOTZ]          = true,
+    [tpz.region.VOLLBOW]         = true,
+    [tpz.region.ELSHIMOLOWLANDS] = true,
+    [tpz.region.ELSHIMOUPLANDS]  = true,
+    [tpz.region.SANDORIA]        = true,
+    [tpz.region.BASTOK]          = true,
+    [tpz.region.WINDURST]        = true,
+    [tpz.region.JEUNO]           = true,
+    [tpz.region.DYNAMIS]         = true
 }
 
 -----------------------------------
@@ -388,7 +419,7 @@ dsp.zone =
 ----------------------------------
 
 function SetExplorerMoogles(moogle)
-    if EXPLORER_MOOGLE == 1 then
+    if EXPLORER_MOOGLE_LV ~= 0 then
         local npc = GetNPCByID(moogle)
         if npc == nil then
             printf("'SetExplorerMoogles' Error trying to load undefined npc (%d)", moogle)

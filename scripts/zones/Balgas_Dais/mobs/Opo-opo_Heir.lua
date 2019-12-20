@@ -1,9 +1,10 @@
 -----------------------------------
 -- Area: Balga's Dais
--- MOB: Opo-opo Heir
--- BCNM Fight: Royal Succession
+--  Mob: Opo-opo Heir
+-- BCNM: Royal Succession
 -----------------------------------
 require("scripts/globals/status");
+-----------------------------------
 
 function onMobSpawn (mob)
     mob:SetAutoAttackEnabled(false);
@@ -17,12 +18,12 @@ function onMobFight (mob,target)
         mob:SetAutoAttackEnabled(true);
         mob:SetMobAbilityEnabled(true);
         mob:addHP(mob:getMaxHP()/2);
-        mob:addMod(dsp.mod.ATT, 500);
+        mob:addMod(tpz.mod.ATT, 500);
         if(math.random(2)==2) then
-            mob:addMod(dsp.mod.UDMGPHYS, -100);
-            mob:addMod(dsp.mod.UDMGRANGE, -100);
+            mob:addMod(tpz.mod.UDMGPHYS, -100);
+            mob:addMod(tpz.mod.UDMGRANGE, -100);
         else
-            mob:setMod(dsp.mod.UDMGMAGIC, -100);
+            mob:setMod(tpz.mod.UDMGMAGIC, -100);
         end
     end
 end;

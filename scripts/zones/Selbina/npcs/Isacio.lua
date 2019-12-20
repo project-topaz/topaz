@@ -11,10 +11,10 @@ require("scripts/globals/quests")
 -----------------------------------
 
 function onTrade(player,npc,trade)
-    local questStatus = player:getQuestStatus(OTHER_AREAS_LOG, dsp.quest.id.otherAreas.ELDER_MEMORIES)
+    local questStatus = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.ELDER_MEMORIES)
 
     if questStatus == QUEST_ACCEPTED then
-        local IsacioElderMemVar = player:getVar("IsacioElderMemVar")
+        local IsacioElderMemVar = player:getCharVar("IsacioElderMemVar")
 
         if IsacioElderMemVar == 1 and npcUtil.tradeHas(trade, 538) then
             player:startEvent(115, 537)
@@ -27,14 +27,14 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    local questStatus = player:getQuestStatus(OTHER_AREAS_LOG, dsp.quest.id.otherAreas.ELDER_MEMORIES)
+    local questStatus = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.ELDER_MEMORIES)
 
-    if player:getQuestStatus(OTHER_AREAS_LOG, dsp.quest.id.otherAreas.THE_OLD_LADY) ~= QUEST_AVAILABLE then
+    if player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.THE_OLD_LADY) ~= QUEST_AVAILABLE then
         player:startEvent(99)
     elseif questStatus == QUEST_COMPLETED then
         player:startEvent(118)
     elseif questStatus == QUEST_ACCEPTED then
-        IsacioElderMemVar = player:getVar("IsacioElderMemVar")
+        IsacioElderMemVar = player:getCharVar("IsacioElderMemVar")
 
         if IsacioElderMemVar == 1 then
             player:startEvent(114, 538)
@@ -58,19 +58,19 @@ end
 
 function onEventFinish(player,csid,option)
     if csid == 111 and option == 40 then
-        player:addQuest(OTHER_AREAS_LOG, dsp.quest.id.otherAreas.ELDER_MEMORIES)
-        player:setVar("IsacioElderMemVar", 1)
+        player:addQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.ELDER_MEMORIES)
+        player:setCharVar("IsacioElderMemVar", 1)
     elseif csid == 115 then
         player:confirmTrade()
-        player:setVar("IsacioElderMemVar", 2)
+        player:setCharVar("IsacioElderMemVar", 2)
     elseif csid == 116 then
         player:confirmTrade()
-        player:setVar("IsacioElderMemVar", 3)
+        player:setCharVar("IsacioElderMemVar", 3)
     elseif csid == 117 then
         player:confirmTrade()
         player:unlockJob(0)
-        player:setVar("IsacioElderMemVar", 0)
+        player:setCharVar("IsacioElderMemVar", 0)
         player:messageSpecial(ID.text.SUBJOB_UNLOCKED)
-        player:completeQuest(OTHER_AREAS_LOG, dsp.quest.id.otherAreas.ELDER_MEMORIES)
+        player:completeQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.ELDER_MEMORIES)
     end
 end

@@ -1,10 +1,10 @@
 -----------------------------------
--- Area: Toraimorai Canal
---  MOB: Flume Toad
+-- Area: Toraimarai Canal
+--  Mob: Flume Toad
 -----------------------------------
 require("scripts/globals/regimes")
 -----------------------------------
 
 function onMobDeath(mob, player, isKiller)
-    dsp.regime.checkRegime(player, mob, 625, 1, dsp.regime.type.GROUNDS)
+    tpz.regime.checkRegime(player, mob, 625, 1, tpz.regime.type.GROUNDS)
 end
