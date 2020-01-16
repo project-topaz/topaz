@@ -839,6 +839,7 @@ dsp.effectFlag =
     DISPELABLE      = 0x0001,
     ERASABLE        = 0x0002,
     ATTACK          = 0x0004,
+    EMPATHY         = 0x0008,
     DAMAGE          = 0x0010,
     DEATH           = 0x0020,
     MAGIC_BEGIN     = 0x0040,
@@ -1912,6 +1913,8 @@ dsp.merit =
     DEVOTION                    = MCATEGORY_WHM_2 + 0x02,
     PROTECTRA_V                 = MCATEGORY_WHM_2 + 0x04,
     SHELLRA_V                   = MCATEGORY_WHM_2 + 0x06,
+    ANIMUS_SOLACE               = MCATEGORY_WHM_2 + 0x08,
+    ANIMUS_MISERY               = MCATEGORY_WHM_2 + 0x0A,
 
     -- BLM 2
     FLARE_II                    = MCATEGORY_BLM_2 + 0x00,
@@ -1920,6 +1923,12 @@ dsp.merit =
     QUAKE_II                    = MCATEGORY_BLM_2 + 0x06,
     BURST_II                    = MCATEGORY_BLM_2 + 0x08,
     FLOOD_II                    = MCATEGORY_BLM_2 + 0x0A,
+    ANCIENT_MAGIC_ATK_BONUS     = MCATEGORY_BLM_2 + 0x0C,
+    ANCIENT_MAGIC_BURST_DMG     = MCATEGORY_BLM_2 + 0x0E,
+    ELEMENTAL_MAGIC_ACCURACY    = MCATEGORY_BLM_2 + 0x10,
+    ELEMENTAL_DEBUFF_DURATION   = MCATEGORY_BLM_2 + 0x12,
+    ELEMENTAL_DEBUFF_EFFECT     = MCATEGORY_BLM_2 + 0x14,
+    ASPIR_ABSORPTION_AMOUNT     = MCATEGORY_BLM_2 + 0x16,
 
     -- RDM 2
     DIA_III                     = MCATEGORY_RDM_2 + 0x00,
@@ -1928,6 +1937,12 @@ dsp.merit =
     PHALANX_II                  = MCATEGORY_RDM_2 + 0x06,
     BIO_III                     = MCATEGORY_RDM_2 + 0x08,
     BLIND_II                    = MCATEGORY_RDM_2 + 0x0A,
+    ENFEEBLING_MAGIC_DURATION   = MCATEGORY_RDM_2 + 0x0C,
+    MAGIC_ACCURACY              = MCATEGORY_RDM_2 + 0x0E,
+    ENHANCING_MAGIC_DURATION    = MCATEGORY_RDM_2 + 0x10,
+    IMMUNOBREAK_CHANCE          = MCATEGORY_RDM_2 + 0x12,
+    ENSPELL_DAMAGE              = MCATEGORY_RDM_2 + 0x14,
+    ACCURACY                    = MCATEGORY_RDM_2 + 0x16,
 
     -- THF 2
     ASSASSINS_CHARGE            = MCATEGORY_THF_2 + 0x00,
@@ -1958,6 +1973,8 @@ dsp.merit =
     TROUBADOUR                  = MCATEGORY_BRD_2 + 0x02,
     FOE_SIRVENTE                = MCATEGORY_BRD_2 + 0x04,
     ADVENTURERS_DIRGE           = MCATEGORY_BRD_2 + 0x06,
+    CON_ANIMA                   = MCATEGORY_BRD_2 + 0x08,
+    CON_BRIO                    = MCATEGORY_BRD_2 + 0x0A,
 
     -- RNG 2
     STEALTH_SHOT                = MCATEGORY_RNG_2 + 0x00,
@@ -1980,6 +1997,10 @@ dsp.merit =
     DOTON_SAN                   = MCATEGORY_NIN_2 + 0x0A,
     RAITON_SAN                  = MCATEGORY_NIN_2 + 0x0C,
     SUITON_SAN                  = MCATEGORY_NIN_2 + 0x0E,
+    YONIN_EFFECT                = MCATEGORY_NIN_2 + 0x10,
+    INNIN_EFFECT                = MCATEGORY_NIN_2 + 0x12,
+    NIN_MAGIC_ACCURACY          = MCATEGORY_NIN_2 + 0x14,
+    NIN_MAGIC_BONUS             = MCATEGORY_NIN_2 + 0x16,
 
     -- DRG 2
     DEEP_BREATHING              = MCATEGORY_DRG_2 + 0x00,
@@ -2713,4 +2734,96 @@ dsp.emoteMode =
     ALL = 0,
     TEXT = 1,
     MOTION = 2
+}
+
+------------------------------------
+-- Relic/Mythic/Empyrean tables
+------------------------------------
+
+dsp.relicIDs =
+{
+    SPHARAI       = 0,
+    MANDAU        = 1,
+    EXCALIBUR     = 2,
+    RAGNAROK      = 3,
+    GUTTLER       = 4,
+    BRAVURA       = 5,
+    APOCALYPSE    = 6,
+    GUNGNIR       = 7,
+    KIKOKU        = 8,
+    AMANOMURAKUMO = 9,
+    MJOLLNIR      = 10,
+    CLAUSTRUM     = 11,
+    YOICHINOYUMI  = 12,
+    ANNIHILATOR   = 13,
+    GJALLARHORN   = 14,
+    AEGIS         = 15
+}
+
+dsp.relicTiers =
+{
+    [dsp.relicIDs.SPHARAI] =
+    {
+        18264, 18265, 18637, 18651, 18665, 19746, 19839, 20480, 20481, 20509
+    },
+    [dsp.relicIDs.MANDAU] =
+    {
+        18270, 18271, 18638, 18652, 18666, 19747, 19840, 20555, 20556, 20583
+    },
+    [dsp.relicIDs.EXCALIBUR] =
+    {
+        18276, 18277, 18639, 18653, 18667, 19748, 19841, 20645, 20646, 20685
+    },
+    [dsp.relicIDs.RAGNAROK] =
+    {
+        18282, 18283, 18640, 18654, 18668, 19749, 19842, 20745, 20746, 21683
+    },
+    [dsp.relicIDs.GUTTLER] =
+    {
+        18288, 18289, 18641, 18655, 18669, 19750, 19843, 20790, 20791, 21750
+    },
+    [dsp.relicIDs.BRAVURA] =
+    {
+        18294, 18295, 18642, 18656, 18670, 19751, 19844, 20835, 20836, 21756
+    },
+    [dsp.relicIDs.APOCALYPSE] =
+    {
+        18306, 18307, 18644, 18658, 18672, 19753, 19846, 20880, 20881, 21808
+    },
+    [dsp.relicIDs.GUNGNIR] =
+    {
+        18300, 18301, 18643, 18657, 18671, 19752, 19845, 20925, 20926, 21857
+    },
+    [dsp.relicIDs.KIKOKU] =
+    {
+        18312, 18313, 18645, 18659, 18673, 19754, 19847, 20970, 20971, 21906
+    },
+    [dsp.relicIDs.AMANOMURAKUMO] =
+    {
+        18318, 18319, 18646, 18660, 18674, 19755, 19848, 21015, 21016, 21954
+    },
+    [dsp.relicIDs.MJOLLNIR] =
+    {
+        18324, 18325, 18647, 18661, 18675, 19756, 19849, 21060, 21061, 21077
+    },
+    [dsp.relicIDs.CLAUSTRUM] =
+    {
+        18330, 18331, 18648, 18662, 18676, 19757, 19850, 21135, 21136, 22060
+    },
+    [dsp.relicIDs.YOICHINOYUMI] =
+    {
+        18348, 18349, 18650, 18664, 18678, 19759, 19852, 21210, 21211, 22129, 22115
+    },
+    [dsp.relicIDs.ANNIHILATOR] =
+    {
+        18336, 18337, 18649, 18663, 18677, 19758, 19851, 21260, 21261, 22140, 21267
+    },
+    [dsp.relicIDs.GJALLARHORN] =
+    {
+        18342, 18577, 18578, 18579, 18580, 18572, 18840
+    },
+    [dsp.relicIDs.AEGIS] =
+    {
+        15070, 16195, 16196, 16197, 16198, 11927, 16200
+    },
 }

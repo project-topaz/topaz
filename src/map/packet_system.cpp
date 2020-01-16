@@ -4713,41 +4713,35 @@ void SmallPacket0x0DD(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             }
             else
             {
-                uint32 baseExp = charutils::GetRealExp(PChar->GetMLevel(), PTarget->GetMLevel());
+                uint8 mobLvl = PTarget->GetMLevel();
+                EMobDifficulty mobCheck = charutils::CheckMob(PChar->GetMLevel(), mobLvl);
+
+                // Calculate main /check message (64 is Too Weak)
+                int32 MessageValue = 64 + (uint8)mobCheck;
+
+                // Grab mob and player stats for extra messaging
                 uint16 charAcc = PChar->ACC(SLOT_MAIN, (uint8)0);
                 uint16 charAtt = PChar->ATT();
-                uint8 mobLvl = PTarget->GetMLevel();
                 uint16 mobEva = PTarget->EVA();
                 uint16 mobDef = PTarget->DEF();
 
-                uint8 MessageValue = 0;
+                // Calculate +/- message
+                uint16 MessageID = 174; // Default even def/eva
 
-                // NOTE: message 0x41: Incredibly Easy Prey
-                if (baseExp >= 400) MessageValue = 0x47;
-                else if (baseExp >= 240) MessageValue = 0x46;
-                else if (baseExp >= 120) MessageValue = 0x45;
-                else if (baseExp == 100) MessageValue = 0x44;
-                else if (baseExp >= 75) MessageValue = 0x43;
-                else if (baseExp >= 15) MessageValue = 0x42;
-                else if (baseExp == 0) MessageValue = 0x40;
-                if (mobDef > charAtt && (mobEva - 30) > charAcc)
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 170));//high eva high def
-                else if ((mobDef * 1.25) > charAtt && mobDef <= charAtt && (mobEva - 30) > charAcc)
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 171));//high eva
-                else if ((mobDef * 1.25) <= charAtt && (mobEva - 30) > charAcc)
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 172));//high eva low def
-                else if (mobDef > charAtt && (mobEva - 30) <= charAcc && (mobEva + 10) > charAcc)
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 173));//high def
-                else if ((mobDef * 1.25) <= charAtt && (mobEva - 30) <= charAcc && (mobEva + 10) > charAcc)
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 175));//low def
-                else if (mobDef > charAtt && (mobEva + 10) <= charAcc)
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 176));//low eva high def
-                else if ((mobDef * 1.25) > charAtt && mobDef <= charAtt && (mobEva + 10) <= charAcc)
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 177));//low eva
-                else if ((mobDef * 1.25) <= charAtt && (mobEva + 10) <= charAcc)
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 178));//low eva low def
-                else
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, 174));//broke even
+                // Offsetting the message ID by a certain amount for each stat gives us the correct message
+                // Defense is +/- 1
+                // Evasion is +/- 3
+                if (mobDef > charAtt) // High Defesne
+                    MessageID -= 1;
+                else if ((mobDef * 1.25) <= charAtt) // Low Defense
+                    MessageID += 1;
+
+                if ((mobEva - 30) > charAcc) // High Evasion
+                    MessageID -= 3;
+                else if ((mobEva + 10) <= charAcc)
+                    MessageID += 3;
+
+                PChar->pushPacket(new CMessageBasicPacket(PChar, PTarget, mobLvl, MessageValue, MessageID));
             }
         }
         break;
