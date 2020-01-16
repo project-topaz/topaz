@@ -139,9 +139,19 @@ function onGameIn(player, firstLogin, zoning)
         if firstLogin then
             CharCreate(player)
         end
-    else
-        -- things checked ONLY during zone in go here
-    end
+	-- Player Login Message		
+    local hidden = player:getName()
+    --hide the login message for these characters.
+    
+    if (hidden == 'Player1' or hidden == 'Player2')  then
+    player:PrintToPlayer("Login hidden"); -- Wont actually print, but we need to make this do something or it fails.
+        --End hidden login message
+	else       
+		player:PrintToServer(string.format("%s has logged in!" , player:getName()), 0xF);
+	end
+else
+        -- things checked ONLY during zone in go here		        
+
 
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
     checkForGearSet(player)
@@ -180,6 +190,7 @@ function onGameIn(player, firstLogin, zoning)
 
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
+end
 end
 
 function onPlayerLevelUp(player)

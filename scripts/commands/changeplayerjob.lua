@@ -1,22 +1,22 @@
 ---------------------------------------------------------------------------------------------------
--- func: changesjob
--- desc: Changes the players current subjob.
+-- func: changejob
+-- desc: Changes the target's current job.
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status");
 
 cmdprops =
 {
-    permission = 3,
-    parameters = "si"
+    permission = 4,
+    parameters = "sis"
 };
 
 function error(player, msg)
     player:PrintToPlayer(msg);
-    player:PrintToPlayer("!changesjob <jobID> {level}");
+    player:PrintToPlayer("!changejob <jobID> {level} {player}");
 end;
 
-function onTrigger(player, jobId, level)
+function onTrigger(player, jobId, level, target)
     -- validate jobId
     if (jobId == nil) then
         error(player, "You must enter a job short-name, e.g. WAR, or its equivalent numeric ID.");
@@ -36,11 +36,6 @@ function onTrigger(player, jobId, level)
         end
     end
 
-    -- change job and (optionally) level
-    player:changesJob(jobId);
-    if (level ~= nil) then
-        player:setsLevel(level);
-    end
 
     -- invert dsp.job table
     local jobNameByNum={};
@@ -48,6 +43,24 @@ function onTrigger(player, jobId, level)
         jobNameByNum[v]=k;
     end
 
+    -- validate target
+    local targ;
+    if (target == nil) then
+        error(player, "You must provide a player name.");
+        return;
+    else
+        targ = GetPlayerByName( target );
+        if (targ == nil) then
+            error(player, string.format( "Player named '%s' not found!", target ) );
+            return;
+        end
+    end
+	
+	-- change job and (optionally) level
+    targ:changeJob(jobId);
+    if (level ~= nil) then
+        targ:setLevel(level);
+    end
     -- output new job to player
-    player:PrintToPlayer(string.format("You are now a %s%i/%s%i.", jobNameByNum[player:getMainJob()], player:getMainLvl(), jobNameByNum[player:getSubJob()], player:getSubLvl()));
+    targ:PrintToPlayer(string.format("You are now a %s%i/%s%i.", jobNameByNum[targ:getMainJob()], targ:getMainLvl(), jobNameByNum[targ:getSubJob()], targ:getSubLvl()));
 end

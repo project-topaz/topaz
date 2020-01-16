@@ -7,7 +7,7 @@ require("scripts/globals/quests")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 3,
     parameters = "sss"
 };
 

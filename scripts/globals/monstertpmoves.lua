@@ -698,7 +698,7 @@ end;
 
 -- similar to statuseffect move except it will only take effect if facing
 function MobGazeMove(mob, target, typeEffect, power, tick, duration)
-    if (target:isFacing(mob)) then
+	if (target:isFacing(mob)) then
         return MobStatusEffectMove(mob, target, typeEffect, power, tick, duration);
     end
     return dsp.msg.basic.SKILL_NO_EFFECT;

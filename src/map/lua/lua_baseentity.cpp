@@ -292,6 +292,22 @@ inline int32 CLuaBaseEntity::PrintToPlayer(lua_State* L)
 }
 
 /************************************************************************
+*  Function: PrintToServer()  Todo: FINISH THIS
+*  Purpose : version of PrintToPlayer that passes to messageserver
+*  Example : player:PrintToArea("Im a real boy!", dsp.msg.channel.SHOUT, dsp.msg.area.SYSTEM, "Pinocchio");
+*          : would print a shout type message from Pinocchio to the entire server
+************************************************************************/
+
+inline int32 CLuaBaseEntity::PrintToServer(lua_State* L)
+{
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity == NULL);
+    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    CHAT_MESSAGE_TYPE messageType = (!lua_isnil(L, 2) && lua_isnumber(L, 2) ? (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2) : MESSAGE_SYSTEM_1);
+    message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1)));
+    return 0;
+}
+/************************************************************************
 *  Function: PrintToArea()
 *  Purpose : version of PrintToPlayer that passes to messageserver
 *  Example : player:PrintToArea("Im a real boy!", dsp.msg.channel.SHOUT, dsp.msg.area.SYSTEM, "Pinocchio");
@@ -13921,6 +13937,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageText),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToPlayer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToArea),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToServer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageBasic),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageName),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messagePublic),

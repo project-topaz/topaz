@@ -30,6 +30,7 @@
 
 #include "../lua/luautils.h"
 
+#include "../packets/char_skills.h"
 #include "../packets/char_update.h"
 #include "../packets/char_sync.h"
 #include "../packets/fishing.h"
@@ -379,6 +380,22 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
 			{
 				// сообщение: "You didn't catch anything."
 
+                //temp fish skillup
+                //fix garbage code later
+                uint8 chance = dsprand::GetRandomNumber(0, 6);
+                if (chance == 6)
+                {
+                    uint8 skillID = 48;
+                    uint8 skillAmount = 1;
+                    int32 charSkill = PChar->RealSkills.skill[skillID];
+                    PChar->RealSkills.skill[skillID] += skillAmount;
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));
+                    PChar->pushPacket(new CCharSkillsPacket(PChar));
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53));
+                    charutils::SaveCharSkills(PChar, 48);
+                }
+                //end
+
 				PChar->animation = ANIMATION_FISHING_STOP;
                 PChar->updatemask |= UPDATE_HP;
 				PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + 0x04));
@@ -396,6 +413,22 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
 
 				PChar->animation = ANIMATION_FISHING_CAUGHT;
                 PChar->updatemask |= UPDATE_HP;
+
+                //temp fish skillup
+                //fix garbage code later
+                uint8 chance = dsprand::GetRandomNumber(0, 2);
+                if (chance == 2)
+                {
+                    uint8 skillID = 48;
+                    uint8 skillAmount = dsprand::GetRandomNumber(1, 3);
+                    int32 charSkill = PChar->RealSkills.skill[skillID];
+                    PChar->RealSkills.skill[skillID] += skillAmount;
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));
+                    PChar->pushPacket(new CCharSkillsPacket(PChar));
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53));
+                    charutils::SaveCharSkills(PChar, 48);
+                }                
+                //end
 
 				CItem* PFish = PChar->UContainer->GetItem(0);
 
