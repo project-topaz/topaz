@@ -173,6 +173,12 @@ cmake_install.cmake
 
 # ignore servers
 *-server
+
+# ignore backups
 /db_backup/*.sql
+
+#ignore custom database mods
 /sql/custom
+
+#ignore server configuration
 /conf
