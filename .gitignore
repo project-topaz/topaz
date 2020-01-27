@@ -173,3 +173,6 @@ cmake_install.cmake
 
 # ignore servers
 *-server
+/db_backup/*.sql
+/sql/custom
+/conf

@@ -1,0 +1,192 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS]
+"CommonFilesFolder"="C:\\Program Files\\Common Files\\"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\InstallFolder]
+"1000"="C:\\Program Files (x86)\\PlayOnline\\SquareEnix\\PlayOnlineViewer"
+"0002"="C:\\Program Files (x86)\\PlayOnline\\SquareEnix\\TetraMaster"
+"0001"="C:\\Program Files (x86)\\PlayOnline\\SquareEnix\\FINAL FANTASY XI\\"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\Interface]
+"0002"="004ed515"
+"1000"="004ed48a"
+"0001"="0056a8ef"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\Product]
+"0001"=hex:6e,a6,8b,52,65,27,3f,9f,1f,90,95,57,41,14,97,bd,56,78,6c,32,a2,15,\
+  8a,68,20,05,79,4c,d6,41,5a,f5,2f,e5,85,4f,4c,1e,fb,7d,2a,24,e5,9b,de,7c,fe,\
+  54,9c,f0,4e,5f,1b,27,b9,df,0a,4f,90,00,97,d6,fd,ed,1e,5e,ca,7f,21,79,91,f1,\
+  ed,78,73,cf,51,ee,61,8b,bc,dc,89,ab,5e,8e,6f,c8,69,a5,5b,65,ca,d6,a7,e8,27,\
+  dc,13,cd,de,43,07,9b,26,7d,45,02,38,19,7b,63,3f,87,a1,5a,16,a1,5d,d6,7a,76,\
+  ff,63,71,d7,2b,e3,08,2a,94,ec,97,c5,3b,c0,0d,10,62,7a,4e,e9,eb,1d,5e,cb,61,\
+  8c,ca,9c,87,67,c1,a2,6d,66,67,da,4c,3e,cf,3d,02,f0,0a,c8,35,78,0d,2f,4a,50,\
+  aa,7f,83,0e,cc,60,70,95,7e,41,41,97,5a,8e,8e,d5,0f,43,57,16,4b,4d,f8,94,6a,\
+  f8,8f,d8,29,b4,8c,ff,7e,96,c9,76,4a,93,48,57,f1,6b,85,4e,8f,53,71,71,09,07,\
+  b5,b0,e5,cc,56,e3,dc,8e,07,21,a2,93,ab,f0,96,3b,fb,29,72,be,ee,fb,da,b6,7b,\
+  5c,e6,67,ec,52,ec,c3,d5,0f,4e,85,ac,65,92,d0,c8,68,3f,af,56,e4,b2,e7,64,4e,\
+  76,47,67,09,59,ee,71,93,50,06,51,75,77,df,f4,8a
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\SquareEnix]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\SquareEnix\FinalFantasyXI]
+"bFirst"=hex:00
+"0000"=dword:00000003
+"0001"=dword:00000780
+"0002"=dword:00000438
+"0037"=dword:00000000
+"0038"=dword:00000000
+"0003"=dword:00000f00
+"0004"=dword:00000870
+"0007"=dword:00000001
+"0035"=dword:00000001
+"0011"=dword:00000000
+"0017"=dword:00000001
+"0018"=dword:00000002
+"0019"=dword:00000001
+"0036"=dword:00000001
+"0020"=dword:00000001
+"0021"=dword:00000001
+"0022"=dword:00000000
+"0023"=dword:00000000
+"0024"=dword:00000000
+"0028"=dword:00000000
+"0029"=dword:0000000c
+"0030"=dword:00000000
+"0031"=dword:3bc49ba6
+"0032"=dword:00000000
+"0033"=dword:00000000
+"0034"=dword:00000001
+"0039"=dword:00000001
+"0040"=dword:00000000
+"0041"=dword:00000000
+"0042"="C:\\Program Files (x86)\\PlayOnline\\SquareEnix\\FINAL FANTASY XI"
+"0043"=dword:00000000
+"padsin000"="13,12,8,9,10,0,1,3,2,15,-1,-1,-1,-33,-33,32,32,-36,-36,35,35,6,7,5,4,14,-1"
+"padmode000"="1,0,0,0,1,1"
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\SquareEnix\PlayOnlineViewer]
+"FirstBootPlayMovie"=dword:00000000
+"SPS000"=hex:66,c8,49,62,a9,46,6c,d9,5e,6f,a1,2e,fa,c7,9c,e9,cd,e6,9f,28,08,fb,\
+  d3,ae,fc,90,a3,87,19,4a,66,a0,c9,1b,04,6b,4f,d3,77,ea,fb,3f,e6,69,69,01,17,\
+  e0,34,d7,12,61,e0,4d,97,2b,c9,8d,92,ea,31,a4,8d,02,e0,44,e7,f1,46,77,70,00,\
+  af,1a,ce,a9,43,aa,dc,f8,23,a0,8c,c3,64,5d,93,47,70,1f,8f,1e,8d,d3,a0,53,05,\
+  5d,51,2c,74,ae,ff,ef,8c,cd,54,47,3c,a3,5c,7f,f2,bc,0a,32,03,0c,10,4b,11,6a,\
+  7d,81,cf,24,7a,d2,7f,d2,b0,6e,53,49,a3,4f,25,60,7a,48,51,c4,2a,f9,86,a4,14,\
+  45,e2,72,94,b5,db,f6,2c,c4,45,11,fb,1e,b3,2a,53,02,ca,93,be,0f,c4,9b,bc,a8,\
+  81,ce,45,e0,5c,43,6d,2f,ea,63,cb,7d,9d,d5,90,d0,e6,7a,68,46,9f,0e,5c,6a,a3,\
+  ac,80,0d,36,59,23,45,55,dd,80,d7,91,66,19,e4,f2,8b,b4,d3,78,e9,b9,2e,a2,44,\
+  19,3e,08,62,c2,03,12,fc,dd,f6,31,44,9d,3c,33,89,ee,1c,d3,de,51,7f,0b,34,c1,\
+  7e,d4,e9,a0,9f,08,59,ab,df,d2,3c,0c,42,3e,8f,5a,6a,1d,a2,c7,a7,56,ff,fa,f4,\
+  57,32,fb,ab,74,9a,1f,ed,55,59,31,b5,f6,97,65,0a,eb,2f,e7,17,20,64,28,7f,db,\
+  11,6d,24,8f,c6,a5,63,1a,09,a9,78,44,07,59,e8,4a,a4,09,d8,b5,cf,99,0a,0c,2e,\
+  0d,7e,61,52,7b,19,dd,13,93,f1,4e,2d,e4,08,ff,b1,dd,27,59,a9,19,58,f0,38,9f,\
+  5f,27,c9,0c,d7,23,89,94,84,36,6d,be,4c,83,04,87,6f,1f,96,9b,bd,46,51,5f,b0,\
+  cd,b9,96,6a,0b,05,6f,ff,6a,ec,d9,d6,e6,5f,41,a8,a6,f5,56,6e,77,b3,0e,56,6d,\
+  95,bb,4d,b5,a9,e9,cc,1a,12,f2,6b,59,91,87,51,0e,6e,e8,d8,2a,ca,95,39,e1,09,\
+  1a,81,20,a5,f4,0c,a1,cb,b9,08,77,7c,a8,99,24,65,90,41,9d,64,aa,f8,35,a9,47,\
+  b7,61,cf,c7,18,88,30,81,18,d7,86,ca,de,04,13,f9,e7,81,d0,55,26,88,d6,1e,60,\
+  a2,8d,f1,ef,6c,d1,04,59,99,88,3f,77,7c,8b,d8,d5,18,12,49,7d,b2,d1,67,be,ef,\
+  27,77,fa,31,36,dd,38,0c,d6,10,35,6d,d4,d9,0a,66,1a,2c,75,a3,53,aa,bc,a6,97,\
+  f1,2e,69,09,9f,09,5c,6b,d0,d1,3b,3f,01,64,21,4b,ed,17,b8,a1,6d,56,bf,29,7b,\
+  37,1a,5c,85,1e,df,5e,07,e6,2c,17,35,4b,db,c0,b9,5d,9e,e8,b3,cd,cb,92,3c,7e,\
+  9a,1f,16,13,50,79,2b,ea,74,53,cc,8c,5c,fa,cc,d4,71,1a,a2,21,cf,fe,88,d2,31,\
+  55,cf,0e,f5,2d,f1,0f,c8,fa,e0,87,79,6d,10,2b,b0,22,45,32,8b,65,89,0d,3c,01,\
+  00,8e,36,f9,79,1b,ee,69,a0,19,52,8d,66,69,68,fb,4f,2f,b7,f6,56,e9,cf,37,c8,\
+  86,6f,50,0b,a4,54,33,2b,38,c9,de,22,85,b5,c4,56,0b,65,94,e7,02,8c,59,71,1a,\
+  e7,4c,d3,cf,27,74,a1,0e,aa,3a,8a,e0,43,61,50,06,0a,59,41,50,b5,05,47,38,ff,\
+  a0,07,c1,28,7f,8d,e4,42,fd,94,fc,33,9f,ba,89,35,39,68,b1,47,00,bd,2c,38,e4,\
+  9f,6f,79,92,e6,63,e2,86,f9,ae,27,ba,f3,9b,c2,c2,93,f6,18,03,69,61,b1,25,c8,\
+  c5,78,4c,88,ae,46,df,d5,3b,9e,2b,f4,69,68,1b,70,41,3e,cb,c0,3b,37,ec,45,d1,\
+  ae,12,f4,4c,8e,3c,90,6e,a0,cb,57,cf,4f,0c,b5,b0,ea,95,cb,7a,0a,5d,ef,07,2f,\
+  8f,72,d4,e8,53,31,dc,3b,d9,e8,20,06,c2,8c,f4,ac,ac,67,2d,15,72,e5,98,69,53,\
+  73,aa,62,a9,d9,93,7a,3d,6a,a6,47,57,79,77,42,b9,2d,fb,ca,99,16,4a,cd,b0,7f,\
+  6b,27,96,64,bb,3c,8a,36,1b,31,a7,d4,4f,08,1f,48,f2,ed,9b,df,b1,7f,74,dc,85,\
+  32,ea,51,3d,78,4d,6f,cb,89,13,74,3c,f8,5a,39,fe,35,68,8c,11,7c,47,a5,1c,75,\
+  7a,8f,c7,3c,40,b9,1d,aa,79,1d,f1,a4,f9,b8,91,6c,0a,05,27,79,59,d7,ea,dd,e6,\
+  e9,ff,f7,f0,7c,3a,1d,a2,29,85,75,70,44,76,f0,83,37,3f,5f,82,ae,aa,d1,03,6b,\
+  3f,12,22,49,fc,14,34,7e,19,a9,d2,3f,ff,c2,68,83,bc,e2,f2,47,67,bb,1f,29,81,\
+  e3,49,5a,e3,44,b3,b0,09,7a,af,4c,8f,09,5b,d1,6c,ac,8f,bc,56,d9,91,92,7d,5f,\
+  b4,c8,0f,c5,15,fe,75,d4,4b,d0,16,a6,52,8c,d9,65,b4,79,6c,a4,51,bd,6f,5e,26,\
+  0f,d5,36,f1,26,1d,6d,ed,aa,db,eb,67,35,27,1d,fb,eb,d6,16,74,31,46,ba,d5,b1,\
+  20,e0,f0,ea,4e,f8,1c,fb,81,e9,7a,fd,3d,1b,e2,24,39,72,1f,91,ca,31,7f,08,bf,\
+  9c,5d,f6,53,82,47,6c,63,81,6f,3e,66,cf,45,f2,21,cd,ec,5f,09,58,b9,c8,6e,e6,\
+  f1,be,e6,37,34,04,af,3a,15,2b,4f,48,c8,af,60,99,1f,4a,15,1a,7a,e5,f5,6d,10,\
+  34,81,c8,d5,0f,26,49,8b,cb,69,da,e0,bf,eb,9d,12,dd,56,60,91,72,ab,58,3d,f5,\
+  9d,59,7b,63,b0,b1,2e,7c,20,45,81,f5,f3,56,cf,32,9e,1a,0c,8e,ca,90,d5,fa,21,\
+  7a,9d,66,23,8f,b9,af,17,cf,42,0e,bf,43,b0,73,c1,99,d1,95,6e,b1,e5,71,b1,ea,\
+  03,25,54,ea,66,61,40,ca,1b,23,25,0e,67,d9,7a,9c,85,9f,68,13,ac,26,dc,ad,c5,\
+  dc,83,1a,f2,72,6c,31,ed,09,bf,39,0f,bf,fd,35,b9,20,dc,0d,82,be,17,5d,d7,8e,\
+  b4,d8,4f,0a,72,d2,cc,b0,84,c4,57,46,3c,8d,bd,66,ee,1b,65,1e,86,20,f5,2d,0c,\
+  ea,7f,7f,07,ca,06,e8,16,41,ce,05,67,89,39,d3,10,ff,98,df,8c,31,36,e1,55,2c,\
+  3c,b2,1b,5c,b4,f3,57,91,a4,88,a5,9e,41,28,1e,f7,a5,77,17,16,d4,45,39,24,0f,\
+  d5,50,71,54,54,ff,79,da,86,a2,2d,9a,6f,d3,31,9e,e7,6b,c9,5c,c2,f5,e8,67,bb,\
+  08,a4,45,92,07,3d,78,7f,66,ce,5d,59,3a,69,fe,85,e6,ad,b7,c8,ee,9d,ee,1b,79,\
+  b2,ea,a5,1d,ac,3b,8d,c2,21,af,1d,c6,39,96,28,11,f4,98,e3,34,7b,88,fe,df,4e,\
+  f4,34,5c,5d,87,fc,77,3b,63,17,4b,b6,ab,74,0d,d4,8b,a4,6b,34,df,89,e2,ae,a2,\
+  86,1f,47,e0,61,8e,e9,78,67,98,02,ad,a2,0e,bd,a6,31,30,8c,39,96,07,70,97,c0,\
+  1b,1b,af,97,dd,bd,f5,bd,ca,ae,dd,e1,57,04,ec,ae,27,5a,3e,da,da,21,89,5b,8b,\
+  f8,7d,3b,03,f0,b0,cb,d4,48,76,6d,34,c1,61,ec,34,80,6f,10,1f,ef,3f,d3,6a,a2,\
+  20,38,7c,41,67,63,81,fc,c4,15,b0,6b,85,de,e6,1d,5b,4a,3a,0b,3a,82,f8,a1,73,\
+  d9,5c,25,d2,53,58,c3,45,60,8a,5b,df,59,79,86,f8,df,40,23,67,ec,5d,2d,6a,fe,\
+  19,97,f9,bb,bd,9b,e4,e6,20,a7,ac,34,c7,d4,42,29,02,d0,c6,66,d3,de,25,30,ce,\
+  a3,64,cb,07,90,3f,7e,8b,a5,5d,3f,67,00,3a,ab,a8,9d,09,3c,12,73,4b,ef,e4,b4,\
+  a4,e6,23,2f,fb,8d,58,b0,2c,1a,4c,a0,b7,64,90,de,a4,db,74,d8,ba,be,76,d7,9b,\
+  d5,7c,5b,f2,26,ff,e6,05,a3,16,c4,43,69,8b,e8,a8,36,07,cf,33,f7,91,77,68,17,\
+  10,7a,38,dc,a0,be,97,6c,8c,14,80,21,eb,af,b3,c7,58,6c,c3,48,b8,ee,32,0a,36,\
+  bc,a2,2f,60,7c,a9,91,0f,66,7d,69,c3,60,2a,26,59,3b,7a,25,5b,d0,c0,0c,2b,9e,\
+  7d,e2,b9,b0,1d,74,bf,14,ab,58,98,d2,3d,5e,ef,19,1b,7b,e9,98,38,cb,ff,d3,af,\
+  4b,6b,15,5c,6b,75,96,54,fa,37,d9,6d,cc,2c,5f,c4,cb,ec,33,14,fa,98,aa,a3,1f,\
+  b4,03,2f,6d,cf,9b,91,b9,2b,c5,a7,d6,1e,bb,01,30,88,aa,f5,eb,da,cb,10,67,a5,\
+  53,eb,e9,ca,96,4f,42,cf,10,18,04,93,28,0f,f0,f3,b9,d8,c5,e3,02,74,2e,4c,bb,\
+  68,db,9a,46,38,37,da,6b,68,b7,86,46,95,7a,c3,5f,dc,0a,bf,c9,1e,91,94,92,2c,\
+  68,81,f9,55,05,92,14,38,15,da,97,0a,69,d1,05,0f,1e,1c,49,5f,95,fb,1d,bf,6d,\
+  eb,dd,66,c6,5c,e8,c1,42,15,ab,4a,06,f0
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\SquareEnix\PlayOnlineViewer\Settings]
+"UseGameController"=dword:00000000
+"WindowH"=dword:000001e7
+"ResetSettings"=dword:00000000
+"SupportLanguage"=dword:00000001
+"WindowW"=dword:0000028a
+"PlayAudio"=dword:00000001
+"PlayOpeningMovie"=dword:00000001
+"FullScreen"=dword:00000000
+"Language"=dword:00000001
+"WindowX"=dword:0000025d
+"WindowY"=dword:0000010e
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\SquareEnix\PlayOnlineViewer\Settings\Controller]
+"ChrCsrNext"=dword:00000007
+"AnchorLeft"=dword:00000036
+"AnchorUp"=dword:00000030
+"Menu"=dword:00000000
+"ID"=dword:00000000
+"AnchorDown"=dword:00000034
+"Ok"=dword:00000001
+"Navi"=dword:00000003
+"Cancel"=dword:00000002
+"PageNext"=dword:00000005
+"ChrCsrPrev"=dword:00000006
+"AnchorRight"=dword:00000032
+"PagePrev"=dword:00000004
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\SquareEnix\PlayOnlineViewer\SystemInfo]
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\SquareEnix\PlayOnlineViewer\SystemInfo\QCheck]
+"LastMeasurementTime"=hex:
+
+[HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\PlayOnlineUS\SquareEnix\TetraMaster]
+"B_06FRIENDLIST"=dword:00000004
+"SOUND"=dword:00000001
+"B_07MENU"=dword:00000001
+"PAD"=dword:00000000
+"LOADDIR"="C:\\Program Files (x86)\\PlayOnline\\SquareEnix/TetraMaster/"
+"JOYPADGUIDENABLE"=dword:00000001
+"B_02PAGEDOWN"=dword:00000005
+"B_05PLAYONLINE"=dword:0000000a
+"B_03PAGEUP"=dword:00000006
+"JOYPADGUID"=hex:
+"B_00OK"=dword:00000002
+"B_01CANCEL"=dword:00000003
+"B_04CHAT"=dword:00000009

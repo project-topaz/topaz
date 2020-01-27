@@ -1,0 +1,1 @@
+SELECT * FROM dspdb.discord, dspdb.chars, dspdb.accounts, dspdb.char_jobs WHERE discord.accid = accounts.id AND chars.charid = discord.charid AND char_jobs.charid = chars.charid;
