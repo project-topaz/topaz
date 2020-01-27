@@ -12,12 +12,10 @@ g_mixins = g_mixins or {}
 g_mixins.spawn_casket = function(mob)
     mob:addListener("DEATH", "DEATH_SPAWN_CASKET", function(mob, player, isKiller)
         local mobPos = mob:getPos()
-
         if mob:getMaster() ~= nil then
             local master = mob:getMaster()
             if master:isMob() then -- sanity check, ensuring the mob killed is not a player's pet.
-                return
-				dsp.caskets.spawnCasket(mob, player, mobPos.x, mobPos.y, mobPos.z, mobPos.rot)
+                dsp.caskets.spawnCasket(mob, player, mobPos.x, mobPos.y, mobPos.z, mobPos.rot)
             end
         else
             dsp.caskets.spawnCasket(mob, player, mobPos.x, mobPos.y, mobPos.z, mobPos.rot)

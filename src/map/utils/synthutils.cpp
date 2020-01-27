@@ -517,7 +517,7 @@ int32 doSynthSkillUp(CCharEntity* PChar)
         uint16 maxSkill  = (skillRank+1)*100;
 
         int32  charSkill = PChar->RealSkills.skill[skillID];
-        int32  baseDiff   = PChar->CraftContainer->getQuantity(skillID-40) - charSkill/10; //the 5 lvl difference rule for breaks does NOT consider the effects of image support/gear
+        int32  baseDiff  = PChar->CraftContainer->getQuantity(skillID-40) - charSkill/10; //the 5 lvl difference rule for breaks does NOT consider the effects of image support/gear
 
         if ((baseDiff <= 0) || ((baseDiff > 5) && (PChar->CraftContainer->getQuantity(0) == SYNTHESIS_FAIL)))       // результат синтеза хранится в quantity нулевой ячейки
         {

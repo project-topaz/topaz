@@ -383,7 +383,12 @@ function onTrigger(player, bytes)
     end
 
     -- send target to destination
-    targ:setPos(x, y, z, rot, zone);
+   	targ:setCharVar("prev_x",targ:getXPos());
+	targ:setCharVar("prev_y", targ:getYPos());
+	targ:setCharVar("prev_z", targ:getZPos());
+	targ:setCharVar("prev_rot", targ:getRotPos());
+	targ:setCharVar("prev_bringzone", targ:getZoneID())
+	targ:setPos(x, y, z, rot, zone);
     if (targ:getID() ~= player:getID()) then
         player:PrintToPlayer( string.format("Sent %s to zone %i.", targ:getName(), zone) );
     end

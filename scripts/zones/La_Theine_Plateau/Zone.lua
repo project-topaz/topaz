@@ -36,7 +36,7 @@ function onZoneIn( player, prevZone)
 
     if (triggerLightCutscene(player)) then -- Quest: I Can Hear A Rainbow
         cs = 123;
-    elseif (prevZone == dsp.zone.ORDELLES_CAVES and player:getCharVar("darkPuppetCS") == 5) then -- and player:getFreeSlotsCount() >= 1
+    elseif (prevZone == dsp.zone.ORDELLES_CAVES and player:getCharVar("darkPuppetCS") == 5 and player:getFreeSlotsCount() >= 1) then
         cs = 122;
     elseif (player:getCurrentMission(WINDURST) == dsp.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==1) then
         cs = 125;
