@@ -12,10 +12,13 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    -- if player:hasKeyItem(dsp.ki.TENSHODO_MEMBERS_CARD) then
-        -- local stock =
-        -- {
-            -- 704,    144,    -- Bamboo Stick
+    if player:hasKeyItem(dsp.ki.TENSHODO_MEMBERS_CARD) then
+        local stock =
+        {
+			5867,	13500,     -- Toolbag (Ino)
+			5868,	18000,     -- Toolbag (Shika)
+			5869,	18000	   -- Toolbag (Cho)
+			-- 704,    144,    -- Bamboo Stick
             -- 829,  21000,    -- Silk Cloth
             -- 1240,   220,    -- Koma
             -- 657,   7000,    -- Tama-Hagane
@@ -71,11 +74,11 @@ function onTrigger(player,npc)
             -- 4882, 67818,    -- Sleepga II
             -- 4946, 13133,    -- Utsusemi: Ichi
             -- 4994, 11830,    -- Mage's Ballad
-        -- }
+        }
 
-        -- player:showText(npc, ID.text.AMALASANDA_SHOP_DIALOG)
-        -- dsp.shop.general(player, stock)
-    -- end
+        player:showText(npc, ID.text.AMALASANDA_SHOP_DIALOG)
+        dsp.shop.general(player, stock)
+    end
 end
 
 function onEventUpdate(player,csid,option)
