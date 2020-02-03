@@ -182,3 +182,4 @@ cmake_install.cmake
 
 #ignore server configuration
 /conf
+/scripts/globals/settings.lua
