@@ -1,6 +1,20 @@
 ---------------------------------------------------------------------------------------------------
 -- func: completequest <logID> <questID> <player>
 -- desc: Completes the given quest for the GM or target player.
+-- https://wiki.dspt.info/index.php/Log_IDs#Quest_Log_IDs
+
+-- Quest Log ID	Quest Log Name
+-- 0	SANDORIA
+-- 1	BASTOK
+-- 2	WINDURST
+-- 3	JEUNO
+-- 4	OTHER_AREAS_LOG
+-- 5	OUTLANDS
+-- 6	TOAU
+-- 7	WOTG
+-- 8	ABYSSEA
+-- 9	SOA
+-- 10	COALITION
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/quests")

@@ -2210,7 +2210,7 @@ void SmallPacket0x04E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     uint16 itemid = data.ref<uint16>(0x0E);
     uint8  quantity = data.ref<uint8>(0x10);
 
-    ShowDebug(CL_CYAN"AH Action (%02hx)\n" CL_RESET, data.ref<uint8>(0x04));
+    //ShowDebug(CL_CYAN"AH Action (%02hx)\n" CL_RESET, data.ref<uint8>(0x04));
 
     if (jailutils::InPrison(PChar)) // If jailed, no AH menu for you.
     {

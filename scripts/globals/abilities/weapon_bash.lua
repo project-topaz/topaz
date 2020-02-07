@@ -36,6 +36,6 @@ function onUseAbility(player,target,ability)
     local damage = math.floor(((darkKnightLvl + 11) / 4) + player:getMod(dsp.mod.WEAPON_BASH))
     target:takeDamage(damage, player, dsp.attackType.PHYSICAL, dsp.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)
-
+	ability:setMsg(dsp.msg.basic.JA_DAMAGE)
     return damage
 end

@@ -9,6 +9,8 @@
 local ID = require("scripts/zones/Southern_San_dOria/IDs");
 require("scripts/globals/settings");
 require("scripts/globals/quests");
+require("scripts/globals/shop");
+require("scripts/globals/npc_util")
 -----------------------------------
 
 function onTrade(player,npc,trade)
@@ -29,16 +31,24 @@ function onTrade(player,npc,trade)
 end;
 
 function onTrigger(player,npc)
-    player:startEvent(615); -- i know a thing or 2 about these streets
+    local stock =
+    {
+		4096,	132, 3,	-- Fire Crystal
+		4097,	342, 2,	-- Ice Crystal
+		4098,	151, 3,	-- Wind Crystal
+		4099,	132, 3,	-- Earth Crystal
+		4100,	342, 2,	-- Lightning Crystal
+		4101,	162, 3,	-- Water Crystal
+		4102,	833, 1,	-- Light Crystal
+		4103,	747, 1,	-- Dark Crystal
+    }
+
+    dsp.shop.nation(player, stock, dsp.nation.SANDORIA)
+--    player:startEvent(615); -- i know a thing or 2 about these streets
 end;
 
 function onEventUpdate(player,csid,option)
 end;
 
 function onEventFinish(player,csid,option)
-    if (csid == 655) then
-        player:addGil(GIL_RATE*50);
-        player:tradeComplete();
-        player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*50);
-    end
 end;

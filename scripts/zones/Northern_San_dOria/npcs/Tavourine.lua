@@ -28,6 +28,7 @@ function onTrigger(player,npc)
         17059,    90, 3,    -- Bronze Rod
         17034,   169, 3,    -- Bronze Mace
         16845, 16578, 3,    -- Lance
+		16834,	4980, 3,	-- Brass Spear
     }
 
     player:showText(npc,ID.text.TAVOURINE_SHOP_DIALOG)
