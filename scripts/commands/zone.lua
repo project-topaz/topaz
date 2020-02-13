@@ -349,5 +349,10 @@ function onTrigger(player, bytes)
     end
 
     -- send player to destination
+	player:setCharVar("prev_x",player:getXPos());
+	player:setCharVar("prev_y", player:getYPos());
+	player:setCharVar("prev_z", player:getZPos());
+	player:setCharVar("prev_rot", player:getRotPos());
+	player:setCharVar("prev_bringzone", player:getZoneID())
     player:setPos(x, y, z, rot, zone);
 end

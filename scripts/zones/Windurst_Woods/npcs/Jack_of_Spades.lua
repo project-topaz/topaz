@@ -15,18 +15,18 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-	local stock =
+    local stock =
     {
-		4096,	132, 3,	-- Fire Crystal
-		4097,	342, 2,	-- Ice Crystal
-		4098,	151, 3,	-- Wind Crystal
-		4099,	132, 3,	-- Earth Crystal
-		4100,	342, 2,	-- Lightning Crystal
-		4101,	162, 3,	-- Water Crystal
-		4102,	833, 1,	-- Light Crystal
-		4103,	747, 1,	-- Dark Crystal
+		4096,	102, 3,	-- Fire Crystal
+		4097,	307, 2,	-- Ice Crystal
+		4098,	99, 3,	-- Wind Crystal
+		4099,	102, 3,	-- Earth Crystal
+		4100,	307, 2,	-- Lightning Crystal
+		4101,	116, 3,	-- Water Crystal
+		4102,	718, 1,	-- Light Crystal
+		4103,	589, 1,	-- Dark Crystal
     }
-
+	
     dsp.shop.nation(player, stock, dsp.nation.WINDURST)
 	-- player:startEvent(10009,0,4)
 end

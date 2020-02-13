@@ -154,7 +154,6 @@ function onGameIn(player, firstLogin, zoning)
 
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
     checkForGearSet(player)
-
     -- god mode
     if player:getCharVar("GodMode") == 1 then
         player:addStatusEffect(tpz.effect.MAX_HP_BOOST,1000,0,0)
@@ -186,7 +185,8 @@ function onGameIn(player, firstLogin, zoning)
     if player:getCharVar("GMHidden") == 1 then
         player:setGMHidden(true)
     end
-
+	
+	
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
 

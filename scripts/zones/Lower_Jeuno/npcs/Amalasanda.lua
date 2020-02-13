@@ -15,9 +15,9 @@ function onTrigger(player,npc)
     if player:hasKeyItem(tpz.ki.TENSHODO_MEMBERS_CARD) then
         local stock =
         {
-			5867,	13500,     -- Toolbag (Ino)
-			5868,	18000,     -- Toolbag (Shika)
-			5869,	18000	   -- Toolbag (Cho)
+			5867,	3500,     -- Toolbag (Ino)
+			5868,	8000,     -- Toolbag (Shika)
+			5869,	8000	   -- Toolbag (Cho)
 			-- 704,    144,    -- Bamboo Stick
             -- 829,  21000,    -- Silk Cloth
             -- 1240,   220,    -- Koma

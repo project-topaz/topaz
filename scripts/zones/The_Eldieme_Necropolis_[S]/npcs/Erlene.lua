@@ -119,10 +119,11 @@ function onEventFinish(player,csid,option)
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED);
         else
+
+            player:addItem(6058); --klimaform
             player:delKeyItem(tpz.ki.ULBRECHTS_SEALED_LETTER);
             player:delKeyItem(tpz.ki.SCHULTS_SEALED_LETTER);
             player:completeQuest(CRYSTAL_WAR,tpz.quest.id.crystalWar.ON_SABBATICAL);
-            player:addItem(6058); --klimaform
             player:messageSpecial(ID.text.ITEM_OBTAINED, 6058);
             player:setCharVar("onSabbatical",0);
             player:setCharVar("Erlene_Sabbatical_Timer",VanadielDayOfTheYear());

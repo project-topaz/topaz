@@ -107,6 +107,6 @@ function onEventFinish(player,csid,option)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.MAP_OF_THE_NORTHLANDS_AREA);
         player:addFame(SANDORIA,30);
         player:completeQuest(SANDORIA,tpz.quest.id.sandoria.HER_MAJESTY_S_GARDEN);
-
+		player:addExp(2000 * EXP_RATE);
     end;
 end;

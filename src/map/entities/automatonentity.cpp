@@ -205,6 +205,11 @@ void CAutomatonEntity::OnMobSkillFinished(CMobSkillState& state, action_t& actio
     {
         puppetutils::TrySkillUP(this, SKILL_AUTOMATON_RANGED, PTarget->GetMLevel());
     }
+    // TODO: Workaround for Shield Bash
+    if (PSkill->getID() == 1944 && !PSkill->hasMissMsg())
+    {
+        puppetutils::TrySkillUP(this, SKILL_AUTOMATON_MELEE, PTarget->GetMLevel());
+    }
 }
 
 void CAutomatonEntity::Spawn()
