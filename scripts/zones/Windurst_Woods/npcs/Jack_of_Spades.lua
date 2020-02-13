@@ -27,7 +27,7 @@ function onTrigger(player,npc)
 		4103,	589, 1,	-- Dark Crystal
     }
 	
-    dsp.shop.nation(player, stock, dsp.nation.WINDURST)
+    tpz.shop.nation(player, stock, tpz.nation.WINDURST)
 	-- player:startEvent(10009,0,4)
 end
 

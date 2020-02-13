@@ -114,7 +114,7 @@ tpz.shop =
             4240, 3000, -- Cyclone Crystal
             4241, 3000, -- Terra Crystal
         }
-        dsp.shop.general(player, stock)
+        tpz.shop.general(player, stock)
     end,
 
     --[[ *******************************************************************************

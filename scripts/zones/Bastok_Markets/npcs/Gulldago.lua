@@ -22,7 +22,7 @@ function onTrigger(player,npc)
 	else
 		local isSkilled = false
 		local mLevel = player:getMainLvl()
-		local hasCrystal = player:hasKeyItem(dsp.ki.DEM_GATE_CRYSTAL)
+		local hasCrystal = player:hasKeyItem(tpz.ki.DEM_GATE_CRYSTAL)
 		if (tutorial == 3) then
 			for i = 1, 12 do
 				if (player:getSkillLevel(i)) >= 5 then
@@ -34,13 +34,13 @@ function onTrigger(player,npc)
 		if tutorial == 0 or tutorial == nil then
 			player:startEvent(518)
 		elseif tutorial == 1 then
-			if not player:hasStatusEffect(dsp.effect.SIGNET) then
+			if not player:hasStatusEffect(tpz.effect.SIGNET) then
 				player:startEvent(519)
 			else
 				player:startEvent(520)
 			end
 		elseif tutorial == 2 then
-			if not player:hasStatusEffect(dsp.effect.FOOD) then
+			if not player:hasStatusEffect(tpz.effect.FOOD) then
 				player:startEvent(521)
 			else
 				player:startEvent(522)
@@ -73,9 +73,9 @@ function onTrigger(player,npc)
 			end
 		elseif tutorial == 10 then
 			if not hasCrystal then
-				player:startEvent(533,dsp.ki.DEM_GATE_CRYSTAL,0,1,0,0,0,0,0)
+				player:startEvent(533,tpz.ki.DEM_GATE_CRYSTAL,0,1,0,0,0,0,0)
 			else
-				player:startEvent(534,dsp.ki.DEM_GATE_CRYSTAL,2500,1789,3,0,0,0,0)
+				player:startEvent(534,tpz.ki.DEM_GATE_CRYSTAL,2500,1789,3,0,0,0,0)
 			end
 		end
 	end
@@ -97,8 +97,8 @@ function onEventFinish(player,csid,option)
 		npcUtil.giveItem(player, {{4096,1}, {926,1}, {4370,1}} )
 		player:setCharVar("TutorialProgress",4)
 	elseif (csid == 526) then
-		player:addKeyItem(dsp.ki.CONQUEST_PROMOTION_VOUCHER)
-		player:messageSpecial(ID.text.KEYITEM_OBTAINED, dsp.ki.CONQUEST_PROMOTION_VOUCHER)
+		player:addKeyItem(tpz.ki.CONQUEST_PROMOTION_VOUCHER)
+		player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CONQUEST_PROMOTION_VOUCHER)
 		player:setCharVar("TutorialProgress",6)
 	elseif (csid == 528) then
 		player:addItem(16003)
@@ -119,8 +119,8 @@ function onEventFinish(player,csid,option)
 end
 -- function onTrigger(player,npc)
     -- local tutorial = player:getCharVar("TutorialProgress")
-	-- local signet = player:hasStatusEffect(dsp.effect.SIGNET)
-	-- local full = player:hasStatusEffect(dsp.effect.FOOD)
+	-- local signet = player:hasStatusEffect(tpz.effect.SIGNET)
+	-- local full = player:hasStatusEffect(tpz.effect.FOOD)
 	-- local skilled = false
 	-- local mLevel = player:getMainLvl()
 	-- if (tutorial == 3) then
@@ -181,8 +181,8 @@ end
 		-- player:messageSpecial(ID.text.ITEM_OBTAINED, 4370)
 		-- player:setCharVar("TutorialProgress",4)
 	-- elseif (csid == 526) then
-		-- player:addKeyItem(dsp.ki.CONQUEST_PROMOTION_VOUCHER)
-		-- player:messageSpecial(ID.text.KEYITEM_OBTAINED, dsp.ki.CONQUEST_PROMOTION_VOUCHER)
+		-- player:addKeyItem(tpz.ki.CONQUEST_PROMOTION_VOUCHER)
+		-- player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CONQUEST_PROMOTION_VOUCHER)
 		-- player:setCharVar("TutorialProgress",6)
 	-- elseif (csid == 528) then
 		-- player:addItem(16003)

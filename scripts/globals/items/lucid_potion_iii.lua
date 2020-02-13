@@ -13,5 +13,5 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:messageBasic(dsp.msg.basic.RECOVERS_HP,0,target:addHP(2000*ITEM_POWER))
+    target:messageBasic(tpz.msg.basic.RECOVERS_HP,0,target:addHP(2000*ITEM_POWER))
 end

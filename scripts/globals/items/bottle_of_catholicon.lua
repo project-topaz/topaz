@@ -18,17 +18,17 @@ function onItemUse(target)
     local removedCount = 0
     local removable =
     {
-        dsp.effect.PETRIFICATION,
-        dsp.effect.SILENCE,
-        dsp.effect.BIND,
-        dsp.effect.BANE,
-        dsp.effect.CURSE_II,
-        dsp.effect.CURSE,
-        dsp.effect.PARALYSIS,
-        dsp.effect.PLAGUE,
-        dsp.effect.POISON,
-        dsp.effect.DISEASE,
-        dsp.effect.BLINDNESS
+        tpz.effect.PETRIFICATION,
+        tpz.effect.SILENCE,
+        tpz.effect.BIND,
+        tpz.effect.BANE,
+        tpz.effect.CURSE_II,
+        tpz.effect.CURSE,
+        tpz.effect.PARALYSIS,
+        tpz.effect.PLAGUE,
+        tpz.effect.POISON,
+        tpz.effect.DISEASE,
+        tpz.effect.BLINDNESS
     }
     for _, status in pairs(removable) do
         if target:hasStatusEffect(status) then
@@ -39,9 +39,9 @@ function onItemUse(target)
             end
         end
     end
-    if target:hasStatusEffectByFlag(dsp.effectFlag.ERASABLE) and removedCount < 3 then
+    if target:hasStatusEffectByFlag(tpz.effectFlag.ERASABLE) and removedCount < 3 then
         for i=1, (3 - removedCount) do
-            target:eraseStatusEffect(dsp.effectFlag.ERASABLE)
+            target:eraseStatusEffect(tpz.effectFlag.ERASABLE)
             removedCount = removedCount + 1
             if removedCount == 3 then
                 break
@@ -49,6 +49,6 @@ function onItemUse(target)
         end
     end
     if removedCount == 0 then
-        target:messageBasic(dsp.msg.basic.NO_EFFECT)
+        target:messageBasic(tpz.msg.basic.NO_EFFECT)
     end
 end

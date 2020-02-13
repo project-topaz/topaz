@@ -13,9 +13,9 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    if not target:hasStatusEffect(dsp.effect.PAX) then
-        target:addStatusEffect(dsp.effect.PAX,-30,3,60)
+    if not target:hasStatusEffect(tpz.effect.PAX) then
+        target:addStatusEffect(tpz.effect.PAX,-30,3,60)
     else
-        target:messageBasic(dsp.msg.basic.NO_EFFECT)
+        target:messageBasic(tpz.msg.basic.NO_EFFECT)
     end
 end

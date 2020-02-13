@@ -219,7 +219,7 @@ local casketItems =
             { 320, 17050}, -- Willow Wand
         }
     },
-    [dsp.zone.LA_THEINE_PLATEAU] =
+    [tpz.zone.LA_THEINE_PLATEAU] =
     {
         regionalItems = {15835}, -- Desperado Ring
         temps =
@@ -290,7 +290,7 @@ local casketItems =
             {2320, 17316}, -- Bomb Arm
         }
     },
-    [dsp.zone.VALKURM_DUNES] =
+    [tpz.zone.VALKURM_DUNES] =
     {
         regionalItems = {16367}, -- Phlegethon's Trousers
         temps =
@@ -364,7 +364,7 @@ local casketItems =
             {2165, 12737}, -- White Mitts
         }
     },
-    [dsp.zone.JUGNER_FOREST] =
+    [tpz.zone.JUGNER_FOREST] =
     {
         regionalItems = {15927}, -- Pinwheel Belt
         temps =
@@ -439,7 +439,7 @@ local casketItems =
             {2165, 12737}, -- White Mitts
         }
     },
-    [dsp.zone.BATALLIA_DOWNS] =
+    [tpz.zone.BATALLIA_DOWNS] =
     {
         regionalItems = {18451}, -- Mokusa
         temps =
@@ -514,7 +514,7 @@ local casketItems =
             { 350, 17284}, -- Chakram
         }
     },
-    [dsp.zone.NORTH_GUSTABERG] =
+    [tpz.zone.NORTH_GUSTABERG] =
     {
         regionalItems = {11312}, -- Rambler's Cloak
         temps =
@@ -587,7 +587,7 @@ local casketItems =
             { 320, 17050}, -- Willow Wand
         }
     },
-    [dsp.zone.SOUTH_GUSTABERG] =
+    [tpz.zone.SOUTH_GUSTABERG] =
     {
         regionalItems = {15926}, -- Bronze Bandolier
         temps =
@@ -660,7 +660,7 @@ local casketItems =
             { 320, 17050}, -- Willow Wand
         }
     },
-    [dsp.zone.KONSCHTAT_HIGHLANDS] =
+    [tpz.zone.KONSCHTAT_HIGHLANDS] =
     {
         regionalItems = {19223}, -- Attar Of Roses
         temps =
@@ -732,7 +732,7 @@ local casketItems =
             {1465, 17316}, -- Bomb Arm
         }
     },
-    [dsp.zone.PASHHOW_MARSHLANDS] =
+    [tpz.zone.PASHHOW_MARSHLANDS] =
     {
         regionalItems = {19222}, -- Wurger
         temps =
@@ -807,7 +807,7 @@ local casketItems =
             { 350, 17090}, -- Elm Staff
         }
     },
-    [dsp.zone.ROLANBERRY_FIELDS] =
+    [tpz.zone.ROLANBERRY_FIELDS] =
     {
         regionalItems = {11401}, -- Rambler's Gaiters
         temps =
@@ -883,7 +883,7 @@ local casketItems =
             { 350, 17090}, -- Elm Staff
         }
     },
-    [dsp.zone.BEAUCEDINE_GLACIER] =
+    [tpz.zone.BEAUCEDINE_GLACIER] =
     {
         regionalItems = {16280}, -- Haraldr's Muffler
         temps =
@@ -942,7 +942,7 @@ local casketItems =
             { 390, 12987}, -- Ebony Sabots
         }
     },
-    [dsp.zone.XARCABARD] =
+    [tpz.zone.XARCABARD] =
     {
         regionalItems = {15042, 17267}, -- Gothic Gauntlets / Negoroshiki
         temps =
@@ -1002,7 +1002,7 @@ local casketItems =
             {  80, 18207}, -- Kheten
         }
     },
-    [dsp.zone.CAPE_TERIGGAN] =
+    [tpz.zone.CAPE_TERIGGAN] =
     {
         regionalItems = {17965}, -- Sirocco Axe
         temps =
@@ -1059,7 +1059,7 @@ local casketItems =
             { 470, 13702}, -- Beak Ledelsens
         }
     },
-    [dsp.zone.EASTERN_ALTEPA_DESERT] =
+    [tpz.zone.EASTERN_ALTEPA_DESERT] =
     {
         regionalItems = {16251}, -- Casaba Melon Tank
         temps =
@@ -1118,7 +1118,7 @@ local casketItems =
             { 390, 12987}, -- Ebony Sabots
         }
     },
-    [dsp.zone.WEST_SARUTABARUTA] =
+    [tpz.zone.WEST_SARUTABARUTA] =
     {
         regionalItems = {19221}, -- Firefly
         temps =
@@ -1191,7 +1191,7 @@ local casketItems =
             { 320, 17050}, -- Willow Wand
         }
     },
-    [dsp.zone.EAST_SARUTABARUTA] =
+    [tpz.zone.EAST_SARUTABARUTA] =
     {
         regionalItems = {16279}, -- Pile Chain
         temps =
@@ -1264,7 +1264,7 @@ local casketItems =
             { 320, 17050}, -- Willow Wand
         }
     },
-    [dsp.zone.TAHRONGI_CANYON] =
+    [tpz.zone.TAHRONGI_CANYON] =
     {
         regionalItems = {16007}, -- Protect Earring
         temps =
@@ -1336,7 +1336,7 @@ local casketItems =
             {2320, 17316}, -- Bomb Arm
         }
     },
-    [dsp.zone.BUBURIMU_PENINSULA] =
+    [tpz.zone.BUBURIMU_PENINSULA] =
     {
         regionalItems = {18599}, -- Pestle
         temps =
@@ -1408,7 +1408,7 @@ local casketItems =
             { 345, 16643}, -- Battleaxe
         }
     },
-    [dsp.zone.MERIPHATAUD_MOUNTAINS] =
+    [tpz.zone.MERIPHATAUD_MOUNTAINS] =
     {
         regionalItems = {18503}, -- Mammut
         temps =
@@ -1483,7 +1483,7 @@ local casketItems =
             { 350, 17090}, -- Elm Staff
         }
     },
-    [dsp.zone.SAUROMUGUE_CHAMPAIGN] =
+    [tpz.zone.SAUROMUGUE_CHAMPAIGN] =
     {
         regionalItems = {16368}, -- Herder's Subligar
         temps =
@@ -1558,7 +1558,7 @@ local casketItems =
             { 350, 17284}, -- Chakram
         }
     },
-    [dsp.zone.THE_SANCTUARY_OF_ZITAH] =
+    [tpz.zone.THE_SANCTUARY_OF_ZITAH] =
     {
         regionalItems = {18075}, -- Rossignol
         temps =
@@ -1617,7 +1617,7 @@ local casketItems =
             { 390, 12987}, -- Ebony Sabots
         }
     },
-    [dsp.zone.ROMAEVE] =
+    [tpz.zone.ROMAEVE] =
     {
         regionalItems = {11486}, -- Diana Corona
         temps =
@@ -1674,7 +1674,7 @@ local casketItems =
             { 470, 13702}, -- Beak Ledelsens
         }
     },
-    [dsp.zone.YUHTUNGA_JUNGLE] =
+    [tpz.zone.YUHTUNGA_JUNGLE] =
     {
         regionalItems = {17760}, -- Buccaneer's Scimitar
         temps =
@@ -1730,7 +1730,7 @@ local casketItems =
             { 390, 12986}, -- Chestnut Sabots
         }
     },
-    [dsp.zone.YHOATOR_JUNGLE] =
+    [tpz.zone.YHOATOR_JUNGLE] =
     {
         regionalItems = {18953}, -- Beluga
         temps =
@@ -1791,7 +1791,7 @@ local casketItems =
             { 230, 12987}, -- Ebony Sabots
         }
     },
-    [dsp.zone.WESTERN_ALTEPA_DESERT] =
+    [tpz.zone.WESTERN_ALTEPA_DESERT] =
     {
         regionalItems = {19114}, -- Galkan Dagger
         temps =
@@ -1851,7 +1851,7 @@ local casketItems =
             {  80, 18207}, -- Kheten
         }
     },
-    [dsp.zone.QUFIM_ISLAND] =
+    [tpz.zone.QUFIM_ISLAND] =
     {
         regionalItems = {18762}, -- Custodes
         temps =
@@ -1925,7 +1925,7 @@ local casketItems =
             { 350, 17284}, -- Chakram
         }
     },
-    [dsp.zone.BEHEMOTHS_DOMINION] =
+    [tpz.zone.BEHEMOTHS_DOMINION] =
     {
         regionalItems = {11402}, -- Gothic Sabatons
         temps =
@@ -1987,7 +1987,7 @@ local casketItems =
             { 230, 12987}, -- Ebony Sabots
         }
     },
-    [dsp.zone.VALLEY_OF_SORROWS] =
+    [tpz.zone.VALLEY_OF_SORROWS] =
     {
         regionalItems = {18867}, -- Daedalus Hammer
         temps =
@@ -2045,7 +2045,7 @@ local casketItems =
             { 470, 13702}, -- Beak Ledelsens
         }
     },
-    [dsp.zone.RUAUN_GARDENS] =
+    [tpz.zone.RUAUN_GARDENS] =
     {
         regionalItems = {16284}, -- Caract Choker
         temps =
@@ -2101,7 +2101,7 @@ local casketItems =
             { 725, 16265}, -- Wivre Gorget
         }
     },
-    [dsp.zone.THE_BOYAHDA_TREE] =
+    [tpz.zone.THE_BOYAHDA_TREE] =
     {
         regionalItems = {11038, 10948}, -- Dragonkin Earring | Carver's Torque
         temps =
@@ -2171,7 +2171,7 @@ local casketItems =
             { 400, 17899}, -- Svg. Mole Broth
         }
     },
-    [dsp.zone.MIDDLE_DELKFUTTS_TOWER] =
+    [tpz.zone.MIDDLE_DELKFUTTS_TOWER] =
     {
         regionalItems = {651}, -- Iron Ingot
         temps =
@@ -2229,7 +2229,7 @@ local casketItems =
             { 390, 12986}, -- Chestnut Sabots
         }
     },
-    [dsp.zone.UPPER_DELKFUTTS_TOWER] =
+    [tpz.zone.UPPER_DELKFUTTS_TOWER] =
     {
         regionalItems = {19779}, -- Potestas Bomblet
         temps =
@@ -2274,7 +2274,7 @@ local casketItems =
             { 440, 12996}, -- Silk Pumps
         }
     },
-    [dsp.zone.TEMPLE_OF_UGGALEPIH] =
+    [tpz.zone.TEMPLE_OF_UGGALEPIH] =
     {
         regionalItems = {10953}, -- Boneworker's Torque
         temps =
@@ -2329,7 +2329,7 @@ local casketItems =
             { 610, 12996}, -- Silk Pumps
         }
     },
-    [dsp.zone.DEN_OF_RANCOR] =
+    [tpz.zone.DEN_OF_RANCOR] =
     {
         regionalItems = {10950, 10991}, -- Goldsm. Torque | Rancorous Mantle
         temps =
@@ -2395,7 +2395,7 @@ local casketItems =
             { 695, 16128}, -- Wivre Hairpin
         }
     },
-    [dsp.zone.RANGUEMONT_PASS] =
+    [tpz.zone.RANGUEMONT_PASS] =
     {
         regionalItems = {11575}, -- Grapevine Cape
         temps =
@@ -2437,7 +2437,7 @@ local casketItems =
             { 500, 17898}, -- C. Grass. Broth
         }
     },
-    [dsp.zone.BOSTAUNIEUX_OUBLIETTE] =
+    [tpz.zone.BOSTAUNIEUX_OUBLIETTE] =
     {
         regionalItems = {11920}, -- Melaco Mittens
         temps =
@@ -2506,7 +2506,7 @@ local casketItems =
             { 110, 16520}, -- Verdun
         }
     },
-    [dsp.zone.TORAIMARAI_CANAL] =
+    [tpz.zone.TORAIMARAI_CANAL] =
     {
         regionalItems = {11576}, -- Bond Cape
         temps =
@@ -2575,7 +2575,7 @@ local casketItems =
             { 110, 16520}, -- Verdun
         }
     },
-    [dsp.zone.ZERUHN_MINES] =
+    [tpz.zone.ZERUHN_MINES] =
     {
         regionalItems = {11677}, -- Prouesse Ring
         tempsLow =
@@ -2711,7 +2711,7 @@ local casketItems =
             {1070, 17894}, -- Vermihumus
         }
     },
-    [dsp.zone.KORROLOKA_TUNNEL] =
+    [tpz.zone.KORROLOKA_TUNNEL] =
     {
         regionalItems = {11039}, -- Brachyura Earring
         tempsLow =
@@ -2823,7 +2823,7 @@ local casketItems =
             { 110, 13704}, -- Ogre Mask
         }
     },
-    [dsp.zone.KUFTAL_TUNNEL] =
+    [tpz.zone.KUFTAL_TUNNEL] =
     {
         regionalItems = {18816}, -- Wizzan Grip
         temps =
@@ -2892,7 +2892,7 @@ local casketItems =
             { 420,  5872}, -- D.A. Bolt Quiver
         }
     },
-    [dsp.zone.SEA_SERPENT_GROTTO] =
+    [tpz.zone.SEA_SERPENT_GROTTO] =
     {
         regionalItems = {19780}, -- Mana Ampulla
         temps =
@@ -2952,7 +2952,7 @@ local casketItems =
             { 525, 13702}, -- Beak Ledelsens
         }
     },
-    [dsp.zone.VELUGANNON_PALACE] =
+    [tpz.zone.VELUGANNON_PALACE] =
     {
         regionalItems = {13467}, -- Dragon Ring
         temps =
@@ -3032,7 +3032,7 @@ local casketItems =
             {1070, 17894}, -- Vermihumus
         }
     },
-    [dsp.zone.THE_SHRINE_OF_RUAVITAU] =
+    [tpz.zone.THE_SHRINE_OF_RUAVITAU] =
     {
         regionalItems = {11040, 10951}, -- Terminus Earring | Weaver's Torque
         temps =
@@ -3103,7 +3103,7 @@ local casketItems =
             { 400, 17899}, -- Svg. Mole Broth
         }
     },
-    [dsp.zone.LOWER_DELKFUTTS_TOWER] =
+    [tpz.zone.LOWER_DELKFUTTS_TOWER] =
     {
         regionalItems = {11043}, -- Giant's Earring
         temps =
@@ -3161,7 +3161,7 @@ local casketItems =
             { 390, 12986}, -- Chestnut Sabots
         }
     },
-    [dsp.zone.KING_RANPERRES_TOMB] =
+    [tpz.zone.KING_RANPERRES_TOMB] =
     {
         regionalItems = {10924}, -- Chocobo Torque
         tempsLow =
@@ -3289,7 +3289,7 @@ local casketItems =
             {3810, 17316}, -- Bomb Arm
         }
     },
-    [dsp.zone.DANGRUF_WADI] =
+    [tpz.zone.DANGRUF_WADI] =
     {
         regionalItems = {11769}, -- Field Rope
         tempsLow =
@@ -3397,7 +3397,7 @@ local casketItems =
             { 245, 12437}, -- Gavial Mask
         }
     },
-    [dsp.zone.INNER_HORUTOTO_RUINS] =
+    [tpz.zone.INNER_HORUTOTO_RUINS] =
     {
         regionalItems = {18624}, -- Numen Staff
         temps =
@@ -3478,7 +3478,7 @@ local casketItems =
             {3810, 17316}, -- Bomb Arm
         }
     },
-    [dsp.zone.ORDELLES_CAVES] =
+    [tpz.zone.ORDELLES_CAVES] =
     {
         regionalItems = {11767}, -- Chocobo Rope
         tempsLow =
@@ -3602,7 +3602,7 @@ local casketItems =
             { 150, 13708}, -- Ogre Ledelsens
         }
     },
-    [dsp.zone.OUTER_HORUTOTO_RUINS] =
+    [tpz.zone.OUTER_HORUTOTO_RUINS] =
     {
         regionalItems = {10925}, -- Fisher's Torque
         tempsLow =
@@ -3738,7 +3738,7 @@ local casketItems =
             {1070, 17894}, -- Vermihumus
         }
     },
-    [dsp.zone.THE_ELDIEME_NECROPOLIS] =
+    [tpz.zone.THE_ELDIEME_NECROPOLIS] =
     {
         regionalItems = {18812}, -- Ossa Grip
         temps =
@@ -3805,7 +3805,7 @@ local casketItems =
             {3100, 18259}, -- Angon
         }
     },
-    [dsp.zone.GUSGEN_MINES] =
+    [tpz.zone.GUSGEN_MINES] =
     {
         regionalItems = {10926}, -- Field Torque
         tempsLow =
@@ -3930,7 +3930,7 @@ local casketItems =
             { 150, 13708}, -- Ogre Ledelsens
         }
     },
-    [dsp.zone.CRAWLERS_NEST] =
+    [tpz.zone.CRAWLERS_NEST] =
     {
         regionalItems = {11823}, -- Cocoon Band
         temps =
@@ -3997,7 +3997,7 @@ local casketItems =
             {3100, 18259}, -- Angon
         }
     },
-    [dsp.zone.MAZE_OF_SHAKHRAMI] =
+    [tpz.zone.MAZE_OF_SHAKHRAMI] =
     {
         regionalItems = {11768}, -- Fisher's Rope
         tempsLow =
@@ -4122,7 +4122,7 @@ local casketItems =
             { 150, 13708}, -- Ogre Ledelsens
         }
     },
-    [dsp.zone.GARLAIGE_CITADEL] =
+    [tpz.zone.GARLAIGE_CITADEL] =
     {
         regionalItems = {18784}, -- Metasoma Katars
         temps =
@@ -4192,7 +4192,7 @@ local casketItems =
             {3100, 18259}, -- Angon
         }
     },
-    [dsp.zone.FEIYIN] =
+    [tpz.zone.FEIYIN] =
     {
         regionalItems = {16202}, -- Dagda's Shield
         temps =
@@ -4268,7 +4268,7 @@ local casketItems =
             {2150, 18258}, -- Thr. Tomahawk
         }
     },
-    [dsp.zone.IFRITS_CAULDRON] =
+    [tpz.zone.IFRITS_CAULDRON] =
     {
         regionalItems = {10949}, -- Smithy's Torque
         temps =
@@ -4340,7 +4340,7 @@ local casketItems =
             { 725, 16265}, -- Wivre Gorget
         }
     },
-    [dsp.zone.QUICKSAND_CAVES] =
+    [tpz.zone.QUICKSAND_CAVES] =
     {
         regionalItems = {10949}, -- Smithy's Torque
         temps =
@@ -4398,7 +4398,7 @@ local casketItems =
             { 680, 12740}, -- Silk Mitts
         }
     },
-    [dsp.zone.GUSTAV_TUNNEL] =
+    [tpz.zone.GUSTAV_TUNNEL] =
     {
         regionalItems = {10955, 11041}, -- Culinarian's Torque | Liminus Earring
         temps =
@@ -4470,7 +4470,7 @@ local casketItems =
             { 400, 17899}, -- Svg. Mole Broth
         }
     },
-    [dsp.zone.LABYRINTH_OF_ONZOZO] =
+    [tpz.zone.LABYRINTH_OF_ONZOZO] =
     {
         regionalItems = {18817}, -- Furtive Grip
         temps =

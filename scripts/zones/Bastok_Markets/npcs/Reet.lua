@@ -26,7 +26,7 @@ function onTrigger(player,npc)
 		4103,	589, 1,	-- Dark Crystal
     }
 
-    dsp.shop.nation(player, stock, dsp.nation.BASTOK)
+    tpz.shop.nation(player, stock, tpz.nation.BASTOK)
 end
 
 function onEventUpdate(player,csid,option)

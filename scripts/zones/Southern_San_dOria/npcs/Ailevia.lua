@@ -39,7 +39,7 @@ function onTrigger(player,npc)
 		4103,	589, 1,	-- Dark Crystal
     }
 
-    dsp.shop.nation(player, stock, dsp.nation.SANDORIA)
+    tpz.shop.nation(player, stock, tpz.nation.SANDORIA)
 --    player:startEvent(615); -- i know a thing or 2 about these streets
 end;
 

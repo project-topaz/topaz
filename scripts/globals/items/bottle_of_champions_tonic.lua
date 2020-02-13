@@ -12,5 +12,5 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(dsp.effect.POTENCY, 25, 3, 60)
+    target:addStatusEffect(tpz.effect.POTENCY, 25, 3, 60)
 end

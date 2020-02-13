@@ -14,5 +14,5 @@ end
 function onItemUse(target)
     target:addHP((target:getMaxHP()/100)*25)
     target:addMP((target:getMaxMP()/100)*25)
-    target:messageBasic(dsp.msg.basic.RECOVERS_HP_AND_MP)
+    target:messageBasic(tpz.msg.basic.RECOVERS_HP_AND_MP)
 end

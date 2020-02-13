@@ -11,8 +11,8 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(dsp.effect.ATTACK_BOOST, 25, 3, 300)
-    --player:addStatusEffect(dsp.effect., 25, 3, 60) -- TODO: add a status effect that increases ranged attack
-    target:addStatusEffect(dsp.effect.ACCURACY_BOOST, 50, 3, 300)
-    target:addStatusEffect(dsp.effect.SHARPSHOT, 50, 3, 300)
+    target:addStatusEffect(tpz.effect.ATTACK_BOOST, 25, 3, 300)
+    --player:addStatusEffect(tpz.effect., 25, 3, 60) -- TODO: add a status effect that increases ranged attack
+    target:addStatusEffect(tpz.effect.ACCURACY_BOOST, 50, 3, 300)
+    target:addStatusEffect(tpz.effect.SHARPSHOT, 50, 3, 300)
 end

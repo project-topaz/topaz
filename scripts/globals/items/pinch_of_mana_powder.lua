@@ -14,6 +14,6 @@ end
 -- TODO: AOE animation effect.
 function onItemUse(target)
     target:forMembersInRange(10, function(member)
-        member:messageBasic(dsp.msg.basic.RECOVERS_MP,0,member:addMP((member:getMaxMP()/100)*25))
+        member:messageBasic(tpz.msg.basic.RECOVERS_MP,0,member:addMP((member:getMaxMP()/100)*25))
     end)
 end

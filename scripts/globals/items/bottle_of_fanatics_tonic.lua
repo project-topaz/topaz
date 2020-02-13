@@ -12,5 +12,5 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(dsp.effect.PHYSICAL_SHIELD, 1, 3, 60)
+    target:addStatusEffect(tpz.effect.PHYSICAL_SHIELD, 1, 3, 60)
 end

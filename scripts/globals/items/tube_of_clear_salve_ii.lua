@@ -10,7 +10,7 @@ require("scripts/globals/msg")
 function onItemCheck(target)
     local result = 0
     if not target:hasPet() then
-        result = dsp.msg.basic.REQUIRES_A_PET
+        result = tpz.msg.basic.REQUIRES_A_PET
     end
     return result
 end
@@ -20,17 +20,17 @@ function onItemUse(target)
     local removedCount = 0
     local removable =
     {
-        dsp.effect.PETRIFICATION,
-        dsp.effect.SILENCE,
-        dsp.effect.BIND,
-        dsp.effect.BANE,
-        dsp.effect.CURSE_II,
-        dsp.effect.CURSE,
-        dsp.effect.PARALYSIS,
-        dsp.effect.PLAGUE,
-        dsp.effect.POISON,
-        dsp.effect.DISEASE,
-        dsp.effect.BLINDNESS
+        tpz.effect.PETRIFICATION,
+        tpz.effect.SILENCE,
+        tpz.effect.BIND,
+        tpz.effect.BANE,
+        tpz.effect.CURSE_II,
+        tpz.effect.CURSE,
+        tpz.effect.PARALYSIS,
+        tpz.effect.PLAGUE,
+        tpz.effect.POISON,
+        tpz.effect.DISEASE,
+        tpz.effect.BLINDNESS
     }
     for _, status in pairs(removable) do
         if pet:hasStatusEffect(status) then
@@ -38,11 +38,11 @@ function onItemUse(target)
             removedCount = removedCount + 1
         end
     end
-    if pet:hasStatusEffectByFlag(dsp.effectFlag.ERASABLE) then
-        pet:eraseStatusEffect(dsp.effectFlag.ERASABLE)
+    if pet:hasStatusEffectByFlag(tpz.effectFlag.ERASABLE) then
+        pet:eraseStatusEffect(tpz.effectFlag.ERASABLE)
     else
         if removedCount == 0 then
-            pet:messageBasic(dsp.msg.basic.NO_EFFECT)
+            pet:messageBasic(tpz.msg.basic.NO_EFFECT)
         end
     end
 end

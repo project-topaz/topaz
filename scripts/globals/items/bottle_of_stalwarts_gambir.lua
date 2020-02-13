@@ -11,6 +11,6 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(dsp.effect.ATTACK_BOOST, 50, 3, 300)
-    target:addStatusEffect(dsp.effect.ACCURACY_BOOST, 100, 3, 300)
+    target:addStatusEffect(tpz.effect.ATTACK_BOOST, 50, 3, 300)
+    target:addStatusEffect(tpz.effect.ACCURACY_BOOST, 100, 3, 300)
 end

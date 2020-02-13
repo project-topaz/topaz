@@ -32,7 +32,7 @@ function onTrigger(player,npc)
 	else
 		local isSkilled = false
 		local mLevel = player:getMainLvl()
-		local hasCrystal = player:hasKeyItem(dsp.ki.HOLLA_GATE_CRYSTAL)
+		local hasCrystal = player:hasKeyItem(tpz.ki.HOLLA_GATE_CRYSTAL)
 		if (tutorial == 3) then
 			for i = 1, 12 do
 				if (player:getSkillLevel(i)) >= 5 then
@@ -44,13 +44,13 @@ function onTrigger(player,npc)
 		if tutorial == 0 or tutorial == nil then
 			player:startEvent(916)
 		elseif tutorial == 1 then
-			if not player:hasStatusEffect(dsp.effect.SIGNET) then
+			if not player:hasStatusEffect(tpz.effect.SIGNET) then
 				player:startEvent(917)
 			else
 				player:startEvent(918)
 			end
 		elseif tutorial == 2 then
-			if not player:hasStatusEffect(dsp.effect.FOOD) then
+			if not player:hasStatusEffect(tpz.effect.FOOD) then
 				player:startEvent(919)
 			else
 				player:startEvent(920)
@@ -83,9 +83,9 @@ function onTrigger(player,npc)
 			end
 		elseif tutorial == 10 then
 			if not hasCrystal then
-				player:startEvent(931,dsp.ki.HOLLA_GATE_CRYSTAL,0,2,0,0,0,0,0)
+				player:startEvent(931,tpz.ki.HOLLA_GATE_CRYSTAL,0,2,0,0,0,0,0)
 			else
-				player:startEvent(932,dsp.ki.HOLLA_GATE_CRYSTAL,2500,1789,3,0,0,0,0)
+				player:startEvent(932,tpz.ki.HOLLA_GATE_CRYSTAL,2500,1789,3,0,0,0,0)
 			end
 		end
 	end
@@ -107,8 +107,8 @@ function onEventFinish(player,csid,option)
 		npcUtil.giveItem(player, {{4101,1}, {936,1}, {4358,1}} )
 		player:setCharVar("TutorialProgress",4)
 	elseif (csid == 924) then
-		player:addKeyItem(dsp.ki.CONQUEST_PROMOTION_VOUCHER)
-		player:messageSpecial(ID.text.KEYITEM_OBTAINED, dsp.ki.CONQUEST_PROMOTION_VOUCHER)
+		player:addKeyItem(tpz.ki.CONQUEST_PROMOTION_VOUCHER)
+		player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CONQUEST_PROMOTION_VOUCHER)
 		player:setCharVar("TutorialProgress",6)
 	elseif (csid == 926) then
 		player:addItem(16003)
@@ -146,8 +146,8 @@ end
 		-- player:messageSpecial(ID.text.ITEM_OBTAINED, 4358)
 		-- player:setCharVar("TutorialProgress",4)
 	-- elseif (csid == 924) then
-		-- player:addKeyItem(dsp.ki.CONQUEST_PROMOTION_VOUCHER)
-		-- player:messageSpecial(ID.text.KEYITEM_OBTAINED, dsp.ki.CONQUEST_PROMOTION_VOUCHER)
+		-- player:addKeyItem(tpz.ki.CONQUEST_PROMOTION_VOUCHER)
+		-- player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CONQUEST_PROMOTION_VOUCHER)
 		-- player:setCharVar("TutorialProgress",6)
 	-- elseif (csid == 926) then
 		-- player:addItem(16003)

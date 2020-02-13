@@ -10,10 +10,10 @@ require("scripts/globals/msg")
 function onItemCheck(target)
     local result = 0
     if not target:hasPet() then
-        result = dsp.msg.basic.REQUIRES_A_PET
+        result = tpz.msg.basic.REQUIRES_A_PET
     end
-    if target:hasStatusEffect(dsp.effect.MEDICINE) then
-        result = dsp.msg.basic.ITEM_NO_USE_MEDICATED
+    if target:hasStatusEffect(tpz.effect.MEDICINE) then
+        result = tpz.msg.basic.ITEM_NO_USE_MEDICATED
     end
     return result
 end
@@ -23,17 +23,17 @@ function onItemUse(target)
     local removedCount = 0
     local removable =
     {
-        dsp.effect.PETRIFICATION,
-        dsp.effect.SILENCE,
-        dsp.effect.BIND,
-        dsp.effect.BANE,
-        dsp.effect.CURSE_II,
-        dsp.effect.CURSE,
-        dsp.effect.PARALYSIS,
-        dsp.effect.PLAGUE,
-        dsp.effect.POISON,
-        dsp.effect.DISEASE,
-        dsp.effect.BLINDNESS
+        tpz.effect.PETRIFICATION,
+        tpz.effect.SILENCE,
+        tpz.effect.BIND,
+        tpz.effect.BANE,
+        tpz.effect.CURSE_II,
+        tpz.effect.CURSE,
+        tpz.effect.PARALYSIS,
+        tpz.effect.PLAGUE,
+        tpz.effect.POISON,
+        tpz.effect.DISEASE,
+        tpz.effect.BLINDNESS
     }
     for _, status in pairs(removable) do
         if pet:hasStatusEffect(status) then
@@ -44,9 +44,9 @@ function onItemUse(target)
             end
         end
     end
-    if pet:hasStatusEffectByFlag(dsp.effectFlag.ERASABLE) and removedCount < 2 then
+    if pet:hasStatusEffectByFlag(tpz.effectFlag.ERASABLE) and removedCount < 2 then
         for i=1, (2 - removedCount) do
-            pet:eraseStatusEffect(dsp.effectFlag.ERASABLE)
+            pet:eraseStatusEffect(tpz.effectFlag.ERASABLE)
             removedCount = removedCount + 1
             if removedCount == 2 then
                 break
@@ -54,6 +54,6 @@ function onItemUse(target)
         end
     end
     if removedCount == 0 then
-        pet:messageBasic(dsp.msg.basic.NO_EFFECT)
+        pet:messageBasic(tpz.msg.basic.NO_EFFECT)
     end
 end

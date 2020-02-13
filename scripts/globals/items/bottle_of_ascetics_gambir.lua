@@ -11,6 +11,6 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    target:addStatusEffect(dsp.effect.MAGIC_ATK_BOOST, 50, 3, 300)
-    target:addStatusEffect(dsp.effect.INTENSION, 100, 3, 300)
+    target:addStatusEffect(tpz.effect.MAGIC_ATK_BOOST, 50, 3, 300)
+    target:addStatusEffect(tpz.effect.INTENSION, 100, 3, 300)
 end
