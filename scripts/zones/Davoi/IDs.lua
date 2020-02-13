@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.DAVOI] =
+zones[tpz.zone.DAVOI] =
 {
     text =
     {
@@ -17,6 +17,7 @@ zones[dsp.zone.DAVOI] =
         NOT_ENOUGH_GIL              = 6393, -- You do not have enough gil.
         ITEMS_OBTAINED              = 6397, -- You obtain <number> <item>!
         NOTHING_OUT_OF_ORDINARY     = 6402, -- There is nothing out of the ordinary here.
+        FELLOW_MESSAGE_OFFSET       = 6417, -- I'm ready. I suppose.
         CONQUEST_BASE               = 7049, -- Tallying conquest results...
         FISHING_MESSAGE_OFFSET      = 7208, -- You can't fish here.
         CAVE_HAS_BEEN_SEALED_OFF    = 7352, -- The cave has been sealed off by some sort of barrier.
@@ -77,4 +78,4 @@ zones[dsp.zone.DAVOI] =
     },
 }
 
-return zones[dsp.zone.DAVOI]
+return zones[tpz.zone.DAVOI]

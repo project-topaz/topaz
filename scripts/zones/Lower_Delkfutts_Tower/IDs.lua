@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.LOWER_DELKFUTTS_TOWER] =
+zones[tpz.zone.LOWER_DELKFUTTS_TOWER] =
 {
     text =
     {
@@ -17,6 +17,7 @@ zones[dsp.zone.LOWER_DELKFUTTS_TOWER] =
         ITEM_OBTAINED                    = 6577,  -- Obtained: <item>.
         GIL_OBTAINED                     = 6578,  -- Obtained <number> gil.
         KEYITEM_OBTAINED                 = 6580,  -- Obtained key item: <keyitem>.
+        FELLOW_MESSAGE_OFFSET            = 6606,  -- I'm ready. I suppose.
         FISHING_MESSAGE_OFFSET           = 7238,  -- You can't fish here.
         PLAYER_OBTAINS_ITEM              = 8621,  -- <name> obtains <item>!
         UNABLE_TO_OBTAIN_ITEM            = 8622,  -- You were unable to obtain the item.
@@ -50,4 +51,4 @@ zones[dsp.zone.LOWER_DELKFUTTS_TOWER] =
     },
 }
 
-return zones[dsp.zone.LOWER_DELKFUTTS_TOWER]
+return zones[tpz.zone.LOWER_DELKFUTTS_TOWER]

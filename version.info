@@ -1,4 +1,4 @@
-#DarkStar Version Info
+#Topaz Version Info
 
 #Expected Client version (wrong version cannot log in)
 CLIENT_VER: 30191204_1
@@ -10,4 +10,4 @@ CLIENT_VER: 30191204_1
 VER_LOCK: 0
 
 #Current Server Version. Not the same thing as source revision.
-#DSP_VER: Unused because we aren't even close to a "release" yet.
+#TOPAZ_VER: Unused because we aren't even close to a "release" yet.

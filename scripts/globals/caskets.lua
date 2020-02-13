@@ -20,8 +20,8 @@ require("scripts/globals/msg")
 -- 2425 -- Black with Red chest 2
 -----------------------------------------------
 
-dsp = dsp or {}
-dsp.caskets = dsp.caskets or {}
+tpz = tpz or {}
+tpz.caskets = tpz.caskets or {}
 
 local casketInfo =
 {
@@ -77,7 +77,7 @@ local casketInfo =
 
 local casketItems =
 {
-    [dsp.zone.WEST_RONFAURE] =
+    [tpz.zone.WEST_RONFAURE] =
     {
         regionalItems = {15834}, -- Blind Ring
         temps =
@@ -148,7 +148,7 @@ local casketItems =
             { 320, 17050}, -- Willow Wand
         }
     },
-    [dsp.zone.EAST_RONFAURE] =
+    [tpz.zone.EAST_RONFAURE] =
     {
         regionalItems = {19157}, -- Surviver
         temps =
@@ -4604,18 +4604,18 @@ local function canDropCasket(player)
     -- This should be max 5 levels but its 11 right now - Teo says the regimes global needs fixing
     -----------------------------------------------------------------------------------------
     local baseCasketRate      = 10 -- 1 power = 1%
-    local casketProwessEffect = player:getStatusEffect(dsp.effect.PROWESS_CASKET_RATE)
+    local casketProwessEffect = player:getStatusEffect(tpz.effect.PROWESS_CASKET_RATE)
     local kupowersMMBPower    = 0
     local prowessCasketsPower = 0
 
     --[[ Super Kupowers Myriad Mystery Boxes not implimented yet.
-    if player:hasStatusEffect(dsp.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES) then
-        local kupowerMMBEffect = player:getStatusEffect(dsp.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES)
+    if player:hasStatusEffect(tpz.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES) then
+        local kupowerMMBEffect = player:getStatusEffect(tpz.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES)
         kupowersMMBPower = kupowerMMBEffect:getPower()
     end
     ]]
 
-    if player:hasStatusEffect(dsp.effect.PROWESS_CASKET_RATE) then
+    if player:hasStatusEffect(tpz.effect.PROWESS_CASKET_RATE) then
         prowessCasketsPower = casketProwessEffect:getPower()
     end
 
@@ -4666,7 +4666,7 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
     local attempts         = math.random(4, 6)
     local kupowersBonus    = 0
 
-    -- if player:hasStatusEffect(dsp.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES) then    -- Super Kupowers Myriad Mystery Boxes not implimented yet.
+    -- if player:hasStatusEffect(tpz.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES) then    -- Super Kupowers Myriad Mystery Boxes not implimented yet.
     --     kupowersBonus = 0.2
     -- end
 
@@ -4702,7 +4702,7 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
         npc:setLocalVar("[caskets]SPAWNSTATUS", casketInfo.spawnStatus.SPAWNED_CLOSED)
         npc:setLocalVar("[caskets]SPAWNTIME", os.time())
         npc:setPos(x, y, z, r)
-        npc:setStatus(dsp.status.NORMAL)
+        npc:setStatus(tpz.status.NORMAL)
         --npc:entityAnimationPacket("deru")
         npc:setModelId(chestStyle)
         sendChestDropMessage(player)
@@ -5084,7 +5084,7 @@ end
 ---------------------------------------------------------------------------------------------
 -- Desc: Casket spawn checks, runs through all checks before spawning
 ---------------------------------------------------------------------------------------------
-dsp.caskets.spawnCasket = function (mob, player, x, y, z, r)
+tpz.caskets.spawnCasket = function (player, mob, x, y, z, r)
     if mob == nil or player == nil then
         return
     end
@@ -5105,7 +5105,7 @@ end
 ----------------------------------------------------------------------
 -- Main public casket functions
 ----------------------------------------------------------------------
-dsp.caskets.onTrigger = function(player, npc)
+tpz.caskets.onTrigger = function(player, npc)
     ------------------------------------------------------------------
     -- Basic chest var's
     ------------------------------------------------------------------
@@ -5170,7 +5170,7 @@ end
 -- (e.g. its between 24 and 58) its usually a good idea to start with this clue.
 -- Multiple tools may be used, however there is a low rate of success after the first.
 -------------------------------------------------------------------------------------------------------------------
-dsp.caskets.onTrade = function(player, npc, trade)
+tpz.caskets.onTrade = function(player, npc, trade)
     local zoneId            = player:getZoneID()
     local ID                = zones[zoneId]
     local baseMessage       = ID.text.PLAYER_OBTAINS_TEMP_ITEM
@@ -5230,7 +5230,7 @@ dsp.caskets.onTrade = function(player, npc, trade)
     end
 end
 
-dsp.caskets.onEventFinish = function(player, csid, option, npc)
+tpz.caskets.onEventFinish = function(player, csid, option, npc)
     local zoneId = player:getZoneID()
     local ID = zones[zoneId]
     local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM

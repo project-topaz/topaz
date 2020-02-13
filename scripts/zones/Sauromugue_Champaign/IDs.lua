@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.SAUROMUGUE_CHAMPAIGN] =
+zones[tpz.zone.SAUROMUGUE_CHAMPAIGN] =
 {
     text =
     {
@@ -16,6 +16,7 @@ zones[dsp.zone.SAUROMUGUE_CHAMPAIGN] =
         GIL_OBTAINED             = 6411,  -- Obtained <number> gil.
         KEYITEM_OBTAINED         = 6413,  -- Obtained key item: <keyitem>.
         NOTHING_OUT_OF_ORDINARY  = 6424,  -- There is nothing out of the ordinary here.
+        FELLOW_MESSAGE_OFFSET    = 6439,  -- I'm ready. I suppose.
         CONQUEST_BASE            = 7071,  -- Tallying conquest results...
         MANY_TIGER_BONES         = 7230,  -- There are many tiger bones here...
         OLD_SABERTOOTH_DIALOG_I  = 7236,  -- You hear the distant roar of a tiger. It sounds as if the beast is approaching slowly...
@@ -55,4 +56,4 @@ zones[dsp.zone.SAUROMUGUE_CHAMPAIGN] =
     },
 }
 
-return zones[dsp.zone.SAUROMUGUE_CHAMPAIGN]
+return zones[tpz.zone.SAUROMUGUE_CHAMPAIGN]

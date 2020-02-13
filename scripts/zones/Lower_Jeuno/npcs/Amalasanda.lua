@@ -12,7 +12,7 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    if player:hasKeyItem(dsp.ki.TENSHODO_MEMBERS_CARD) then
+    if player:hasKeyItem(tpz.ki.TENSHODO_MEMBERS_CARD) then
         local stock =
         {
 			5867,	13500,     -- Toolbag (Ino)
@@ -77,7 +77,7 @@ function onTrigger(player,npc)
         }
 
         player:showText(npc, ID.text.AMALASANDA_SHOP_DIALOG)
-        dsp.shop.general(player, stock)
+        tpz.shop.general(player, stock)
     end
 end
 

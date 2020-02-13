@@ -6,7 +6,7 @@ require("scripts/globals/zone")
 
 zones = zones or {}
 
-zones[dsp.zone.XARCABARD] =
+zones[tpz.zone.XARCABARD] =
 {
     text =
     {
@@ -17,6 +17,7 @@ zones[dsp.zone.XARCABARD] =
         KEYITEM_OBTAINED               = 6404,  -- Obtained key item: <keyitem>.
         KEYITEM_LOST                   = 6405,  -- Lost key item: <keyitem>.
         NOTHING_OUT_OF_ORDINARY        = 6415,  -- There is nothing out of the ordinary here.
+        FELLOW_MESSAGE_OFFSET          = 6430,  -- I'm ready. I suppose.
         CONQUEST_BASE                  = 7062,  -- Tallying conquest results...
         BEASTMEN_BANNER                = 7141,  -- There was a curse on the beastmen's banner!
         ALREADY_OBTAINED_TELE          = 7371,  -- You already possess the gate crystal for this telepoint.
@@ -78,4 +79,4 @@ zones[dsp.zone.XARCABARD] =
     },
 }
 
-return zones[dsp.zone.XARCABARD]
+return zones[tpz.zone.XARCABARD]
