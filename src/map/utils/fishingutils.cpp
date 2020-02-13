@@ -380,7 +380,7 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
 
                 //temp fish skillup
                 //fix garbage code later
-                uint8 chance = dsprand::GetRandomNumber(0, 6);
+                uint8 chance = tpzrand::GetRandomNumber(0, 6);
                 if (chance == 6)
                 {
                     uint8 skillID = 48;
@@ -414,11 +414,11 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
 
                 //temp fish skillup
                 //fix garbage code later
-                uint8 chance = dsprand::GetRandomNumber(0, 2);
+                uint8 chance = tpzrand::GetRandomNumber(0, 2);
                 if (chance == 2)
                 {
                     uint8 skillID = 48;
-                    uint8 skillAmount = dsprand::GetRandomNumber(1, 3);
+                    uint8 skillAmount = tpzrand::GetRandomNumber(1, 3);
                     int32 charSkill = PChar->RealSkills.skill[skillID];
                     PChar->RealSkills.skill[skillID] += skillAmount;
                     PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));

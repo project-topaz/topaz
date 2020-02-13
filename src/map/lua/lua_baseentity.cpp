@@ -298,9 +298,9 @@ inline int32 CLuaBaseEntity::PrintToPlayer(lua_State* L)
 
 inline int32 CLuaBaseEntity::PrintToServer(lua_State* L)
 {
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity == NULL);
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
-    DSP_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == NULL);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
     CHAT_MESSAGE_TYPE messageType = (!lua_isnil(L, 2) && lua_isnumber(L, 2) ? (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2) : MESSAGE_SYSTEM_1);
     message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1)));
     return 0;
@@ -2165,8 +2165,8 @@ inline int32 CLuaBaseEntity::hideNPC(lua_State *L)
 
 inline int32 CLuaBaseEntity::despawnNPC(lua_State* L)
 {
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
 
     if (m_PBaseEntity->status == STATUS_NORMAL)
     {
@@ -2186,8 +2186,8 @@ inline int32 CLuaBaseEntity::despawnNPC(lua_State* L)
 
 inline int32 CLuaBaseEntity::releaseAllFromNPC(lua_State* L)
 {
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    DSP_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
 
     CBaseEntity* PTarget = (CBaseEntity*)m_PBaseEntity;
 
