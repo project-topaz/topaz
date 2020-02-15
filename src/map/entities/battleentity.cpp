@@ -1186,7 +1186,6 @@ void CBattleEntity::Die()
         PAI->EventHandler.triggerListener("DEATH", this);
     SetBattleTargetID(0);
 }
-
 void CBattleEntity::OnDeathTimer()
 {}
 

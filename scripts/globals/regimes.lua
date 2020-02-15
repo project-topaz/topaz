@@ -1259,6 +1259,12 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
         reward = math.floor(reward * avgCapLevel / avgMobLevel)
     end
 
+    --[[
+        This whole thing needs to die and be redone. The prowess effects do not all have the samestack cap of 11.
+        The one for casket rate caps at 5 stacks for example. see https://ffxiclopedia.fandom.com/wiki/Grounds_of_Valor#Prowesses
+        Additionaly forget this if/elseif crap this needs a table.
+        It was ok back when it was only 3 effects but to get all of them this needs changed.
+    ]]
     -- prowess buffs from completing Grounds regimes
     if regimeType == tpz.regime.type.GROUNDS then
         local prowess = math.random(tpz.effect.PROWESS_CASKET_RATE, tpz.effect.PROWESS_KILLER)
@@ -1268,7 +1274,9 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
         if player:hasStatusEffect(prowess) then
 
             -- stack up to 11 times
-            if prowess == tpz.effect.PROWESS_TH then
+            if prowess == tpz.effect.PROWESS_CASKET_RATE then
+                power = utils.clamp(player:getStatusEffect(prowess):getPower() + 1, 0, 11)
+            elseif prowess == tpz.effect.PROWESS_TH then
                 power = utils.clamp(player:getStatusEffect(prowess):getPower() + 1, 0, 11)
             elseif prowess == tpz.effect.PROWESS_ATTACK_SPEED then
                 power = 400
@@ -1289,7 +1297,9 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
 
         -- new buff
         else
-            if prowess == tpz.effect.PROWESS_TH then
+            if prowess == tpz.effect.PROWESS_CASKET_RATE then
+                power = 1
+            elseif prowess == tpz.effect.PROWESS_TH then
                 power = 1
             elseif prowess == tpz.effect.PROWESS_ATTACK_SPEED then
                 power = 400
@@ -1345,7 +1355,7 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
     end
 
     -- award XP every page completion
-    player:addExp(reward)
+    player:addExp(reward*FOV_RATE)
 
     -- repeating regimes
     if player:getCharVar("[regime]repeat") == 1 then

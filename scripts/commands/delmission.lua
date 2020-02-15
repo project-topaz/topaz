@@ -1,13 +1,29 @@
 ---------------------------------------------------------------------------------------------------
 -- func: delmission <logID> <missionID> <player>
 -- desc: Deletes the given mission from the GM or target player.
+
+-- Mission Log ID	Mission Log Name	Full Name
+-- 			0		SANDORIA			Sandoria
+-- 			1		BASTOK				Bastok
+-- 			2		WINDURST			Windurst
+-- 			3		ZILART				Rise of the Zilart
+-- 			4		TOAU				Treasures of Aht Urhgan
+-- 			5		WOTG				Wings of the Goddess
+-- 			6		COP					Chains of Promathia
+-- 			7		ASSAULT				Assault
+-- 			8		CAMPAIGN			Campaign
+-- 			9		ACP					A Crystalline Prophecy
+-- 			10		AMK					A Moogle Kupo d'Etat
+-- 			11		ASA					A Shantotto Ascension
+-- 			12		SOA					Seekers of Adoulin
+-- 			13		ROV					Rhapsodies of Vana'diel
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/missions");
 
 cmdprops =
 {
-    permission = 1,
+    permission = 3,
     parameters = "sss"
 };
 
@@ -26,7 +42,7 @@ function onTrigger(player, logId, missionId, target)
     end
     logName = logInfo.full_name;
     logId = logInfo.mission_log;
-    
+
     -- validate missionId
     local areaMissionIds = tpz.mission.id[tpz.mission.area[logId]]
     if (missionId ~= nil) then

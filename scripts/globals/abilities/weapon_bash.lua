@@ -36,6 +36,6 @@ function onUseAbility(player,target,ability)
     local damage = math.floor(((darkKnightLvl + 11) / 4) + player:getMod(tpz.mod.WEAPON_BASH))
     target:takeDamage(damage, player, tpz.attackType.PHYSICAL, tpz.damageType.BLUNT)
     target:updateEnmityFromDamage(player, damage)
-
+	ability:setMsg(tpz.msg.basic.JA_DAMAGE)
     return damage
 end

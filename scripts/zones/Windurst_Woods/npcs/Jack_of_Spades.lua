@@ -4,26 +4,35 @@
 -- Adventurer's Assistant
 -- Working 100%
 -------------------------------------
+local ID = require("scripts/zones/Windurst_Woods/IDs");
 require("scripts/globals/npc_util")
 require("scripts/globals/settings")
+require("scripts/globals/npc_util")
+require("scripts/globals/shop")
 -----------------------------------
 
 function onTrade(player,npc,trade)
-    if npcUtil.tradeHas(trade, 536) then -- adventurer coupon
-        player:startEvent(10010, GIL_RATE * 50)
-    end
 end
 
 function onTrigger(player,npc)
-    player:startEvent(10009,0,4)
+    local stock =
+    {
+		4096,	102, 3,	-- Fire Crystal
+		4097,	307, 2,	-- Ice Crystal
+		4098,	99, 3,	-- Wind Crystal
+		4099,	102, 3,	-- Earth Crystal
+		4100,	307, 2,	-- Lightning Crystal
+		4101,	116, 3,	-- Water Crystal
+		4102,	718, 1,	-- Light Crystal
+		4103,	589, 1,	-- Dark Crystal
+    }
+	
+    tpz.shop.nation(player, stock, tpz.nation.WINDURST)
+	-- player:startEvent(10009,0,4)
 end
 
 function onEventUpdate(player,csid,option)
 end
 
 function onEventFinish(player,csid,option)
-    if csid == 10010 then
-        player:confirmTrade()
-        player:addGil(GIL_RATE * 50)
-    end
 end

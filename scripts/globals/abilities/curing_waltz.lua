@@ -2,7 +2,7 @@
 -- Ability: Curing Waltz
 -- Heals HP to target player.
 -- Obtained: Dancer Level 15
--- TP Required: 20%
+-- TP Required: 200
 -- Recast Time: 00:06
 -----------------------------------
 require("scripts/globals/settings")

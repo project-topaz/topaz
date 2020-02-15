@@ -214,15 +214,15 @@ void CEnmityContainer::UpdateEnmityFromCure(CBattleEntity* PEntity, uint8 level,
     
     if (isCureV)
     {
-        CE = (int32)(400.f * bonus * tranquilHeartReduction);
-        VE = (int32)(800.f * bonus * tranquilHeartReduction);
+        CE = (int32)(300.f * bonus * tranquilHeartReduction);
+        VE = (int32)(740.f * bonus * tranquilHeartReduction);
     }
     else
     {
         CureAmount = (CureAmount < 1 ? 1 : CureAmount);
 
-        CE = (int32)(40.f / battleutils::GetEnmityModCure(level) * CureAmount * bonus * tranquilHeartReduction);
-        VE = (int32)(240.f / battleutils::GetEnmityModCure(level) * CureAmount * bonus * tranquilHeartReduction);
+        CE = (int32)(33.f / battleutils::GetEnmityModCure(level) * CureAmount * bonus * tranquilHeartReduction);
+        VE = (int32)(215.f / battleutils::GetEnmityModCure(level) * CureAmount * bonus * tranquilHeartReduction);
     }
 
     auto enmity_obj = m_EnmityList.find(PEntity->id);
@@ -413,7 +413,7 @@ void CEnmityContainer::DecayEnmity()
     for (auto it = m_EnmityList.begin(); it != m_EnmityList.end(); ++it)
     {
         EnmityObject_t& PEnmityObject = it->second;
-        constexpr int decay_amount = (int)(60 / server_tick_rate);
+        constexpr int decay_amount = (int)(53 / server_tick_rate); // default: 60 / server_tick_rate
 
         PEnmityObject.VE -= PEnmityObject.VE > decay_amount ? decay_amount : PEnmityObject.VE;
         //ShowDebug("%d: active: %d CE: %d VE: %d\n", it->first, PEnmityObject.active, PEnmityObject.CE, PEnmityObject.VE);

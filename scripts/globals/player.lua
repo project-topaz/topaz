@@ -120,12 +120,12 @@ local function CharCreate(player)
        player:setGil(START_GIL)
     end
 
-    player:addItem(536) -- adventurer coupon
     player:addTitle(tpz.title.NEW_ADVENTURER)
     player:setCharVar("MoghouseExplication", 1) -- needs Moghouse intro
     player:setCharVar("spokeKindlix", 1) -- Kindlix introduction
     player:setCharVar("spokePyropox", 1) -- Pyropox introduction
     player:setNewPlayer(true) -- apply new player flag
+    -- player:addItem(
 end
 
 -----------------------------------
@@ -139,13 +139,21 @@ function onGameIn(player, firstLogin, zoning)
         if firstLogin then
             CharCreate(player)
         end
+        -- Player Login Message
+         local hidden = player:getName()
+        --hide the login message for these characters.
+        if (hidden == 'Player1' or hidden == 'Player2') then
+            player:PrintToPlayer("Login hidden"); -- Wont actually print, but we need to make this do something or it fails.
+            --End hidden login message
+        else
+            player:PrintToServer(string.format("%s has logged in!" , player:getName()), 0xF);
+        end
     else
         -- things checked ONLY during zone in go here
     end
 
     -- apply mods from gearsets (scripts/globals/gear_sets.lua)
     checkForGearSet(player)
-
     -- god mode
     if player:getCharVar("GodMode") == 1 then
         player:addStatusEffect(tpz.effect.MAX_HP_BOOST,1000,0,0)
@@ -177,9 +185,16 @@ function onGameIn(player, firstLogin, zoning)
     if player:getCharVar("GMHidden") == 1 then
         player:setGMHidden(true)
     end
-
+	
+	
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
+
+    player:timer(2500, function (player)
+        if player:getCharVar("GMCostume") > 0 then
+            player:costume(player:getCharVar("GMCostume"))
+        end
+	end)
 end
 
 function onPlayerLevelUp(player)

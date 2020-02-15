@@ -7,7 +7,7 @@ require("scripts/globals/zone")
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "s"
 };
 
@@ -31,15 +31,19 @@ function onTrigger(player, target)
     end
 
     -- get previous zone
-    zoneId = targ:getPreviousZone();
+    zoneId = targ:getCharVar("prev_bringzone");
     if (zoneId == nil or zoneId == tpz.zone.UNKNOWN or zoneId == tpz.zone.RESIDENTIAL_AREA) then
         error(player, "Previous zone was a Mog House or there was a problem fetching the ID.");
         return;
     end
 
     -- zone target
-    targ:setPos( 0, 0, 0, 0, zoneId );
+	local x_pos = targ:getCharVar("prev_x");
+	local y_pos = targ:getCharVar("prev_y");
+	local z_pos = targ:getCharVar("prev_z");
+	local rot_pos = targ:getCharVar("prev_rot");
+	targ:setPos( x_pos, y_pos, z_pos, rot_pos, zoneId );
     if (targ:getID() ~= player:getID()) then
-        player:PrintToPlayer( string.format( "%s was returned to zone %i.", targ:getName(), zoneId ) );
+        player:PrintToPlayer( string.format( "%s was returned to their previous position in zone %i.", targ:getName(), zoneId ) );
     end
 end

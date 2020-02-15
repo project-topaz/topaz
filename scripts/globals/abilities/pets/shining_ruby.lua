@@ -9,7 +9,8 @@ require("scripts/globals/msg")
 ---------------------------------------------
 
 function onAbilityCheck(player, target, ability)
-    return 0,0
+    player:PrintToPlayer("The skill temporarily disabled. ", tpz.msg.channel)
+    return tpz.msg.basic.CANNOT_PERFORM, 0
 end
 
 function onPetAbility(target, pet, skill, summoner)

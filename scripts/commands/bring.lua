@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = "si"
 };
 
@@ -37,9 +37,13 @@ function onTrigger(player, target, forceZone)
     else
         forceZone = 1;
     end
-
     -- bring target
-    if (targ:getZoneID() ~= player:getZoneID() or forceZone == 1) then
+	targ:setCharVar("prev_x",targ:getXPos());
+	targ:setCharVar("prev_y", targ:getYPos());
+	targ:setCharVar("prev_z", targ:getZPos());
+	targ:setCharVar("prev_rot", targ:getRotPos());
+	targ:setCharVar("prev_bringzone", targ:getZoneID())
+	if (targ:getZoneID() ~= player:getZoneID() or forceZone == 1) then
         targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() );
     else
         targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos() );

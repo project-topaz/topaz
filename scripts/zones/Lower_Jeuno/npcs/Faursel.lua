@@ -80,7 +80,11 @@ function onEventUpdate(player,csid,option)
         elseif (option == 13) then -- Advanced List
             player:updateEvent(1692,1693,1694,0,0,0,0,0);
         elseif (option == 14) then -- Gil Option
+          if player:getGil() >= 500000 then
             player:updateEvent(1,1,1,1,1,1,player:getGil(),1);
+          else
+            -- update event, need prams for not enough money
+          end
         elseif (option == 2 or option == 1073741824) then  -- Let me think about it... / Cancel
 
         end
@@ -94,8 +98,8 @@ function onEventFinish(player,csid,option)
         player:addQuest(JEUNO,tpz.quest.id.jeuno.THE_ROAD_TO_AHT_URHGAN);
     elseif (csid == 10063 or csid == 10064) then
         if (csid == 10063 and option == 1 or csid == 10063 and option == 2) then -- Offically offer quest, Second Dialog.
-        player:setCharVar("THE_ROAD_TO_AHT_URHGAN",1);
-        elseif (option == 3) then
+            player:setCharVar("THE_ROAD_TO_AHT_URHGAN",1);
+        elseif (option == 3 and player:getGil() >= 500000) then
             player:delGil(500000);
             player:setCharVar("THE_ROAD_TO_AHT_URHGAN",2);
             player:setCharVar("THE_ROAD_TO_AHT_URHGAN_Day",VanadielDayOfTheYear());

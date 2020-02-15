@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 3,
     parameters = "siiiiiiiiii"
 };
 
@@ -24,6 +24,12 @@ function onTrigger(player, target, itemId, amount, aug0, aug0val, aug1, aug1val,
     -- Load needed text ids for target's current zone..
     local ID = zones[targ:getZoneID()]
 
+    -- validate itemId
+    if (itemId == nil or tonumber(itemId) == nil or tonumber(itemId) == 0) then
+        error(player, "Invalid itemId.");
+        return;
+    end
+	
     -- Attempt to give the target the item..
     if (targ:getFreeSlotsCount() == 0) then
         targ:messageSpecial( ID.text.ITEM_CANNOT_BE_OBTAINED, itemId );

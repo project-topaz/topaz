@@ -48,12 +48,14 @@ public:
     int32 showText(lua_State*);             // Displays Dialog for npc
     int32 messageText(lua_State* L);
     int32 PrintToPlayer(lua_State* L);      // for sending debugging messages/command confirmations to the player's client
+    int32 PrintToServer(lua_State* L);    // Print to SERVER (Prints to every zone on the server) -- Defaults to System Message, but can be altered with HEX or Integer of type of text
     int32 PrintToArea(lua_State* L);        // for sending area messages to multiple players at once
     int32 messageBasic(lua_State*);         // Sends Basic Message
     int32 messageName(lua_State* L);        // Sends a Message with a Name
     int32 messagePublic(lua_State*);        // Sends a public Basic Message
     int32 messageSpecial(lua_State*);       // Sends Special Message
     int32 messageSystem(lua_State*);        // Sends System Message
+
 
     // Variables
     int32 getCharVar(lua_State*);           // Returns a character variable
@@ -126,6 +128,8 @@ public:
     int32 addPeriodicTrigger(lua_State* L);  // Adds a periodic trigger to the NPC that allows time based scripting
     int32 showNPC(lua_State*);               // Show an NPC
     int32 hideNPC(lua_State*);               // hide an NPC
+	int32 despawnNPC(lua_State* L);
+	int32 releaseAllFromNPC(lua_State* L);
     int32 updateNPCHideTime(lua_State*);     // Updates the length of time a NPC remains hidden, if shorter than the original hide time.
 
     int32 getWeather(lua_State*);            // Get Weather condition

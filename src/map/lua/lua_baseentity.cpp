@@ -290,6 +290,22 @@ inline int32 CLuaBaseEntity::PrintToPlayer(lua_State* L)
 }
 
 /************************************************************************
+*  Function: PrintToServer()  Todo: FINISH THIS
+*  Purpose : version of PrintToPlayer that passes to messageserver
+*  Example : player:PrintToArea("Im a real boy!", dsp.msg.channel.SHOUT, dsp.msg.area.SYSTEM, "Pinocchio");
+*          : would print a shout type message from Pinocchio to the entire server
+************************************************************************/
+
+inline int32 CLuaBaseEntity::PrintToServer(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == NULL);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+    CHAT_MESSAGE_TYPE messageType = (!lua_isnil(L, 2) && lua_isnumber(L, 2) ? (CHAT_MESSAGE_TYPE)lua_tointeger(L, 2) : MESSAGE_SYSTEM_1);
+    message::send(MSG_CHAT_SERVMES, 0, 0, new CChatMessagePacket((CCharEntity*)m_PBaseEntity, messageType, (char*)lua_tostring(L, 1)));
+    return 0;
+}
+/************************************************************************
 *  Function: PrintToArea()
 *  Purpose : version of PrintToPlayer that passes to messageserver
 *  Example : player:PrintToArea("Im a real boy!", tpz.msg.channel.SHOUT, tpz.msg.area.SYSTEM, "Pinocchio");
@@ -2137,6 +2153,55 @@ inline int32 CLuaBaseEntity::hideNPC(lua_State *L)
             PNpc->loc.zone->PushPacket(PNpc, CHAR_INRANGE, new CEntityUpdatePacket(PNpc, ENTITY_UPDATE, UPDATE_COMBAT));
         }));
     }
+    return 0;
+}
+
+/************************************************************************
+*  Function: despawnNPC()
+*  Purpose : despawns an npc right away and removes any queued actions.
+*  Example : npc:despawnNPC()
+*  Notes   : Currently only used to force despawn caskets.
+************************************************************************/
+
+inline int32 CLuaBaseEntity::despawnNPC(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
+
+    if (m_PBaseEntity->status == STATUS_NORMAL)
+    {
+        m_PBaseEntity->status = STATUS_DISAPPEAR;
+        m_PBaseEntity->loc.zone->PushPacket(m_PBaseEntity, CHAR_INRANGE, new CEntityUpdatePacket(m_PBaseEntity, ENTITY_DESPAWN, UPDATE_COMBAT));
+        m_PBaseEntity->PAI->QueueEmpty();
+    }
+    return 0;
+}
+
+/************************************************************************
+*  Function: releaseAllFromNPC()
+*  Purpose : releases any players currently interacting with the npc
+*  Example : npc:releaseAllFromNPC()
+*  Notes   : Currently only used to force release for caskets.
+************************************************************************/
+
+inline int32 CLuaBaseEntity::releaseAllFromNPC(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
+
+    CBaseEntity* PTarget = (CBaseEntity*)m_PBaseEntity;
+
+    m_PBaseEntity->loc.zone->ForEachChar([&PTarget](CCharEntity* PChar)
+    {
+        if (PChar != nullptr && PChar->m_event.Target != nullptr)
+        {
+            if (PChar->m_event.Target == PTarget && PChar->m_event.EventID != -1)
+            {
+                PChar->pushPacket(new CReleasePacket(PChar, RELEASE_SKIPPING));
+                PChar->pushPacket(new CReleasePacket(PChar, RELEASE_EVENT));
+            }
+        }
+    });
     return 0;
 }
 
@@ -13947,6 +14012,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageText),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToPlayer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToArea),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,PrintToServer),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageBasic),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageName),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messagePublic),
@@ -14021,6 +14087,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addPeriodicTrigger),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,showNPC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hideNPC),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,releaseAllFromNPC),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,despawnNPC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateNPCHideTime),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeather),
