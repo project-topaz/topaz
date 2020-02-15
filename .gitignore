@@ -182,4 +182,6 @@ cmake_install.cmake
 
 #ignore server configuration
 /conf
-/scripts/globals/settings.lua
+updatedb/update.cmd
+
+win32/enc_temp_folder/5818279cd668471d679dcbe752bcca0/
