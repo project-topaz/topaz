@@ -7,8 +7,8 @@ ECHO ---------------------------------
 ECHO Do not add tables to batch unless certain no character/account data will be harmed!
 ECHO ------------------------------------------------------------------
 PAUSE
-set mysqlExec="C:\Program Files (x86)\MySQL\MySQL Server 5.7\bin\mysql.exe"
-set sqlPass="Promyvion!"
+set mysqlExec="C:\Program Files\MySQL\MySQL Server 8.0\bin\mysql.exe"
+set sqlPass="gamecube"
 ECHO ---------------------------------
 ECHO Importing system data tables...
 %mysqlExec% dspdb -h localhost -u root -p%sqlPass% < augments.sql
@@ -41,6 +41,7 @@ FOR %%X IN (guild*.sql) DO ECHO Importing %%X & %mysqlExec% dspdb -h localhost -
 ECHO ------------------------------------------------------------------
 ECHO Importing item tables...
 FOR %%X IN (item*.sql) DO ECHO Importing %%X & %mysqlExec% dspdb -h localhost -u root -p%sqlPass% < %%X
+FOR %%X IN (fishing*.sql) DO ECHO Importing %%X & %mysqlExec% dspdb -h localhost -u root -p%sqlPass% < %%X
 ECHO ---------------------------------
 ECHO importing mob and npc tables...
 FOR %%X IN (mob*.sql) DO ECHO Importing %%X & %mysqlExec% dspdb -h localhost -u root -p%sqlPass% < %%X
