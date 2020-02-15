@@ -190,9 +190,11 @@ function onGameIn(player, firstLogin, zoning)
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
 
-    if player:getCharVar("GMCostume") > 0 then
-        player:costume(player:getCharVar("GMCostume"))
-    end
+    player:timer(2500, function (player)
+        if player:getCharVar("GMCostume") > 0 then
+            player:costume(player:getCharVar("GMCostume"))
+        end
+	end)
 end
 
 function onPlayerLevelUp(player)

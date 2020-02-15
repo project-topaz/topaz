@@ -5084,7 +5084,7 @@ end
 ---------------------------------------------------------------------------------------------
 -- Desc: Casket spawn checks, runs through all checks before spawning
 ---------------------------------------------------------------------------------------------
-tpz.caskets.spawnCasket = function (player, mob, x, y, z, r)
+tpz.caskets.spawnCasket = function (mob, player, x, y, z, r)
     if mob == nil or player == nil then
         return
     end

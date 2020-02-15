@@ -127,32 +127,3 @@ function onEventFinish(player,csid,option)
 		player:setCharVar("TutorialProgress",11)
 	end
 end
-
--- function onEventFinish(player,csid,option)
-	-- if (csid == 916) then
-		-- player:setCharVar("TutorialProgress",1)
-	-- elseif (csid == 918) then
-		-- player:setCharVar("TutorialProgress",2)
-		-- player:addItem(4376,6)
-		-- player:messageSpecial(ID.text.ITEM_OBTAINED, 4376)
-	-- elseif (csid == 920) then
-		-- player:setCharVar("TutorialProgress",3)
-	-- elseif (csid == 922) then
-		-- player:addItem(4101)
-		-- player:addItem(936)
-		-- player:addItem(4358)
-		-- player:messageSpecial(ID.text.ITEM_OBTAINED, 4101)
-		-- player:messageSpecial(ID.text.ITEM_OBTAINED, 936)
-		-- player:messageSpecial(ID.text.ITEM_OBTAINED, 4358)
-		-- player:setCharVar("TutorialProgress",4)
-	-- elseif (csid == 924) then
-		-- player:addKeyItem(tpz.ki.CONQUEST_PROMOTION_VOUCHER)
-		-- player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.CONQUEST_PROMOTION_VOUCHER)
-		-- player:setCharVar("TutorialProgress",6)
-	-- elseif (csid == 926) then
-		-- player:addItem(16003)
-		-- player:messageSpecial(ID.text.ITEM_OBTAINED, 16003)
-		-- player:setCharVar("TutorialProgress",7)
-		
-	-- end
--- end
