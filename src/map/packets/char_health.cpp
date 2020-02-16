@@ -25,7 +25,7 @@
 
 #include "../entities/charentity.h"
 #include "../entities/trustentity.h"
-
+#include "../entities/fellowentity.h"
 
 CCharHealthPacket::CCharHealthPacket(CCharEntity* PChar)
 {
@@ -72,4 +72,26 @@ CCharHealthPacket::CCharHealthPacket(CTrustEntity* PTrust)
     ref<uint8>(0x21) = PTrust->GetMLevel();
     ref<uint8>(0x22) = PTrust->GetSJob();
     ref<uint8>(0x23) = PTrust->GetSLevel();
+}
+
+CCharHealthPacket::CCharHealthPacket(CFellowEntity* PFellow)
+{
+    this->type = 0xDF;
+    this->size = 0x12;
+
+    ref<uint32>(0x04) = PFellow->id;
+
+    ref<uint32>(0x08) = PFellow->health.hp;
+    ref<uint32>(0x0C) = PFellow->health.mp;
+    ref<uint32>(0x10) = PFellow->health.tp;
+
+    ref<uint16>(0x14) = PFellow->targid;
+
+    ref<uint8>(0x16) = PFellow->GetHPP();
+    ref<uint8>(0x17) = PFellow->GetMPP();
+
+    ref<uint8>(0x20) = PFellow->GetMJob();
+    ref<uint8>(0x21) = PFellow->GetMLevel();
+    ref<uint8>(0x22) = PFellow->GetSJob();
+    ref<uint8>(0x23) = PFellow->GetSLevel();
 }

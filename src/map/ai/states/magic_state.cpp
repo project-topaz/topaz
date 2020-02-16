@@ -102,7 +102,10 @@ bool CMagicState::Update(time_point tick)
         action_t action;
 
         if (!PTarget || m_errorMsg || (HasMoved() && (m_PEntity->objtype != TYPE_PET ||
-            static_cast<CPetEntity*>(m_PEntity)->getPetType() != PETTYPE_AUTOMATON)) || !CanCastSpell(PTarget))
+            static_cast<CPetEntity*>(m_PEntity)->getPetType() != PETTYPE_AUTOMATON) &&
+            m_PEntity->objtype != TYPE_FELLOW) || !CanCastSpell(PTarget))
+
+
         {
             m_interrupted = true;
         }
@@ -172,7 +175,7 @@ bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_CANNOT_USE_IN_AREA);
         return false;
     }
-    if (m_PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_SILENCE, EFFECT_MUTE, EFFECT_OMERTA}))
+    if (m_PEntity->StatusEffectContainer->HasStatusEffect({EFFECT_SILENCE, EFFECT_MUTE, EFFECT_OMERTA, EFFECT_HEALING}))
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_UNABLE_TO_CAST_SPELLS);
         return false;
@@ -308,14 +311,12 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
 
                 if (!(m_PSpell->isHeal()) || m_PSpell->tookEffect())  //can't claim mob with cure unless it does damage
                 {
-                    if (m_PEntity->objtype == TYPE_PC || (m_PEntity->PMaster && m_PEntity->PMaster->objtype == TYPE_PC))
+                    if (m_PEntity->objtype == TYPE_PC)
                     {
-                        auto claimer = m_PEntity->objtype == TYPE_PC ? m_PEntity : m_PEntity->PMaster;
-
                         if (!mob->CalledForHelp())
                         {
-                            mob->m_OwnerID.id = claimer->id;
-                            mob->m_OwnerID.targid = claimer->targid;
+                            mob->m_OwnerID.id = m_PEntity->id;
+                            mob->m_OwnerID.targid = m_PEntity->targid;
                         }
                         mob->updatemask |= UPDATE_STATUS;
                     }

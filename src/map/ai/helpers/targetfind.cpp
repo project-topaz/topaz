@@ -24,6 +24,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <math.h>
 #include "../../entities/charentity.h"
 #include "../../entities/mobentity.h"
+#include "../../entities/fellowentity.h"
 #include "../../packets/action.h"
 #include "../../alliance.h"
 #include "../../../common/mmo.h"
@@ -463,11 +464,28 @@ bool CTargetFind::canSee(position_t* point)
 
 CBattleEntity* CTargetFind::getValidTarget(uint16 actionTargetID, uint16 validTargetFlags)
 {
-    CBattleEntity* PTarget = (CBattleEntity*)m_PBattleEntity->GetEntity(actionTargetID, TYPE_MOB | TYPE_PC | TYPE_PET);
+    CBattleEntity* PTarget = (CBattleEntity*)m_PBattleEntity->GetEntity(actionTargetID, TYPE_MOB | TYPE_PC | TYPE_PET | TYPE_FELLOW);
 
     if (PTarget == nullptr)
     {
         return nullptr;
+    }
+
+    if (m_PBattleEntity->objtype == TYPE_FELLOW)
+    {
+        CFellowEntity* PFellow = static_cast<CFellowEntity*>(m_PBattleEntity);
+
+        if (PFellow->targid == actionTargetID)
+        {
+            return (CBattleEntity*)PFellow;
+        }            
+    }
+
+    if (m_PBattleEntity->objtype == TYPE_PC)
+    {
+        CCharEntity* PChar = static_cast<CCharEntity*>(m_PBattleEntity);
+        if (PChar->m_PFellow != nullptr && PChar->m_PFellow->targid == actionTargetID)
+            return (CBattleEntity*)PChar->m_PFellow;
     }
 
     if (validTargetFlags & TARGET_PET)

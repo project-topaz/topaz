@@ -38,23 +38,24 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/battleutils.h"
 #include "utils/charutils.h"
 #include "utils/fishingutils.h"
+#include "utils/fellowutils.h"
 #include "utils/guildutils.h"
 #include "utils/instanceutils.h"
 #include "utils/itemutils.h"
+#include "utils/mobutils.h"
+#include "utils/petutils.h"
+#include "utils/zoneutils.h"
 #include "linkshell.h"
 #include "map.h"
 #include "mob_spell_list.h"
 #include "packet_system.h"
 #include "party.h"
-#include "utils/petutils.h"
 #include "spell.h"
 #include "time_server.h"
 #include "transport.h"
 #include "vana_time.h"
 #include "status_effect_container.h"
-#include "utils/zoneutils.h"
 #include "conquest_system.h"
-#include "utils/mobutils.h"
 #include "ai/controllers/automaton_controller.h"
 
 #include "lua/luautils.h"
@@ -217,6 +218,7 @@ int32 do_init(int32 argc, char** argv)
     battleutils::LoadMobSkillsList();
     battleutils::LoadSkillChainDamageModifiers();
     petutils::LoadPetList();
+    fellowutils::LoadFellowList();
     mobutils::LoadCustomMods();
 
     ShowStatus("do_init: loading zones");
@@ -224,6 +226,7 @@ int32 do_init(int32 argc, char** argv)
     ShowMessage("\t\t\t - " CL_GREEN"[OK]" CL_RESET"\n");
 
     fishingutils::LoadFishingMessages();
+    fellowutils::LoadFellowMessages();
 
     ShowStatus("do_init: server is binding with port %u", map_port == 0 ? map_config.usMapPort : map_port);
     map_fd = makeBind_udp(map_config.uiMapIp, map_port == 0 ? map_config.usMapPort : map_port);

@@ -40,10 +40,12 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "utils/petutils.h"
 #include "utils/puppetutils.h"
 #include "utils/fishingutils.h"
+#include "utils/fellowutils.h"
 #include "utils/itemutils.h"
 #include "utils/jailutils.h"
 #include "linkshell.h"
 #include "map.h"
+#include "entities/fellowentity.h"
 #include "entities/mobentity.h"
 #include "entities/npcentity.h"
 #include "entities/charentity.h"
@@ -76,7 +78,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/bazaar_message.h"
 #include "packets/bazaar_purchase.h"
 #include "packets/blacklist.h"
-#include "packets/campaign_map.h"
+#include "packets/campaing_map.h"
 #include "packets/char.h"
 #include "packets/char_abilities.h"
 #include "packets/char_appearance.h"
@@ -103,6 +105,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/delivery_box.h"
 #include "packets/downloading_data.h"
 #include "packets/entity_update.h"
+#include "packets/fellow_despawn.h"
 #include "packets/furniture_interact.h"
 #include "packets/guild_menu_buy.h"
 #include "packets/guild_menu_sell.h"
@@ -351,10 +354,25 @@ void SmallPacket0x00C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             default:
                 break;
             }
+            // reset the petZoning info
+            PChar->resetPetZoningInfo();
         }
     }
-    // reset the petZoning info
-    PChar->resetPetZoningInfo();
+    // respawn fellow from last zone
+    if (PChar->fellowZoningInfo.respawnFellow == true)
+    {
+        // only repawn fellow in valid zones
+        if (PChar->loc.zone->CanUseMisc(MISC_FELLOW) && !PChar->m_moghouseID)
+        {
+            fellowutils::SpawnFellow(PChar, PChar->fellowZoningInfo.fellowID, true);
+            // reset the fellowZoning info
+            PChar->resetFellowZoningInfo();
+        }
+        else
+        {
+            PChar->resetFellowZoningInfo();
+        }
+    }
     return;
 }
 
@@ -418,6 +436,22 @@ void SmallPacket0x00D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         if (PChar->PPet != nullptr)
         {
             PChar->setPetZoningInfo();
+        }
+        if (PChar->m_PFellow != nullptr)
+        {
+            uint16 maxTime = 0;
+            const char* QueryMax = "SELECT maxTime FROM char_fellow WHERE charid = %u";
+            if (Sql_Query(SqlHandle, QueryMax, PChar->id) != SQL_ERROR &&
+                Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                    maxTime =  (uint16)Sql_GetIntData(SqlHandle, 0);
+            uint32 spawnTime = 0;
+            const char* QuerySpawn = "SELECT spawnTime FROM char_fellow WHERE charid = %u";
+            if (Sql_Query(SqlHandle, QuerySpawn, PChar->id) != SQL_ERROR &&
+                Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                    spawnTime =  (uint32)Sql_GetIntData(SqlHandle, 0);
+            Sql_Query(SqlHandle, "UPDATE char_fellow SET maxTime = %u WHERE charid = %u",
+                maxTime - (CVanaTime::getInstance()->getVanaTime() + 1009810800 - spawnTime), PChar->id);
+            PChar->setFellowZoningInfo();
         }
 
         session->shuttingDown = 1;
@@ -650,6 +684,20 @@ void SmallPacket0x01A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         {
             PChar->RemoveTrust((CTrustEntity*)PTrust);
         }
+
+        if (PChar->m_PFellow != nullptr && PChar->m_PFellow->targid == TargID)
+        {
+            if (data.ref<uint8>(0x0C) == 1) // Releasing an NPC Fellow
+            {
+                fellowutils::TriggerFellowChat(PChar, FELLOWCHAT_DISBAND); // Dismiss Message
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CFellowDespawnPacket(PChar->m_PFellow));
+                PChar->RemoveFellow();
+            }
+            else
+                PChar->m_PFellow->PAI->Trigger(PChar->targid);
+        }
+
+
 
         if (PChar->m_event.EventID == -1)
         {
@@ -2653,15 +2701,15 @@ void SmallPacket0x059(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 /************************************************************************
 *                                                                       *
-*  Map Update (Conquest, Besieged, Campaign)                            *
+*  Map Update (Conquest, Besieged, Campaing)                            *
 *                                                                       *
 ************************************************************************/
 
 void SmallPacket0x05A(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
     PChar->pushPacket(new CConquestPacket(PChar));
-    PChar->pushPacket(new CCampaignPacket(PChar, 0));
-    PChar->pushPacket(new CCampaignPacket(PChar, 1));
+    PChar->pushPacket(new CCampaingPacket(PChar, 0));
+    PChar->pushPacket(new CCampaingPacket(PChar, 1));
 
     // May Require Sending of 0x0F
     //    PChar->pushPacket(new CStopDownloadingPacket(PChar));
@@ -2802,6 +2850,24 @@ void SmallPacket0x05E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     {
         PChar->setPetZoningInfo();
         petutils::DespawnPet(PChar);
+    }
+
+    if (PChar->m_PFellow != nullptr)
+    {
+        uint16 maxTime = 0;
+        const char* QueryMax = "SELECT maxTime FROM char_fellow WHERE charid = %u";
+        if (Sql_Query(SqlHandle, QueryMax, PChar->id) != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                maxTime =  (uint16)Sql_GetIntData(SqlHandle, 0);
+        uint32 spawnTime = 0;
+        const char* QuerySpawn = "SELECT spawnTime FROM char_fellow WHERE charid = %u";
+        if (Sql_Query(SqlHandle, QuerySpawn, PChar->id) != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                spawnTime =  (uint32)Sql_GetIntData(SqlHandle, 0);
+        Sql_Query(SqlHandle, "UPDATE char_fellow SET maxTime = %u WHERE charid = %u",
+            maxTime - (CVanaTime::getInstance()->getVanaTime() + 1009810800 - spawnTime), PChar->id);
+        PChar->setFellowZoningInfo();
+        PChar->RemoveFellow();
     }
 
     uint32 zoneLineID = data.ref<uint32>(0x04);
@@ -5459,6 +5525,7 @@ void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         {
             JOBTYPE prevjob = PChar->GetMJob();
             PChar->resetPetZoningInfo();
+            PChar->resetFellowZoningInfo();
 
             charutils::RemoveAllEquipment(PChar);
             PChar->SetMJob(mjob);
@@ -5481,6 +5548,7 @@ void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         {
             JOBTYPE prevsjob = PChar->GetSJob();
             PChar->resetPetZoningInfo();
+            PChar->resetFellowZoningInfo();
 
             PChar->SetSJob(sjob);
             PChar->SetSLevel(PChar->jobs.job[PChar->GetSJob()]);

@@ -29,6 +29,7 @@
 #include "../ai/ai_container.h"
 #include "../ai/states/death_state.h"
 #include "../entities/charentity.h"
+#include "../entities/fellowentity.h"
 #include "../utils/itemutils.h"
 #include "../vana_time.h"
 #include "../status_effect_container.h"
@@ -81,6 +82,13 @@ CCharUpdatePacket::CCharUpdatePacket(CCharEntity* PChar)
     {
         ref<uint16>(0x34) = PChar->PPet->targid << 3;
     }
+
+    if (PChar->m_PFellow != nullptr)
+    {
+        ref<uint16>(0x48) = PChar->m_PFellow->targid;
+        ref<uint8>(0x38) |= 0x80; // initiate fellow menu system
+    }
+
     //Status flag: bit 4: frozen anim (terror),
     //  bit 6/7/8 related to Ballista (6 set - normal, 7 set san d'oria, 6+7 set bastok, 8 set windurst)
     uint8 flag = (PChar->allegiance << 5);

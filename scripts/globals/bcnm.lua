@@ -206,7 +206,7 @@ local battlefields = {
         { 2,   34, 1551},   -- Wings of Fury (BS20) -- TODO: mobskills Slipstream and Turbulence
         { 3,   35, 1552},   -- Petrifying Pair (BS30)
         { 4,   36, 1552},   -- Toadal Recall (BS30) -- TODO: shroom-in-cap mechanic
-     -- { 5,   37,    0},   -- Mirror, Mirror (Quest)
+        { 5,   37,    0},   -- Mirror, Mirror (Quest)
     },
 
     [144] = {               -- WAUGHROON SHRINE
@@ -475,6 +475,7 @@ function checkReqs(player, npc, bfid, registrant)
         [  20] = function() return ( player:hasKeyItem(tpz.ki.SOUL_GEM_CLASP)                                                                                               ) end, -- Quest: Beyond Infinity
         [  32] = function() return ( sandy == mi.sandoria.SAVE_THE_CHILDREN and ((stc and natStat <= 2) or (not stc and natStat == 2))                                      ) end, -- Sandy 1-3: Save the Children
         [  33] = function() return ( player:hasKeyItem(tpz.ki.DRAGON_CURSE_REMEDY)                                                                                          ) end, -- Quest: The Holy Crest
+        [  37] = function() return ( player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.MIRROR_MIRROR) == QUEST_ACCEPTED and player:getCharVar("[Quest]Mirror_Mirror") == 2     ) end, -- Quest: Mirror Mirror
         [  64] = function() return ( (sandy == mi.sandoria.JOURNEY_TO_BASTOK2 or windy == mi.windurst.THE_THREE_KINGDOMS_BASTOK2) and natStat == 10                         ) end, -- Mission 2-3
         [  67] = function() return ( basty == mi.bastok.ON_MY_WAY and natStat == 2                                                                                          ) end, -- Basty 7-2: On My Way
         [  68] = function() return ( player:getCharVar("aThiefinNorgCS") == 6                                                                                               ) end, -- Quest: A Thief in Norg!?

@@ -36,7 +36,8 @@ enum ENTITYTYPE
     TYPE_MOB    = 0x04,
     TYPE_PET    = 0x08,
     TYPE_SHIP   = 0x10,
-    TYPE_TRUST  = 0x20
+    TYPE_TRUST  = 0x20,
+    TYPE_FELLOW = 0X40
 };
 
 enum STATUSTYPE
@@ -56,7 +57,7 @@ enum ANIMATIONTYPE
 {
     ANIMATION_NONE               = 0,
     ANIMATION_ATTACK             = 1,
-    // Death                        = 2,
+    ANIMATION_DESPAWN            = 2,
     ANIMATION_DEATH              = 3,
     ANIMATION_EVENT              = 4,
     ANIMATION_CHOCOBO            = 5,

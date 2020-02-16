@@ -88,6 +88,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "battleutils.h"
 #include "charutils.h"
+#include "fellowutils.h"
 #include "itemutils.h"
 #include "blueutils.h"
 #include "puppetutils.h"
@@ -641,9 +642,12 @@ namespace charutils
             limitPoints = (uint16)Sql_GetIntData(SqlHandle, 24);
         }
 
-        fmtQuery = "SELECT nameflags, mjob, sjob, hp, mp, mhflag, title, bazaar_message, zoning, "
-            "pet_id, pet_type, pet_hp, pet_mp "
-            "FROM char_stats WHERE charid = %u;";
+        fmtQuery = "SELECT char_stats.nameflags, char_stats.mjob, char_stats.sjob, "
+            "char_stats.hp, char_stats.mp, char_stats.mhflag, char_stats.title, "
+            "char_stats.bazaar_message, char_stats.zoning, char_stats.pet_id, "
+            "char_stats.pet_type, char_stats.pet_hp, char_stats.pet_mp, "
+            "char_fellow.fellowid, char_fellow.zone_hp, char_fellow.zone_mp "
+            "FROM char_stats, char_fellow WHERE char_stats.charid = char_fellow.charid AND char_stats.charid = %u;";
 
         ret = Sql_Query(SqlHandle, fmtQuery, PChar->id);
         uint8 zoning = 0;
@@ -679,6 +683,14 @@ namespace charutils
                 PChar->petZoningInfo.petMP = Sql_GetIntData(SqlHandle, 12);
                 PChar->petZoningInfo.petType = (PETTYPE)Sql_GetUIntData(SqlHandle, 10);
                 PChar->petZoningInfo.respawnPet = true;
+            }
+            // Determine if the fellow should be respawned.
+            int16 fellowHP = Sql_GetUIntData(SqlHandle, 14);
+            if (fellowHP) {
+                PChar->fellowZoningInfo.fellowHP = fellowHP;
+                PChar->fellowZoningInfo.fellowID = Sql_GetUIntData(SqlHandle, 13);
+                PChar->fellowZoningInfo.fellowMP = Sql_GetIntData(SqlHandle, 15);
+                PChar->fellowZoningInfo.respawnFellow = true;
             }
         }
 
@@ -3468,6 +3480,11 @@ namespace charutils
                     }
 
                     // pet or companion exp penalty needs to be added here
+
+                    // if (PMember->m_PFellow != nullptr)
+                    // exp *= 0.7f;
+                    // Adventuring Fellows no longer reduce exp earned
+
                     if (distance(PMember->loc.p, PMob->loc.p) > 100)
                     {
                         PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, 0, 0, 37));
@@ -3476,7 +3493,14 @@ namespace charutils
 
                     exp = charutils::AddExpBonus(PMember, exp);
                     charutils::AddExperiencePoints(false, PMember, PMob, (uint32)exp, mobCheck, chainactive);
+                    if (PMember->m_PFellow != nullptr)
+                        fellowutils::DistributeExperiencePoints(PMember->m_PFellow, PMob, PMember);
                 }
+            }
+            else if (PMember->m_PFellow != nullptr) // fellows get exp according to THEIR lvl; not master lvl
+            {
+                if (PMember->getZone() == PMob->getZone() && distance(PMember->loc.p, PMob->loc.p) < 100)
+                    fellowutils::DistributeExperiencePoints(PMember->m_PFellow, PMob, PMember);
             }
         });
     }
@@ -4166,6 +4190,16 @@ namespace charutils
             PChar->petZoningInfo.petType,
             PChar->petZoningInfo.petHP,
             PChar->petZoningInfo.petMP,
+            PChar->id);
+
+        const char* Query2 = "UPDATE char_fellow "
+            "SET zone_hp = %u, zone_mp = %u "
+            "WHERE charid = %u;";
+
+        Sql_Query(SqlHandle,
+            Query2,
+            PChar->fellowZoningInfo.fellowHP,
+            PChar->fellowZoningInfo.fellowMP,
             PChar->id);
     }
 

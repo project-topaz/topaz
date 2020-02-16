@@ -26,6 +26,7 @@
 #include "packets/basic.h"
 
 #include "entities/charentity.h"
+#include "entities/fellowentity.h"
 
 struct map_session_data_t;
 

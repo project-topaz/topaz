@@ -242,6 +242,7 @@
     <ClInclude Include="..\..\src\map\ai\controllers\player_charm_controller.h" />
     <ClInclude Include="..\..\src\map\ai\controllers\player_controller.h" />
     <ClInclude Include="..\..\src\map\ai\controllers\trust_controller.h" />
+    <ClInclude Include="..\..\src\map\ai\controllers\fellow_controller.h" />
     <ClInclude Include="..\..\src\map\ai\helpers\action_queue.h" />
     <ClInclude Include="..\..\src\map\ai\helpers\event_handler.h" />
     <ClInclude Include="..\..\src\map\ai\helpers\pathfind.h" />
@@ -274,6 +275,7 @@
     <ClInclude Include="..\..\src\map\entities\baseentity.h" />
     <ClInclude Include="..\..\src\map\entities\battleentity.h" />
     <ClInclude Include="..\..\src\map\entities\charentity.h" />
+    <ClInclude Include="..\..\src\map\entities\fellowentity.h" />
     <ClInclude Include="..\..\src\map\entities\mobentity.h" />
     <ClInclude Include="..\..\src\map\entities\npcentity.h" />
     <ClInclude Include="..\..\src\map\entities\petentity.h" />
@@ -361,6 +363,7 @@
     <ClInclude Include="..\..\src\map\packets\event_update.h" />
     <ClInclude Include="..\..\src\map\packets\entity_animation.h" />
     <ClInclude Include="..\..\src\map\packets\event_update_string.h" />
+    <ClInclude Include="..\..\src\map\packets\fellow_despawn.h" />
     <ClInclude Include="..\..\src\map\packets\fishing.h" />
     <ClInclude Include="..\..\src\map\packets\furniture_interact.h" />
     <ClInclude Include="..\..\src\map\packets\guild_menu.h" />
@@ -448,6 +451,7 @@
     <ClInclude Include="..\..\src\map\utils\blacklistutils.h" />
     <ClInclude Include="..\..\src\map\utils\blueutils.h" />
     <ClInclude Include="..\..\src\map\utils\charutils.h" />
+    <ClInclude Include="..\..\src\map\utils\fellowutils.h" />
     <ClInclude Include="..\..\src\map\utils\fishingutils.h" />
     <ClInclude Include="..\..\src\map\utils\guildutils.h" />
     <ClInclude Include="..\..\src\map\utils\battlefieldutils.h" />
@@ -495,6 +499,7 @@
     <ClCompile Include="..\..\src\map\ai\controllers\player_charm_controller.cpp" />
     <ClCompile Include="..\..\src\map\ai\controllers\player_controller.cpp" />
     <ClCompile Include="..\..\src\map\ai\controllers\trust_controller.cpp" />
+    <ClCompile Include="..\..\src\map\ai\controllers\fellow_controller.cpp" />
     <ClCompile Include="..\..\src\map\ai\helpers\action_queue.cpp" />
     <ClCompile Include="..\..\src\map\ai\helpers\event_handler.cpp" />
     <ClCompile Include="..\..\src\map\ai\helpers\pathfind.cpp" />
@@ -527,6 +532,7 @@
     <ClCompile Include="..\..\src\map\entities\baseentity.cpp" />
     <ClCompile Include="..\..\src\map\entities\battleentity.cpp" />
     <ClCompile Include="..\..\src\map\entities\charentity.cpp" />
+    <ClCompile Include="..\..\src\map\entities\fellowentity.cpp" />
     <ClCompile Include="..\..\src\map\entities\mobentity.cpp" />
     <ClCompile Include="..\..\src\map\entities\npcentity.cpp" />
     <ClCompile Include="..\..\src\map\entities\petentity.cpp" />
@@ -612,6 +618,7 @@
     <ClCompile Include="..\..\src\map\packets\event_update.cpp" />
     <ClCompile Include="..\..\src\map\packets\entity_animation.cpp" />
     <ClCompile Include="..\..\src\map\packets\event_update_string.cpp" />
+    <ClCompile Include="..\..\src\map\packets\fellow_despawn.cpp" />
     <ClCompile Include="..\..\src\map\packets\fishing.cpp" />
     <ClCompile Include="..\..\src\map\packets\furniture_interact.cpp" />
     <ClCompile Include="..\..\src\map\packets\guild_menu.cpp" />
@@ -699,6 +706,7 @@
     <ClCompile Include="..\..\src\map\utils\blacklistutils.cpp" />
     <ClCompile Include="..\..\src\map\utils\blueutils.cpp" />
     <ClCompile Include="..\..\src\map\utils\charutils.cpp" />
+    <ClCompile Include="..\..\src\map\utils\fellowutils.cpp" />
     <ClCompile Include="..\..\src\map\utils\fishingutils.cpp" />
     <ClCompile Include="..\..\src\map\utils\guildutils.cpp" />
     <ClCompile Include="..\..\src\map\utils\battlefieldutils.cpp" />

@@ -40,6 +40,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 class CItemWeapon;
 class CTrustEntity;
+class CFellowEntity;
 
 struct jobs_t
 {
@@ -117,6 +118,14 @@ struct PetInfo_t
     int16		petHP;			// pets hp
     int16       petMP;
     float		petTP;			// pets tp
+};
+
+struct FellowInfo_t
+{
+    bool        respawnFellow;  // used for spawning fellow on zone
+    uint8       fellowID;       // id
+    int16       fellowHP;       // fellow hp
+    int16       fellowMP;       // fellow mp
 };
 
 struct AuctionHistory_t
@@ -202,15 +211,19 @@ public:
     questlog_t				m_questLog[MAX_QUESTAREA];		// список всех квестов
     missionlog_t			m_missionLog[MAX_MISSIONAREA];	// список миссий
     assaultlog_t			m_assaultLog;					// список assault миссий
-    campaignlog_t			m_campaignLog;					// список campaign миссий
+    campaignlog_t			m_campaignLog;					// список campaing миссий
     uint32					m_lastBcnmTimePrompt;			// the last message prompt in seconds
     PetInfo_t				petZoningInfo;					// used to repawn dragoons pets ect on zone
     void					setPetZoningInfo();				// set pet zoning info (when zoning and logging out)
     void					resetPetZoningInfo();			// reset pet zoning info (when changing job ect)
+    FellowInfo_t            fellowZoningInfo;               // used to repawn fellows on zone
+    void                    setFellowZoningInfo();          // set fellow zoning info (when zoning and logging out)
+    void                    resetFellowZoningInfo();        // reset fellow zoning info (when changing job ect)
     uint8					m_SetBlueSpells[20];			// The 0x200 offsetted blue magic spell IDs which the user has set. (1 byte per spell)
 
     UnlockedAttachments_t	m_unlockedAttachments;			// Unlocked Automaton Attachments (1 bit per attachment)
     CAutomatonEntity*       PAutomaton;                     // Automaton statistics
+    CFellowEntity*          m_PFellow;
 
     std::vector<CTrustEntity*> PTrusts; // Active trusts
 
@@ -326,6 +339,7 @@ public:
     bool        ReloadParty();
     void        ClearTrusts();
     void        RemoveTrust(CTrustEntity*);
+    void        RemoveFellow();
 
     virtual void Tick(time_point) override;
     void        PostTick() override;

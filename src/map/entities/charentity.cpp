@@ -54,6 +54,7 @@
 
 #include "charentity.h"
 #include "automatonentity.h"
+#include "fellowentity.h"
 #include "trustentity.h"
 #include "../ability.h"
 #include "../conquest_system.h"
@@ -193,6 +194,11 @@ CCharEntity::CCharEntity()
     petZoningInfo.petMP = 0;
     petZoningInfo.petTP = 0;
 
+    fellowZoningInfo.respawnFellow = false;
+    fellowZoningInfo.fellowID = 0;
+    fellowZoningInfo.fellowHP = 0;
+    fellowZoningInfo.fellowMP = 0;
+
     m_PlayTime = 0;
     m_SaveTime = 0;
     m_reloadParty = 0;
@@ -200,6 +206,8 @@ CCharEntity::CCharEntity()
     m_LastYell = 0;
     m_moghouseID = 0;
     m_moghancementID = 0;
+
+    m_PFellow = nullptr;
 
     PAI = std::make_unique<CAIContainer>(this, nullptr, std::make_unique<CPlayerController>(this),
         std::make_unique<CTargetFind>(this));
@@ -313,6 +321,20 @@ void CCharEntity::resetPetZoningInfo()
     petZoningInfo.respawnPet = false;
     petZoningInfo.petType = PETTYPE_AVATAR;
 }
+
+void CCharEntity::setFellowZoningInfo()
+{
+    fellowZoningInfo.fellowHP = m_PFellow->health.hp;
+    fellowZoningInfo.fellowMP = m_PFellow->health.mp;
+}
+
+void CCharEntity::resetFellowZoningInfo()
+{
+    fellowZoningInfo.fellowHP = 0;
+    fellowZoningInfo.fellowMP = 0;
+    fellowZoningInfo.respawnFellow = false;
+}
+
 /************************************************************************
 *																		*
 *  Возвращаем контейнер с указанным ID. Если ID выходит за рамки, то	*
@@ -499,6 +521,17 @@ void CCharEntity::ClearTrusts()
         trust->PAI->Despawn();
     }
     PTrusts.clear();
+}
+
+void CCharEntity::RemoveFellow()
+{
+    if (m_PFellow == nullptr || !m_PFellow->PAI->IsSpawned())
+        return;
+
+//    loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CFellowDespawnPacket(this));
+    m_PFellow->PAI->Despawn();
+    m_PFellow = nullptr;
+    pushPacket(new CCharUpdatePacket(this));
 }
 
 void CCharEntity::Tick(time_point tick)

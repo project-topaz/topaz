@@ -56,7 +56,7 @@ function onSpellCast(caster,target,spell)
             basepower = 0
         end
     end
-    if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB)) then
+    if (target:getAllegiance() == caster:getAllegiance() and (target:getObjType() == tpz.objType.PC or target:getObjType() == tpz.objType.MOB or target:getObjType() == tpz.objType.FELLOW)) then
         if (USE_OLD_CURE_FORMULA == true) then
             basecure = getBaseCureOld(power,divisor,constant)
         else
