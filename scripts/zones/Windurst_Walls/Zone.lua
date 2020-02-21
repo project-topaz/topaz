@@ -20,17 +20,10 @@ function onZoneIn(player, prevZone)
     local cs = -1
     -- MOG HOUSE EXIT
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
-<<<<<<< HEAD
         position = math.random(1,5) - 123;
         player:setPos(-257.5,-5.05,position,0);
         if player:getMainJob() ~= player:getCharVar("PlayerMainJob") and player:getGMLevel() == 0 then
             cs = 30004;
-=======
-        position = math.random(1, 5) - 123
-        player:setPos(-257.5, -5.05, position, 0)
-        if player:getMainJob() ~= player:getCharVar("PlayerMainJob") and player:getGMLevel() == 0 then
-            cs = 30004
->>>>>>> 7da047a... Merge pull request #369 from TeoTwawki/master
         end
         player:setCharVar("PlayerMainJob", 0)
     elseif ENABLE_ASA == 1 and player:getCurrentMission(ASA) == tpz.mission.id.asa.A_SHANTOTTO_ASCENSION

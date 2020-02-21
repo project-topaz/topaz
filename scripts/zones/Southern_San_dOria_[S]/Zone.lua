@@ -31,15 +31,9 @@ function onZoneIn(player, prevZone)
     end
     -- MOG HOUSE EXIT
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
-<<<<<<< HEAD
         player:setPos(161,-2,161,94);
         if player:getMainJob() ~= player:getCharVar("PlayerMainJob") and player:getGMLevel() == 0 then
             cs = 30004;
-=======
-        player:setPos(161, -2, 161, 94)
-        if player:getMainJob() ~= player:getCharVar("PlayerMainJob") and player:getGMLevel() == 0 then
-            cs = 30004
->>>>>>> 7da047a... Merge pull request #369 from TeoTwawki/master
         end
         player:setCharVar("PlayerMainJob", 0)
     end
