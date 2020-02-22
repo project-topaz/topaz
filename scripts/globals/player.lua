@@ -5,6 +5,7 @@ require("scripts/globals/status")
 require("scripts/globals/teleports")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
+require("scripts/globals/msg")
 -----------------------------------
 
 local startingRaceInfo =
@@ -140,14 +141,9 @@ function onGameIn(player, firstLogin, zoning)
             CharCreate(player)
         end
         -- Player Login Message
-         local hidden = player:getName()
-        --hide the login message for these characters.
-        if (hidden == 'Player1' or hidden == 'Player2') then
-            player:PrintToPlayer("Login hidden"); -- Wont actually print, but we need to make this do something or it fails.
-            --End hidden login message
-        else
-            player:PrintToServer(string.format("%s has logged in!" , player:getName()), 0xF);
-        end
+        player:timer(1000, function (player)
+            player:PrintToArea(string.format("%s has logged in!" , player:getName()), tpz.msg.channel.NS_PARTY, tpz.msg.area.SERVER, "God")
+        end)
     else
         -- things checked ONLY during zone in go here
     end
@@ -185,8 +181,8 @@ function onGameIn(player, firstLogin, zoning)
     if player:getCharVar("GMHidden") == 1 then
         player:setGMHidden(true)
     end
-	
-	
+
+
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
 

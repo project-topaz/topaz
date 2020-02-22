@@ -11,7 +11,7 @@ require("scripts/globals/missions")
 
 function onTrade(player, npc, trade)
     local currentMission = player:getCurrentMission(WINDURST)
-    local nextMissionFinished = player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.A_NEW_JOURNEY)
+    local nextMissionFinished = player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_FINAL_SEAL)
 
     if currentMission == tpz.mission.id.windurst.WRITTEN_IN_THE_STARS and player:getCharVar("MissionStatus") == 3 then
         if trade:hasItemQty(16447, 3) and trade:getItemCount() == 3 then -- Trade Rusty Dagger
@@ -24,7 +24,7 @@ end
 function onTrigger(player, npc)
     local currentMission = player:getCurrentMission(WINDURST)
     local missionStatus = player:getCharVar("MissionStatus")
-    local nextMissionFinished = player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.A_NEW_JOURNEY)
+    local nextMissionFinished = player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_FINAL_SEAL)
 
     if currentMission == tpz.mission.id.windurst.WRITTEN_IN_THE_STARS and not nextMissionFinished then
         if missionStatus == 0 then
