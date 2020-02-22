@@ -5475,7 +5475,6 @@ void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             {
                 blueutils::UnequipAllBlueSpells(PChar);
             }
-
         }
 
         if ((sjob > 0x00) && (sjob < MAX_JOBTYPE) && (PChar->jobs.unlocked & (1 << sjob)))
@@ -5492,13 +5491,13 @@ void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                 blueutils::LoadSetSpells(PChar);
             else if (prevsjob == JOB_BLU)
                 blueutils::UnequipAllBlueSpells(PChar);
+
             if (sjob == JOB_DNC)
             {
                 PChar->SetSJob(prevsjob);
                 PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Using Dancer as a support job alters the class balance in a way Dawnbreak feels is deterimental to the diversity of the game."));
                 PChar->pushPacket(new CChatMessagePacket(PChar, CHAT_MESSAGE_TYPE::MESSAGE_SYSTEM_1, "Therefore, setting Dancer as a support job is disabled on Dawnbreak."));
             }
-            
 
             uint16 subType = 0;
             if (auto weapon = dynamic_cast<CItemWeapon*>(PChar->m_Weapons[SLOT_SUB]))

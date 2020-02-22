@@ -59,7 +59,7 @@ UNLOCK_OUTPOST_WARPS = 0; -- Set to 1 to give starting characters all outpost wa
 --UNLOCK_ADOULIN_JOBS = 1; -- Set to unlock Rune Fencer and Geomancer automatically.
 
 SHOP_PRICE      = 1.000; -- Multiplies prices in NPC shops.
-GIL_RATE        = 1.000; -- Multiplies gil earned from quests.  Won't always display in game.
+GIL_RATE        = 1.600; -- Multiplies gil earned from quests.  Won't always display in game.
 BAYLD_RATE      = 1.000; -- Multiples bayld earned from quests.
 EXP_RATE        = 1.500; -- Multiplies exp earned from quests. Dawnbreak default: 1.500
 FOV_RATE        = 0.780;
