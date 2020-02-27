@@ -7,7 +7,7 @@ cmdprops =
 {
     permission = 4,
     parameters = "siss"
-};
+}
 
 function error(player, msg)
     player:PrintToPlayer(msg)

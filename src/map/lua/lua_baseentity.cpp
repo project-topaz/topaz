@@ -43,6 +43,7 @@
 #include "../instance.h"
 #include "../item_container.h"
 #include "../latent_effect_container.h"
+#include "../linkshell.h"
 #include "../map.h"
 #include "../message.h"
 #include "../mob_modifier.h"
@@ -3604,6 +3605,7 @@ inline int32 CLuaBaseEntity::addItem(lua_State *L)
             else
             {
                 ShowWarning(CL_YELLOW"charplugin::AddItem: Item <%i> is not found in a database\n" CL_RESET, itemID);
+                break;
             }
         }
     }
@@ -3877,6 +3879,44 @@ inline int32 CLuaBaseEntity::getCurrentGPItem(lua_State* L)
     lua_pushinteger(L, GPItem.second);
 
     return 2;
+}
+
+/************************************************************************
+*  Function: breakLinkshell()
+*  Purpose : Breaks linkshell and all pearls/sacks
+*  Example : player:breakLinkshell(LSname)
+*  Notes   : Used by GMs to break a linkshell
+************************************************************************/
+
+inline int32 CLuaBaseEntity::breakLinkshell(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isstring(L, 1));
+
+    auto lsname = lua_tostring(L, 1);
+    bool found = false;
+
+    int32 ret = Sql_Query(SqlHandle, "SELECT broken, linkshellid FROM linkshells WHERE name = '%s'", lsname);
+	if( ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+    {
+        uint8 broken = Sql_GetUIntData(SqlHandle,0);
+        if (broken)
+        {
+            lua_pushboolean(L, true);
+            return 1;
+        }
+        uint32 lsid = Sql_GetUIntData(SqlHandle,1);
+        CLinkshell* PLinkshell = linkshell::GetLinkshell(lsid);
+        if (!PLinkshell)
+            PLinkshell = linkshell::LoadLinkshell(lsid);
+        int8 EncodedName[16];
+        EncodeStringLinkshell((int8*)lsname, EncodedName);
+        PLinkshell->BreakLinkshell(EncodedName, true);
+        linkshell::UnloadLinkshell(lsid);
+        found = true;
+    }
+
+    lua_pushboolean(L, found);
+    return 1;
 }
 
 /************************************************************************
@@ -5349,6 +5389,29 @@ inline int32 CLuaBaseEntity::unlockJob(lua_State *L)
 }
 
 /************************************************************************
+*  Function: hasJob()
+*  Purpose : Check to see if JOBTYPE is unlocked
+*  Example : player:hasJob(BRD)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::hasJob(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    JOBTYPE JobID = (JOBTYPE)lua_tointeger(L, 1);
+
+    TPZ_DEBUG_BREAK_IF(JobID > MAX_JOBTYPE || JobID < 0);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    lua_pushinteger(L, (PChar->jobs.unlocked >> JobID) & 1);
+    return 1;
+}
+
+/************************************************************************
 *  Function: getMainLvl()
 *  Purpose : Returns the main level of entity's current job
 *  Example : player:getMainLvl()
@@ -5377,6 +5440,29 @@ inline int32 CLuaBaseEntity::getSubLvl(lua_State *L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
 
     lua_pushinteger(L, ((CBattleEntity*)m_PBaseEntity)->GetSLevel());
+    return 1;
+}
+
+/************************************************************************
+*  Function: getJobLevel()
+*  Purpose : Return the levle of job specified by JOBTYPE
+*  Example : player:getJobLevel(BRD)
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getJobLevel(lua_State *L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    JOBTYPE JobID = (JOBTYPE)lua_tointeger(L, 1);
+
+    TPZ_DEBUG_BREAK_IF(JobID > MAX_JOBTYPE || JobID < 0);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    lua_pushinteger(L, PChar->jobs.job[JobID]);
+
     return 1;
 }
 
@@ -14135,6 +14221,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createShop),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentGPItem),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,breakLinkshell),
 
     // Trading
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getContainerSize),
@@ -14212,9 +14299,11 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,changeJob),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,changesJob),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,unlockJob),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasJob),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMainLvl),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSubLvl),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getJobLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setsLevel),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,levelCap),

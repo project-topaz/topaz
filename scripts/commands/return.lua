@@ -9,32 +9,32 @@ cmdprops =
 {
     permission = 2,
     parameters = "s"
-};
+}
 
 function error(player, msg)
-    player:PrintToPlayer(msg);
-    player:PrintToPlayer("!return {player}");
-end;
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!return {player}")
+end
 
 function onTrigger(player, target)
 
     -- validate target
-    local targ;
+    local targ
     if (target == nil) then
-        targ = player;
+        targ = player
     else
-        targ = GetPlayerByName(target);
+        targ = GetPlayerByName(target)
         if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found!", target ) );
-            return;
+            error(player, string.format( "Player named '%s' not found!", target ) )
+            return
         end
     end
 
     -- get previous zone
     zoneId = targ:getCharVar("prev_bringzone");
     if (zoneId == nil or zoneId == tpz.zone.UNKNOWN or zoneId == tpz.zone.RESIDENTIAL_AREA) then
-        error(player, "Previous zone was a Mog House or there was a problem fetching the ID.");
-        return;
+        error(player, "Previous zone was a Mog House or there was a problem fetching the ID.")
+        return
     end
 
     -- zone target

@@ -33,9 +33,9 @@ function onZoneIn(player, prevZone)
 
     -- MOG HOUSE EXIT
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
-        player:setPos(41.2,-5, 84,85);
+        player:setPos(41.2, -5, 84, 85)
         if player:getMainJob() ~= player:getCharVar("PlayerMainJob") and player:getGMLevel() == 0 then
-            cs = 30004;
+            cs = 30004
         end
         player:setCharVar("PlayerMainJob", 0)
     elseif player:getCurrentMission(COP) == tpz.mission.id.cop.TENDING_AGED_WOUNDS and player:getCharVar("PromathiaStatus") == 0 then
