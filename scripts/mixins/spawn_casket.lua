@@ -20,7 +20,7 @@ g_mixins.spawn_casket = function(mob)
         else
             tpz.caskets.spawnCasket(mob, player, mobPos.x, mobPos.y, mobPos.z, mobPos.rot)
         end
-    end);
+    end)
 end
 
 return g_mixins.spawn_casket

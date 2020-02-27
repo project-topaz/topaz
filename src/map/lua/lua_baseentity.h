@@ -194,6 +194,7 @@ public:
     int32 createShop(lua_State*);            // Prepare the container for work of shop ??
     int32 addShopItem(lua_State*);           // Adds item to shop container (16 max)
     int32 getCurrentGPItem(lua_State*);      // Gets current GP item id and max points
+    int32 breakLinkshell(lua_State*);        // Breaks all pearls/sacks
 
     // Trading
     int32 getContainerSize(lua_State*);      // Gets the current capacity of a container
@@ -269,9 +270,11 @@ public:
     int32 changeJob(lua_State*);            // changes the job of a char (testing only!)
     int32 changesJob(lua_State*);           // changes the sub job of a char (testing only!)
     int32 unlockJob(lua_State*);            // Unlocks a job for the entity, sets job level to 1
+    int32 hasJob(lua_State*);               // Check to see if JOBTYPE is unlocked for a character
 
     int32 getMainLvl(lua_State*);           // Gets Entity Main Job Level
     int32 getSubLvl(lua_State*);            // Get Entity Sub Job Level
+    int32 getJobLevel(lua_State*);          // Gets character job level for specified JOBTYPE
     int32 setLevel(lua_State*);             // sets the character's level
     int32 setsLevel(lua_State*);            // sets the character's level
     int32 levelCap(lua_State*);             // genkai

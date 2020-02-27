@@ -189,3 +189,7 @@ win32/enc_temp_folder/5818279cd668471d679dcbe752bcca0/
 scripts/commands.rar
 
 scripts/zones/promathia.rar
+
+scripts/commands/exec.lua
+
+scripts/globals/settings.lua

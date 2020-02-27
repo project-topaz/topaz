@@ -58,12 +58,6 @@ CMagicState::CMagicState(CBattleEntity* PEntity, uint16 targid, SpellID spellid,
         throw CStateInitException(std::move(m_errorMsg));
     }
 
-    /*if (PTarget->objtype != TYPE_PC && (m_PSpell->getZoneMisc() & MISC_TRACTOR) != 0)
-    {
-        throw CStateInitException(std::make_unique<CMessageBasicPacket>(m_PEntity, m_PEntity, 0, 0, MSGBASIC_CANNOT_ON_THAT_TARG));
-    }*/
-
-    if (PTarget) {
     auto errorMsg = luautils::OnMagicCastingCheck(m_PEntity, PTarget, GetSpell());
     if (errorMsg)
     {
@@ -309,12 +303,14 @@ void CMagicState::ApplyEnmity(CBattleEntity* PTarget, int ce, int ve)
 
                 if (!(m_PSpell->isHeal()) || m_PSpell->tookEffect())  //can't claim mob with cure unless it does damage
                 {
-                    if (m_PEntity->objtype == TYPE_PC)
+                    if (m_PEntity->objtype == TYPE_PC || (m_PEntity->PMaster && m_PEntity->PMaster->objtype == TYPE_PC))
                     {
+                        auto claimer = m_PEntity->objtype == TYPE_PC ? m_PEntity : m_PEntity->PMaster;
+
                         if (!mob->CalledForHelp())
                         {
-                            mob->m_OwnerID.id = m_PEntity->id;
-                            mob->m_OwnerID.targid = m_PEntity->targid;
+                            mob->m_OwnerID.id = claimer->id;
+                            mob->m_OwnerID.targid = claimer->targid;
                         }
                         mob->updatemask |= UPDATE_STATUS;
                     }
