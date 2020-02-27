@@ -26,5 +26,7 @@ end;
 function onEventFinish(player,csid,option)
     if (csid == 4) then
         player:setCharVar("DownwardHelix",4);
+        player:addKeyItem(tpz.ki.ULBRECHTS_MORTARBOARD);
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.ULBRECHTS_MORTARBOARD);
     end
 end;
