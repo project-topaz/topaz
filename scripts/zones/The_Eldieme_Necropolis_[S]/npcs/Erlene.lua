@@ -138,6 +138,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED);
         else
             player:completeQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.DOWNWARD_HELIX);
+            player:addKeyItem(tpz.ki.ULBRECHTS_MORTARBOARD);
             player:addItem(15004); -- Schlar's Bracers
             player:messageSpecial(ID.text.ITEM_OBTAINED, 15004);
             player:setCharVar("DownwardHelix",0);
