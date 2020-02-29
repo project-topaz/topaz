@@ -289,6 +289,7 @@ INSERT INTO `abilities` VALUES (305,'bully',6,93,4,180,240,127,0,248,2000,0,6,12
 INSERT INTO `abilities` VALUES (306,'maintenance',18,30,257,90,214,0,0,83,2000,0,6,18.0,0,0,0,1474,0,'ABYSSEA');
 INSERT INTO `abilities` VALUES (311,'stymie',5,96,1,3600,254,0,0,275,2000,0,6,20.0,0,1,80,0,0,'SOA');
 INSERT INTO `abilities` VALUES (319,'mikage',13,96,1,3600,254,0,0,283,2000,0,6,20.0,0,1,80,0,0,'SOA');
+INSERT INTO `abilities` VALUES (329,'full_circle',21,0,5,10,243,0,0,83,2000,0,6,20.0,0,1,300,0,0,'SOA');
 INSERT INTO `abilities` VALUES (327,'bolster',21,0,1,3600,0,0,0,33,2000,0,6,20.0,0,1,300,0,0,NULL);
 INSERT INTO `abilities` VALUES (340,'elemental_sforzo',22,0,1,3600,0,0,0,302,2000,0,6,20.0,0,1800,7200,0,0,'SOA');
 INSERT INTO `abilities` VALUES (341,'Rune_enchantment',22,5,1,0,92,0,0,0,2000,0,6,20.0,0,0,0,0,0,'SOA');

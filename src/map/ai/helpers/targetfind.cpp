@@ -267,6 +267,34 @@ void CTargetFind::addAllInEnmityList()
     }
 }
 
+void CTargetFind::addAllInRange(CBattleEntity* PTarget, float radius, uint8 allegiance)
+{
+    m_radius = radius;
+    m_PRadiusAround = &(m_PBattleEntity->loc.p);
+
+    // TODO: Use spawnlists instead of ForEachCharInstance and ForEachMobInstance
+    if (allegiance == ALLEGIANCE_PLAYER)
+    {
+        zoneutils::GetZone(PTarget->getZone())->ForEachCharInstance(PTarget, [&](CCharEntity* PChar)
+        {
+            if (PChar && isWithinArea(&(PChar->loc.p)) && !PChar->isDead())
+            {
+                m_targets.push_back(PChar);
+            }
+        });
+    }
+    else
+    {
+        zoneutils::GetZone(PTarget->getZone())->ForEachMobInstance(PTarget, [&](CMobEntity* PMob)
+        {
+            if (PMob && isWithinArea(&(PMob->loc.p)) && !PMob->isDead())
+            {
+                m_targets.push_back(PMob);
+            }
+        });
+    }
+}
+
 void CTargetFind::addEntity(CBattleEntity* PTarget, bool withPet)
 {
     if (validEntity(PTarget)){

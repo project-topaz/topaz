@@ -68,6 +68,7 @@ enum EFFECTFLAG
     EFFECTFLAG_NO_CANCEL        = 0x800000, // CAN NOT CLICK IT OFF IN CLIENT
     EFFECTFLAG_INFLUENCE        = 0x1000000, // Influence effects - e.g. Signet, Sanction, Sigil, Ionis
     EFFECTFLAG_OFFLINE_TICK     = 0x2000000, // Duration elapses while offline
+    EFFECTFLAG_AURA             = 0x4000000, // Duration elapses while offline
 };
 
 enum EFFECT
@@ -674,7 +675,7 @@ enum EFFECT
     EFFECT_NEGATE_CURSE             = 609,
     EFFECT_NEGATE_CHARM             = 610,
     EFFECT_MAGIC_EVASION_BOOST_II   = 611,
-
+    EFFECT_COLURE_ACTIVE            = 612,
     // Effect icons in packet can go from 0-767, so no custom effects should go in that range.
 
     // Purchased from Cruor Prospector

@@ -51,10 +51,12 @@ When a status effect is gained twice on a player. It can do one or more of the f
 #include "entities/battleentity.h"
 #include "entities/charentity.h"
 #include "entities/automatonentity.h"
+#include "entities/mobentity.h"
 #include "utils/itemutils.h"
 #include "map.h"
 #include "latent_effect_container.h"
 #include "status_effect_container.h"
+#include "enmity_container.h"
 #include "utils/zoneutils.h"
 #include "utils/petutils.h"
 #include "utils/puppetutils.h"
@@ -1446,6 +1448,100 @@ void CStatusEffectContainer::CheckEffectsExpiry(time_point tick)
         }
     }
     DeleteStatusEffects();
+}
+
+
+void CStatusEffectContainer::TickAuras(time_point tick)
+{
+    TPZ_DEBUG_BREAK_IF(m_POwner == nullptr);
+
+    if (!m_POwner->isDead())
+    {
+        for (const auto& PStatusEffect : m_StatusEffectList)
+        {
+            bool isAura = PStatusEffect->GetFlag() & EFFECTFLAG_AURA;
+            if (isAura && PStatusEffect->GetTickTime() != 0 &&
+                PStatusEffect->GetElapsedTickCount() <= std::chrono::duration_cast<std::chrono::milliseconds>(tick - PStatusEffect->GetStartTime()).count() / PStatusEffect->GetTickTime())
+            {
+                CBattleEntity* PEntity = static_cast<CBattleEntity*>(m_POwner);
+                uint16 targetType = (uint16)PStatusEffect->GetTier();
+
+                switch (targetType)
+                {
+                case ALLEGIANCE_PLAYER:
+                    if (PEntity->objtype == TYPE_PET)
+                    {
+                        PEntity = PEntity->PMaster;
+                    }
+                    if (PEntity->PParty)
+                    {
+                        PEntity->ForParty([&](CBattleEntity* PMember)
+                        {
+                            if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID() &&
+                                distance(m_POwner->loc.p, PMember->loc.p) <= 6.25)
+                            {
+                                if (!PMember->isDead())
+                                {
+                                    CStatusEffect* PEffect = new CStatusEffect(
+                                        (EFFECT)PStatusEffect->GetSubID(),    // Effect ID
+                                        (uint16)PStatusEffect->GetSubID(),    // Effect Icon (Associated with ID)
+                                        (uint16)PStatusEffect->GetSubPower(), // Power
+                                        3,                                    // Tick
+                                        4);                                   // Duration
+                                    PMember->StatusEffectContainer->AddStatusEffect(PEffect, true);
+                                }
+                            }
+                        });
+                    }
+                    else
+                    {
+                        if (PEntity != nullptr && PEntity->loc.zone->GetID() == m_POwner->loc.zone->GetID() &&
+                            distance(m_POwner->loc.p, PEntity->loc.p) <= 6.25)
+                        {
+                            if (!PEntity->isDead())
+                            {
+                                CStatusEffect* PSoloEffect = new CStatusEffect(
+                                    (EFFECT)PStatusEffect->GetSubID(),    // Effect ID
+                                    (uint16)PStatusEffect->GetSubID(),    // Effect Icon (Associated with ID)
+                                    (uint16)PStatusEffect->GetSubPower(), // Power
+                                    3,                                    // Tick
+                                    4);                                   // Duration
+                                PEntity->StatusEffectContainer->AddStatusEffect(PSoloEffect, true);
+                            }
+                        }
+                    }
+                    break;
+                case ALLEGIANCE_MOB:
+                    PEntity->PAI->TargetFind->reset();
+                    PEntity->PAI->TargetFind->addAllInRange(PEntity, 6.25, ALLEGIANCE_MOB);
+                    uint16 size = (uint16)PEntity->PAI->TargetFind->m_targets.size();
+
+                    for (auto PTarget : PEntity->PAI->TargetFind->m_targets)
+                    {
+                        auto PMob = static_cast<CMobEntity*>(PTarget);
+                        if (PEntity->objtype == TYPE_PET)
+                        {
+                            PEntity = PEntity->PMaster;
+                        }
+                        if (PMob->PEnmityContainer->HasID(PEntity->id))
+                        {
+                            if (!PMob->isDead())
+                            {
+                                CStatusEffect* PMobEffect = new CStatusEffect(
+                                    (EFFECT)PStatusEffect->GetSubID(),    // Effect ID
+                                    (uint16)PStatusEffect->GetSubID(),    // Effect Icon (Associated with ID)
+                                    (uint16)PStatusEffect->GetSubPower(), // Power
+                                    3,                                    // Tick
+                                    4);                                   // Duration
+                                PMob->StatusEffectContainer->AddStatusEffect(PMobEffect, true);
+                            }
+                        }
+                    };
+                    break;
+                }
+            }    
+        } 
+    }
 }
 
 /************************************************************************

@@ -771,6 +771,7 @@ tpz.effect =
     NEGATE_CURSE             = 609,
     NEGATE_CHARM             = 610,
     MAGIC_EVASION_BOOST_II   = 611,
+    COLURE_ACTIVE            = 612,
     -- Effect icons in packet can go from 0-767, so no custom effects should go in that range.
 
     -- Purchased from Cruor Prospector
@@ -862,6 +863,8 @@ tpz.effectFlag =
     ON_JOBCHANGE    = 0x400000,
     NO_CANCEL       = 0x800000,
     INFLUENCE       = 0x1000000,
+    OFFLINE_TICK    = 0x2000000,
+    AURA            = 0x4000000,
 }
 
 ------------------------------------
@@ -2156,14 +2159,17 @@ tpz.damageType =
 -- DROP_DESPOIL = 0x04
 
 ----------------------------------
--- Allegiance (not currently used in code base)
+-- Allegiance
 ----------------------------------
 
--- ALLEGIANCE_MOB       = 0
--- ALLEGIANCE_PLAYER    = 1
--- ALLEGIANCE_SAN_DORIA = 2
--- ALLEGIANCE_BASTOK    = 3
--- ALLEGIANCE_WINDURST  = 4
+tpz.allegiance =
+{
+    MOB       = 0,
+    PLAYER    = 1,
+    SAN_DORIA = 2,
+    BASTOK    = 3,
+    WINDURST  = 4,
+}
 
 ------------------------------------
 -- MOBMODs

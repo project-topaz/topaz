@@ -36,6 +36,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../entities/mobentity.h"
 #include "../entities/trustentity.h"
 #include "../entities/automatonentity.h"
+#include "../entities/luopanentity.h"
 #include "../ability.h"
 #include "../status_effect_container.h"
 #include "../latent_effect_container.h"
@@ -60,6 +61,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 struct Pet_t
 {
+    uint16      m_PetID;
     look_t		look;		// внешний вид
     string_t	name;		// имя
     ECOSYSTEM	EcoSystem;	// эко-система
@@ -168,7 +170,7 @@ namespace petutils
                 hasSpellScript, spellList, \
                 Slash, Pierce, H2H, Impact, \
                 Fire, Ice, Wind, Earth, Lightning, Water, Light, Dark, \
-                cmbDelay, name_prefix, mob_pools.skill_list_id \
+                cmbDelay, name_prefix, mob_pools.skill_list_id, pet_list.petid \
                 FROM pet_list, mob_pools, mob_family_system \
                 WHERE pet_list.poolid = mob_pools.poolid AND mob_pools.familyid = mob_family_system.familyid";
 
@@ -238,6 +240,8 @@ namespace petutils
                 Pet->cmbDelay = (uint16)Sql_GetIntData(SqlHandle, 38);
                 Pet->name_prefix = (uint8)Sql_GetUIntData(SqlHandle, 39);
                 Pet->m_MobSkillList = (uint16)Sql_GetUIntData(SqlHandle, 40);
+
+                Pet->m_PetID = (uint16)Sql_GetIntData(SqlHandle, 41);
 
                 g_PPetList.push_back(Pet);
             }
@@ -973,6 +977,13 @@ namespace petutils
             puppetutils::LoadAutomaton(static_cast<CCharEntity*>(PMaster));
             PMaster->PPet = static_cast<CCharEntity*>(PMaster)->PAutomaton;
         }
+        else if (PMaster->objtype == TYPE_PC && PetID == PETID_LUOPAN)
+        {
+            auto master = static_cast<CCharEntity*>(PMaster);
+            delete master->PLuopan;
+            master->PLuopan = new CLuopanEntity();
+            PMaster->PPet = master->PLuopan;
+        }
         else
         {
             LoadPet(PMaster, PetID, spawningFromZone);
@@ -1399,11 +1410,22 @@ namespace petutils
 
     void LoadPet(CBattleEntity* PMaster, uint32 PetID, bool spawningFromZone)
     {
-        TPZ_DEBUG_BREAK_IF(PetID >= g_PPetList.size());
+        TPZ_DEBUG_BREAK_IF(PetID > 75);
+
         if (PMaster->GetMJob() != JOB_DRG && PetID == PETID_WYVERN)
             return;
 
-        Pet_t* PPetData = g_PPetList.at(PetID);
+        Pet_t* PPetData = new Pet_t();
+
+        uint32 index = 0;
+        for (index; index < g_PPetList.size(); index++)
+        {
+            if (g_PPetList.at(index)->m_PetID == PetID)
+            {
+                PPetData = g_PPetList.at(index);
+                break;
+            }
+        }
 
         if (PMaster->objtype == TYPE_PC)
         {
@@ -1437,8 +1459,8 @@ namespace petutils
 
                     if (wyvernid != 0)
                     {
-                        g_PPetList.at(PetID)->name.clear();
-                        g_PPetList.at(PetID)->name.insert(0, (const char*)Sql_GetData(SqlHandle, 0));
+                        PPetData->name.clear();
+                        PPetData->name.insert(0, (const char*)Sql_GetData(SqlHandle, 0));
                     }
                 }
             }
@@ -1491,7 +1513,7 @@ namespace petutils
                         uint16 chocoboname1 = chocoboid & 0x0000FFFF;
                         uint16 chocoboname2 = chocoboid >>= 16;
 
-                        g_PPetList.at(PetID)->name.clear();
+                        PPetData->name.clear();
 
                         Query =
                             "SELECT\
@@ -1505,7 +1527,7 @@ namespace petutils
                             {
                                 if (chocoboname1 != 0 && chocoboname2 != 0)
                                 {
-                                    g_PPetList.at(PetID)->name.insert(0, (const char*)Sql_GetData(SqlHandle, 0));
+                                    PPetData->name.insert(0, (const char*)Sql_GetData(SqlHandle, 0));
                                 }
                             }
                         }
@@ -1516,6 +1538,10 @@ namespace petutils
         else if (PetID == PETID_HARLEQUINFRAME || PetID == PETID_VALOREDGEFRAME || PetID == PETID_SHARPSHOTFRAME || PetID == PETID_STORMWAKERFRAME)
         {
             petType = PETTYPE_AUTOMATON;
+        }
+        else if (PetID == PETID_LUOPAN)
+        {
+            petType = PETTYPE_LUOPAN;
         }
 
         CPetEntity* PPet = nullptr;
@@ -1531,23 +1557,32 @@ namespace petutils
 
         PPet->loc = PMaster->loc;
 
-        // spawn me randomly around master
-        PPet->loc.p = nearPosition(PMaster->loc.p, CPetController::PetRoamDistance, (float)M_PI);
+        if (petType == PETTYPE_LUOPAN)
+        {
+            PPet->loc.p = nearPosition(PMaster->GetEntity(PMaster->m_TargID)->loc.p, 0.5f, 0.0f);
+            // This sets the correct size for the luopan
+            PPet->setEntityFlags(131);
+        }
+        else
+        {
+            // spawn me randomly around master
+            PPet->loc.p = nearPosition(PMaster->loc.p, CPetController::PetRoamDistance, (float)M_PI);
+        }
 
         if (petType != PETTYPE_AUTOMATON)
         {
-            PPet->look = g_PPetList.at(PetID)->look;
-            PPet->name = g_PPetList.at(PetID)->name;
+            PPet->look = PPetData->look;
+            PPet->name = PPetData->name;
         }
         else
         {
             PPet->look.size = MODEL_AUTOMATON;
         }
-        PPet->m_name_prefix = g_PPetList.at(PetID)->name_prefix;
-        PPet->m_Family = g_PPetList.at(PetID)->m_Family;
-        PPet->m_MobSkillList = g_PPetList.at(PetID)->m_MobSkillList;
-        PPet->SetMJob(g_PPetList.at(PetID)->mJob);
-        PPet->m_Element = g_PPetList.at(PetID)->m_Element;
+        PPet->m_name_prefix = PPetData->name_prefix;
+        PPet->m_Family = PPetData->m_Family;
+        PPet->m_MobSkillList = PPetData->m_MobSkillList;
+        PPet->SetMJob(PPetData->mJob);
+        PPet->m_Element = PPetData->m_Element;
         PPet->m_PetID = PetID;
 
         if (PPet->getPetType() == PETTYPE_AVATAR)
@@ -1699,7 +1734,7 @@ namespace petutils
                 PPet->SetMLevel(PMaster->GetSLevel());
                 PPet->SetSLevel(PMaster->GetSLevel() / 2);
             }
-            LoadAutomatonStats((CCharEntity*)PMaster, PPet, g_PPetList.at(PetID)); //temp
+            LoadAutomatonStats((CCharEntity*)PMaster, PPet, PPetData); //temp
             if (PMaster->objtype == TYPE_PC)
             {
                 CCharEntity* PChar = (CCharEntity*)PMaster;
@@ -1712,11 +1747,24 @@ namespace petutils
                 PPet->addModifier(Mod::MDEF, PChar->PMeritPoints->GetMeritValue(MERIT_FINE_TUNING, PChar));
             }
         }
+        else if (PPet->getPetType() == PETTYPE_LUOPAN && PMaster->objtype == TYPE_PC)
+        {
+            PPet->SetMLevel(PMaster->GetMLevel());
+
+            PPet->health.maxhp = PMaster->GetMaxHP();
+            PPet->health.hp = PPet->health.maxhp;
+
+            PPet->addModifier(Mod::DMG, -50);
+
+            // Just sit, do nothing
+            PPet->PAI->PathFind = nullptr;
+            PPet->PAI->SetController(nullptr);
+        }
 
         FinalizePetStatistics(PMaster, PPet);
         PPet->status = STATUS_NORMAL;
-        PPet->m_ModelSize = g_PPetList.at(PetID)->size;
-        PPet->m_EcoSystem = g_PPetList.at(PetID)->EcoSystem;
+        PPet->m_ModelSize = PPetData->size;
+        PPet->m_EcoSystem = PPetData->EcoSystem;
 
         PMaster->PPet = PPet;
     }
