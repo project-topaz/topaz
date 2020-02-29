@@ -669,6 +669,7 @@ public:
     int32 updateTarget(lua_State*);         // Force mob to update target from enmity container (ie after updateEnmity)
     int32 getEnmityList(lua_State* L);
     int32 getTrickAttackChar(lua_State*);   // true if TA target is available
+    int32 getTargetsWithinArea(lua_State* L);
 
     int32 actionQueueEmpty(lua_State*);     // returns whether the action queue is empty or not
 
