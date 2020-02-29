@@ -19,6 +19,7 @@ tpz.pet.type =
     AUTOMATON          = 4,
     ADVENTURING_FELLOW = 5,
     CHOCOBO            = 6,
+    LUOPAN             = 7,
 }
 
 
@@ -85,6 +86,9 @@ tpz.pet.id =
 
     --  Puppetmaster
     AUTOMATON             = 69,
+
+    -- Geomancer
+    LUOPAN                = 75,
 }
 
 -----------------------------------

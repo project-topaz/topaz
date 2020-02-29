@@ -56,11 +56,8 @@ enum PETID
     PETID_STORMWAKERFRAME    = 72,
     PETID_ADVENTURING_FELLOW = 73,
     PETID_CHOCOBO            = 74,
+    PETID_LUOPAN             = 75,
 
-    // Trusts are 896 and above
-    // PETID_SHANTOTTO          = 896
-    PETID_SHANTOTTO          = 75
-    // Todo: change how this works so trusts don't need PetID at all..
 };
 
 

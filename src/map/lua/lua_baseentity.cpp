@@ -10461,14 +10461,15 @@ inline int32 CLuaBaseEntity::addStatusEffectEx(lua_State *L)
     }
 
     CStatusEffect * PEffect = new CStatusEffect(
-        (EFFECT)lua_tointeger(L, 1),
-        (uint16)lua_tointeger(L, 2),
-        (uint16)lua_tointeger(L, 3),
-        (uint16)lua_tointeger(L, 4),
-        (uint16)lua_tointeger(L, 5),
-        (n >= 6 ? (uint16)lua_tointeger(L, 6) : 0),
-        (n >= 7 ? (uint16)lua_tointeger(L, 7) : 0),
-        (n >= 8 ? (uint16)lua_tointeger(L, 8) : 0));
+        (EFFECT)lua_tointeger(L, 1), // Effect ID
+        (uint16)lua_tointeger(L, 2), // Effect Icon ID
+        (uint16)lua_tointeger(L, 3), // Power
+        (uint16)lua_tointeger(L, 4), // Tick
+        (uint16)lua_tointeger(L, 5), // Duration
+        (n >= 6 ? (uint16)lua_tointeger(L, 6) : 0),  // Sub Effect ID
+        (n >= 7 ? (uint16)lua_tointeger(L, 7) : 0),  // Sub Power
+        (n >= 8 ? (uint16)lua_tointeger(L, 8) : 0),  // Tier
+        (n >= 9 ? (uint64)lua_tointeger(L, 9) : 0)); // Effect Flag (i.e in lua tpz.effectFlag.AURA will make this an aura effect)
 
     lua_pushboolean(L, ((CBattleEntity*)m_PBaseEntity)->StatusEffectContainer->AddStatusEffect(PEffect, silent));
     return 1;
@@ -13684,6 +13685,38 @@ inline int32 CLuaBaseEntity::getTrickAttackChar(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getTargetsWithinArea()
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getTargetsWithinArea(lua_State* L) {
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+
+    float radius = (float)lua_tonumber(L, 1);
+    uint8 allegiance = lua_isnil(L, 2) ? 0 : lua_tointeger(L, 2);
+
+    PEntity->PAI->TargetFind->reset();
+    PEntity->PAI->TargetFind->addAllInRange(PEntity, radius, allegiance);
+    uint16 size = (uint16)PEntity->PAI->TargetFind->m_targets.size();
+    lua_createtable(L, size, 0);
+    int i = 1;
+    for (auto PTarget : PEntity->PAI->TargetFind->m_targets) {
+        lua_getglobal(L, CLuaBaseEntity::className);
+        lua_pushstring(L, "new");
+        lua_gettable(L, -2);
+        lua_insert(L, -2);
+        lua_pushlightuserdata(L, (void*)PTarget);
+        lua_pcall(L, 2, 1, 0);
+        lua_rawseti(L, -2, i++);
+    };
+    return true;
+};
+
+/************************************************************************
 *  Function: actionQueueEmpty()
 *  Purpose : Returns true if a Mob's action queue is empty
 *  Example : if (mob:actionQueueEmpty() == true) then
@@ -14758,6 +14791,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateTarget),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getEnmityList),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTrickAttackChar),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTargetsWithinArea),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,actionQueueEmpty),
 
