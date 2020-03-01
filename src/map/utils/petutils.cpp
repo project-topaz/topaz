@@ -1412,7 +1412,7 @@ namespace petutils
 
         PETTYPE petType = PETTYPE_JUG_PET;
 
-        if (PetID <= PETID_CAIT_SITH)
+        if (PetID <= PETID_CAIT_SITH || PetID == PETID_SIREN)
         {
             petType = PETTYPE_AVATAR;
         }

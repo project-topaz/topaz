@@ -627,11 +627,21 @@ enum ABILITY
     ABILITY_SWOOPING_FRENZY    = 748,
     ABILITY_SWEEPING_GOUGE     = 749,
     ABILITY_ZEALOUS_SNORT      = 750,
-    ABILITY_PENTAPECK          = 751
+    ABILITY_PENTAPECK          = 751,
+
+    ABILITY_CLARSACH_CALL      = 960, // animation id 175
+    ABILITY_WELT               = 961, //              176
+    ABILITY_KATABATIC_BLADES   = 962, //              177
+    ABILITY_LUNATIC_VOICE      = 963, //              178
+    ABILITY_ROUNDHOUSE         = 964, //              179
+    ABILITY_CHINOOK            = 965, //              180
+    ABILITY_BITTER_ELEGY       = 966, //              181
+    ABILITY_SONIC_BUFFET       = 967, //              182
+    ABILITY_TORNADO_II         = 968  //              183
 
 };
 
-#define MAX_ABILITY_ID  752
+#define MAX_ABILITY_ID  969
 
 struct Charge_t
 {
