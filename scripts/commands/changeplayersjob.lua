@@ -7,7 +7,7 @@ require("scripts/globals/status");
 
 cmdprops =
 {
-    permission = 4,
+    permission = 3,
     parameters = "sis"
 };
 
@@ -55,7 +55,7 @@ function onTrigger(player, jobId, level, target)
             return;
         end
     end
-    
+
     -- change job and (optionally) level
     targ:changesJob(jobId);
     if (level ~= nil) then

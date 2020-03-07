@@ -5,7 +5,7 @@
 
 -- cmdprops =
 -- {
-    -- permission = 1,
+    -- permission = 4,
     -- parameters = "i"
 -- };
 
@@ -31,7 +31,7 @@
             -- return;
         -- end
     -- end
-    
+
     -- -- despawn mob
     -- DespawnNPC(targ:getID());
     -- player:PrintToPlayer(string.format("Despawned %s %i.",targ:getName(),targ:getID()));

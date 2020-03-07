@@ -73,6 +73,7 @@ zones[tpz.zone.CASTLE_OZTROJA] =
             [17395952] = 17395954, -- -25.044 -16.250 -141.534
             [17395953] = 17395954, -- -32.302 -16.250 -139.169
         },
+        ODONTOTYRANNUS             = 17396141,
         YAGUDO_AVATAR              = 17396134,
         HUU_XALMO_THE_SAVAGE       = 17396140,
         MIMIC                      = 17396144,

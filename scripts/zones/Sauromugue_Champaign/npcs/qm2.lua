@@ -23,6 +23,7 @@ function onTrade(player, npc, trade)
 
     if grapplingCS >= 2 and grapplingCS <= 7 and npcUtil.tradeHas(trade, 17474) then
         if isNaked(player) then
+            player:confirmTrade()
             player:startEvent(2) -- complete grappling part of the quest
         else
             player:messageSpecial(ID.text.THF_AF_WALL_OFFSET + 2, 0, 17474) -- You try climbing the wall using the [Grapnel], but you are too heavy.

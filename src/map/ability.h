@@ -630,7 +630,7 @@ enum ABILITY
     ABILITY_PENTAPECK          = 751,
 
     ABILITY_CLARSACH_CALL      = 960, // animation id 175
-    ABILITY_WELT               = 961, //              176
+    ABILITY_WELT               = 945, //              176
     ABILITY_KATABATIC_BLADES   = 962, //              177
     ABILITY_LUNATIC_VOICE      = 963, //              178
     ABILITY_ROUNDHOUSE         = 964, //              179
