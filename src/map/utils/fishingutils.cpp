@@ -390,7 +390,7 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
                     PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));
                     PChar->pushPacket(new CCharSkillsPacket(PChar));
                     PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53));
-                    charutils::SaveCharSkills(PChar, 48);
+                    charutils::SaveCharSkills(PChar, skillID);
                 }
                 //end
 
@@ -424,7 +424,7 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
                     PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));
                     PChar->pushPacket(new CCharSkillsPacket(PChar));
                     PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53));
-                    charutils::SaveCharSkills(PChar, 48);
+                    charutils::SaveCharSkills(PChar, skillID);
                 }                
                 //end
 

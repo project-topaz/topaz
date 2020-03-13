@@ -85,6 +85,8 @@ tpz.pet.id =
 
     --  Puppetmaster
     AUTOMATON             = 69,
+
+    -- more avatards
     SIREN                 = 73,
 }
 
