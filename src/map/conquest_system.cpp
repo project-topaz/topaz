@@ -38,27 +38,27 @@
 
 namespace conquest
 {
-	/************************************************************************
+    /************************************************************************
     *                                                                       *
     *	UpdateConquestSystem		                                        *
     *                                                                       *
     ************************************************************************/
 
-	void UpdateConquestSystem()
-	{
-		zoneutils::ForEachZone([](CZone* PZone)
-		{
-            //only find chars for zones that have had conquest updated
-            if (PZone->GetRegionID() <= 18)
+    void UpdateConquestSystem()
+    {
+        zoneutils::ForEachZone([](CZone* PZone)
             {
-                luautils::OnConquestUpdate(PZone, Conquest_Update);
-				PZone->ForEachChar([](CCharEntity* PChar)
-				{
-					PChar->PLatentEffectContainer->CheckLatentsZone();
-				});
-            }
-		});
-	}
+                //only find chars for zones that have had conquest updated
+                if (PZone->GetRegionID() <= 18)
+                {
+                    luautils::OnConquestUpdate(PZone, Conquest_Update);
+                    PZone->ForEachChar([](CCharEntity* PChar)
+                        {
+                            PChar->PLatentEffectContainer->CheckLatentsZone();
+                        });
+                }
+            });
+    }
 
     void UpdateInfluencePoints(int points, unsigned int nation, REGIONTYPE region)
     {
@@ -131,62 +131,62 @@ namespace conquest
 
         switch (region)
         {
-            case REGION_RONFAURE:
-            case REGION_GUSTABERG:
-            case REGION_SARUTABARUTA:
-            {
-                points = 10;
-                break;
-            }
-            case REGION_ZULKHEIM:
-            case REGION_KOLSHUSHU:
-            case REGION_NORVALLEN:
-            case REGION_DERFLAND:
-            case REGION_ARAGONEU:
-            {
-                points = 50;
-                break;
-            }
-            case REGION_QUFIMISLAND:
-            case REGION_LITELOR:
-            case REGION_KUZOTZ:
-            case REGION_ELSHIMOLOWLANDS:
-            {
-                points = 75;
-                break;
-            }
-            case REGION_VOLLBOW:
-            case REGION_VALDEAUNIA:
-            case REGION_FAUREGANDI:
-            case REGION_ELSHIMOUPLANDS:
-            {
-                points = 300;
-                break;
-            }
-            case REGION_TULIA:
-            case REGION_MOVALPOLOS:
-            case REGION_TAVNAZIA:
-            {
-                points = 600;
-                break;
-            }
-            default:
-            {
-                break;
-            }
+        case REGION_RONFAURE:
+        case REGION_GUSTABERG:
+        case REGION_SARUTABARUTA:
+        {
+            points = 10;
+            break;
+        }
+        case REGION_ZULKHEIM:
+        case REGION_KOLSHUSHU:
+        case REGION_NORVALLEN:
+        case REGION_DERFLAND:
+        case REGION_ARAGONEU:
+        {
+            points = 50;
+            break;
+        }
+        case REGION_QUFIMISLAND:
+        case REGION_LITELOR:
+        case REGION_KUZOTZ:
+        case REGION_ELSHIMOLOWLANDS:
+        {
+            points = 75;
+            break;
+        }
+        case REGION_VOLLBOW:
+        case REGION_VALDEAUNIA:
+        case REGION_FAUREGANDI:
+        case REGION_ELSHIMOUPLANDS:
+        {
+            points = 300;
+            break;
+        }
+        case REGION_TULIA:
+        case REGION_MOVALPOLOS:
+        case REGION_TAVNAZIA:
+        {
+            points = 600;
+            break;
+        }
+        default:
+        {
+            break;
+        }
         }
 
         conquest::UpdateInfluencePoints(points, BEASTMEN, region);
     }
 
-	/************************************************************************
+    /************************************************************************
     *                                                                       *
     *	GetInfluenceGraphics		                                        *
     *												                        *
     ************************************************************************/
 
     uint8 GetInfluenceGraphics(int32 san_inf, int32 bas_inf, int32 win_inf, int32 bst_inf)
-	{
+    {
         //if all nations and beastmen == 0
         if (san_inf == 0 && bas_inf == 0 && win_inf == 0 && bst_inf == 0)
         {
@@ -200,8 +200,8 @@ namespace conquest
             return 0;
         }
         //if Beast influence > all nations
-        else if (bst_inf > san_inf &&
-            bst_inf > win_inf &&
+        else if (bst_inf > san_inf&&
+            bst_inf > win_inf&&
             bst_inf > bas_inf)
         {
             return 64;
@@ -231,7 +231,7 @@ namespace conquest
 
             return offset;
         }
-	}
+    }
 
     uint8 GetInfluenceGraphics(REGIONTYPE regionid)
     {
@@ -284,7 +284,7 @@ namespace conquest
         return GetInfluenceRanking(san_inf, bas_inf, win_inf, 0);
     }
 
-	/************************************************************************
+    /************************************************************************
     *   UpdateConquestGM                                                    *
     *	Update region control		                                        *
     *   just used by GM command			                                    *
@@ -296,27 +296,27 @@ namespace conquest
             UpdateWeekConquest();
         else
             UpdateConquestSystem();
-	}
+    }
 
-	/************************************************************************
+    /************************************************************************
     *   UpdateWeekConquest                                                  *
     *	Update region control		                                        *
     *   update 1 time per week			                                    *
     ************************************************************************/
 
-	void UpdateWeekConquest()
-	{
-		//TODO: move to lobby server
-		//launch conquest message in all zone (monday server midnight)
+    void UpdateWeekConquest()
+    {
+        //TODO: move to lobby server
+        //launch conquest message in all zone (monday server midnight)
 
         zoneutils::ForEachZone([](CZone* PZone)
-        {
-            //only find chars for zones that have had conquest updated
-            if (PZone->GetRegionID() <= 18)
             {
-                luautils::OnConquestUpdate(PZone, Conquest_Tally_Start);
-            }
-        });
+                //only find chars for zones that have had conquest updated
+                if (PZone->GetRegionID() <= 18)
+                {
+                    luautils::OnConquestUpdate(PZone, Conquest_Tally_Start);
+                }
+            });
 
         const char* Query = "UPDATE conquest_system SET region_control = \
                             IF(sandoria_influence > bastok_influence AND sandoria_influence > windurst_influence AND \
@@ -328,30 +328,30 @@ namespace conquest
 
         Sql_Query(SqlHandle, Query);
 
-		//update conquest overseers
-		for (uint8 i=0; i <= 18; i++)
-		{
+        //update conquest overseers
+        for (uint8 i = 0; i <= 18; i++)
+        {
             luautils::SetRegionalConquestOverseers(i);
-		}
+        }
 
         zoneutils::ForEachZone([](CZone* PZone)
-        {
-            //only find chars for zones that have had conquest updated
-            if (PZone->GetRegionID() <= 18)
             {
-                luautils::OnConquestUpdate(PZone, Conquest_Tally_End);
-                PZone->ForEachChar([](CCharEntity* PChar)
+                //only find chars for zones that have had conquest updated
+                if (PZone->GetRegionID() <= 18)
                 {
-                    PChar->pushPacket(new CConquestPacket(PChar));
-                    PChar->PLatentEffectContainer->CheckLatentsZone();
-                });
-            }
-        });
+                    luautils::OnConquestUpdate(PZone, Conquest_Tally_End);
+                    PZone->ForEachChar([](CCharEntity* PChar)
+                        {
+                            PChar->pushPacket(new CConquestPacket(PChar));
+                            PChar->PLatentEffectContainer->CheckLatentsZone();
+                        });
+                }
+            });
 
-		ShowDebug(CL_CYAN"Conquest Weekly Update is finished\n" CL_RESET);
-	}
+        ShowDebug(CL_CYAN"Conquest Weekly Update is finished\n" CL_RESET);
+    }
 
-	/************************************************************************
+    /************************************************************************
     *                                                                       *
     *	GetBalance					                                        *
     *   Ranking for the 3 nations                                           *
@@ -359,49 +359,49 @@ namespace conquest
 
     uint8 GetBalance(uint8 sandoria, uint8 bastok, uint8 windurst, uint8 sandoria_prev, uint8 bastok_prev, uint8 windurst_prev)
     {
-		// Based on the below values, it seems to be in pairs of bits.
-		// Order is Windurst, Bastok, San d'Oria
-		// 01 for first place, 10 for second, 11 for third.
-		// 45 = 0b101101 = Windurst in second, Bastok in third, San d'Oria in first
-		// 30 = 0b011110 = Windurst in first, Bastok in third, San d'Oria in second
+        // Based on the below values, it seems to be in pairs of bits.
+        // Order is Windurst, Bastok, San d'Oria
+        // 01 for first place, 10 for second, 11 for third.
+        // 45 = 0b101101 = Windurst in second, Bastok in third, San d'Oria in first
+        // 30 = 0b011110 = Windurst in first, Bastok in third, San d'Oria in second
 
-		uint8 ranking = 63;
+        uint8 ranking = 63;
         if (sandoria >= bastok)
-			ranking -= 1;
+            ranking -= 1;
 
         if (sandoria >= windurst)
-			ranking -= 1;
+            ranking -= 1;
 
         if (bastok >= sandoria)
-			ranking -= 4;
+            ranking -= 4;
 
         if (bastok >= windurst)
-			ranking -= 4;
+            ranking -= 4;
 
         if (windurst >= sandoria)
-			ranking -= 16;
+            ranking -= 16;
 
         if (windurst >= bastok)
-			ranking -= 16;
+            ranking -= 16;
 
         if (GetAlliance(sandoria_prev, bastok_prev, windurst_prev) != 0)
         {
             //there was an alliance last conquest week, so the allied nations will be tied for first (unless they didn't pass the other nation)
-            if (sandoria_prev > bastok_prev && sandoria_prev > windurst_prev && (ranking & 0x03) != 0x01)
+            if (sandoria_prev > bastok_prev&& sandoria_prev > windurst_prev && (ranking & 0x03) != 0x01)
             {
                 ranking = 0x17;
             }
-            else if (bastok_prev > sandoria_prev && bastok_prev > windurst_prev && (ranking & 0x0C) != 0x04)
+            else if (bastok_prev > sandoria_prev&& bastok_prev > windurst_prev && (ranking & 0x0C) != 0x04)
             {
                 ranking = 0x1D;
             }
-            else if (windurst_prev > bastok_prev && windurst_prev > sandoria_prev && (ranking & 0x30) != 0x10)
+            else if (windurst_prev > bastok_prev&& windurst_prev > sandoria_prev && (ranking & 0x30) != 0x10)
             {
                 ranking = 0x35;
             }
         }
 
-		return ranking;
+        return ranking;
     }
 
     uint8 GetBalance()
@@ -419,7 +419,7 @@ namespace conquest
             {
                 if (Sql_GetIntData(SqlHandle, 0) == 0)
                     sandoria = Sql_GetIntData(SqlHandle, 1);
-                else if(Sql_GetIntData(SqlHandle, 0) == 1)
+                else if (Sql_GetIntData(SqlHandle, 0) == 1)
                     bastok = Sql_GetIntData(SqlHandle, 1);
                 else if (Sql_GetIntData(SqlHandle, 0) == 2)
                     windurst = Sql_GetIntData(SqlHandle, 1);
@@ -451,9 +451,9 @@ namespace conquest
 
     uint8 GetAlliance(uint8 sandoria, uint8 bastok, uint8 windurst)
     {
-        if (((sandoria > (bastok + windurst) && sandoria > bastok && sandoria > windurst) && sandoria > 9) ||
-            ((bastok > (sandoria + windurst) && bastok > sandoria && bastok > windurst) && bastok > 9) ||
-            ((windurst > (sandoria + bastok) && windurst > bastok && windurst > sandoria) && windurst > 9))
+        if (((sandoria > (bastok + windurst) && sandoria > bastok&& sandoria > windurst) && sandoria > 9) ||
+            ((bastok > (sandoria + windurst) && bastok > sandoria&& bastok > windurst) && bastok > 9) ||
+            ((windurst > (sandoria + bastok) && windurst > bastok&& windurst > sandoria) && windurst > 9))
         {
             return 1;
         }
@@ -462,19 +462,19 @@ namespace conquest
 
     uint8 GetAlliance(uint8 sandoria, uint8 bastok, uint8 windurst, uint8 sandoria_prev, uint8 bastok_prev, uint8 windurst_prev)
     {
-        if (sandoria > (bastok + windurst) && sandoria > bastok && sandoria > windurst)
+        if (sandoria > (bastok + windurst) && sandoria > bastok&& sandoria > windurst)
         {
             uint8 ranking = GetBalance(sandoria, bastok, windurst, sandoria_prev, bastok_prev, windurst_prev);
             if ((ranking & 0x03) == 0x01)
                 return 1;
         }
-        else if (bastok > (sandoria + windurst) && bastok > sandoria && bastok > windurst)
+        else if (bastok > (sandoria + windurst) && bastok > sandoria&& bastok > windurst)
         {
             uint8 ranking = GetBalance(sandoria, bastok, windurst, sandoria_prev, bastok_prev, windurst_prev);
             if ((ranking & 0x0C) == 0x04)
                 return 1;
         }
-        else if (windurst > (sandoria + bastok) && windurst > bastok && windurst > sandoria)
+        else if (windurst > (sandoria + bastok) && windurst > bastok&& windurst > sandoria)
         {
             uint8 ranking = GetBalance(sandoria, bastok, windurst, sandoria_prev, bastok_prev, windurst_prev);
             if ((ranking & 0x30) == 0x10)
@@ -539,7 +539,7 @@ namespace conquest
     {
         auto weekday = CVanaTime::getInstance()->getSysWeekDay();
         uint8 dayspassed = (weekday == 0 ? 6 : weekday - 1) * 25;
-        dayspassed += ((CVanaTime::getInstance()->getSysHour() * 60 + CVanaTime::getInstance()->getSysMinute()) * 25 ) / 1440;
+        dayspassed += ((CVanaTime::getInstance()->getSysHour() * 60 + CVanaTime::getInstance()->getSysMinute()) * 25) / 1440;
         return (uint8)(175 - dayspassed);
     }
 
@@ -562,7 +562,7 @@ namespace conquest
         return NEUTRAL;
     }
 
-	/************************************************************************
+    /************************************************************************
     *                                                                       *
     *  Добавляем персонажу conquest points, основываясь на полученном опыте *
     *                                                                       *
@@ -577,7 +577,7 @@ namespace conquest
 
         REGIONTYPE region = PChar->loc.zone->GetRegionID();
 
-        if(region != REGION_UNKNOWN)
+        if (region != REGION_UNKNOWN)
         {
             // 10% if region control is player's nation
             // 15% otherwise
@@ -587,24 +587,24 @@ namespace conquest
             uint32 points = (uint32)(exp * percentage);
 
             charutils::AddPoints(PChar, charutils::GetConquestPointsName(PChar).c_str(), points);
-            GainInfluencePoints(PChar, points/2);
+            GainInfluencePoints(PChar, points / 2);
         }
         return 0; // added conquest points (пока не вижу в этом определенного смысла)
     }
 
 
-	//GetConquestInfluence(region,nation)
-	//AddConquestInfluence(region,nation)
-	//ResetConquestInfluence()
-	//UpdateConquestInfluence()
+    //GetConquestInfluence(region,nation)
+    //AddConquestInfluence(region,nation)
+    //ResetConquestInfluence()
+    //UpdateConquestInfluence()
 
-	//gain/loss influence
-	//Dying in the Outlands decrease your Allegiance influence and increase the influence of the Beastmen hordes instead.
-	//Gain: XP/CP, Garrison quests, Expeditionary Forces, trade items to Outpost Vendors (influence only)
+    //gain/loss influence
+    //Dying in the Outlands decrease your Allegiance influence and increase the influence of the Beastmen hordes instead.
+    //Gain: XP/CP, Garrison quests, Expeditionary Forces, trade items to Outpost Vendors (influence only)
 
-	//Region control
-	//0: sandoria
-	//1: bastok
-	//2: windurst
-	//3: beastmen
+    //Region control
+    //0: sandoria
+    //1: bastok
+    //2: windurst
+    //3: beastmen
 };
