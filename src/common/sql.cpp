@@ -485,11 +485,11 @@ void Sql_ShowDebug_(Sql_t* self, const char* debug_file, const unsigned long deb
 {
 	if( self->buf.length() > 0 )
 	{
-		ShowDebug("at %s:%lu - %s\n", debug_file, debug_line, self->buf.c_str());
+		//ShowDebug("at %s:%lu - %s\n", debug_file, debug_line, self->buf.c_str());
 	}
 	else
 	{
-		ShowDebug("at %s:%lu\n", debug_file, debug_line);
+		//ShowDebug("at %s:%lu\n", debug_file, debug_line);
 	}
 }
 

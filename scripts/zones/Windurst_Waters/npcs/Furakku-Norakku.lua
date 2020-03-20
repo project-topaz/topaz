@@ -69,6 +69,7 @@ function onEventFinish(player,csid,option)
         player:setCharVar("EARLY_BIRD_TRACK_BOOK",0);
         player:addFame(WINDURST,120);
         player:completeQuest(WINDURST,tpz.quest.id.windurst.EARLY_BIRD_CATCHES_THE_BOOKWORM);
+        player:delKeyItem(tpz.ki.ART_FOR_EVERYONE);
     elseif (csid == 404) then
         player:addKeyItem(tpz.ki.OVERDUE_BOOK_NOTIFICATION);
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.OVERDUE_BOOK_NOTIFICATION);

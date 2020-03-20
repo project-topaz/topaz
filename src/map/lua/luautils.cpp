@@ -194,7 +194,7 @@ namespace luautils
     {
 
         int32 top = lua_gettop(LuaHandle);
-        ShowDebug(CL_CYAN"[Lua] Garbage Collected. Current State Top: %d\n" CL_RESET, top);
+        //ShowDebug(CL_CYAN"[Lua] Garbage Collected. Current State Top: %d\n" CL_RESET, top);
 
         lua_gc(LuaHandle, LUA_GCSTEP, 10);
 

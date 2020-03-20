@@ -96,7 +96,7 @@ function onEventUpdate(player,csid,option)
 end;
 
 function onEventFinish(player,csid,option)
-printf("RESULT: %u",option);
+--printf("RESULT: %u",option);
     if (csid == 48 and option == 1) then
         player:addQuest(WINDURST,tpz.quest.id.windurst.HAT_IN_HAND);
         player:addKeyItem(tpz.ki.NEW_MODEL_HAT);
