@@ -40,8 +40,8 @@ function onTrigger(player, logId, missionId, target)
         error(player, "Invalid logID.")
         return
     end
-    logName = logInfo.full_name;
     logId = logInfo.mission_log;
+    logName = logInfo.full_name;
 
     -- validate missionId
     local areaMissionIds = tpz.mission.id[tpz.mission.area[logId]]

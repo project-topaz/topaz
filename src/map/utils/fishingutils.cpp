@@ -21,7 +21,7 @@
 
 #include "../../common/showmsg.h"
 
-#include <string.h> 
+#include <string.h>
 
 #include "../universal_container.h"
 #include "../item_container.h"
@@ -98,15 +98,15 @@ void StartFishing(CCharEntity* PChar)
 		PChar->pushPacket(new CReleasePacket(PChar,RELEASE_FISHING));
 		return;
 	}
-	
+
 	CItemWeapon* WeaponItem = nullptr;
 
-	WeaponItem = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);	
-			
+	WeaponItem = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);
+
 	if ((WeaponItem == nullptr) ||
 	   !(WeaponItem->isType(ITEM_WEAPON)) ||
-		(WeaponItem->getSkillType() != SKILL_FISHING)) 
-	{													
+		(WeaponItem->getSkillType() != SKILL_FISHING))
+	{
 		// сообщение: "You can't fish without a rod in your hands"
 
 		PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + 0x01));
@@ -114,13 +114,13 @@ void StartFishing(CCharEntity* PChar)
 		return;
 	}
 
-	WeaponItem = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);	
-							
+	WeaponItem = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
+
 	if ((WeaponItem == nullptr) ||
 	   !(WeaponItem->isType(ITEM_WEAPON)) ||
 		(WeaponItem->getSkillType() != SKILL_FISHING))
 	{
-		// сообщение: "You can't fish without bait on the hook"	
+		// сообщение: "You can't fish without bait on the hook"
 
 		PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + 0x02));
 		PChar->pushPacket(new CReleasePacket(PChar,RELEASE_FISHING));
@@ -151,7 +151,7 @@ bool CheckFisherLuck(CCharEntity* PChar)
 	CItemFish* PFish = nullptr;
 	CItemWeapon* WeaponItem = nullptr;
 
-	WeaponItem = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);	
+	WeaponItem = (CItemWeapon*)PChar->getEquip(SLOT_RANGED);
 
 	TPZ_DEBUG_BREAK_IF(WeaponItem == nullptr);
 	TPZ_DEBUG_BREAK_IF(WeaponItem->isType(ITEM_WEAPON) == false);
@@ -159,8 +159,8 @@ bool CheckFisherLuck(CCharEntity* PChar)
 
 	uint16 RodID = WeaponItem->getID();
 
-	WeaponItem = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);	
-							
+	WeaponItem = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
+
 	TPZ_DEBUG_BREAK_IF(WeaponItem == nullptr);
 	TPZ_DEBUG_BREAK_IF(WeaponItem->isType(ITEM_WEAPON) == false);
 	TPZ_DEBUG_BREAK_IF(WeaponItem->getSkillType() != SKILL_FISHING);
@@ -171,7 +171,7 @@ bool CheckFisherLuck(CCharEntity* PChar)
 
 	if (FishingChance <= 20)
 	{
-		const char* Query = 
+		const char* Query =
             "SELECT "
                 "fish.fishid,"      // 0
                 "fish.max,"         // 1
@@ -195,12 +195,12 @@ bool CheckFisherLuck(CCharEntity* PChar)
             std::vector<int32> fishIDs((int32)Sql_NumRows(SqlHandle));
             int32 fishCounter = 0;
             bool caughtQuestedFish = false;
-            
+
             while(Sql_NextRow(SqlHandle) == SQL_SUCCESS)
 			{
                 // store fish id
                 fishIDs[fishCounter] = Sql_GetIntData(SqlHandle, 0);
-                
+
                 // ловля предметов, необходимых для поисков
 
                 uint8 logid = (uint8)Sql_GetIntData(SqlHandle,5);
@@ -217,7 +217,7 @@ bool CheckFisherLuck(CCharEntity* PChar)
 
 					    PChar->UContainer->SetType(UCONTAINER_FISHING);
 					    PChar->UContainer->SetItem(0, PFish);
-                        
+
                         // got my quested fish
                         caughtQuestedFish = true;
 					    break;
@@ -226,7 +226,7 @@ bool CheckFisherLuck(CCharEntity* PChar)
                 fishCounter++;
                 // TODO: ловля простых предметов
             }
-            
+
             if (!caughtQuestedFish)
             {
                 int32 luckyFish = tpzrand::GetRandomNumber((int32)Sql_NumRows(SqlHandle));
@@ -235,11 +235,11 @@ bool CheckFisherLuck(CCharEntity* PChar)
                 PChar->UContainer->SetType(UCONTAINER_FISHING);
                 PChar->UContainer->SetItem(0, PFish);
             }
-		}						
+		}
 	}
 	else
 	{
-		const char* Query = 
+		const char* Query =
             "SELECT "
                 "fish.fishid,"      // 0
                 "fish.min,"         // 1
@@ -254,8 +254,8 @@ bool CheckFisherLuck(CCharEntity* PChar)
 			"INNER JOIN fishing_lure AS lure USING (fishid) "
 			"INNER JOIN fishing_fish AS fish USING (fishid) "
 			"WHERE zone.zoneid = %u AND rod.rodid = %u AND lure.lureid = %u AND lure.luck != 0 "
-			"ORDER BY luck"; 
-		
+			"ORDER BY luck";
+
 		int32 ret = Sql_Query(SqlHandle, Query, PChar->getZone(), RodID, LureID);
 
 		if( ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
@@ -263,7 +263,7 @@ bool CheckFisherLuck(CCharEntity* PChar)
 			int32 FisherLuck = 0;
             int32 FishingChance = tpzrand::GetRandomNumber(1000);
 
-			while(Sql_NextRow(SqlHandle) == SQL_SUCCESS) 
+			while(Sql_NextRow(SqlHandle) == SQL_SUCCESS)
 			{
 				FisherLuck += Sql_GetIntData(SqlHandle,7);
 
@@ -274,7 +274,7 @@ bool CheckFisherLuck(CCharEntity* PChar)
 					PChar->UContainer->SetType(UCONTAINER_FISHING);
 					PChar->UContainer->SetItem(0, PFish);
 					break;
-				}	
+				}
 			}
 		}
 	}
@@ -289,7 +289,7 @@ bool CheckFisherLuck(CCharEntity* PChar)
 ************************************************************************/
 
 bool LureLoss(CCharEntity* PChar, bool RemoveFly)
-{	
+{
 	CItemWeapon* PLure = (CItemWeapon*)PChar->getEquip(SLOT_AMMO);
 
 	TPZ_DEBUG_BREAK_IF(PLure == nullptr);
@@ -347,7 +347,7 @@ void RodBreaks(CCharEntity* PChar)
 	TPZ_DEBUG_BREAK_IF(BrokenRodID == 0);
 
 	charutils::EquipItem(PChar, 0, SLOT_RANGED, LOC_INVENTORY);
-	charutils::UpdateItem(PChar, LOC_INVENTORY, SlotID, -1); 
+	charutils::UpdateItem(PChar, LOC_INVENTORY, SlotID, -1);
 	charutils::AddItem(PChar, LOC_INVENTORY, BrokenRodID, 1);
 }
 
@@ -361,14 +361,14 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
 {
 	uint16 MessageOffset = GetMessageOffset(PChar->getZone());
 
-	switch (action) 
+	switch (action)
 	{
 		case FISHACTION_CHECK:
 		{
 			if (CheckFisherLuck(PChar))
 			{
 				// сообщение: "Something caught the hook!"
-			
+
 				//PChar->animation = ANIMATION_FISHING_FISH;
                 //PChar->updatemask |= UPDATE_HP;
 				PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + 0x08));
@@ -444,7 +444,7 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
 			else if (stamina <= 0x64)
 			{
 				// сообщение: "Your line breaks!"
-	
+
 				PChar->animation = ANIMATION_FISHING_LINE_BREAK;
                 PChar->updatemask |= UPDATE_HP;
 				LureLoss(PChar, true);
@@ -494,7 +494,7 @@ void FishingAction(CCharEntity* PChar, FISHACTION action, uint16 stamina, uint32
 		}
 		break;
 	}
-			
+
 	PChar->pushPacket(new CCharUpdatePacket(PChar));
 	PChar->pushPacket(new CCharSyncPacket(PChar));
 }
