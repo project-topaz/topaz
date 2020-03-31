@@ -3461,4 +3461,25 @@ INSERT INTO `mob_skill_lists` VALUES ('Siren',1010,3512); -- Sonic Buffet
 INSERT INTO `mob_skill_lists` VALUES ('Siren',1010,3513); -- Entice
 INSERT INTO `mob_skill_lists` VALUES ('Siren',1010,3514); -- Hysteric Assault
 INSERT INTO `mob_skill_lists` VALUES ('Siren',1010,3515); -- Clarsach Call
-INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1011,1945); -- Provoke
+INSERT INTO `mob_skill_lists` VALUES ('Lightning_Wyvern',1011,813); -- Dispelling Wind
+INSERT INTO `mob_skill_lists` VALUES ('Lightning_Wyvern',1011,814); -- Deadly Drive
+INSERT INTO `mob_skill_lists` VALUES ('Lightning_Wyvern',1011,815); -- Wind Wall
+INSERT INTO `mob_skill_lists` VALUES ('Lightning_Wyvern',1011,816); -- Fang RUsh
+INSERT INTO `mob_skill_lists` VALUES ('Lightning_Wyvern',1011,817); -- Dread Shriek
+INSERT INTO `mob_skill_lists` VALUES ('Lightning_Wyvern',1011,818); -- Tail Crush
+INSERT INTO `mob_skill_lists` VALUES ('Lightning_Wyvern',1011,820); -- Thunder Breath
+INSERT INTO `mob_skill_lists` VALUES ('Chaos_Wyvern',1012,813); -- Dispelling Wind
+INSERT INTO `mob_skill_lists` VALUES ('Chaos_Wyvern',1012,814); -- Deadly Drive 
+INSERT INTO `mob_skill_lists` VALUES ('Chaos_Wyvern',1012,815); -- Wind Wall
+INSERT INTO `mob_skill_lists` VALUES ('Chaos_Wyvern',1012,816); -- Fang Rush
+INSERT INTO `mob_skill_lists` VALUES ('Chaos_Wyvern',1012,817); -- Dread Shriek
+INSERT INTO `mob_skill_lists` VALUES ('Chaos_Wyvern',1012,818); -- Tail Crush
+INSERT INTO `mob_skill_lists` VALUES ('Chaos_Wyvern',1012,822); -- Chaos Breath
+INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1013,813); -- Dispelling Wind 
+INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1013,814); -- Deadly Drive
+INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1013,815); -- Wind Wall
+INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1013,816); -- Fang Rush
+INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1013,817); -- Dread Shriek
+INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1013,818); -- Tail Crush
+INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1013,819); -- Blizzard Breath
+INSERT INTO `mob_skill_lists` VALUES ('TRUST_Trion',1014,1945); -- Provoke
