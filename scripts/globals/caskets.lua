@@ -5063,24 +5063,23 @@ local function giveItem(player, npc, itemNum)
             return
         elseif player:getFreeSlotsCount() > 0 then
             if itemID ~= 0 then
-                if multipleItemCheck(itemID) then
+                --[[if multipleItemCheck(itemID) then
                     if player:addItem(itemID, 33) then
                         messageChest(player, "PLAYER_OBTAINS_ITEM", itemID, 0, 0, 0)
                         npc:setLocalVar(itemQuery, 0)
                         checkItemChestIsEmpty(player, npc)
                     end
-                else
+                else]]
                     if player:addItem(itemID) then
                         messageChest(player, "PLAYER_OBTAINS_ITEM", itemID, 0, 0, 0)
                         npc:setLocalVar(itemQuery, 0)
                          checkItemChestIsEmpty(npc)
                     end
-                end
+                --end
             end
         end
     end
 end
-
 ---------------------------------------------------------------------------------------------
 -- Desc: Casket spawn checks, runs through all checks before spawning
 ---------------------------------------------------------------------------------------------

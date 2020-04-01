@@ -100,11 +100,11 @@ LandKingSystem_NQ = 0;
 LandKingSystem_HQ = 0;
 
 -- DYNAMIS SETTINGS
-    BETWEEN_2DYNA_WAIT_TIME = 24;       -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
+    BETWEEN_2DYNA_WAIT_TIME = 3;       -- Hours before player can re-enter Dynamis. Default is 1 Earthday (24 hours).
         DYNA_MIDNIGHT_RESET = true;     -- if true, makes the wait time count by number of server midnights instead of full 24 hour intervals
-             DYNA_LEVEL_MIN = 65;       -- level min for entering in Dynamis
+             DYNA_LEVEL_MIN = 60;       -- level min for entering in Dynamis
     TIMELESS_HOURGLASS_COST = 500000;   -- refund for the timeless hourglass for Dynamis.
-   PRISMATIC_HOURGLASS_COST = 50000;    -- cost of the prismatic hourglass for Dynamis.
+   PRISMATIC_HOURGLASS_COST = 30000;    -- cost of the prismatic hourglass for Dynamis.
      CURRENCY_EXCHANGE_RATE = 100;      -- X Tier 1 ancient currency -> 1 Tier 2, and so on.  Certain values may conflict with shop items.  Not designed to exceed 198.
 RELIC_2ND_UPGRADE_WAIT_TIME = 7200;     -- wait time for 2nd relic upgrade (stage 2 -> stage 3) in seconds. 7200s = 2 hours.
 RELIC_3RD_UPGRADE_WAIT_TIME = 3600;     -- wait time for 3rd relic upgrade (stage 3 -> stage 4) in seconds. 3600s = 1 hour.
