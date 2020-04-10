@@ -623,6 +623,7 @@ bool CCharEntity::CanUseSpell(CSpell* PSpell)
 
 void CCharEntity::OnChangeTarget(CBattleEntity* PNewTarget)
 {
+    battleutils::RelinquishClaim(this);
     pushPacket(new CLockOnPacket(this, PNewTarget));
     PLatentEffectContainer->CheckLatentsTargetChange();
 }
@@ -635,7 +636,6 @@ void CCharEntity::OnEngage(CAttackState& state)
 
 void CCharEntity::OnDisengage(CAttackState& state)
 {
-    battleutils::RelinquishClaim(this);
     CBattleEntity::OnDisengage(state);
     if (state.HasErrorMsg())
     {
