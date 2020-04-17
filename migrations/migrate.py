@@ -84,6 +84,7 @@ def run_all_migrations():
     run_migration(broken_linkshells)
     run_migration(add_daily_tally_column)
     run_migration(add_timecreated_column)
+    run_migration(spell_family_column)
     close()
 
     print("Finished running all migrations")
