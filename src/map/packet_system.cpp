@@ -169,14 +169,14 @@ void PrintPacket(CBasicPacket data)
         if (((y + 1) % 16) == 0)
         {
             message[48] = '\n';
-            ShowDebug(message);
+            //ShowDebug(message);
             memset(&message, 0, 50);
         }
     }
     if (strlen(message) > 0)
     {
         message[strlen(message)] = '\n';
-        ShowDebug(message);
+        //ShowDebug(message);
     }
 }
 
@@ -5623,7 +5623,8 @@ void SmallPacket0x102(map_session_data_t* session, CCharEntity* PChar, CBasicPac
                         blueutils::SetBlueSpell(PChar, spell, spellIndex, false);
                     }
                     else {
-                        ShowDebug("Cannot resolve spell id \n");
+
+                        ("Cannot resolve spell id \n");
                     }
                 }
             }
