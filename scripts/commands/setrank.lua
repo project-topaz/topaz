@@ -16,7 +16,7 @@ end
 
 function onTrigger(player, target, rank)
     if target == nil then
-        error(player, "Set who's rank?")
+        error(player, "Set whose rank?")
         return
     end
 
