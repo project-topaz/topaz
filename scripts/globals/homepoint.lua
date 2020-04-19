@@ -179,7 +179,7 @@ tpz.homepoint.onTrigger = function(player, csid, index)
         player:addMP(player:getMaxMP())
     end
 
-    if not HOMEPOINT_TELEPORT == 1 then -- Settings.lua Homepoints disabled
+    if HOMEPOINT_TELEPORT ~= 1 then -- Settings.lua Homepoints disabled
         player:startEvent(csid, 0, 0, 0, 0, 0, player:getGil(), 4095, index)
         return
     end
@@ -210,11 +210,13 @@ tpz.homepoint.onEventUpdate = function(player, csid, option)
         local index = bit.rshift(bit.lshift(option, 8), 24) -- Ret HP #
 
         if choice == selection.ADD_FAVORITE then
-            local temp = 0
-            for x = 1, 9 do
-                temp = favs[x]
-                favs[x] = index
-                index = temp
+            if HOMEPOINT_TELEPORT == 1 then
+                local temp = 0
+                for x = 1, 9 do
+                    temp = favs[x]
+                    favs[x] = index
+                    index = temp
+                end
             end
         elseif choice == selection.REM_FAVORITE then
             for x = 1, 9 do
@@ -243,9 +245,14 @@ tpz.homepoint.onEventUpdate = function(player, csid, option)
     end
 
     favs[9] = favs[9] + favs[10] * 256
-    player:updateEvent(favs[1], favs[5], favs[9])
+    if HOMEPOINT_TELEPORT ~= 1 then
+        player:updateEvent(-1, -1, -1)
+    else
+        player:updateEvent(favs[1], favs[5], favs[9])
+    end
 
 end
+
 
 tpz.homepoint.onEventFinish = function(player, csid, option, event)
 
