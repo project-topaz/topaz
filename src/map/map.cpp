@@ -54,6 +54,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "status_effect_container.h"
 #include "utils/zoneutils.h"
 #include "conquest_system.h"
+#include "daily_system.h"
 #include "utils/mobutils.h"
 #include "ai/controllers/automaton_controller.h"
 
@@ -218,6 +219,7 @@ int32 do_init(int32 argc, char** argv)
     battleutils::LoadSkillChainDamageModifiers();
     petutils::LoadPetList();
     mobutils::LoadCustomMods();
+    daily::LoadDailyItems();
 
     ShowStatus("do_init: loading zones");
     zoneutils::LoadZoneList();
@@ -1006,6 +1008,8 @@ int32 map_config_default()
     map_config.skillup_bloodpact = true;
     map_config.anticheat_enabled = false;
     map_config.anticheat_jail_disable = false;
+    map_config.daily_tally_amount = 10;
+    map_config.daily_tally_limit = 50000;
     return 0;
 }
 
@@ -1346,6 +1350,14 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "anticheat_jail_disable") == 0)
         {
             map_config.anticheat_jail_disable = atoi(w2);
+        }
+        else if (strcmp(w1, "daily_tally_amount") == 0)
+        {
+            map_config.daily_tally_amount = atoi(w2);
+        }
+        else if (strcmp(w1, "daily_tally_limit") == 0)
+        {
+            map_config.daily_tally_limit = atoi(w2);
         }
         else
         {
