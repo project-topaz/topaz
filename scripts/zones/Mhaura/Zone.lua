@@ -77,6 +77,7 @@ function onEventFinish(player,csid,option)
         elseif DepartureTime % 8 == 4 then
             player:setPos(0, 0, 0, 0, tpz.zone.OPEN_SEA_ROUTE_TO_AL_ZAHBI)
         else
+            player:PrintToPlayer("Something went wrong, please report this bug to Topaz.")
             player:setPos(8, -1, 5, 62, 249) -- Something went wrong, dump them on the dock for safety.
         end
     elseif csid == 322 then
