@@ -1342,7 +1342,7 @@ tpz.regime.checkRegime = function(player, mob, regimeId, index, regimeType)
     local vanadielEpoch = vanaDay()
     if REGIME_WAIT == 0 or player:getCharVar("[regime]lastReward") < vanadielEpoch then
         -- gil
-        player:addGil(reward)
+        player:addGil(reward*FOV_GIL)
         player:messageBasic(tpz.msg.basic.FOV_OBTAINS_GIL, reward)
 
         -- tabs
