@@ -33,4 +33,3 @@ zones[tpz.zone.SHIP_BOUND_FOR_MHAURA_PIRATES] =
 }
 
 return zones[tpz.zone.SHIP_BOUND_FOR_MHAURA_PIRATES]
-

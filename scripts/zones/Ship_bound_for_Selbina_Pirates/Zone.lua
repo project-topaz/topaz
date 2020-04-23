@@ -13,6 +13,8 @@ end
 function onZoneIn(player,prevZone)
     local cs = -1
 
+    player:ChangeMusic(0, 170)
+    player:ChangeMusic(1, 170)
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         local position = math.random(-2, 2) + 0.150
         player:setPos(position, -2.100, 3.250, 64)
