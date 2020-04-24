@@ -29,7 +29,7 @@ ENABLE_VOIDWATCH = 0; -- Not an expansion, but has its own storyline.
 
 -- FIELDS OF VALOR/Grounds of Valor settings
 ENABLE_FIELD_MANUALS  = 1; -- Enables Fields of Valor
-ENABLE_GROUNDS_TOMES  = 0; -- Enables Grounds of Valor
+ENABLE_GROUNDS_TOMES  = 1; -- Enables Grounds of Valor
 REGIME_WAIT = 1; -- Make people wait till 00:00 game time as in retail. If it's 0, there is no wait time.
 
 -- TREASURE CASKETS
@@ -63,8 +63,8 @@ GIL_RATE        = 1.600; -- Multiplies gil earned from quests.  Won't always dis
 BAYLD_RATE      = 1.000; -- Multiples bayld earned from quests.
 EXP_RATE        = 1.500; -- Multiplies exp earned from quests. Dawnbreak default: 1.500
 FOV_RATE        = 0.000; -- Normal: 0.78
-FOV_GIL         = 2.500; -- Multiplies gil earned from fov. Normal: 2.0
-TABS_RATE       = 2.500; -- Multiplies tabs earned from fov. Normal: 1.2
+FOV_GIL         = 2.500; -- Multiplies gil earned from fov. Normal: 2.5
+TABS_RATE       = 2.500; -- Multiplies tabs earned from fov. Normal: 2.5
 CURE_POWER      = 1.000; -- Multiplies amount healed from Healing Magic, including the relevant Blue Magic.
 ELEMENTAL_POWER = 1.000; -- Multiplies damage dealt by Elemental and non-drain Dark Magic.
 DIVINE_POWER    = 1.000; -- Multiplies damage dealt by Divine Magic.
