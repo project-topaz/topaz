@@ -89,8 +89,18 @@ tpz.tutorial.onEventFinish = function(player, csid, option, npc_event_offset, na
     elseif csid == (npc_event_offset + 4) then
         player:setCharVar("TutorialProgress", 4)
     elseif csid == (npc_event_offset + 6) then
-        if npcUtil.giveItem(player, {{4101, 1}, {936, 1}, {4358, 1}}) then
-            player:setCharVar("TutorialProgress", 5)
+        if player:getZoneID() == tpz.zone.WINDURST_WOODS then
+            if npcUtil.giveItem(player, {{4101, 1}, {4570, 1}, {4370, 1}}) then
+                player:setCharVar("TutorialProgress", 5)
+            end
+        elseif player:getZoneID() == tpz.zone.BASTOK_MARKETS then
+            if npcUtil.giveItem(player, {{4096, 1}, {926, 1}, {4370, 1}}) then
+                player:setCharVar("TutorialProgress", 5)
+            end
+        elseif player:getZoneID() == tpz.zone.SOUTHERN_SAN_DORIA then
+            if npcUtil.giveItem(player, {{4096, 1}, {936, 1}, {4358, 1}}) then
+                player:setCharVar("TutorialProgress", 5)
+            end
         end
     elseif csid == (npc_event_offset + 8) then
         npcUtil.giveKeyItem(player, tpz.ki.CONQUEST_PROMOTION_VOUCHER)
