@@ -108,6 +108,8 @@ public:
     int32 lookAt(lua_State* L);              // look at given position
     int32 clearTargID(lua_State*);           // clears target of entity
 
+    int32 getPathPoint(lua_State* L);
+    int32 setPathPoint(lua_State* L);
     int32 atPoint(lua_State* L);             // is at given point
     int32 pathTo(lua_State* L);              // set new path to point without changing action
     int32 pathThrough(lua_State* L);         // walk at normal speed through the given points

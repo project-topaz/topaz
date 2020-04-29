@@ -1742,6 +1742,46 @@ inline int32 CLuaBaseEntity::clearTargID(lua_State* L)
 }
 
 /************************************************************************
+*  Function: getPathPoint()
+*  Purpose : To get the current path point the entity is on
+*  Example : if npc:getPathPoint() == 3 then do stuff end
+*  Notes   : See Novalmauge in Bostaunieux Oubliette
+*  Notes   : currently used for pathfind.lua npcBasicPath
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getPathPoint(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+
+    uint16 point = m_PBaseEntity->GetPathPoint();
+
+    lua_pushnumber(L, point);
+    return 1;
+}
+
+/************************************************************************
+*  Function: setPathPoint()
+*  Purpose : To set the current path point the entity is on
+*  Example : npc:setPathPoint(pathPoint +1)
+*  Notes   : See Novalmauge in Bostaunieux Oubliette
+*  Notes   : currently used for pathfind.lua npcBasicPath
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setPathPoint(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint16 pathPoint = (uint16)lua_tonumber(L, 1);
+
+    m_PBaseEntity->SetPathPoint(pathPoint);
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: atPoint()
 *  Purpose : Used to check whether an entity is at a specified point in the specified path
 *  Example : if (npc:atPoint(pathfind.get(path, 45))) then
@@ -1802,6 +1842,10 @@ inline int32 CLuaBaseEntity::pathTo(lua_State* L)
     point.x = (float)lua_tonumber(L, 1);
     point.y = (float)lua_tonumber(L, 2);
     point.z = (float)lua_tonumber(L, 3);
+    if (!lua_isnil(L, 4) && lua_isnumber(L, 4))
+    {
+        point.rotation = (uint8)lua_tonumber(L, 4);
+    }
 
     if (m_PBaseEntity->PAI->PathFind)
     {
@@ -14198,7 +14242,9 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,lookAt),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearTargID),
-
+    
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPathPoint),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setPathPoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,atPoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathTo),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathThrough),

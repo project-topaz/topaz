@@ -125,5 +125,33 @@ tpz.path =
                 i = i + 50
             end
         end
+    end,
+
+    npcBasicPath = function(npc, points, flags)
+        local pathPoints = {}
+        local pathPoint = npc:getPathPoint()
+        local pos = npc:getPos()
+
+        pathPoints = points
+
+        local dx = pos.x - pathPoints[pathPoint][1]
+        local dy = pos.y - pathPoints[pathPoint][2]
+        local distance = math.sqrt ( dx * dx + dy * dy )
+
+        if distance == 0 then
+            if pathPoint == #pathPoints then
+                npc:setPathPoint(1)
+            else
+                npc:setPathPoint(pathPoint +1)
+            end
+        end
+
+        local pointX = pathPoints[pathPoint][1]
+        local pointY = pathPoints[pathPoint][2]
+        local pointZ = pathPoints[pathPoint][3]
+        local rotation = pathPoints[pathPoint][4]
+   
+        npc:pathTo(pointX, pointY, pointZ, rotation)
+        npc:lookAt(pointX, pointY, pointZ)
     end
 }
