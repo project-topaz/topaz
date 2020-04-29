@@ -33,11 +33,8 @@ public:
     uint32      m_flags;
     uint8       name_prefix;
     uint8       widescan;
-    uint16      m_pathPoint;
     uint32      getEntityFlags();                        // Returns the current value in m_flags
     void        setEntityFlags(uint32 EntityFlags);      // Change the current value in m_flags
-    uint16      GetPathPoint();
-    void        SetPathPoint(uint16 pathPoint);
     void        HideHP(bool hide);
     bool        IsHPHidden();
     void        Untargetable(bool untargetable);

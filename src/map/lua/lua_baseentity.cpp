@@ -1774,7 +1774,6 @@ inline int32 CLuaBaseEntity::setPathPoint(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
-    auto PNpc = static_cast<CNpcEntity*>(m_PBaseEntity);
     uint16 pathPoint = (uint16)lua_tonumber(L, 1);
 
     m_PBaseEntity->SetPathPoint(pathPoint);
