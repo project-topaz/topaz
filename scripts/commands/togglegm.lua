@@ -5,7 +5,7 @@
 
 cmdprops =
 {
-    permission = 1,
+    permission = 2,
     parameters = ""
 }
 
@@ -19,10 +19,10 @@ function onTrigger(player)
     local FLAG_LEAD             = 0x02000000 -- ensure all GM status is removed.
 
     -- Configurable Options
-    local MINLVL_GM             = 1 -- For "whitelisting" players to have some commands, but not GM tier commands.
-    local MINLVL_GM_SENIOR      = 2 -- These are configurable so that commands may be restricted
-    local MINLVL_GM_LEAD        = 3 -- between different levels of GM's with the same icon.
-    local MINLVL_GM_PRODUCER    = 4
+    local MINLVL_GM             = 2 -- For "whitelisting" players to have some commands, but not GM tier commands.
+    local MINLVL_GM_SENIOR      = 3 -- These are configurable so that commands may be restricted
+    local MINLVL_GM_LEAD        = 4 -- between different levels of GM's with the same icon.
+    local MINLVL_GM_PRODUCER    = 5
 
     if (player:checkNameFlags(FLAG_GM)) then
         if (player:checkNameFlags(FLAG_GM)) then
