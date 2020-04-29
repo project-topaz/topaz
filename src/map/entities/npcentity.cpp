@@ -47,6 +47,16 @@ CNpcEntity::~CNpcEntity()
 
 }
 
+uint16 CNpcEntity::GetPathPoint()
+{
+    return m_pathPoint;
+}
+
+void CNpcEntity::SetPathPoint(uint16 point)
+{
+    m_pathPoint = point;
+}
+
 uint32 CNpcEntity::getEntityFlags()
 {
     return m_flags;
