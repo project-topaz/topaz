@@ -5243,7 +5243,7 @@ INSERT INTO `mob_groups` VALUES (44,473,89,'Blood_Soul',330,1,311,0,0,53,56,0);
 INSERT INTO `mob_groups` VALUES (45,3148,89,'Pixie',330,0,2001,0,0,51,56,0);
 INSERT INTO `mob_groups` VALUES (46,1698,89,'Goblin_Pioneer',330,0,1138,0,0,62,64,0);
 INSERT INTO `mob_groups` VALUES (47,1688,89,'Goblin_Mine',0,128,0,0,0,59,59,0);
-INSERT INTO `mob_groups` VALUES (48,2654,89,'Migratory_Hippogryph',0,128,0,0,0,74,78,0);
+INSERT INTO `mob_groups` VALUES (48,2654,89,'Migratory_Hippogryph',0,128,0,2000,0,45,45,0);
 INSERT INTO `mob_groups` VALUES (49,3276,89,'Quadav_Transporter',0,128,2061,0,0,60,60,0);
 INSERT INTO `mob_groups` VALUES (50,3274,89,'Quadav_Guard',0,128,2061,0,0,60,60,0);
 INSERT INTO `mob_groups` VALUES (51,915,89,'Dark_Ixion',0,128,0,100000,0,85,85,0);
@@ -5397,7 +5397,6 @@ INSERT INTO `mob_groups` VALUES (10972,473,89,'Blood_Soul',240,0,0,3000,9999,52,
 INSERT INTO `mob_groups` VALUES (10973,3148,89,'Pixie',240,0,0,3000,9999,56,59,0);
 INSERT INTO `mob_groups` VALUES (10974,1688,89,'Goblin_Mine',240,0,0,500,9999,56,59,0);
 INSERT INTO `mob_groups` VALUES (10975,1698,89,'Goblin_Pioneer',240,0,0,5000,9999,62,64,0);
-INSERT INTO `mob_groups` VALUES (10976,2654,89,'Migratory_Hippogryph',240,0,0,2000,9999,60,62,0);
 INSERT INTO `mob_groups` VALUES (10977,3276,89,'Quadav_Transporter',240,0,0,500,9999,56,59,0);
 INSERT INTO `mob_groups` VALUES (10978,3274,89,'Quadav_Guard',240,0,0,2500,9999,65,68,0);
 INSERT INTO `mob_groups` VALUES (10979,1793,89,'Grauberg_Hippogryph',240,0,0,5000,9999,72,75,0);
@@ -9619,7 +9618,7 @@ INSERT INTO `mob_groups` VALUES (12,2461,146,'Maats_Avatar',0,128,0,0,0,56,56,0)
 INSERT INTO `mob_groups` VALUES (13,3214,146,'Prune',0,128,0,0,0,20,20,0);
 INSERT INTO `mob_groups` VALUES (14,3116,146,'Pepper',0,128,0,0,0,20,20,0);
 INSERT INTO `mob_groups` VALUES (15,3132,146,'Phoedme',0,128,0,0,0,20,20,0);
-INSERT INTO `mob_groups` VALUES (16,425,146,'Bitoso',0,128,0,0,0,30,30,0);
+INSERT INTO `mob_groups` VALUES (16,425,146,'Bitoso',0,128,0,3600,1200,31,33,0);
 INSERT INTO `mob_groups` VALUES (17,2822,146,'Nenaunir',0,128,0,0,0,30,30,0);
 INSERT INTO `mob_groups` VALUES (18,2823,146,'Nenaunirs_Wife',0,128,0,0,0,30,30,0);
 INSERT INTO `mob_groups` VALUES (19,1149,146,'Dvorovoi',0,128,0,0,0,45,45,0);
