@@ -35,7 +35,7 @@ function onEventFinish(player,csid,option)
     elseif csid == 256 then
         player:addQuest(BASTOK,tpz.quest.id.bastok.THE_BARE_BONES)
     elseif csid == 258 then
-        if (npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.THE_BARE_BONES, {keyItem = tpz.ki.MAP_OF_THE_DANGRUF_WADI, fame = 60})) then
+        if (npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.THE_BARE_BONES, {keyItem = tpz.ki.MAP_OF_THE_DANGRUF_WADI, fame = 60, xp = 600})) then -- Quest normally gives 2k exp, we lowered it. (TOPAZ IF I DIDNT FIX THIS, PLEASE FIX IT OR REMIND ME)
             player:confirmTrade()
         end
     end
