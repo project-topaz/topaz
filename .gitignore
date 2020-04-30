@@ -205,3 +205,5 @@ scripts/globals/settings.lua
 /conf/search_server.conf
 /conf/server_message.conf
 /conf/server_message_fr.conf
+
+settings.ini

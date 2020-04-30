@@ -65,7 +65,7 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
     if nmId ~= nil then
         local nm = GetMobByID(nmId)
         if nm ~= nil then
-            local pop = nm:getLocalVar("pop")
+            local pop = GetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId))
 
             if os.time() > pop and not lotteryPrimed(phList) and math.random(100) <= chance then
 
@@ -80,7 +80,7 @@ tpz.mob.phOnDespawn = function(ph, phList, chance, cooldown, immediate)
                     DisallowRespawn(nmId, true)
                     DisallowRespawn(phId, false)
                     GetMobByID(phId):setRespawnTime(GetMobRespawnTime(phId))
-                    m:setLocalVar("pop", os.time() + cooldown)
+                    SetServerVariable(string.format("[POP]%s %i", nm:getName(), nmId), os.time() + cooldown)
                     m:removeListener("DESPAWN_" .. nmId)
                 end)
 
