@@ -46,6 +46,7 @@ function onEventFinish(player,csid,option)
         player:completeQuest(BASTOK,tpz.quest.id.bastok.WISH_UPON_A_STAR);
         player:setCharVar("WishUponAStar_Status",0);
         player:addFame(BASTOK,50);
+        player:addExp(4500 * EXP_RATE);
         player:addItem(1236,4); -- Reward for quest completion: Cactus Stems x 4
         player:messageSpecial(ID.text.ITEM_OBTAINED,1236);
     end

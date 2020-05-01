@@ -154,6 +154,7 @@ function onEventFinish(player,csid,option)
         player:addGil(GIL_RATE*440);
         if (player:getCharVar("Kenapa_Food_var") == 4 and player:getCharVar("Ohbiru_Food_var") == 3) then -- If this is the last NPC to be fed
             player:completeQuest(WINDURST,tpz.quest.id.windurst.FOOD_FOR_THOUGHT);
+            player:addExp(1000 * EXP_RATE);
             player:addFame(WINDURST,100);
             player:addTitle(tpz.title.FAST_FOOD_DELIVERER);
             player:needToZone(true);

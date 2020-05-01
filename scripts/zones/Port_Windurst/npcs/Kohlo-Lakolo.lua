@@ -199,6 +199,7 @@ function onEventFinish(player,csid,option)
         if (FreeSlots >= 1) then
             player:completeQuest(WINDURST,tpz.quest.id.windurst.TRUTH_JUSTICE_AND_THE_ONION_WAY);
             player:addFame(WINDURST,75);
+            player:addExp(200 * EXP_RATE);
             player:addTitle(tpz.title.STAR_ONION_BRIGADE_MEMBER);
             player:tradeComplete();
             player:addItem(13093);

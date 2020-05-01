@@ -31,7 +31,7 @@ function onEventFinish(player,csid,option)
     if csid == 251 then
         player:addQuest(BASTOK, tpz.quest.id.bastok.THE_CURSE_COLLECTOR)
         npcUtil.giveKeyItem(player, tpz.ki.CURSEPAPER)
-    elseif csid == 252 and npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.THE_CURSE_COLLECTOR, {item = 16387, var = {"cCollectSilence", "cCollectCurse"}}) then
+    elseif csid == 252 and npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.THE_CURSE_COLLECTOR, {item = 16387, var = {"cCollectSilence", "cCollectCurse"}, xp = 3000}) then
         player:delKeyItem(tpz.ki.CURSEPAPER)
     end
 end

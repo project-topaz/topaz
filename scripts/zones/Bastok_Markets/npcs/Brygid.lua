@@ -118,6 +118,7 @@ function onEventFinish(player,csid,option)
             player:addItem(12720);
             player:messageSpecial(ID.text.ITEM_OBTAINED,12720);
             player:addFame(BASTOK,30);
+            player:addExp(800 * EXP_RATE);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.BRYGID_THE_STYLIST);
         end
     elseif (csid == 380) then
@@ -133,6 +134,7 @@ function onEventFinish(player,csid,option)
         player:addItem(14400+wantsSubligar);
         player:messageSpecial(ID.text.ITEM_OBTAINED,14400+wantsSubligar);
         player:addFame(BASTOK,30);
+        player:addExp(3000 * EXP_RATE);
         player:completeQuest(BASTOK,tpz.quest.id.bastok.BRYGID_THE_STYLIST_RETURNS);
     end
 end;
