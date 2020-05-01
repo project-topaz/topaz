@@ -85,6 +85,7 @@ function onEventFinish(player, csid, option)
         if npcUtil.giveItem(player, rse_map[player:getRace()][option]) then
             if questStatus == QUEST_ACCEPTED then
                 player:addFame(JEUNO, 30)
+                player:addExp(1000 * EXP_RATE)
                 player:completeQuest(JEUNO, tpz.quest.id.jeuno.THE_GOBLIN_TAILOR)
             end
 

@@ -129,6 +129,7 @@ function onEventFinish(player,csid,option)
             player:addFame(WINDURST,80)
             player:addItem(17081)
             player:messageSpecial(ID.text.ITEM_OBTAINED,17081)
+            player:addExp(800 * EXP_RATE)
             player:completeQuest(WINDURST,tpz.quest.id.windurst.CURSES_FOILED_AGAIN_1)
         end
     elseif (csid == 171 and option ~= 1) then

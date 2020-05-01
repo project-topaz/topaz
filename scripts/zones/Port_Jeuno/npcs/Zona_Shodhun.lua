@@ -45,7 +45,7 @@ function onTrade(player,npc,trade)
                 trade:hasItemQty(1410,1) or        -- Sweet William
                 trade:hasItemQty(950,1)  or        -- Tahrongi Cactus
                 trade:hasItemQty(2960,1) or        -- Water Lily
-                trade:hasItemQty(951,1)) then    -- Wijnruit
+                trade:hasItemQty(951,1)) then      -- Wijnruit
             itemQuality = 1;
         end
     end
@@ -86,6 +86,7 @@ function onEventFinish(player,csid,option)
         player:messageSpecial(ID.text.MOGHOUSE_EXIT);
         player:addFame(JEUNO, 30);
         player:tradeComplete();
+        player:addExp(1000 * EXP_RATE);
         player:completeQuest(JEUNO,tpz.quest.id.jeuno.PRETTY_LITTLE_THINGS);
     elseif (csid == 10023 and option == 1) then
         player:tradeComplete();

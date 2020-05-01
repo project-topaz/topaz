@@ -75,6 +75,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 670 or csid == 674) then
         player:addTitle(tpz.title.EDITORS_HATCHET_MAN);
         player:addGil(GIL_RATE*560);
+        player:addExp(1500 * EXP_RATE);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*560);
         player:delKeyItem(tpz.ki.WINDURST_WOODS_SCOOP);
         player:delKeyItem(tpz.ki.WINDURST_WALLS_SCOOP);

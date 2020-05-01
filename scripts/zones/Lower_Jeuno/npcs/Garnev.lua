@@ -41,6 +41,7 @@ function onEventFinish(player,csid,option)
         player:addKeyItem(tpz.ki.CLOCK_TOWER_OIL);
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.CLOCK_TOWER_OIL);
         player:addFame(JEUNO,30);
+        player:addExp(3500 * EXP_RATE)
         player:tradeComplete(trade);
         player:completeQuest(JEUNO,tpz.quest.id.jeuno.DEAL_WITH_TENSHODO);
     end

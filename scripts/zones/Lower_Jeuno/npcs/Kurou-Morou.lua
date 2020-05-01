@@ -80,6 +80,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 196) then
         player:addTitle(tpz.title.FORTUNETELLER_IN_TRAINING);
         player:addFame(JEUNO, 30);
+        player:addExp(4000 * EXP_RATE)
         player:tradeComplete(trade);
         player:completeQuest(JEUNO,tpz.quest.id.jeuno.YOUR_CRYSTAL_BALL);
     elseif (csid == 204 and option == 0) then
@@ -98,6 +99,7 @@ function onEventFinish(player,csid,option)
             player:addItem(13477);
             player:messageSpecial(ID.text.ITEM_OBTAINED,13477);
             player:addFame(JEUNO, 30);
+            player:addExp(4000 * EXP_RATE)
             player:tradeComplete(trade);
             player:completeQuest(JEUNO,tpz.quest.id.jeuno.NEVER_TO_RETURN);
         end

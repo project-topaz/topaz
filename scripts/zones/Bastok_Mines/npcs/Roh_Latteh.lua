@@ -49,6 +49,7 @@ function onEventFinish(player,csid,option)
             player:completeQuest(BASTOK,tpz.quest.id.bastok.THE_SIGNPOST_MARKS_THE_SPOT);
             player:delKeyItem(tpz.ki.PAINTING_OF_A_WINDMILL);
             player:addTitle(tpz.title.TREASURE_SCAVENGER);
+            player:addExp(900 * EXP_RATE);
             player:addFame(BASTOK,50);
             player:addItem(12601);
             player:messageSpecial(ID.text.ITEM_OBTAINED,12601); -- Linen Robe

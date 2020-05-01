@@ -45,6 +45,7 @@ function onEventFinish(player,csid,option)
         player:addKeyItem(tpz.ki.WONDER_MAGIC_SET);
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.WONDER_MAGIC_SET);
         player:addFame(JEUNO, 30);
+        player:addExp(1000 * EXP_RATE);
         player:tradeComplete(trade);
         player:completeQuest(JEUNO,tpz.quest.id.jeuno.CHILD_S_PLAY);
     elseif (csid == 316) then

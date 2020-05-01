@@ -110,6 +110,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 52 and option >= 1) then
         if (option == 5) then          --    80 = HAT + FULL REWARD  =  8 NPCS - Option 5
             player:addGil(GIL_RATE*500);
+            player:addExp(1000 * EXP_RATE);
             player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*500);
             if (player:hasItem(12543) == false) then
                 player:addItem(12543,1);
@@ -117,6 +118,7 @@ function onEventFinish(player,csid,option)
             end
         elseif (option == 4) then     -- 50 = HAT + GOOD REWARD  >= 6 NPCS - Option 4
             player:addGil(GIL_RATE*400);
+            player:addExp(800 * EXP_RATE);
             player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*400);
             if (player:hasItem(12543) == false) then
                 player:addItem(12543,1);
@@ -124,11 +126,14 @@ function onEventFinish(player,csid,option)
             end
         elseif (option == 3) then     -- 30 = PARTIAL REWARD -   >= 4 NPCS - Option 3
             player:addGil(GIL_RATE*300);
+            player:addExp(500 * EXP_RATE);
             player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*300);
         elseif (option == 2) then     -- 20 = POOR REWARD         >= 2 NPCS - Option 2
             player:addGil(GIL_RATE*150);
+            player:addExp(200 * EXP_RATE);
             player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*150);
---        else (option == 1) then     -- 0/nill = NO REWARD      >= 0 NPCS - Option 1
+        elseif (option == 1) then     -- 0/nill = NO REWARD      >= 0 NPCS - Option 1
+            player:addExp(1);
         end
         if (hatstatus == 1) then
             player:addFame(WINDURST,75);

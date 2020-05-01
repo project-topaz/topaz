@@ -78,6 +78,7 @@ function onEventFinish(player,csid,option)
             player:addItem(13596);
             player:messageSpecial(ID.text.ITEM_OBTAINED,13596); -- Green Cape
             player:addFame(JEUNO, 30);
+            player:addExp(4500 * EXP_RATE);
             player:completeQuest(JEUNO,tpz.quest.id.jeuno.THE_KIND_CARDIAN);
         end
     end

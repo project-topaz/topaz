@@ -77,6 +77,7 @@ function onEventFinish(player,csid,option)
         else
             player:completeQuest(WINDURST,tpz.quest.id.windurst.A_POSE_BY_ANY_OTHER_NAME)
             player:addTitle(tpz.title.SUPER_MODEL);
+            player:addExp(800 * EXP_RATE)
             player:addItem(206);
             player:messageSpecial(ID.text.ITEM_OBTAINED,206);
             player:addKeyItem(tpz.ki.ANGELICAS_AUTOGRAPH);

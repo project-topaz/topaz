@@ -53,6 +53,7 @@ function onEventFinish(player,csid,option)
             player:addItem(13202);
             player:messageSpecial(ID.text.ITEM_OBTAINED,13202);
             player:addFame(NORG,125);
+            player:addExp(4000);
             player:tradeComplete();
             player:completeQuest(JEUNO,tpz.quest.id.jeuno.FISTFUL_OF_FURY);
         end

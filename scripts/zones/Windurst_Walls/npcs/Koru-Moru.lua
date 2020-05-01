@@ -147,6 +147,7 @@ function onEventFinish(player,csid,option)
         player:messageSpecial(ID.text.ITEM_OBTAINED,12502);
         player:completeQuest(WINDURST,tpz.quest.id.windurst.STAR_STRUCK);
         player:needToZone(true);
+        player:addExp(800 * EXP_RATE)
         player:addFame(WINDURST,20);
     elseif (csid == 199) then
         player:tradeComplete();
