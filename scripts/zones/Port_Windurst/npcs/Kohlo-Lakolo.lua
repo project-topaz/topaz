@@ -226,6 +226,7 @@ function onEventFinish(player,csid,option)
         end
     elseif (csid == 386 or csid == 400) then
         player:completeQuest(WINDURST,tpz.quest.id.windurst.KNOW_ONE_S_ONIONS);
+        player:addExp(700 * EXP_RATE);
         player:addFame(WINDURST,80);
         player:addTitle(tpz.title.SOB_SUPER_HERO);
         player:setCharVar("KnowOnesOnions",0);
@@ -238,6 +239,7 @@ function onEventFinish(player,csid,option)
 
         if (FreeSlots >= 1) then
             player:completeQuest(WINDURST,tpz.quest.id.windurst.INSPECTOR_S_GADGET);
+            player:addExp(1200 * EXP_RATE);
             player:addFame(WINDURST,90);
             player:addTitle(tpz.title.FAKEMOUSTACHED_INVESTIGATOR);
             player:addItem(13204);

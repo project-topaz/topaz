@@ -58,6 +58,7 @@ function onEventFinish(player,csid,option)
         else
             player:addTitle(tpz.title.PILGRIM_TO_DEM);
             player:delKeyItem(tpz.ki.LETTER_FROM_VIRNAGE);
+            player:addExp(1000 * EXP_RATE);
             player:addItem(4731);
             player:messageSpecial(ID.text.ITEM_OBTAINED,4731); -- Scroll of Teleport-Dem
             player:addFame(BASTOK,30);
@@ -69,6 +70,7 @@ function onEventFinish(player,csid,option)
         else
             player:addTitle(tpz.title.PILGRIM_TO_MEA);
             player:delKeyItem(tpz.ki.GANTINEUXS_LETTER);
+            player:addExp(1000 * EXP_RATE);
             player:addItem(4732);
             player:messageSpecial(ID.text.ITEM_OBTAINED,4732); -- Scroll of Teleport-Mea
             player:addFame(WINDURST,30);
@@ -83,6 +85,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,4730);
         else
             player:addTitle(tpz.title.PILGRIM_TO_HOLLA);
+            player:addExp(1000 * EXP_RATE);
             player:addItem(4730);
             player:messageSpecial(ID.text.ITEM_OBTAINED,4730); -- Scroll of Teleport-Holla
             player:needToZone(true);
@@ -96,6 +99,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,4747);
         else
             player:delKeyItem(tpz.ki.FEIYIN_MAGIC_TOME);
+            player:addExp(3000 * EXP_RATE);
             player:addItem(4747);
             player:messageSpecial(ID.text.ITEM_OBTAINED,4747); -- Scroll of Teleport-Vahzl
             player:addFame(SANDORIA,30);

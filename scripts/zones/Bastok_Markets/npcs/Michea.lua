@@ -91,7 +91,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 240) then
         player:addQuest(BASTOK,tpz.quest.id.bastok.FATHER_FIGURE);
     elseif (csid == 241) then
-        if (npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.FATHER_FIGURE, {gil=2200, fame=120})) then
+        if (npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.FATHER_FIGURE, {xp=700,gil=2200, fame=120})) then
             player:confirmTrade();
         end
     end

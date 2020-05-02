@@ -50,6 +50,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 196) then
         player:tradeComplete();
         player:completeQuest(BASTOK,tpz.quest.id.bastok.SILENCE_OF_THE_RAMS);
+        player:addExp(2500 * EXP_RATE);
         player:addFame(3,125);
         player:addItem(13201);
         player:messageSpecial(ID.text.ITEM_OBTAINED,13201);

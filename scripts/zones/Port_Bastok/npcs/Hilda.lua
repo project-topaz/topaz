@@ -91,6 +91,7 @@ function onEventFinish(player,csid,option)
             player:setCharVar("TheUsual_Event",0);
             player:addItem(17170);
             player:messageSpecial(ID.text.ITEM_OBTAINED,17170); -- Speed Bow
+            player:addExp(3000 * EXP_RATE);
             player:addFame(BASTOK,30);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.THE_USUAL);
         end

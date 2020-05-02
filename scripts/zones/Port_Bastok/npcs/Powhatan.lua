@@ -63,6 +63,7 @@ function onEventFinish(player,csid,option)
             player:addItem(16565);
             player:messageSpecial(ID.text.ITEM_OBTAINED,16565); -- Spatha
             player:setCharVar("WelcomeToBastok_Event",0);
+            player:addExp(500 * EXP_RATE);
             player:addFame(BASTOK,80);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.WELCOME_TO_BASTOK);
         end
@@ -77,6 +78,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED,12300); -- Targe
             player:delKeyItem(tpz.ki.LETTERS_FROM_DOMIEN);
             player:setCharVar("GuestofHauteur_Event",0);
+            player:addExp(1500 * EXP_RATE);
             player:addFame(BASTOK,80);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.GUEST_OF_HAUTEUR);
         end

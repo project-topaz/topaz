@@ -75,6 +75,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 103) then
         player:tradeComplete();
         player:completeQuest(BASTOK,tpz.quest.id.bastok.DRACHENFALL);
+        player:addExp(2000 * EXP_RATE);
         player:addFame(BASTOK,120);
         player:addTitle(tpz.title.DRACHENFALL_ASCETIC);
         player:addGil(GIL_RATE*2000);

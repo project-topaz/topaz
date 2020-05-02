@@ -47,6 +47,7 @@ function onEventFinish(player,csid,option)
         player:addQuest(SANDORIA,tpz.quest.id.sandoria.THE_SETTING_SUN);
     elseif (csid == 658) then --The player trades the Engraved Key to the NPC. Here come the rewards!
         player:tradeComplete();
+        player:addExp(3500 * EXP_RATE);
         player:addGil(GIL_RATE*10000);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*10000);
         player:addFame(SANDORIA,30);

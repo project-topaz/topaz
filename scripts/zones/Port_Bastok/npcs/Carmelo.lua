@@ -80,6 +80,7 @@ function onEventFinish(player,csid,option)
             player:addTitle(tpz.title.SORROW_DROWNER);
             player:addItem(17356);
             player:messageSpecial(ID.text.ITEM_OBTAINED,17356); -- Lamia Harp
+            player:addExp(3000 * EXP_RATE);
             player:addFame(BASTOK,120);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.LOVE_AND_ICE);
         end
@@ -91,6 +92,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 274) then
         player:setCharVar("ATestOfTrueLoveProgress",0);
         player:needToZone(true);
+        player:addExp(9000 * EXP_RATE);
         player:addFame(BASTOK,120);
         player:completeQuest(BASTOK,tpz.quest.id.bastok.A_TEST_OF_TRUE_LOVE);
     elseif (csid == 275) then

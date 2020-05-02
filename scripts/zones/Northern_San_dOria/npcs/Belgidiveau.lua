@@ -47,6 +47,7 @@ function onEventFinish(player,csid,option)
             player:delKeyItem(tpz.ki.NEUTRALIZER);
             player:addItem(16706);
             player:messageSpecial(ID.text.ITEM_OBTAINED,16706); -- Heavy Axe
+            player:addExp(700 * EXP_RATE);
             player:addFame(SANDORIA,30);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.TROUBLE_AT_THE_SLUICE);
         end

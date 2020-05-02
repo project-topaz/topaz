@@ -81,6 +81,7 @@ function onEventFinish(player,csid,option)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.WHITE_SENTINEL_BADGE);
     elseif (csid == 10091) then
         player:completeQuest(JEUNO,tpz.quest.id.jeuno.LURE_OF_THE_WILDCAT);
+        player:addExp(1500 * EXP_RATE);
         player:addFame(JEUNO, 150);
         player:setCharVar("WildcatJeuno",0);
         player:delKeyItem(tpz.ki.WHITE_SENTINEL_BADGE);

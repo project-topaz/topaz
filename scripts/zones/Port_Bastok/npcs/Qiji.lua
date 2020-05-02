@@ -45,6 +45,7 @@ function onEventFinish(player,csid,option)
         player:addTitle(tpz.title.QIJIS_FRIEND);
         player:addGil(GIL_RATE*300);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*300);
+        player:addExp(700 * EXP_RATE);
         player:addFame(BASTOK,80);
         player:completeQuest(BASTOK,tpz.quest.id.bastok.FOREVER_TO_HOLD);
     end

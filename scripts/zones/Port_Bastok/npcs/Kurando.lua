@@ -50,6 +50,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED,13113);
             player:setTitle(tpz.title.AIRSHIP_DENOUNCER);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.FEAR_OF_FLYING);
+            player:addExp(2200 * EXP_RATE);
             player:addFame(BASTOK,30);
         end
     end

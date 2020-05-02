@@ -55,6 +55,7 @@ function onEventFinish(player,csid,option)
             player:addItem(12840);
             player:messageSpecial(ID.text.ITEM_OBTAINED,12840);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.HEARTS_OF_MYTHRIL);
+            player:addExp(500 * EXP_RATE);
             player:addFame(BASTOK,80);
             player:setCharVar("HeartsOfMythril",0);
             player:needToZone(true);

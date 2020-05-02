@@ -74,6 +74,7 @@ function onEventFinish(player,csid,option)
     if (csid == 605 and option == 1002) then
         player:tradeComplete();
         player:completeQuest(SANDORIA,tpz.quest.id.sandoria.GROWING_FLOWERS);
+        player:addExp(1000 * EXP_RATE);
         player:addFame(SANDORIA,120);
         player:moghouseFlag(1);
         player:messageSpecial(ID.text.MOGHOUSE_EXIT);

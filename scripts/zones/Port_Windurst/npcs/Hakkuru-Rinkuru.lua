@@ -111,6 +111,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 277) then
             player:addGil(GIL_RATE*1500);
             player:completeQuest(WINDURST,tpz.quest.id.windurst.MAKING_AMENDS);
+            player:addExp(600 * EXP_RATE);
             player:addFame(WINDURST,75);
             player:addTitle(tpz.title.QUICK_FIXER);
             player:needToZone(true);

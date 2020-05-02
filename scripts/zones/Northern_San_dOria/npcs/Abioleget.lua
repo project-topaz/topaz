@@ -50,6 +50,7 @@ function onEventFinish(player,csid,option)
         else
             player:addItem(13465);
             player:messageSpecial(ID.text.ITEM_OBTAINED, 13465);
+            player:addExp(500 * EXP_RATE);
             player:addFame(SANDORIA,30);
             player:addTitle(tpz.title.THE_BENEVOLENT_ONE);
             player:setCharVar("sermonQuestVar",0);

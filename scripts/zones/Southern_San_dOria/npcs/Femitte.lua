@@ -59,6 +59,7 @@ function onEventFinish(player,csid,option)
             player:addItem(13585,1);
             player:messageSpecial(ID.text.ITEM_OBTAINED,13585);
             player:setCharVar("DistantLoyaltiesProgress",0);
+            player:addExp(3000 * EXP_RATE);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.DISTANT_LOYALTIES);
         end;
     end;

@@ -107,6 +107,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED,12289);
             player:addTitle(tpz.title.COURIER_EXTRAORDINAIRE);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.THE_BRUGAIRE_CONSORTIUM);
+            player:addExp(500 * EXP_RATE);
             player:addFame(SANDORIA,30);
             player:setCharVar("TheBrugaireConsortium-Parcels",0);
         else

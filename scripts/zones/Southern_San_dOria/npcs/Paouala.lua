@@ -46,6 +46,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 84) then
         player:tradeComplete();
         player:addTitle(tpz.title.SHEEPS_MILK_DELIVERER);
+        player:addExp(2200 * EXP_RATE);
         player:addGil(GIL_RATE*5000);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*5000);
         player:addFame(SANDORIA,30);

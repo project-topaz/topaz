@@ -45,6 +45,7 @@ function onEventFinish(player,csid,option)
             player:delKeyItem(tpz.ki.WEAPONS_RECEIPT);
             player:addItem(17090);
             player:messageSpecial(ID.text.ITEM_OBTAINED,17090); -- Elm Staff
+            player:addExp(800 * EXP_RATE);
             player:addFame(SANDORIA,30);
             player:completeQuest(SANDORIA, tpz.quest.id.sandoria.A_PURCHASE_OF_ARMS);
         end

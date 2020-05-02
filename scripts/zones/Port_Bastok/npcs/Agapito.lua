@@ -35,6 +35,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 181) then
         player:addGil(GIL_RATE*2100);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*2100);
+        player:addExp(2000 * EXP_RATE);
         player:addFame(BASTOK,100);
         player:addTitle(tpz.title.STAR_OF_IFRIT);
         player:completeQuest(BASTOK,tpz.quest.id.bastok.THE_STARS_OF_IFRIT);

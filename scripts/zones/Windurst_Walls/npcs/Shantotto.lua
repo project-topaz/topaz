@@ -158,6 +158,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED,17116)
             player:completeQuest(WINDURST,tpz.quest.id.windurst.CURSES_FOILED_AGAIN_2)
             player:needToZone(true)
+            player:addExp(1500 * EXP_RATE);
             player:addFame(WINDURST,90)
         end
 

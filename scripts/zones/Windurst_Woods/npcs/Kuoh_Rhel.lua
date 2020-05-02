@@ -60,7 +60,7 @@ function onEventFinish(player,csid,option)
     -- CHOCOBILIOUS
     if csid == 224 and option == 1 then
         player:addQuest(WINDURST, tpz.quest.id.windurst.CHOCOBILIOUS)
-    elseif csid == 231 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.CHOCOBILIOUS, {fame=220, gil=1500, var="ChocobiliousQuest"}) then
+    elseif csid == 231 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.CHOCOBILIOUS, {xp=800, fame=220, gil=1500, var="ChocobiliousQuest"}) then
         player:needToZone(true)
 
     -- IN A STEW

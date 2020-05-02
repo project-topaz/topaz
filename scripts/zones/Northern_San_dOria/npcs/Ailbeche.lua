@@ -113,12 +113,14 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 17391); -- Willow Fishing Rod
             player:addTitle(tpz.title.LOST_CHILD_OFFICER);
             player:setCharVar("QuestfatherAndSonVar",0);
+            player:addExp(500 * EXP_RATE);
             player:addFame(SANDORIA,30);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.FATHER_AND_SON);
         end
     elseif (csid == 61) then
         player:setCharVar("returnedAilbecheRod",1);
         player:addTitle(tpz.title.FAMILY_COUNSELOR);
+        player:addExp(200 * EXP_RATE)
         player:tradeComplete();
     -- "Sharpening the Sword"
     elseif ((csid == 45 or csid == 43) and option == 1) then

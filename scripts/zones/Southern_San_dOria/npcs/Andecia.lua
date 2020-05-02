@@ -69,8 +69,9 @@ function onEventFinish(player,csid,option)
         player:tradeComplete();
         player:setCharVar("OfferingWaterOK",0);
         player:addTitle(tpz.title.ROYAL_GRAVE_KEEPER);
+        player:addExp(600 * EXP_RATE);
         player:addGil(GIL_RATE*560);
-        player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*560)
+        player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*560);
         player:addFame(SANDORIA,30);
         player:completeQuest(SANDORIA,tpz.quest.id.sandoria.GRAVE_CONCERNS);
     end

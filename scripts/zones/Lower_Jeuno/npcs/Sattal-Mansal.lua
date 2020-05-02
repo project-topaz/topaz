@@ -37,12 +37,14 @@ function onEventFinish(player,csid,option)
     elseif (csid == 91) then
         player:addKeyItem(tpz.ki.CORUSCANT_ROSARY);
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.CORUSCANT_ROSARY);
+        player:addExp(3700 * EXP_RATE)
         player:addFame(JEUNO,30);
         player:tradeComplete(trade);
         player:completeQuest(JEUNO,tpz.quest.id.jeuno.MYSTERIES_OF_BEADEAUX_I);
     elseif (csid == 92) then
         player:addKeyItem(tpz.ki.BLACK_MATINEE_NECKLACE);
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.BLACK_MATINEE_NECKLACE);
+        player:addExp(3700 * EXP_RATE)
         player:addFame(JEUNO,30);
         player:tradeComplete(trade);
         player:completeQuest(JEUNO,tpz.quest.id.jeuno.MYSTERIES_OF_BEADEAUX_II);

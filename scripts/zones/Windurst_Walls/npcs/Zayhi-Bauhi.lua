@@ -84,6 +84,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 75) then -- After Honey#5: ToBee quest Finish (tooth hurts from all the Honey)
         player:tradeComplete();
         player:setCharVar("ToBeeOrNot_var",5);
+        player:addExp(800 * EXP_RATE);
         player:addFame(WINDURST,30);
         player:completeQuest(WINDURST,tpz.quest.id.windurst.TO_BEE_OR_NOT_TO_BEE);
         player:needToZone(true);

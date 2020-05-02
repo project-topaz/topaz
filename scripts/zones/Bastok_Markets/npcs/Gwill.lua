@@ -58,6 +58,7 @@ function onEventFinish(player,csid,option)
             player:addTitle(tpz.title.KULATZ_BRIDGE_COMPANION);
             player:addItem(12498);
             player:messageSpecial(ID.text.ITEM_OBTAINED,12498);
+            player:addExp(1300 * EXP_RATE);
             player:addFame(BASTOK,80);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.THE_RETURN_OF_THE_ADVENTURER);
         else

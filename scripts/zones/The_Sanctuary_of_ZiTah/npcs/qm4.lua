@@ -26,6 +26,6 @@ end
 
 function onEventFinish(player,csid,option)
     if csid == 204 then
-        npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.LOVERS_IN_THE_DUSK, {item = 17346, fame = 120})
+        npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.LOVERS_IN_THE_DUSK, {item = 17346, xp=3000, fame = 120})
     end
 end

@@ -229,6 +229,7 @@ function onEventFinish(player,csid,option)
             player:setCharVar("CidsSecret_Event",0)
             player:addItem(13570)
             player:messageSpecial(ID.text.ITEM_OBTAINED,13570) -- Ram Mantle
+            player:addExp(4000 * EXP_RATE)
             player:addFame(BASTOK,30)
             player:completeQuest(BASTOK,tpz.quest.id.bastok.CID_S_SECRET)
         else

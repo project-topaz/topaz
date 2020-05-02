@@ -55,6 +55,7 @@ function onEventFinish(player,csid,option)
             player:completeQuest(BASTOK,tpz.quest.id.bastok.BEAUTY_AND_THE_GALKA);
             player:setCharVar("BeautyAndTheGalkaDenied",0);
             player:delKeyItem(tpz.ki.PALBOROUGH_MINES_LOGS);
+            player:addExp(600 * EXP_RATE);
             player:addFame(BASTOK,75);
             player:addItem(16465);
             player:messageSpecial(ID.text.ITEM_OBTAINED,16465);

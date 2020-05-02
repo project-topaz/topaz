@@ -100,6 +100,7 @@ function onEventFinish(player,csid,option)
             player:addTitle(tpz.title.KNIGHT_IN_TRAINING)
             player:addItem(16565)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 16565) -- Spatha
+            player:addExp(500 * EXP_RATE)
             player:addFame(SANDORIA,30)
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.A_SQUIRE_S_TEST)
         else
@@ -113,6 +114,7 @@ function onEventFinish(player,csid,option)
         player:delKeyItem(tpz.ki.STALACTITE_DEW)
         player:addKeyItem(tpz.ki.SQUIRE_CERTIFICATE)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.SQUIRE_CERTIFICATE)
+        player:addExp(1200 * EXP_RATE);
         player:addFame(SANDORIA,30)
         player:completeQuest(SANDORIA,tpz.quest.id.sandoria.A_SQUIRE_S_TEST_II)
     elseif (csid == 627) then

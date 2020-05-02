@@ -47,6 +47,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 44) then
         player:setCharVar("CleanSignPost",0);
         player:addFame(SANDORIA,30);
+        player:addExp(950 * EXP_RATE)
         player:addGil(GIL_RATE*1500);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*1500);
         player:completeQuest(SANDORIA,tpz.quest.id.sandoria.GRIMY_SIGNPOSTS);

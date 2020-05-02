@@ -45,6 +45,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 13584);
         else
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.GATES_TO_PARADISE);
+            player:addExp(700 * EXP_RATE);
             player:addFame(SANDORIA,30);
             player:addTitle(tpz.title.THE_PIOUS_ONE);
             player:delKeyItem(tpz.ki.SCRIPTURE_OF_WATER);

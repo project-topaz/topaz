@@ -59,7 +59,7 @@ function onEventFinish(player,csid,option)
             player:setCharVar("FFR",17);
         end
     elseif (csid == 603) then
-        if (npcUtil.completeQuest(player, SANDORIA, tpz.quest.id.sandoria.FLYERS_FOR_REGINE, {gil=440, title=tpz.title.ADVERTISING_EXECUTIVE})) then
+        if (npcUtil.completeQuest(player, SANDORIA, tpz.quest.id.sandoria.FLYERS_FOR_REGINE, {xp=650, gil=440, title=tpz.title.ADVERTISING_EXECUTIVE})) then
             player:setCharVar("tradeAnswald",0);
             player:setCharVar("tradePrietta",0);
             player:setCharVar("tradeMiene",0);

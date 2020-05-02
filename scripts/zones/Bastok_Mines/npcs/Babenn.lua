@@ -50,6 +50,7 @@ function onEventFinish(player,csid,option)
             player:addTitle(tpz.title.PURSUER_OF_THE_TRUTH);
             player:addItem(16629);
             player:messageSpecial(ID.text.ITEM_OBTAINED,16629);
+            player:addExp(1500 * EXP_RATE);
             player:addFame(BASTOK,30);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.THE_ELEVENTH_S_HOUR);
         else

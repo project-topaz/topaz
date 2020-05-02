@@ -57,6 +57,7 @@ function onEventFinish(player,csid,option)
             player:tradeComplete();
             player:addItem(13183);
             player:messageSpecial(ID.text.ITEM_OBTAINED, 13183);
+            player:addExp(500 * EXP_RATE);
             player:addFame(SANDORIA,30);
             player:addTitle(tpz.title.THE_PURE_ONE);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.WATER_OF_THE_CHEVAL);

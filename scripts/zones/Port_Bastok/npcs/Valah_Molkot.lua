@@ -76,6 +76,7 @@ function onEventFinish(player,csid,option)
     if (csid == 160 and option == 2002) then
         player:tradeComplete();
         player:completeQuest(BASTOK,tpz.quest.id.bastok.A_LADY_S_HEART);
+        player:addExp(1000 * EXP_RATE);
         player:addFame(BASTOK,120);
         player:moghouseFlag(2);
         player:messageSpecial(ID.text.MOGHOUSE_EXIT);

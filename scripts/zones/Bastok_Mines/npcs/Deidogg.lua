@@ -90,6 +90,7 @@ function onEventFinish(player,csid,option)
             player:setCharVar("theTalekeeperTruth_timer",0);
             player:setCharVar("DeidoggWait1DayForAF3",VanadielDayOfTheYear());
             player:needToZone(true);
+            player:addExp(3000 * EXP_RATE);
             player:addFame(BASTOK,40);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.THE_TALEKEEPER_S_TRUTH);
         end

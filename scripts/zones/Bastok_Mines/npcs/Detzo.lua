@@ -65,6 +65,7 @@ function onEventFinish(player,csid,option)
             player:addTitle(tpz.title.CONTEST_RIGGER);
             player:addItem(13571);
             player:messageSpecial(ID.text.ITEM_OBTAINED,13571);
+            player:addExp(2300 * EXP_RATE);
             player:addFame(BASTOK,30);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.RIVALS);
         end

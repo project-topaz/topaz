@@ -59,7 +59,7 @@ end
 
 function onEventFinish(player,csid,option)
 
-    if csid == 10 and npcUtil.completeQuest(player, SANDORIA, tpz.quest.id.sandoria.OVER_THE_HILLS_AND_FAR_AWAY, {gil = 2000, xp = 2000, ki = tpz.ki.MAP_OF_THE_ULEGUERAND_RANGE}) then
+    if csid == 10 and npcUtil.completeQuest(player, SANDORIA, tpz.quest.id.sandoria.OVER_THE_HILLS_AND_FAR_AWAY, {gil = 2000, xp = 3500, ki = tpz.ki.MAP_OF_THE_ULEGUERAND_RANGE}) then
         player:confirmTrade()
     end
 

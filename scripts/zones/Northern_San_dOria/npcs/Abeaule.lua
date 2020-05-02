@@ -80,6 +80,7 @@ function onEventFinish(player,csid,option)
             player:tradeComplete();
             player:addTitle(tpz.title.GREEN_GROCER);
             player:addItem(12600);
+            player:addExp(500 * EXP_RATE);
             player:messageSpecial(ID.text.ITEM_OBTAINED,12600); -- Robe
             player:addFame(SANDORIA,30);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.THE_TRADER_IN_THE_FOREST);
@@ -90,6 +91,7 @@ function onEventFinish(player,csid,option)
     elseif (csid == 614) then
         player:addTitle(tpz.title.TRAVELING_MEDICINE_MAN);
         player:delKeyItem(tpz.ki.COLD_MEDICINE);
+        player:addExp(1000 * EXP_RATE)
         player:addGil(GIL_RATE*2100);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*2100);
         player:addFame(SANDORIA,30);

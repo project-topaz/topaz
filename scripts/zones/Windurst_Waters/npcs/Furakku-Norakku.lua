@@ -67,6 +67,7 @@ function onEventFinish(player,csid,option)
         player:addGil(GIL_RATE*1500);
         player:messageSpecial(ID.text.GIL_OBTAINED,GIL_RATE*1500);
         player:setCharVar("EARLY_BIRD_TRACK_BOOK",0);
+        player:addExp(1500 * EXP_RATE);
         player:addFame(WINDURST,120);
         player:completeQuest(WINDURST,tpz.quest.id.windurst.EARLY_BIRD_CATCHES_THE_BOOKWORM);
         player:delKeyItem(tpz.ki.ART_FOR_EVERYONE);

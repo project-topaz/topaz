@@ -188,6 +188,7 @@ function onEventFinish(player,csid,option)
             player:delKeyItem(tpz.ki.SMALL_BAG);
             player:messageSpecial(ID.text.ITEM_OBTAINED,12590);
             player:completeQuest(WINDURST,tpz.quest.id.windurst.OVERNIGHT_DELIVERY);
+            player:addExp(600 * EXP_RATE);
             player:addFame(WINDURST,100);
             player:needToZone(true);
             player:setCharVar("Kenapa_Overnight_var",0);

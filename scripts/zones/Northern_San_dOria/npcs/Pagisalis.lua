@@ -63,6 +63,7 @@ function onEventFinish(player,csid,option)
             player:addTitle(tpz.title.FAITH_LIKE_A_CANDLE);
             player:addItem(13211);
             player:messageSpecial(ID.text.ITEM_OBTAINED,13211); -- Friars Rope
+            player:addExp(500 * EXP_RATE);
             player:addFame(SANDORIA,30);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.UNDYING_FLAMES);
         end
