@@ -1040,7 +1040,7 @@ namespace battleutils
 
                 if (daze == EFFECT_DRAIN_DAZE)
                 {
-                    uint16 multiplier = (uint16)(3 + (5.5f * power - 1));
+                    uint16 multiplier = (uint16)(3 + (5.5f * (power - 1)));
                     int8 Samba = tpzrand::GetRandomNumber(1, (delay * multiplier) / 100 + 1);
 
                     // vary damage based on lvl diff
@@ -1076,7 +1076,7 @@ namespace battleutils
                 }
                 else if (daze == EFFECT_ASPIR_DAZE)
                 {
-                    uint16 multiplier = 1 + (2 * power - 1);
+                    uint16 multiplier = 1 + (2 * (power - 1));
                     int8 Samba = tpzrand::GetRandomNumber(1, (delay * multiplier) / 100 + 1);
 
                     if (Samba >= finaldamage / 4) { Samba = finaldamage / 4; }
