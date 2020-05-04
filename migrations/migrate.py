@@ -9,6 +9,7 @@ import crystal_storage
 import broken_linkshells
 import add_daily_tally_column
 import add_timecreated_column
+import spell_family_column
 
 credentials = {}
 db = None
