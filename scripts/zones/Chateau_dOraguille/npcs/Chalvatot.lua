@@ -87,6 +87,7 @@ function onEventFinish(player,csid,option)
         if (player:getFreeSlotsCount() ~= 0) then
             player:addItem(12647);
             player:messageSpecial(ID.text.ITEM_OBTAINED,12647)
+            player:addExp(7000*EXP_RATE);
             player:completeQuest(JEUNO,tpz.quest.id.jeuno.THE_CIRCLE_OF_TIME);
             player:addTitle(tpz.title.PARAGON_OF_BARD_EXCELLENCE);
             player:setCharVar("circleTime",0);

@@ -60,6 +60,7 @@ function onEventFinish(player,csid,option)
             player:delKeyItem(tpz.ki.ALTEPA_POLISHING_STONE);
             player:addItem(16887);
             player:messageSpecial(ID.text.ITEM_OBTAINED,16887); -- Peregrine (DRG AF1)
+            player:addExp(2000*EXP_RATE);
             player:addFame(SANDORIA,20);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.A_CRAFTSMAN_S_WORK);
         end

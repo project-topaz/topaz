@@ -58,6 +58,7 @@ function onEventFinish(player,csid,option)
             player:addItem(17422);
             player:messageSpecial(ID.text.ITEM_OBTAINED,17422); -- Blessed Hammer
             player:tradeComplete();
+            player:addExp(2000*EXP_RATE);
             player:addFame(SANDORIA,20);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.MESSENGER_FROM_BEYOND);
         end
@@ -68,6 +69,7 @@ function onEventFinish(player,csid,option)
             player:addItem(14091);
             player:messageSpecial(ID.text.ITEM_OBTAINED,14091); -- Healer's Duckbills
             player:tradeComplete();
+            player:addExp(3000*EXP_RATE);
             player:addFame(SANDORIA,40);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.PRELUDE_OF_BLACK_AND_WHITE);
         end
@@ -80,6 +82,7 @@ function onEventFinish(player,csid,option)
             player:addItem(12640);
             player:messageSpecial(ID.text.ITEM_OBTAINED,12640); -- Healer's Briault
             player:tradeComplete();
+            player:addExp(7000*EXP_RATE);
             player:addFame(SANDORIA,60);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.PIEUJE_S_DECISION);
         end

@@ -89,6 +89,7 @@ function onEventFinish(player,csid,option)
         else
             player:addItem(14098);
             player:messageSpecial(ID.text.ITEM_OBTAINED,14098); -- Choral Slippers
+            player:addExp(3000*EXP_RATE);
             player:addFame(JEUNO, 30);
             player:completeQuest(JEUNO,tpz.quest.id.jeuno.THE_REQUIEM);
         end;

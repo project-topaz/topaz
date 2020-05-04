@@ -56,7 +56,7 @@ function onEventFinish(player,csid,option)
         else
             player:setPos(0, 0, 0, 0, tpz.zone.SHIP_BOUND_FOR_MHAURA)
         end
-    elseif csid == 1101 and npcUtil.completeQuest(player, OUTLANDS, tpz.quest.id.outlands.I_LL_TAKE_THE_BIG_BOX, {item = 14226, fame_area = NORG, var = {"Enagakure_Killed", "illTakeTheBigBoxCS"}}) then
+    elseif csid == 1101 and npcUtil.completeQuest(player, OUTLANDS, tpz.quest.id.outlands.I_LL_TAKE_THE_BIG_BOX, {xp = 3000, item = 14226, fame_area = NORG, var = {"Enagakure_Killed", "illTakeTheBigBoxCS"}}) then
         player:delKeyItem(tpz.ki.SEANCE_STAFF)
     end
 end

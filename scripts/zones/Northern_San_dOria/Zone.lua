@@ -98,7 +98,7 @@ function onEventFinish(player, csid, option)
         player:setCharVar("MissionStatus", 5)
     elseif csid == 569 then
         player:setPos(0, 0, -13, 192, 233)
-    elseif csid == 49 and npcUtil.completeQuest(player, SANDORIA, tpz.quest.id.sandoria.PEACE_FOR_THE_SPIRIT, {item = 12513, fame = 60, title = tpz.title.PARAGON_OF_RED_MAGE_EXCELLENCE}) then
+    elseif csid == 49 and npcUtil.completeQuest(player, SANDORIA, tpz.quest.id.sandoria.PEACE_FOR_THE_SPIRIT, {item = 12513, xp = 7000, fame = 60, title = tpz.title.PARAGON_OF_RED_MAGE_EXCELLENCE}) then
         player:setCharVar("peaceForTheSpiritCS", 0)
     elseif csid == 16 then
         player:setCharVar("Wait1DayM8-1_date", 0)

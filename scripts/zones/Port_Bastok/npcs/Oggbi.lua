@@ -57,6 +57,7 @@ function onEventFinish(player,csid,option)
             player:addItem(17478)
             player:messageSpecial(ID.text.ITEM_OBTAINED,17478) -- Beat Cesti
             player:needToZone(true)
+            player:addExp(2000*EXP_RATE);
             player:addFame(BASTOK,20)
             player:completeQuest(BASTOK,tpz.quest.id.bastok.GHOSTS_OF_THE_PAST)
         end
@@ -70,6 +71,7 @@ function onEventFinish(player,csid,option)
             player:delKeyItem(tpz.ki.SANDORIAN_MARTIAL_ARTS_SCROLL)
             player:addItem(14090)
             player:messageSpecial(ID.text.ITEM_OBTAINED,14090) -- Temple Gaiters
+            player:addExp(3000*EXP_RATE);
             player:addFame(BASTOK,40)
             player:completeQuest(BASTOK,tpz.quest.id.bastok.THE_FIRST_MEETING)
         end

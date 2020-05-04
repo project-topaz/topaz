@@ -64,7 +64,7 @@ function onEventFinish( player, csid, option)
     if (csid == 123) then
         lightCutsceneFinish(player); -- Quest: I Can Hear A Rainbow
     elseif (csid == 122) then
-        npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.DARK_PUPPET, {item=14096, fame=40, var="darkPuppetCS"}); -- Chaos Sollerets
+        npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.DARK_PUPPET, {item=14096, xp=3000, fame=40, var="darkPuppetCS"}); -- Chaos Sollerets
     end
 end;
 

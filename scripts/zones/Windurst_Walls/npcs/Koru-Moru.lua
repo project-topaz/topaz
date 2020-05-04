@@ -173,6 +173,7 @@ function onEventFinish(player,csid,option)
             player:completeQuest(WINDURST,tpz.quest.id.windurst.THE_PUPPET_MASTER);
             player:setCharVar("ThePuppetMasterProgress",0);
             player:needToZone(true);
+            player:addExp(2000*EXP_RATE);
             player:addFame(WINDURST,20);
         else
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,17532);
@@ -192,6 +193,7 @@ function onEventFinish(player,csid,option)
             player:setCharVar("ClassReunion_TalkedToFurakku",0);
             player:setCharVar("ClassReunion_TalkedToFupepe",0);
             player:needToZone(true);
+            player:addExp(3000*EXP_RATE);
             player:addFame(WINDURST,40);
         else
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,14228);
@@ -208,6 +210,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED,12520);
             player:addTitle(tpz.title.PARAGON_OF_SUMMONER_EXCELLENCE);
             player:completeQuest(WINDURST,tpz.quest.id.windurst.CARBUNCLE_DEBACLE);
+            player:addExp(7000*EXP_RATE);
             player:addFame(WINDURST,60);
             player:setCharVar("CarbuncleDebacleProgress",0);
             player:needToZone(true);

@@ -65,6 +65,7 @@ function onEventFinish(player,csid,option)
             player:addItem(16798);
             player:messageSpecial(ID.text.ITEM_OBTAINED, 16798); -- Raven Scythe
             player:setCharVar("darkLegacyCS",0);
+            player:addExp(2000*EXP_RATE);
             player:addFame(BASTOK,20);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.DARK_LEGACY);
         end

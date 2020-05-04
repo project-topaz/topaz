@@ -137,6 +137,7 @@ function onEventFinish(player,csid,option)
             player:addItem(17643);
             player:messageSpecial(ID.text.ITEM_OBTAINED, 17643); -- Honor Sword
             player:setCharVar("sharpeningTheSwordCS",0);
+            player:addExp(2000*EXP_RATE);
             player:addFame(SANDORIA,30);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.SHARPENING_THE_SWORD);
         end

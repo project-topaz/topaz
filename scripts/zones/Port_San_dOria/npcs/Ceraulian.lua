@@ -105,6 +105,7 @@ function onEventFinish(player,csid,option)
             player:delKeyItem(tpz.ki.RANCHURIOMES_LEGACY);
             player:addItem(14227);
             player:messageSpecial(ID.text.ITEM_OBTAINED,14227); -- Drachen Brais
+            player:addExp(3000*EXP_RATE);
             player:addFame(SANDORIA,40);
             player:completeQuest(SANDORIA,tpz.quest.id.sandoria.CHASING_QUOTAS);
             player:setCharVar("ChasingQuotas_Progress",0);

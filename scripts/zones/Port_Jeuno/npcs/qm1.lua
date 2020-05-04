@@ -46,6 +46,7 @@ function onEventFinish(player,csid,option)
             player:delKeyItem(tpz.ki.SHADOW_FLAMES);
             player:setCharVar("BorghertzCS",0);
             player:setCharVar("BorghertzAlreadyActiveWithJob",0);
+            player:addExp(4000*EXP_RATE);
             player:addFame(JEUNO,30);
             player:completeQuest(JEUNO,NumQuest);
         end

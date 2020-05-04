@@ -58,6 +58,7 @@ function onEventFinish(player,csid,option)
             player:addTitle(tpz.title.PARAGON_OF_MONK_EXCELLENCE);
             player:addItem(14215);
             player:messageSpecial(ID.text.ITEM_OBTAINED,14215); -- Temple Hose
+            player:addExp(7000*EXP_RATE);
             player:addFame(BASTOK,60);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.TRUE_STRENGTH);
         end

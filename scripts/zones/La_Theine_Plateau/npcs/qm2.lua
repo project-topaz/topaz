@@ -35,6 +35,7 @@ function onEventFinish(player,csid,option)
         player:addItem(14094);
         player:messageSpecial(ID.text.ITEM_OBTAINED,14094);
         player:tradeComplete();
+        player:addExp(7000*EXP_RATE);
         player:completeQuest(WINDURST, tpz.quest.id.windurst.HITTING_THE_MARQUISATE);
         player:addTitle(tpz.title.PARAGON_OF_THIEF_EXCELLENCE);
         player:setCharVar("hittingTheMarquisateNanaaCS",0);

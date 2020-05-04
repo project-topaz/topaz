@@ -34,7 +34,7 @@ end;
 
 function onEventFinish(player,csid,option)
     if (csid == 8) then
-        if (npcUtil.completeQuest(player, JEUNO, tpz.quest.id.jeuno.PAINFUL_MEMORY, {item=16766})) then
+        if (npcUtil.completeQuest(player, JEUNO, tpz.quest.id.jeuno.PAINFUL_MEMORY, {xp=2000, item=16766})) then
             player:delKeyItem(tpz.ki.MERTAIRES_BRACELET);
             player:setCharVar("TrosKilled",0);
             player:setCharVar("Tros_Timer",0);

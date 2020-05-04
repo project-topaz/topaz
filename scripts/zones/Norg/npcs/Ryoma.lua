@@ -78,6 +78,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 17772) -- Zushio
             player:needToZone()
             player:setCharVar("twentyInPirateYearsCS",0)
+            player:addExp(2000*EXP_RATE);
             player:addFame(NORG,30)
             player:completeQuest(OUTLANDS,tpz.quest.id.outlands.TWENTY_IN_PIRATE_YEARS)
         end

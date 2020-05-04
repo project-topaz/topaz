@@ -8,6 +8,7 @@ require("scripts/globals/settings");
 require("scripts/globals/keyitems");
 require("scripts/globals/shop");
 require("scripts/globals/quests");
+require("scripts/globals/titles");
 local ID = require("scripts/zones/Rabao/IDs");
 -----------------------------------
 
@@ -80,7 +81,9 @@ function onEventFinish(player,csid,option)
             player:addItem(13782);
             player:messageSpecial(ID.text.ITEM_OBTAINED,13782); -- Ninja Chainmail
             player:setCharVar("trueWillCS",0);
+            player:addExp(7000*EXP_RATE);
             player:addFame(NORG,30);
+            player:addTitle(tpz.title.PARAGON_OF_NINJA_EXCELLENCE)
             player:completeQuest(OUTLANDS,tpz.quest.id.outlands.TRUE_WILL);
         end
     end

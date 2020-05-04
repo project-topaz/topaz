@@ -83,6 +83,7 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 16678); -- Razor Axe
             player:delKeyItem(tpz.ki.YASINS_SWORD);
             player:setCharVar("theDoormanCS",0);
+            player:addExp(2000 * EXP_RATE);
             player:addFame(BASTOK,30);
             player:completeQuest(BASTOK,tpz.quest.id.bastok.THE_DOORMAN);
         else

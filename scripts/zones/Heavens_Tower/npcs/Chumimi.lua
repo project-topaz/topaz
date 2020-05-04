@@ -113,6 +113,7 @@ function onEventFinish(player, csid, option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 17423) -- Casting Wand
             player:needToZone(true)
             player:setCharVar("theThreeMagiSupport", 0)
+            player:addExp(2000*EXP_RATE);
             player:addFame(WINDURST, 20)
             player:completeQuest(WINDURST, tpz.quest.id.windurst.THE_THREE_MAGI)
         end
@@ -129,6 +130,7 @@ function onEventFinish(player, csid, option)
             player:delKeyItem(tpz.ki.FOE_FINDER_MK_I)
             player:addItem(14092)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 14092) -- wizards sabots
+            player:addExp(3000*EXP_RATE);
             player:addFame(WINDURST, 40)
             player:completeQuest(WINDURST, tpz.quest.id.windurst.RECOLLECTIONS)
         end
@@ -145,6 +147,7 @@ function onEventFinish(player, csid, option)
             player:completeQuest(WINDURST, tpz.quest.id.windurst.THE_ROOT_OF_THE_PROBLEM)
             player:addItem(13856)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 13856)
+            player:addExp(7000*EXP_RATE);
             player:addTitle(tpz.title.PARAGON_OF_BLACK_MAGE_EXCELLENCE)
             player:delKeyItem(tpz.ki.SLUICE_SURVEYOR_MK_I)
         end
