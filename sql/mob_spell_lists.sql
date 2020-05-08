@@ -3875,6 +3875,10 @@ INSERT INTO `mob_spell_lists` VALUES ('EaldNarche (Apoc Nigh)',430,201,75,255);-
 INSERT INTO `mob_spell_lists` VALUES ('EaldNarche (Apoc Nigh)',430,274,75,255);-- sleepga_ii
 INSERT INTO `mob_spell_lists` VALUES ('EaldNarche (Apoc Nigh)',430,362,75,255);-- bindga
 
+INSERT INTO `mob_spell_lists` VALUES ('Siren',431,423,1,255);        -- Massacre Elegy
+INSERT INTO `mob_spell_lists` VALUES ('Siren',431,462,1,255);        -- Magic Finale
+INSERT INTO `mob_spell_lists` VALUES ('Siren',431,873,1,255);        -- Wind Threnody II
+
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
