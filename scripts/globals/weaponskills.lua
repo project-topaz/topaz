@@ -271,13 +271,13 @@ function doPhysicalWeaponskill(attacker, target, wsID, wsParams, tp, action, pri
     if not wsParams.formless then
         finaldmg = target:physicalDmgTaken(finaldmg, attack.damageType)
         if (attack.weaponType == tpz.skill.HAND_TO_HAND) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.HTHRES) / 1000
+            finaldmg = finaldmg * target:getMod(tpz.mod.HTHSDT) / 1000
         elseif (attack.weaponType == tpz.skill.DAGGER or attack.weaponType == tpz.skill.POLEARM) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
+            finaldmg = finaldmg * target:getMod(tpz.mod.PIERCESDT) / 1000
         elseif (attack.weaponType == tpz.skill.CLUB or attack.weaponType == tpz.skill.STAFF) then
-            finaldmg = finaldmg * target:getMod(tpz.mod.IMPACTRES) / 1000
+            finaldmg = finaldmg * target:getMod(tpz.mod.IMPACTSDT) / 1000
         else
-            finaldmg = finaldmg * target:getMod(tpz.mod.SLASHRES) / 1000
+            finaldmg = finaldmg * target:getMod(tpz.mod.SLASHSDT) / 1000
         end
     end
 
@@ -338,7 +338,7 @@ end
 
     -- Calculate reductions
     finaldmg = target:rangedDmgTaken(finaldmg)
-    finaldmg = finaldmg * target:getMod(tpz.mod.PIERCERES) / 1000
+    finaldmg = finaldmg * target:getMod(tpz.mod.PIERCESDT) / 1000
 
     finaldmg = finaldmg * WEAPON_SKILL_POWER -- Add server bonus
     calcParams.finalDmg = finaldmg

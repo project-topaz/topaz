@@ -7,11 +7,11 @@ require("scripts/globals/missions")
 -----------------------------------
 
 function onMobSpawn(mob)
-    if (mob:getMod(tpz.mod.SLASHRES)) then mob:setMod(tpz.mod.SLASHRES, 1000); end
-    if (mob:getMod(tpz.mod.PIERCERES)) then mob:setMod(tpz.mod.PIERCERES, 1000); end
-    if (mob:getMod(tpz.mod.IMPACTRES)) then mob:setMod(tpz.mod.IMPACTRES, 1000); end
-    if (mob:getMod(tpz.mod.HTHRES)) then mob:setMod(tpz.mod.HTHRES, 1000); end
-end
+    if (mob:getMod(tpz.mod.SLASHSDT)) then mob:setMod(tpz.mod.SLASHSDT, 1000); end
+    if (mob:getMod(tpz.mod.PIERCESDT)) then mob:setMod(tpz.mod.PIERCESDT, 1000); end
+    if (mob:getMod(tpz.mod.IMPACTSDT)) then mob:setMod(tpz.mod.IMPACTSDT, 1000); end
+    if (mob:getMod(tpz.mod.HTHSDT)) then mob:setMod(tpz.mod.HTHSDT, 1000); end
+end;
 
 function onMobFight(mob, target)
     local changeTime = mob:getLocalVar("changeTime")

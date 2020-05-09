@@ -44,16 +44,16 @@ enum class Mod
     MND                       = 13, // Mind
     CHR                       = 14, // Charisma
 
-    // Elemental Defenses
-    // 128 = 128 / 256 = 50% reduction
-    FIREDEF                   = 15, // Fire Defense
-    ICEDEF                    = 16, // Ice Defense
-    WINDDEF                   = 17, // Wind Defense
-    EARTHDEF                  = 18, // Earth Defense
-    THUNDERDEF                = 19, // Thunder Defense
-    WATERDEF                  = 20, // Water Defense
-    LIGHTDEF                  = 21, // Light Defense
-    DARKDEF                   = 22, // Dark Defense
+    // Elemental Resistances (from things like items) increases your Magic Evasion to that element
+    // For example, Byakko's Haidate is +50 Lightning Defense which is +50 Magic Evasion for Lightning
+    FIRERES                   = 15, // Fire Elemental Resistance
+    ICERES                    = 16, // Ice Elemental Resistance
+    WINDRES                   = 17, // Wind Elemental Resistance
+    EARTHRES                  = 18, // Earth Elemental Resistance
+    THUNDERRES                = 19, // Thunder Elemental Resistance
+    WATERRES                  = 20, // Water Elemental Resistance
+    LIGHTRES                  = 21, // Light Elemental Resistance
+    DARKRES                   = 22, // Dark Elemental Resistance
 
     ATT                       = 23, // Attack
     RATT                      = 24, // Ranged Attack
@@ -89,25 +89,25 @@ enum class Mod
 
     WSACC                     = 48, // Weaponskill Accuracy
 
-    // Resistance to damage type
+    // Specific Damage Taken
     // Value is stored as a percentage of damage reduction (to within 1000)
     // Example: 1000 = 100%, 875= 87.5%
-    SLASHRES                  = 49, // Slash Resistance
-    PIERCERES                 = 50, // Piercing Resistance
-    IMPACTRES                 = 51, // Impact Resistance
-    HTHRES                    = 52, // Hand-To-Hand Resistance
+    SLASHSDT                  = 49, // Slash Specific Damage Taken
+    PIERCESDT                 = 50, // Piercing Specific Damage Taken
+    IMPACTSDT                 = 51, // Impact Specific Damage Taken
+    HTHSDT                    = 52, // Hand-To-Hand Specific Damage Taken
 
     // Damage Reduction to Elements
     // Value is stored as a percentage of damage reduction (to within 1000)
     // Example: 1000 = 100%, 875= 87.5%
-    FIRERES                   = 54, // % Fire Resistance
-    ICERES                    = 55, // % Ice Resistance
-    WINDRES                   = 56, // % Wind Resistance
-    EARTHRES                  = 57, // % Earth Resistance
-    THUNDERRES                = 58, // % Thunder Resistance
-    WATERRES                  = 59, // % Water Resistance
-    LIGHTRES                  = 60, // % Light Resistance
-    DARKRES                   = 61, // % Dark Resistance
+    FIRESDT                   = 54, // % Fire Specific Damage Taken
+    ICESDT                    = 55, // % Ice Specific Damage Taken
+    WINDSDT                   = 56, // % Wind Specific Damage Taken
+    EARTHSDT                  = 57, // % Earth Specific Damage Taken
+    THUNDERSDT                = 58, // % Thunder Specific Damage Taken
+    WATERSDT                  = 59, // % Water Specific Damage Taken
+    LIGHTSDT                  = 60, // % Light Specific Damage Taken
+    DARKSDT                   = 61, // % Dark Specific Damage Taken
 
     ATTP                      = 62, // % Attack
     DEFP                      = 63, // % Defense

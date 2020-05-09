@@ -17,7 +17,7 @@ local ID = require("scripts/zones/Uleguerand_Range/IDs")
 
 function onMobSpawn(mob)
     mob:setMod(tpz.mod.REGAIN, 30) -- unassisted by combat TP, will give a base of 1 wild carrot move approx every 100 sec while above 25% hp
-    mob:setMod(tpz.mod.ICERES, 150)
+    mob:setMod(tpz.mod.ICESDT,500)
 end
 
 function onMobDeath(mob, player, isKiller)

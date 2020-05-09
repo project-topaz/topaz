@@ -15,7 +15,7 @@ function onAdditionalEffect(player, target, damage)
         local finalDMG = math.floor(player.getHP(player) / 4)
         if finalDMG > 0 then
             local damageType = player:getWeaponDamageType(tpz.slot.MAIN)
-            local physicalResist = target:getMod(tpz.mod.SLASHRES) / 1000
+            local physicalResist = target:getMod(tpz.mod.SLASHSDT) / 1000
             finalDMG = finalDMG * physicalResist
             finalDMG = target:physicalDmgTaken(finalDMG, damageType)
             finalDMG = finalDMG - target:getMod(tpz.mod.PHALANX)

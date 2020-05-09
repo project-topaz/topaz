@@ -99,19 +99,19 @@ struct Pet_t
     uint16 spellList;
 
     // resists
-    int16 slashres;
-    int16 pierceres;
-    int16 hthres;
-    int16 impactres;
+    int16 slashsdt;
+    int16 piercesdt;
+    int16 hthsdt;
+    int16 impactsdt;
 
-    int16 firedef;
-    int16 icedef;
-    int16 winddef;
-    int16 earthdef;
-    int16 thunderdef;
-    int16 waterdef;
-    int16 lightdef;
-    int16 darkdef;
+    int16 firesdt;
+    int16 icesdt;
+    int16 windsdt;
+    int16 earthsdt;
+    int16 thundersdt;
+    int16 watersdt;
+    int16 lightsdt;
+    int16 darksdt;
 
     int16 fireres;
     int16 iceres;
@@ -212,28 +212,28 @@ namespace petutils
                 Pet->spellList = (uint8)Sql_GetIntData(SqlHandle, 25);
 
                 // resistances
-                Pet->slashres = (uint16)(Sql_GetFloatData(SqlHandle, 26) * 1000);
-                Pet->pierceres = (uint16)(Sql_GetFloatData(SqlHandle, 27) * 1000);
-                Pet->hthres = (uint16)(Sql_GetFloatData(SqlHandle, 28) * 1000);
-                Pet->impactres = (uint16)(Sql_GetFloatData(SqlHandle, 29) * 1000);
+                Pet->slashsdt = (uint16)(Sql_GetFloatData( SqlHandle, 26) * 1000);
+                Pet->piercesdt = (uint16)(Sql_GetFloatData( SqlHandle, 27) * 1000);
+                Pet->hthsdt = (uint16)(Sql_GetFloatData( SqlHandle, 28) * 1000);
+                Pet->impactsdt = (uint16)(Sql_GetFloatData( SqlHandle, 29) * 1000);
 
-                Pet->firedef = 0;
-                Pet->icedef = 0;
-                Pet->winddef = 0;
-                Pet->earthdef = 0;
-                Pet->thunderdef = 0;
-                Pet->waterdef = 0;
-                Pet->lightdef = 0;
-                Pet->darkdef = 0;
+                Pet->firesdt = (uint16)(Sql_GetFloatData(SqlHandle, 30) * 1000);
+                Pet->icesdt = (uint16)(Sql_GetFloatData(SqlHandle, 31) * 1000);
+                Pet->windsdt = (uint16)(Sql_GetFloatData(SqlHandle, 32) * 1000);
+                Pet->earthsdt = (uint16)(Sql_GetFloatData(SqlHandle, 33) * 1000);
+                Pet->thundersdt = (uint16)(Sql_GetFloatData(SqlHandle, 34) * 1000);
+                Pet->watersdt = (uint16)(Sql_GetFloatData(SqlHandle, 35) * 1000);
+                Pet->lightsdt = (uint16)(Sql_GetFloatData(SqlHandle, 36) * 1000);
+                Pet->darksdt = (uint16)(Sql_GetFloatData(SqlHandle, 37) * 1000);
 
-                Pet->fireres = (uint16)((Sql_GetFloatData(SqlHandle, 30) - 1) * -100);
-                Pet->iceres = (uint16)((Sql_GetFloatData(SqlHandle, 31) - 1) * -100);
-                Pet->windres = (uint16)((Sql_GetFloatData(SqlHandle, 32) - 1) * -100);
-                Pet->earthres = (uint16)((Sql_GetFloatData(SqlHandle, 33) - 1) * -100);
-                Pet->thunderres = (uint16)((Sql_GetFloatData(SqlHandle, 34) - 1) * -100);
-                Pet->waterres = (uint16)((Sql_GetFloatData(SqlHandle, 35) - 1) * -100);
-                Pet->lightres = (uint16)((Sql_GetFloatData(SqlHandle, 36) - 1) * -100);
-                Pet->darkres = (uint16)((Sql_GetFloatData(SqlHandle, 37) - 1) * -100);
+                Pet->fireres = 0;
+                Pet->iceres = 0;
+                Pet->windres = 0;
+                Pet->earthres = 0;
+                Pet->thunderres = 0;
+                Pet->waterres = 0;
+                Pet->lightres = 0;
+                Pet->darkres = 0;
 
                 Pet->cmbDelay = (uint16)Sql_GetIntData(SqlHandle, 38);
                 Pet->name_prefix = (uint8)Sql_GetUIntData(SqlHandle, 39);
@@ -1128,28 +1128,28 @@ namespace petutils
 
         PPet->m_SpellListContainer = mobSpellList::GetMobSpellList(petData->spellList);
 
-        PPet->setModifier(Mod::SLASHRES, petData->slashres);
-        PPet->setModifier(Mod::PIERCERES, petData->pierceres);
-        PPet->setModifier(Mod::HTHRES, petData->hthres);
-        PPet->setModifier(Mod::IMPACTRES, petData->impactres);
+        PPet->setModifier( Mod::SLASHSDT, petData->slashsdt);
+        PPet->setModifier( Mod::PIERCESDT, petData->piercesdt);
+        PPet->setModifier( Mod::HTHSDT, petData->hthsdt);
+        PPet->setModifier( Mod::IMPACTSDT, petData->impactsdt);
 
-        PPet->setModifier(Mod::FIREDEF, petData->firedef); // These are stored as floating percentages
-        PPet->setModifier(Mod::ICEDEF, petData->icedef); // and need to be adjusted into modifier units.
-        PPet->setModifier(Mod::WINDDEF, petData->winddef); // Higher DEF = lower damage.
-        PPet->setModifier(Mod::EARTHDEF, petData->earthdef); // Negatives signify increased damage.
-        PPet->setModifier(Mod::THUNDERDEF, petData->thunderdef); // Positives signify reduced damage.
-        PPet->setModifier(Mod::WATERDEF, petData->waterdef); // Ex: 125% damage would be 1.25, 50% damage would be 0.50
-        PPet->setModifier(Mod::LIGHTDEF, petData->lightdef); // (1.25 - 1) * -1000 = -250 DEF
-        PPet->setModifier(Mod::DARKDEF, petData->darkdef); // (0.50 - 1) * -1000 = 500 DEF
+        PPet->setModifier( Mod::FIRESDT, petData->firesdt);
+        PPet->setModifier( Mod::ICESDT, petData->icesdt);
+        PPet->setModifier( Mod::WINDSDT, petData->windsdt);
+        PPet->setModifier( Mod::EARTHSDT, petData->earthsdt);
+        PPet->setModifier( Mod::THUNDERSDT, petData->thundersdt);
+        PPet->setModifier( Mod::WATERSDT, petData->watersdt);
+        PPet->setModifier( Mod::LIGHTSDT, petData->lightsdt);
+        PPet->setModifier( Mod::DARKSDT, petData->darksdt);
 
-        PPet->setModifier(Mod::FIRERES, petData->fireres); // These are stored as floating percentages
-        PPet->setModifier(Mod::ICERES, petData->iceres); // and need to be adjusted into modifier units.
-        PPet->setModifier(Mod::WINDRES, petData->windres); // Higher RES = lower damage.
-        PPet->setModifier(Mod::EARTHRES, petData->earthres); // Negatives signify lower resist chance.
-        PPet->setModifier(Mod::THUNDERRES, petData->thunderres); // Positives signify increased resist chance.
-        PPet->setModifier(Mod::WATERRES, petData->waterres);
-        PPet->setModifier(Mod::LIGHTRES, petData->lightres);
-        PPet->setModifier(Mod::DARKRES, petData->darkres);
+        PPet->setModifier( Mod::FIRERES, petData->fireres);
+        PPet->setModifier( Mod::ICERES, petData->iceres);
+        PPet->setModifier( Mod::WINDRES, petData->windres);
+        PPet->setModifier( Mod::EARTHRES, petData->earthres);
+        PPet->setModifier( Mod::THUNDERRES, petData->thunderres);
+        PPet->setModifier( Mod::WATERRES, petData->waterres);
+        PPet->setModifier( Mod::LIGHTRES, petData->lightres);
+        PPet->setModifier( Mod::DARKRES, petData->darkres);
     }
 
     void DetachPet(CBattleEntity* PMaster)
