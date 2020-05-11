@@ -816,8 +816,16 @@ tpz.effect =
     DYNAMIS                  = 800,
     MEDITATE                 = 801, -- Dummy effect for SAM Meditate JA
     ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
-    -- PLACEHOLDER           = 803, -- Description
-    -- 803-1022
+    NUKEWALL_FIRE            = 803,
+    NUKEWALL_EARTH           = 804,
+    NUKEWALL_WATER           = 805,
+    NUKEWALL_WIND            = 806,
+    NUKEWALL_ICE             = 807,
+    NUKEWALL_LIGHTNING       = 808,
+    NUKEWALL_LIGHT           = 809,
+    NUKEWALL_DARK            = 810,
+    -- PLACEHOLDER              = 811, -- Description
+    -- 802-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
