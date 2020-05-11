@@ -824,7 +824,8 @@ tpz.effect =
     NUKEWALL_LIGHTNING       = 808,
     NUKEWALL_LIGHT           = 809,
     NUKEWALL_DARK            = 810,
-    -- PLACEHOLDER              = 811, -- Description
+    CUMULATIVE_MAGIC_BONUS   = 811, -- for -ja spells
+    -- PLACEHOLDER              = 812, -- Description
     -- 802-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }

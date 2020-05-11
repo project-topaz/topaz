@@ -683,6 +683,7 @@ INSERT INTO `status_effects` VALUES (807,'nukewall_ice',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (808,'nukewall_lightning',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (809,'nukewall_light',32,0,0,0,0,0,0,0);
 INSERT INTO `status_effects` VALUES (810,'nukewall_dark',32,0,0,0,0,0,0,0);
+INSERT INTO `status_effects` VALUES (811,'cumulative_magic_bonus',32,0,0,0,0,0,0,0); -- for -ja spells
 
 /*!40000 ALTER TABLE `status_effects` ENABLE KEYS */;
 UNLOCK TABLES;

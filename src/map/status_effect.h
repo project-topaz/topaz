@@ -729,6 +729,7 @@ enum EFFECT
     EFFECT_NUKEWALL_LIGHTNING       = 808,
     EFFECT_NUKEWALL_LIGHT           = 809,
     EFFECT_NUKEWALL_DARK            = 810,
+    EFFECT_CUMULATIVE_MAGIC_BONUS   = 811, // for -ja spells
     // EFFECT_PLACEHOLDER              = 802 // Description
     // 811-1022
     // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
