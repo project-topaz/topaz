@@ -125,6 +125,7 @@ enum class Mod
     STORETP                   = 73, // Increases the rate at which TP is gained
     TACTICAL_PARRY            = 486, // Tactical Parry Tp Bonus
     MAG_BURST_BONUS           = 487, // Magic Burst Bonus Modifier (percent)
+    MAG_BURST_BONUS_TRAIT     = 502, // Magic Burst Bonus Trait (handled separately than above because he is not subjected to cap)
     INHIBIT_TP                = 488, // Inhibits TP Gain (percent)
 
     // Working Skills (weapon combat skills)

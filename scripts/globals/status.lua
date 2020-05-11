@@ -1365,6 +1365,7 @@ tpz.mod =
     AUSPICE_EFFECT                  = 484, -- Auspice Subtle Blow Bonus
     TACTICAL_PARRY                  = 486, -- Tactical Parry TP Bonus
     MAG_BURST_BONUS                 = 487, -- Magic Burst Bonus
+    MAG_BURST_BONUS_TRAIT           = 502, -- Magic Burst Bonus Trait (handled separately than above because he is not subjected to cap)
     INHIBIT_TP                      = 488, -- Inhibits TP Gain (percent)
 
     GOV_CLEARS                      = 496, -- Tracks GoV page completion (for 4% bonus on rewards).
