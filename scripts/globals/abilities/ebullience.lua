@@ -26,7 +26,7 @@ function onAbilityCheck(player, target, ability)
 end
 
 function onUseAbility(player, target, ability)
-    player:addStatusEffect(tpz.effect.EBULLIENCE, 1, 0, 60)
+    player:addStatusEffect(tpz.effect.EBULLIENCE, 20, 0, 60)
 
     return tpz.effect.EBULLIENCE
 end
