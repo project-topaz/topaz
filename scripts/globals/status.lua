@@ -1462,6 +1462,7 @@ tpz.mod =
     BARSPELL_MDEF_BONUS             = 827, -- Extra magic defense bonus granted to the bar- spell effect
     RAPTURE_AMOUNT                  = 568, -- Bonus amount added to Rapture effect
     EBULLIENCE_AMOUNT               = 569, -- Bonus amount added to Ebullience effect
+    FOCALIZATION_AMOUNT             = 571, -- MAC added by Focalization
     WYVERN_EFFECTIVE_BREATH         = 829, -- Increases the threshold for triggering healing breath
     AQUAVEIL_COUNT                  = 832, -- Modifies the amount of hits that Aquaveil absorbs before being removed
     SONG_RECAST_DELAY               = 833, -- Reduces song recast time in seconds.
