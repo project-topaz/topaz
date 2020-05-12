@@ -153,24 +153,21 @@ end
 ---------------------------------------------------------------------------------------------
 -- Desc: Drop rate check, calculates all drop rate modifiers.
 ---------------------------------------------------------------------------------------------
-local function canDropCasket(player)
+local function dropChance(player)
     -----------------------------------------------------------------------------------------
     -- NOTES: 10% base drop rate.
     -- Super Kupowers(Myriad Mystery Boxes) adds 10% drop rate to the base rate.
-    -- GoV Prowess Increased Treasure Casket Discovery adds 1% per level (max 5 levels)
-    -- This should be max 5 levels but its 11 right now - Teo says the regimes global needs fixing
+    -- GoV Prowess Increased Treasure Casket Discovery adds 5% per level (max 5 levels)
+    -- for a total of 25% increase. -- NOTE this needs to be confirmed!
     -----------------------------------------------------------------------------------------
-    local baseCasketRate      = 10 -- 1 power = 1%
+    --local kupowerMMBEffect    = player:getStatusEffect(tpz.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES)  -- Super Kupowers Myriad Mystery Boxes not implimented yet.
     local casketProwessEffect = player:getStatusEffect(tpz.effect.PROWESS_CASKET_RATE)
     local kupowersMMBPower    = 0
     local prowessCasketsPower = 0
 
-    --[[ Super Kupowers Myriad Mystery Boxes not implimented yet.
-    if player:hasStatusEffect(tpz.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES) then
-        local kupowerMMBEffect = player:getStatusEffect(tpz.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES)
-        kupowersMMBPower = kupowerMMBEffect:getPower()
-    end
-    ]]
+    --if player:hasStatusEffect(tpz.effect.KUPOWERS_MYRIAD_MYSTERY_BOXES) then                       -- Super Kupowers Myriad Mystery Boxes not implimented yet.
+    --     kupowersMMBPower = kupowerMMBEffect:getPower()
+    --end
 
     if player:hasStatusEffect(tpz.effect.PROWESS_CASKET_RATE) then
         prowessCasketsPower = casketProwessEffect:getPower()
@@ -205,8 +202,9 @@ end
 -- Desc: Despawn a chest and reset its local var's
 ----------------------------------------------------------------------------------
 local function removeChest(npc)
-    npc:despawnNPC()
-    npc:releaseAllFromNPC()
+    npc:AnimationSub(0)
+    npc:setStatus(tpz.status.DISAPPEAR)
+    npc:setLocalVar("[caskets]SPAWNSTATUS", casketInfo.spawnStatus.DESPAWNED)
 end
 
 ---------------------------------------------------------------------------------------------
@@ -227,7 +225,7 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
     --     kupowersBonus = 0.2
     -- end
 
-    if typeChance < 0.5 + kupowersBonus then
+    if typeChance < 0.2 + kupowersBonus then
         chestStyle = 966 -- Brown locked
     else
         chestStyle = 965 -- Blue
@@ -260,13 +258,12 @@ local function setCasketData(player, x, y, z, r, npc, partyID, mobLvl)
         npc:setLocalVar("[caskets]SPAWNTIME", os.time())
         npc:setPos(x, y, z, r)
         npc:setStatus(tpz.status.NORMAL)
-        --npc:entityAnimationPacket("deru")
+        npc:entityAnimationPacket("deru")
         npc:setModelId(chestStyle)
         sendChestDropMessage(player)
         -------------------------------------------------------
         -- Despawn chest after 3 Mins
         -------------------------------------------------------
-        -- npc:showNPC(180)
         npc:timer(180000, function(npc)
             removeChest(npc)
         end)
@@ -413,7 +410,6 @@ function getDrops(npc, dropType, zoneId)
         local temps        = {0,0,0}
         local tempCount    = 1
         local randomTable  = {1,3,1,2,1,2,1,1,3,1,2,1}
-        local tempDrops    = {}
 
         if casketInfo.splitZones[zoneId] then
             local mobLvl = npc:getLocalVar("[caskets]MOBLVL")
@@ -456,11 +452,9 @@ function getDrops(npc, dropType, zoneId)
     -- Item drops
     ----------------------------------------------
     elseif chestType == "items" then
-        local items           = {0,0,0,0}
-        local itemCount       = 1
-        local randomTable     = {1,1,1,4,1,1,1,2,1,1,2,1,1,1,3,1,2,1,1,1,1}
-        local drops           = {}
-        local canDropReigonal = true
+        local items        = {0,0,0,0}
+        local itemCount    = 1
+        local randomTable  = {1,4,1,3,1,1,2,1,3,1,2,1}
 
         if casketInfo.splitZones[zoneId] then
             local mobLvl = npc:getLocalVar("[caskets]MOBLVL")
@@ -631,20 +625,17 @@ local function giveItem(player, npc, itemNum)
         end
     end
 end
+
 ---------------------------------------------------------------------------------------------
 -- Desc: Casket spawn checks, runs through all checks before spawning
 ---------------------------------------------------------------------------------------------
-tpz.caskets.spawnCasket = function (mob, player, x, y, z, r)
-    if mob == nil or player == nil then
-        return
-    end
-
+tpz.caskets.spawnCasket = function (player, mob, x, y, z, r)
     local chestId    = getCasketID(mob)
     local npc        = GetNPCByID(chestId)
     local chestOwner = player:getLeaderID()
 
     if chestId == 0 then
-       return
+        return
     end
 
     if dropChance(player) then
