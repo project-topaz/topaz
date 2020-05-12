@@ -17,4 +17,8 @@ end
 
 function onEventFinish(player, csid, option)
     tpz.caskets.onEventFinish(player, csid, option)
+<<<<<<< HEAD
 end
+=======
+end
+>>>>>>> casket
