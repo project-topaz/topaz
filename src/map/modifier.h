@@ -800,6 +800,17 @@ enum class Mod
     CONQUEST_REGION_BONUS     = 934, // Increases the influence points awarded to the player's nation when receiving conquest points
     CAMPAIGN_BONUS            = 935, // Increases the evaluation for allied forces by percentage
 
+    /// New version for Staff Mods
+    /// https://www.bg-wiki.com/bg/Vulcan%27s_Staff
+    FIRE_MAGIC_POTENCY        = 970,
+    EARTH_MAGIC_POTENCY       = 971,
+    WATER_MAGIC_POTENCY       = 972,
+    WIND_MAGIC_POTENCY        = 973,
+    ICE_MAGIC_POTENCY         = 974,
+    LIGHTNING_MAGIC_POTENCY   = 975,
+    LIGHT_MAGIC_POTENCY       = 976,
+    DARK_MAGIC_POTENCY        = 977,
+
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.
     // SPARE = 964, // stuff

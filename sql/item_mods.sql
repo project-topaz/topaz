@@ -21017,117 +21017,105 @@ INSERT INTO `item_mods` VALUES (17543,23,10);
 INSERT INTO `item_mods` VALUES (17543,25,3);
 INSERT INTO `item_mods` VALUES (17544,23,12);
 INSERT INTO `item_mods` VALUES (17544,25,4);
-INSERT INTO `item_mods` VALUES (17545,8,4);
+INSERT INTO `item_mods` VALUES (17545,8,4);     -- Fire Staff https://www.bg-wiki.com/bg/Fire_Staff
 INSERT INTO `item_mods` VALUES (17545,23,10);
 INSERT INTO `item_mods` VALUES (17545,24,10);
 INSERT INTO `item_mods` VALUES (17545,16,15); 
-INSERT INTO `item_mods` VALUES (17545,347,2);
-INSERT INTO `item_mods` VALUES (17545,350,-2);
-INSERT INTO `item_mods` VALUES (17545,544,2);
-INSERT INTO `item_mods` VALUES (17545,547,-2);
+INSERT INTO `item_mods` VALUES (17545,970,10);  -- Fire Magic Potency
+INSERT INTO `item_mods` VALUES (17545,974,-10); -- Ice Magic Potency
+INSERT INTO `item_mods` VALUES (17545,40,20);   -- Fire Magic ACC
 INSERT INTO `item_mods` VALUES (17545,553,2);
 INSERT INTO `item_mods` VALUES (17545,556,-2);
-INSERT INTO `item_mods` VALUES (17546,8,5);
+INSERT INTO `item_mods` VALUES (17546,8,5);     -- Vulcan's Staff https://www.bg-wiki.com/bg/Vulcan%27s_Staff
 INSERT INTO `item_mods` VALUES (17546,23,10);
 INSERT INTO `item_mods` VALUES (17546,24,10);
 INSERT INTO `item_mods` VALUES (17546,16,20); 
-INSERT INTO `item_mods` VALUES (17546,347,3);
-INSERT INTO `item_mods` VALUES (17546,350,-3);
-INSERT INTO `item_mods` VALUES (17546,544,3);
-INSERT INTO `item_mods` VALUES (17546,547,-3);
+INSERT INTO `item_mods` VALUES (17546,970,15);  -- Fire Magic Potency
+INSERT INTO `item_mods` VALUES (17546,974,-15); -- Ice Magic Potency
+INSERT INTO `item_mods` VALUES (17546,40,30);   -- Fire Magic ACC
 INSERT INTO `item_mods` VALUES (17546,553,3);
 INSERT INTO `item_mods` VALUES (17546,556,-3);
-INSERT INTO `item_mods` VALUES (17547,12,4);
+INSERT INTO `item_mods` VALUES (17547,12,4);    -- Ice Staff https://www.bg-wiki.com/bg/Ice_Staff
 INSERT INTO `item_mods` VALUES (17547,17,15); 
 INSERT INTO `item_mods` VALUES (17547,115,10);
-INSERT INTO `item_mods` VALUES (17547,350,2);
-INSERT INTO `item_mods` VALUES (17547,352,-2);
-INSERT INTO `item_mods` VALUES (17547,547,2);
-INSERT INTO `item_mods` VALUES (17547,549,-2);
+INSERT INTO `item_mods` VALUES (17547,974,10);  -- Ice Magic Potency
+INSERT INTO `item_mods` VALUES (17547,973,-10); -- Wind Magic Potency
+INSERT INTO `item_mods` VALUES (17547,41,20);   -- Ice Magic ACC
 INSERT INTO `item_mods` VALUES (17547,556,2);
 INSERT INTO `item_mods` VALUES (17547,558,-2);
-INSERT INTO `item_mods` VALUES (17548,12,5);
+INSERT INTO `item_mods` VALUES (17548,12,5);    -- Aquilo's Staff https://www.bg-wiki.com/bg/Aquilo%27s_Staff
 INSERT INTO `item_mods` VALUES (17548,17,20); 
 INSERT INTO `item_mods` VALUES (17548,115,10);
-INSERT INTO `item_mods` VALUES (17548,350,3);
-INSERT INTO `item_mods` VALUES (17548,352,-3);
-INSERT INTO `item_mods` VALUES (17548,547,3);
-INSERT INTO `item_mods` VALUES (17548,549,-3);
+INSERT INTO `item_mods` VALUES (17548,974,15);  -- Ice Magic Potency
+INSERT INTO `item_mods` VALUES (17548,973,-15); -- Wind Magic Potency
+INSERT INTO `item_mods` VALUES (17548,41,30);   -- Ice Magic ACC
 INSERT INTO `item_mods` VALUES (17548,556,3);
 INSERT INTO `item_mods` VALUES (17548,558,-3);
-INSERT INTO `item_mods` VALUES (17549,11,4);
+INSERT INTO `item_mods` VALUES (17549,11,4);    -- Wind Staff https://www.bg-wiki.com/bg/Wind_Staff
 INSERT INTO `item_mods` VALUES (17549,18,15); 
 INSERT INTO `item_mods` VALUES (17549,68,10);
-INSERT INTO `item_mods` VALUES (17549,348,-2);
-INSERT INTO `item_mods` VALUES (17549,352,2);
-INSERT INTO `item_mods` VALUES (17549,545,-2);
-INSERT INTO `item_mods` VALUES (17549,549,2);
+INSERT INTO `item_mods` VALUES (17549,973,10);  -- Wind Magic Potency
+INSERT INTO `item_mods` VALUES (17549,971,-10); -- Earth Magic Potency
+INSERT INTO `item_mods` VALUES (17549,42,20);   -- Wind Magic ACC
 INSERT INTO `item_mods` VALUES (17549,554,-2);
 INSERT INTO `item_mods` VALUES (17549,558,2);
-INSERT INTO `item_mods` VALUES (17550,11,5);
+INSERT INTO `item_mods` VALUES (17550,11,5);    -- Auster's Staff https://www.bg-wiki.com/bg/Auster%27s_Staff
 INSERT INTO `item_mods` VALUES (17550,18,20); 
 INSERT INTO `item_mods` VALUES (17550,68,10);
-INSERT INTO `item_mods` VALUES (17550,348,-3);
-INSERT INTO `item_mods` VALUES (17550,352,3);
-INSERT INTO `item_mods` VALUES (17550,545,-3);
-INSERT INTO `item_mods` VALUES (17550,549,3);
+INSERT INTO `item_mods` VALUES (17550,973,15);  -- Wind Magic Potency
+INSERT INTO `item_mods` VALUES (17550,971,-15); -- Earth Magic Potency
+INSERT INTO `item_mods` VALUES (17550,42,30);   -- Wind Magic ACC
 INSERT INTO `item_mods` VALUES (17550,554,-3);
 INSERT INTO `item_mods` VALUES (17550,558,3);
-INSERT INTO `item_mods` VALUES (17551,10,4);
+INSERT INTO `item_mods` VALUES (17551,10,4);    -- Earth Staff https://www.bg-wiki.com/bg/Earth_Staff
 INSERT INTO `item_mods` VALUES (17551,19,15); 
 INSERT INTO `item_mods` VALUES (17551,161,-20);
-INSERT INTO `item_mods` VALUES (17551,348,2);
-INSERT INTO `item_mods` VALUES (17551,351,-2);
-INSERT INTO `item_mods` VALUES (17551,545,2);
-INSERT INTO `item_mods` VALUES (17551,548,-2);
+INSERT INTO `item_mods` VALUES (17551,971,10);  -- Earth Magic Potency
+INSERT INTO `item_mods` VALUES (17551,975,-10); -- Lightning Magic Potency
+INSERT INTO `item_mods` VALUES (17551,43,20);   -- Earth Magic ACC
 INSERT INTO `item_mods` VALUES (17551,554,2);
 INSERT INTO `item_mods` VALUES (17551,557,-2);
-INSERT INTO `item_mods` VALUES (17552,10,5);
-INSERT INTO `item_mods` VALUES (17552,19,20); 
+INSERT INTO `item_mods` VALUES (17552,10,5);    -- Terra's Staff https://www.bg-wiki.com/bg/Terra%27s_Staff
+INSERT INTO `item_mods` VALUES (17552,19,20);
 INSERT INTO `item_mods` VALUES (17552,161,-20);
-INSERT INTO `item_mods` VALUES (17552,348,3);
-INSERT INTO `item_mods` VALUES (17552,351,-3);
-INSERT INTO `item_mods` VALUES (17552,545,3);
-INSERT INTO `item_mods` VALUES (17552,548,-3);
+INSERT INTO `item_mods` VALUES (17552,971,10);  -- Earth Magic Potency
+INSERT INTO `item_mods` VALUES (17552,975,-10); -- Lightning Magic Potency
+INSERT INTO `item_mods` VALUES (17552,43,30);   -- Earth Magic ACC
 INSERT INTO `item_mods` VALUES (17552,554,3);
 INSERT INTO `item_mods` VALUES (17552,557,-3);
-INSERT INTO `item_mods` VALUES (17553,9,4);
+INSERT INTO `item_mods` VALUES (17553,9,4);     -- Thunder Staff https://www.bg-wiki.com/bg/Thunder_Staff
 INSERT INTO `item_mods` VALUES (17553,20,15); 
 INSERT INTO `item_mods` VALUES (17553,165,15);
-INSERT INTO `item_mods` VALUES (17553,349,-2);
-INSERT INTO `item_mods` VALUES (17553,351,2);
-INSERT INTO `item_mods` VALUES (17553,546,-2);
-INSERT INTO `item_mods` VALUES (17553,548,2);
+INSERT INTO `item_mods` VALUES (17553,975,10);  -- Lightning Magic Potency
+INSERT INTO `item_mods` VALUES (17553,972,-10); -- Water Magic Potency
+INSERT INTO `item_mods` VALUES (17553,44,20);   -- Lightning Magic ACC
 INSERT INTO `item_mods` VALUES (17553,555,-2);
 INSERT INTO `item_mods` VALUES (17553,557,2);
-INSERT INTO `item_mods` VALUES (17554,9,5);
+INSERT INTO `item_mods` VALUES (17554,9,5);     -- Jupiter's Staff https://www.bg-wiki.com/bg/Jupiter%27s_Staff
 INSERT INTO `item_mods` VALUES (17554,20,20); 
 INSERT INTO `item_mods` VALUES (17554,165,15);
-INSERT INTO `item_mods` VALUES (17554,349,-3);
-INSERT INTO `item_mods` VALUES (17554,351,3);
-INSERT INTO `item_mods` VALUES (17554,546,-3);
-INSERT INTO `item_mods` VALUES (17554,548,3);
+INSERT INTO `item_mods` VALUES (17554,975,15);  -- Lightning Magic Potency
+INSERT INTO `item_mods` VALUES (17554,972,-15); -- Water Magic Potency
+INSERT INTO `item_mods` VALUES (17554,44,30);   -- Lightning Magic ACC
 INSERT INTO `item_mods` VALUES (17554,555,-3);
 INSERT INTO `item_mods` VALUES (17554,557,3);
-INSERT INTO `item_mods` VALUES (17555,13,4);
+INSERT INTO `item_mods` VALUES (17555,13,4);    -- Water Staff https://www.bg-wiki.com/bg/Water_Staff
 INSERT INTO `item_mods` VALUES (17555,15,15); 
 INSERT INTO `item_mods` VALUES (17555,111,10);
-INSERT INTO `item_mods` VALUES (17555,347,-2);
-INSERT INTO `item_mods` VALUES (17555,349,2);
-INSERT INTO `item_mods` VALUES (17555,544,-2);
-INSERT INTO `item_mods` VALUES (17555,546,2);
+INSERT INTO `item_mods` VALUES (17555,972,10);  -- Water Magic Potency
+INSERT INTO `item_mods` VALUES (17555,970,-10); -- Fire Magic Potency
+INSERT INTO `item_mods` VALUES (17555,45,20);   -- Water Magic ACC
 INSERT INTO `item_mods` VALUES (17555,553,-2);
 INSERT INTO `item_mods` VALUES (17555,555,2);
-INSERT INTO `item_mods` VALUES (17556,13,5);
+INSERT INTO `item_mods` VALUES (17556,13,5);    -- Neptune's Staff https://www.bg-wiki.com/bg/Neptune%27s_Staff
 INSERT INTO `item_mods` VALUES (17556,15,20); 
 INSERT INTO `item_mods` VALUES (17556,111,10);
-INSERT INTO `item_mods` VALUES (17556,347,-3);
-INSERT INTO `item_mods` VALUES (17556,349,3);
-INSERT INTO `item_mods` VALUES (17556,544,-3);
-INSERT INTO `item_mods` VALUES (17556,546,3);
+INSERT INTO `item_mods` VALUES (17556,972,15);  -- Water Magic Potency
+INSERT INTO `item_mods` VALUES (17556,970,-15); -- Fire Magic Potency
+INSERT INTO `item_mods` VALUES (17556,45,30);   -- Water Magic ACC
 INSERT INTO `item_mods` VALUES (17556,553,-3);
 INSERT INTO `item_mods` VALUES (17556,555,3);
-INSERT INTO `item_mods` VALUES (17557,8,1);
+INSERT INTO `item_mods` VALUES (17557,8,1);     -- Light Staff https://www.bg-wiki.com/bg/Light_Staff
 INSERT INTO `item_mods` VALUES (17557,9,1);
 INSERT INTO `item_mods` VALUES (17557,10,1);
 INSERT INTO `item_mods` VALUES (17557,11,1);
@@ -21135,15 +21123,14 @@ INSERT INTO `item_mods` VALUES (17557,12,1);
 INSERT INTO `item_mods` VALUES (17557,13,1);
 INSERT INTO `item_mods` VALUES (17557,14,1);
 INSERT INTO `item_mods` VALUES (17557,22,15); 
-INSERT INTO `item_mods` VALUES (17557,353,2);
-INSERT INTO `item_mods` VALUES (17557,354,-2);
-INSERT INTO `item_mods` VALUES (17557,550,2);
-INSERT INTO `item_mods` VALUES (17557,551,-2);
+INSERT INTO `item_mods` VALUES (17557,976,10);  -- Light Magic Potency
+INSERT INTO `item_mods` VALUES (17557,977,-10); -- Dark Magic Potency
+INSERT INTO `item_mods` VALUES (17557,46,20);   -- Light Magic ACC
 INSERT INTO `item_mods` VALUES (17557,559,2);
 INSERT INTO `item_mods` VALUES (17557,560,-2);
 INSERT INTO `item_mods` VALUES (17557,374,10);
 INSERT INTO `item_mods` VALUES (17557,391,10);
-INSERT INTO `item_mods` VALUES (17558,8,2);
+INSERT INTO `item_mods` VALUES (17558,8,2);     -- Apollo's Staff https://www.bg-wiki.com/bg/Apollo%27s_Staff
 INSERT INTO `item_mods` VALUES (17558,9,2);
 INSERT INTO `item_mods` VALUES (17558,10,2);
 INSERT INTO `item_mods` VALUES (17558,11,2);
@@ -21151,15 +21138,14 @@ INSERT INTO `item_mods` VALUES (17558,12,2);
 INSERT INTO `item_mods` VALUES (17558,13,2);
 INSERT INTO `item_mods` VALUES (17558,14,2);
 INSERT INTO `item_mods` VALUES (17558,22,20); 
-INSERT INTO `item_mods` VALUES (17558,353,3);
-INSERT INTO `item_mods` VALUES (17558,354,-3);
-INSERT INTO `item_mods` VALUES (17558,550,3);
-INSERT INTO `item_mods` VALUES (17558,551,-3);
+INSERT INTO `item_mods` VALUES (17558,976,15);  -- Light Magic Potency
+INSERT INTO `item_mods` VALUES (17558,977,-15); -- Dark Magic Potency
+INSERT INTO `item_mods` VALUES (17558,46,30);   -- Light Magic ACC
 INSERT INTO `item_mods` VALUES (17558,559,3);
 INSERT INTO `item_mods` VALUES (17558,560,-3);
 INSERT INTO `item_mods` VALUES (17558,374,10);
 INSERT INTO `item_mods` VALUES (17558,391,15);
-INSERT INTO `item_mods` VALUES (17559,8,1);
+INSERT INTO `item_mods` VALUES (17559,8,1);     -- Dark Staff https://www.bg-wiki.com/bg/Dark_Staff
 INSERT INTO `item_mods` VALUES (17559,9,1);
 INSERT INTO `item_mods` VALUES (17559,10,1);
 INSERT INTO `item_mods` VALUES (17559,11,1);
@@ -21168,13 +21154,12 @@ INSERT INTO `item_mods` VALUES (17559,13,1);
 INSERT INTO `item_mods` VALUES (17559,14,1);
 INSERT INTO `item_mods` VALUES (17559,21,15); 
 INSERT INTO `item_mods` VALUES (17559,71,10);
-INSERT INTO `item_mods` VALUES (17559,353,-2);
-INSERT INTO `item_mods` VALUES (17559,354,2);
-INSERT INTO `item_mods` VALUES (17559,550,-2);
-INSERT INTO `item_mods` VALUES (17559,551,2);
+INSERT INTO `item_mods` VALUES (17559,977,10);  -- Dark Magic Potency
+INSERT INTO `item_mods` VALUES (17559,976,-10); -- Light Magic Potency
+INSERT INTO `item_mods` VALUES (17559,47,20);   -- Dark Magic ACC
 INSERT INTO `item_mods` VALUES (17559,559,-2);
 INSERT INTO `item_mods` VALUES (17559,560,2);
-INSERT INTO `item_mods` VALUES (17560,8,2);
+INSERT INTO `item_mods` VALUES (17560,8,2);     -- Pluto's Staff https://www.bg-wiki.com/bg/Pluto%27s_Staff
 INSERT INTO `item_mods` VALUES (17560,9,2);
 INSERT INTO `item_mods` VALUES (17560,10,2);
 INSERT INTO `item_mods` VALUES (17560,11,2);
@@ -21183,10 +21168,9 @@ INSERT INTO `item_mods` VALUES (17560,13,2);
 INSERT INTO `item_mods` VALUES (17560,14,2);
 INSERT INTO `item_mods` VALUES (17560,21,20); 
 INSERT INTO `item_mods` VALUES (17560,71,10);
-INSERT INTO `item_mods` VALUES (17560,353,-3);
-INSERT INTO `item_mods` VALUES (17560,354,3);
-INSERT INTO `item_mods` VALUES (17560,550,-3);
-INSERT INTO `item_mods` VALUES (17560,551,3);
+INSERT INTO `item_mods` VALUES (17560,977,15);  -- Dark Magic Potency
+INSERT INTO `item_mods` VALUES (17560,976,-15); -- Light Magic Potency
+INSERT INTO `item_mods` VALUES (17560,47,30);   -- Dark Magic ACC
 INSERT INTO `item_mods` VALUES (17560,559,-3);
 INSERT INTO `item_mods` VALUES (17560,560,3);
 INSERT INTO `item_mods` VALUES (17561,2,9);
@@ -22630,22 +22614,22 @@ INSERT INTO `item_mods` VALUES (18632,21,15);      -- Light resistance +15
 INSERT INTO `item_mods` VALUES (18632,22,15);      -- Dark resistance +15
 INSERT INTO `item_mods` VALUES (18632,71,10);     -- MP recovered while healing +10
 INSERT INTO `item_mods` VALUES (18632,374,10);    -- Cure potency +10%
-INSERT INTO `item_mods` VALUES (18632,347,2);     -- Fire affinity damage +10%
-INSERT INTO `item_mods` VALUES (18632,348,2);     -- Earth affinity damage +10%
-INSERT INTO `item_mods` VALUES (18632,349,2);     -- Water affinity damage +10%
-INSERT INTO `item_mods` VALUES (18632,350,2);     -- Ice affinity damage +10%
-INSERT INTO `item_mods` VALUES (18632,351,2);     -- Thunder affinity damage +10%
-INSERT INTO `item_mods` VALUES (18632,352,2);     -- Wind affinity damage +10%
-INSERT INTO `item_mods` VALUES (18632,353,2);     -- Light affinity damage +10%
-INSERT INTO `item_mods` VALUES (18632,354,2);     -- Dark affinity damage +10%
-INSERT INTO `item_mods` VALUES (18632,544,2);     -- Fire affinity accuracy +20
-INSERT INTO `item_mods` VALUES (18632,545,2);     -- Earth affinity accuracy +20
-INSERT INTO `item_mods` VALUES (18632,546,2);     -- Water affinity accuracy +20
-INSERT INTO `item_mods` VALUES (18632,547,2);     -- Ice affinity accuracy +20
-INSERT INTO `item_mods` VALUES (18632,548,2);     -- Thunder affinity accuracy +20
-INSERT INTO `item_mods` VALUES (18632,549,2);     -- Wind affinity accuracy +20
-INSERT INTO `item_mods` VALUES (18632,550,2);     -- Light affinity accuracy +20
-INSERT INTO `item_mods` VALUES (18632,551,2);     -- Dark affinity accuracy +20
+INSERT INTO `item_mods` VALUES (18632,970,10);    -- Magic Potencies
+INSERT INTO `item_mods` VALUES (18632,971,10);
+INSERT INTO `item_mods` VALUES (18632,972,10);
+INSERT INTO `item_mods` VALUES (18632,973,10);
+INSERT INTO `item_mods` VALUES (18632,974,10);
+INSERT INTO `item_mods` VALUES (18632,975,10);
+INSERT INTO `item_mods` VALUES (18632,976,10);
+INSERT INTO `item_mods` VALUES (18632,977,10);
+INSERT INTO `item_mods` VALUES (18632,40,20);     -- Magic Accuracies
+INSERT INTO `item_mods` VALUES (18632,41,20);
+INSERT INTO `item_mods` VALUES (18632,42,20);
+INSERT INTO `item_mods` VALUES (18632,43,20);
+INSERT INTO `item_mods` VALUES (18632,44,20);
+INSERT INTO `item_mods` VALUES (18632,45,20);
+INSERT INTO `item_mods` VALUES (18632,46,20);
+INSERT INTO `item_mods` VALUES (18632,47,20);
 INSERT INTO `item_mods` VALUES (18632,553,2);     -- Fire affinity perpetuation cost -2
 INSERT INTO `item_mods` VALUES (18632,554,2);     -- Earth affinity perpetuation cost -2
 INSERT INTO `item_mods` VALUES (18632,555,2);     -- Water affinity perpetuation cost -2
@@ -22672,22 +22656,22 @@ INSERT INTO `item_mods` VALUES (18633,21,20);      -- Light resistance +20
 INSERT INTO `item_mods` VALUES (18633,22,20);      -- Dark resistance +20
 INSERT INTO `item_mods` VALUES (18633,71,10);     -- MP recovered while healing +10
 INSERT INTO `item_mods` VALUES (18633,374,10);    -- Cure potency +10%
-INSERT INTO `item_mods` VALUES (18633,347,3);     -- Fire affinity damage +15%
-INSERT INTO `item_mods` VALUES (18633,348,3);     -- Earth affinity damage +15%
-INSERT INTO `item_mods` VALUES (18633,349,3);     -- Water affinity damage +15%
-INSERT INTO `item_mods` VALUES (18633,350,3);     -- Ice affinity damage +15%
-INSERT INTO `item_mods` VALUES (18633,351,3);     -- Thunder affinity damage +15%
-INSERT INTO `item_mods` VALUES (18633,352,3);     -- Wind affinity damage +15%
-INSERT INTO `item_mods` VALUES (18633,353,3);     -- Light affinity damage +15%
-INSERT INTO `item_mods` VALUES (18633,354,3);     -- Dark affinity damage +15%
-INSERT INTO `item_mods` VALUES (18633,544,3);     -- Fire affinity accuracy +30
-INSERT INTO `item_mods` VALUES (18633,545,3);     -- Earth affinity accuracy +30
-INSERT INTO `item_mods` VALUES (18633,546,3);     -- Water affinity accuracy +30
-INSERT INTO `item_mods` VALUES (18633,547,3);     -- Ice affinity accuracy +30
-INSERT INTO `item_mods` VALUES (18633,548,3);     -- Thunder affinity accuracy +30
-INSERT INTO `item_mods` VALUES (18633,549,3);     -- Wind affinity accuracy +30
-INSERT INTO `item_mods` VALUES (18633,550,3);     -- Light affinity accuracy +30
-INSERT INTO `item_mods` VALUES (18633,551,3);     -- Dark affinity accuracy +30
+INSERT INTO `item_mods` VALUES (18633,970,15);    -- Magic Potencies
+INSERT INTO `item_mods` VALUES (18633,971,15);
+INSERT INTO `item_mods` VALUES (18633,972,15);
+INSERT INTO `item_mods` VALUES (18633,973,15);
+INSERT INTO `item_mods` VALUES (18633,974,15);
+INSERT INTO `item_mods` VALUES (18633,975,15);
+INSERT INTO `item_mods` VALUES (18633,976,15);
+INSERT INTO `item_mods` VALUES (18633,977,15);
+INSERT INTO `item_mods` VALUES (18633,40,30);     -- Magic Accuracies
+INSERT INTO `item_mods` VALUES (18633,41,30);
+INSERT INTO `item_mods` VALUES (18633,42,30);
+INSERT INTO `item_mods` VALUES (18633,43,30);
+INSERT INTO `item_mods` VALUES (18633,44,30);
+INSERT INTO `item_mods` VALUES (18633,45,30);
+INSERT INTO `item_mods` VALUES (18633,46,30);
+INSERT INTO `item_mods` VALUES (18633,47,30);
 INSERT INTO `item_mods` VALUES (18633,553,3);     -- Fire affinity perpetuation cost -3
 INSERT INTO `item_mods` VALUES (18633,554,3);     -- Earth affinity perpetuation cost -3
 INSERT INTO `item_mods` VALUES (18633,555,3);     -- Water affinity perpetuation cost -3
