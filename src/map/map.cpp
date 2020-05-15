@@ -978,6 +978,8 @@ int32 map_config_default()
     map_config.mob_mp_multiplier = 1.0f;
     map_config.player_mp_multiplier = 1.0f;
     map_config.sj_mp_divisor = 2.0f;
+    map_config.subjob_ratio = 1;
+    map_config.include_mob_sj = false;
     map_config.nm_stat_multiplier = 1.0f;
     map_config.mob_stat_multiplier = 1.0f;
     map_config.player_stat_multiplier = 1.0f;
@@ -988,6 +990,7 @@ int32 map_config_default()
     map_config.max_time_lastupdate = 60000;
     map_config.newstyle_skillups = 7;
     map_config.drop_rate_multiplier = 1.0f;
+    map_config.mob_gil_multiplier = 1.0f;
     map_config.all_mobs_gil_bonus = 0;
     map_config.max_gil_bonus = 9999;
     map_config.Battle_cap_tweak = 0;
@@ -1163,6 +1166,14 @@ int32 map_config_read(const int8* cfgName)
         {
             map_config.sj_mp_divisor = (float)atof(w2);
         }
+        else if (strcmp(w1, "subjob_ratio") == 0)
+        {
+            map_config.subjob_ratio = atoi(w2);
+        }
+        else if (strcmp(w1, "include_mob_sj") == 0)
+        {
+            map_config.include_mob_sj = atoi(w2);
+        }
         else if (strcmp(w1, "nm_stat_multiplier") == 0)
         {
             map_config.nm_stat_multiplier = (float)atof(w2);
@@ -1186,6 +1197,10 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "drop_rate_multiplier") == 0)
         {
             map_config.drop_rate_multiplier = (float)atof(w2);
+        }
+        else if (strcmp(w1, "mob_gil_multiplier") == 0)
+        {
+            map_config.mob_gil_multiplier = (float)atof(w2);
         }
         else if (strcmp(w1, "all_mobs_gil_bonus") == 0)
         {
