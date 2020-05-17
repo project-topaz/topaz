@@ -18,7 +18,8 @@ function onTrigger(player,npc)
     {
         --10049, 25000, -- ♪Raptor
         10050, 25000, -- ♪Tiger
-        10051, 25000, -- ♪Crab
+        10051, 25000 -- ♪Crab
+
     }
 
     player:showText(npc, ID.text.ADELFLETE_SHOP_DIALOG)
