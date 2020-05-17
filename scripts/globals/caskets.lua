@@ -61,12 +61,12 @@ local casketInfo =
     splitZones = set{
        tpz.zone.ZERUHN_MINES,
        tpz.zone.KORROLOKA_TUNNEL,
+       tpz.zone.DANGRUF_WADI,
        tpz.zone.KING_RANPERRES_TOMB,
        tpz.zone.ORDELLES_CAVES,
        tpz.zone.OUTER_HORUTOTO_RUINS,
        tpz.zone.GUSGEN_MINES,
-       tpz.zone.MAZE_OF_SHAKHRAMI,
-       tpz.zone.DANGRUF_WADI
+       tpz.zone.MAZE_OF_SHAKHRAMI
     },
     cs =
     {
