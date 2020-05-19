@@ -22,30 +22,43 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #ifndef _TRUSTCONTROLLER_H
 #define _TRUSTCONTROLLER_H
 
-#include "controller.h"
+#include <memory>
+
+#include "mob_controller.h"
 
 class CCharEntity;
 class CTrustEntity;
 
-class CTrustController : public CController
+class CGambitsContainer;
+
+class CTrustController : public CMobController
 {
 public:
     CTrustController(CCharEntity*, CTrustEntity*);
-    virtual ~CTrustController();
+    ~CTrustController() override;
+   
+    void Tick(time_point) override;
+    void Despawn() override;
 
-    virtual void Tick(time_point) override;
-    virtual void Despawn() override;
+    bool Ability(uint16 targid, uint16 abilityid) override;
+    bool Cast(uint16 targid, SpellID spellid) override;
 
-    virtual bool Cast(uint16 targid, SpellID spellid) override { return false; }
-    virtual bool ChangeTarget(uint16 targid) override { return false; }
-    virtual bool WeaponSkill(uint16 targid, uint16 wsid) override { return false; }
+    static constexpr float RoamDistance{ 2.0f };
+    static constexpr float SpawnDistance{ 3.0f };
+    static constexpr float WarpDistance{ 30.0f };
 
-    virtual bool Ability(uint16 targid, uint16 abilityid) override { return false; }
+    std::unique_ptr<CGambitsContainer> m_GambitsContainer;
 
 private:
-    static constexpr float RoamDistance{ 2.1f };
-    void DoCombatTick(time_point tick);
-    void DoRoamTick(time_point tick);
+    void DoCombatTick(time_point tick) override;
+    void DoRoamTick(time_point tick) override;
+
+    CBattleEntity* GetTopEnmity();
+    uint8 GetPartyPosition();
+
+    CBattleEntity* m_LastTopEnmity;
+    time_point m_CombatEndTime;
+    time_point m_LastHealTickTime;
 };
 
 #endif // _TRUSTCONTROLLER

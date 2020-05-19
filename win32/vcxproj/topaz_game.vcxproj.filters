@@ -677,6 +677,9 @@
     <ClInclude Include="..\..\src\map\utils\petutils.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\map\utils\trustutils.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\map\utils\synthutils.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
@@ -892,6 +895,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\map\daily_system.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\map\ai\helpers\gambits_container.h">
+      <Filter>Header Files\ai\helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1420,6 +1426,9 @@
     <ClCompile Include="..\..\src\map\utils\petutils.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\map\utils\trustutils.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\map\utils\blueutils.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
@@ -1638,6 +1647,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\map\daily_system.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\map\ai\helpers\gambits_container.cpp">
+      <Filter>Source Files\ai\helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

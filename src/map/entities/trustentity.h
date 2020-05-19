@@ -25,19 +25,24 @@
 #include "mobentity.h"
 
 class CCharEntity;
+
 class CTrustEntity : public CMobEntity
 {
 public:
-    CTrustEntity(CCharEntity*);
-	~CTrustEntity();
-	uint8 m_Element;
-	uint32 m_PetID;
+    explicit CTrustEntity(CCharEntity*);
+    ~CTrustEntity() override = default;
 
-    virtual void PostTick() override;
-    virtual void FadeOut() override;
-    virtual void Die() override;
-    virtual void Spawn() override;
-    virtual bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags) override;
+    void PostTick() override;
+    void FadeOut() override;
+    void Die() override;
+    void Spawn() override;
+    void OnAbility(CAbilityState&, action_t&) override;
+    bool ValidTarget(CBattleEntity* PInitiator, uint16 targetFlags) override;
+    void OnDespawn(CDespawnState&) override;
+
+    void OnCastFinished(CMagicState& state, action_t& action);
+
+    uint32 m_TrustID{};
 };
 
 #endif

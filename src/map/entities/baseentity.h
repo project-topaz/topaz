@@ -30,13 +30,14 @@
 
 enum ENTITYTYPE
 {
-    TYPE_NONE   = 0x00,
-    TYPE_PC     = 0x01,
-    TYPE_NPC    = 0x02,
-    TYPE_MOB    = 0x04,
-    TYPE_PET    = 0x08,
-    TYPE_SHIP   = 0x10,
-    TYPE_TRUST  = 0x20
+    TYPE_NONE    = 0x00,
+    TYPE_PC      = 0x01,
+    TYPE_NPC     = 0x02,
+    TYPE_MOB     = 0x04,
+    TYPE_PET     = 0x08,
+    TYPE_SHIP    = 0x10,
+    TYPE_TRUST   = 0x20,
+    TYPE_FELLOW  = 0x40
 };
 
 enum STATUSTYPE
@@ -56,7 +57,7 @@ enum ANIMATIONTYPE
 {
     ANIMATION_NONE               = 0,
     ANIMATION_ATTACK             = 1,
-    // Death                        = 2,
+    ANIMATION_DESPAWN            = 2,
     ANIMATION_DEATH              = 3,
     ANIMATION_EVENT              = 4,
     ANIMATION_CHOCOBO            = 5,
@@ -230,8 +231,8 @@ public:
 
     virtual void    HandleErrorMessage(std::unique_ptr<CBasicPacket>&) {};
 
-    uint32          id;                 // глобальный идентификатор, уникальный на сервере
-    uint16          targid;             // локалный идентификатор, уникальный в зоне
+    uint32          id;                 // global identifier unique on the server
+    uint16          targid;             // local identifier unique to the zone
     ENTITYTYPE      objtype;            // тип сущности
     STATUSTYPE      status;             // статус сущности (разные сущности - разные статусы)
     uint16          m_TargID;           // targid объекта, на который смотрит сущность
