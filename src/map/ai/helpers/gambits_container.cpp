@@ -3,24 +3,29 @@
 #include "../../spell.h"
 #include "../../utils/battleutils.h"
 
-void CGambitsContainer::AddGambit(G_SELECTOR selector, G_TRIGGER trigger, uint16 trigger_condition, G_REACTION reaction, G_REACTION_MODIFIER reaction_mod, uint16 reaction_arg, uint16 retry_delay)
+// Validate gambit before it's inserted into the gambit list
+// Check levels, etc.
+void CGambitsContainer::AddGambit(Gambit_t gambit)
 {
     bool available = true;
-    if (reaction == G_REACTION::MA && reaction_mod == G_REACTION_MODIFIER::SELECT_SPECIFIC)
+    /*
+    if (gambit.action.reaction == G_REACTION::MA && gambit.action.select == G_SELECT::SPECIFIC)
     {
-        if (!spell::CanUseSpell(static_cast<CBattleEntity*>(POwner), static_cast<SpellID>(reaction_arg)))
+        if (!spell::CanUseSpell(static_cast<CBattleEntity*>(POwner), static_cast<SpellID>(gambit.action.select_arg)))
         {
             available = false;
         }
     }
+    */
     if (available)
     {
-        actions.push_back(Action_t{ selector, trigger, trigger_condition, reaction, reaction_mod, reaction_arg, retry_delay });
+        gambits.push_back(gambit);
     }
 }
 
 void CGambitsContainer::Tick(time_point tick)
 {
+    // TODO: This could be a setting?
     // Do something every second
     if (tick < m_lastAction + 1s)
     {
@@ -28,58 +33,72 @@ void CGambitsContainer::Tick(time_point tick)
     }
     m_lastAction = tick;
 
-    // Define some things
     auto controller = static_cast<CTrustController*>(POwner->PAI->GetController());
 
-    for (auto action : actions)
+    for (auto gambit : gambits)
     {
-        if (tick < action.last_used + std::chrono::seconds(action.retry_delay))
+        if (tick < gambit.last_used + std::chrono::seconds(gambit.retry_delay))
         {
-            return;
+            continue;
         }
 
-        auto checkTrigger = [&](CBattleEntity* target, G_TRIGGER trigger, uint16 param) -> bool
+        auto checkTrigger = [&](CBattleEntity* target, Predicate_t& predicate) -> bool
         {
-            switch (trigger)
+            switch (predicate.condition)
             {
-            case HPP_LTE:
+            case ALWAYS:
             {
-                return target->GetHPP() <= param;
+                return true;
+                break;
+            }
+            case HPP_LT:
+            {
+                return target->GetHPP() < predicate.condition_arg;
                 break;
             }
             case HPP_GTE:
             {
-                return target->GetHPP() >= param;
+                return target->GetHPP() >= predicate.condition_arg;
                 break;
             }
-            case MPP_LTE:
+            case MPP_LT:
             {
-                return target->GetMPP() <= param;
+                return target->GetMPP() < predicate.condition_arg;
+                break;
+            }
+            case TP_LT:
+            {
+                return target->health.tp < predicate.condition_arg;
                 break;
             }
             case TP_GTE:
             {
-                return target->health.tp >= param;
+                return target->health.tp >= predicate.condition_arg;
                 break;
             }
             case STATUS:
             {
-                return target->StatusEffectContainer->HasStatusEffect(static_cast<EFFECT>(param));
+                return target->StatusEffectContainer->HasStatusEffect(static_cast<EFFECT>(predicate.condition_arg));
                 break;
             }
             case NOT_STATUS:
             {
-                return !target->StatusEffectContainer->HasStatusEffect(static_cast<EFFECT>(param));
+                return !target->StatusEffectContainer->HasStatusEffect(static_cast<EFFECT>(predicate.condition_arg));
                 break;
             }
             case STATUS_FLAG:
             {
-                return target->StatusEffectContainer->HasStatusEffectByFlag(static_cast<EFFECTFLAG>(param));
+                return target->StatusEffectContainer->HasStatusEffectByFlag(static_cast<EFFECTFLAG>(predicate.condition_arg));
                 break;
             }
-            case NUKE:
+            case HAS_ENMITY:
             {
-                return true;
+                return controller->GetTopEnmity()->targid == POwner->targid;
+                break;
+            }
+            case NOT_HAS_ENMITY:
+            {
+                return controller->GetTopEnmity()->targid != POwner->targid;
                 break;
             }
             case SC_AVAILABLE:
@@ -105,25 +124,23 @@ void CGambitsContainer::Tick(time_point tick)
         };
 
         CBattleEntity* target = nullptr;
-        if (action.selector == G_SELECTOR::SELF)
+        if (gambit.predicate.target == G_TARGET::SELF)
         {
-            target = checkTrigger(POwner, action.trigger, action.trigger_condition) ? POwner : nullptr;
+            target = checkTrigger(POwner, gambit.predicate) ? POwner : nullptr;
         }
-        else if (action.selector == G_SELECTOR::TARGET)
+        else if (gambit.predicate.target == G_TARGET::TARGET)
         {
             auto mob = POwner->GetBattleTarget();
-            target = checkTrigger(mob, action.trigger, action.trigger_condition) ? mob : nullptr;
+            target = checkTrigger(mob, gambit.predicate) ? mob : nullptr;
         }
-        else if (action.selector == G_SELECTOR::PARTY)
+        else if (gambit.predicate.target == G_TARGET::PARTY)
         {
             // TODO: This is very messy, priority are player chars
             CCharEntity* master = static_cast<CCharEntity*>(POwner->PMaster);
             for (uint8 i = 0; i < master->PParty->members.size(); ++i)
             {
                 auto member = master->PParty->members.at(i);
-                if (POwner->loc.zone == member->loc.zone &&
-                    distance(POwner->loc.p, member->loc.p) <= 20.0f &&
-                    checkTrigger(member, action.trigger, action.trigger_condition))
+                if (checkTrigger(member, gambit.predicate))
                 {
                     target = member;
                     break;
@@ -134,7 +151,7 @@ void CGambitsContainer::Tick(time_point tick)
                 for (uint8 i = 0; i < master->PTrusts.size(); ++i)
                 {
                     auto member = master->PTrusts.at(i);
-                    if (checkTrigger(member, action.trigger, action.trigger_condition))
+                    if (checkTrigger(member, gambit.predicate))
                     {
                         target = member;
                         break;
@@ -142,10 +159,15 @@ void CGambitsContainer::Tick(time_point tick)
                 }
             }
         }
+        else if (gambit.predicate.target == G_TARGET::MASTER)
+        {
+            target = POwner->PMaster;
+        }
 
         if (target)
         {
-            if (action.reaction == G_REACTION::MA)
+            /*
+            if (gambit.action.reaction == G_REACTION::MA)
             {
                 if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_SPECIFIC)
                 {
@@ -165,13 +187,13 @@ void CGambitsContainer::Tick(time_point tick)
                 }
                 else if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_LOWEST)
                 {
-                    /*
+                   
                     auto spell_id = POwner->SpellContainer->GetWorstAvailable(static_cast<SPELLFAMILY>(action.reaction_arg));
                     if (spell_id.has_value())
                     {
                         controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
                     }
-                    */
+
                 }
                 else if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_RANDOM)
                 {
@@ -218,11 +240,19 @@ void CGambitsContainer::Tick(time_point tick)
                     }
                 }
             }
+            else */
+            if (gambit.action.reaction == G_REACTION::JA)
+            {
+                if (gambit.action.select == G_SELECT::SPECIFIC)
+                {
+                    controller->Ability(target->targid, gambit.action.select_arg);
+                }
+            }
 
             // Assume success
-            if (action.retry_delay != 0)
+            if (gambit.retry_delay != 0)
             {
-                action.last_used = tick;
+                gambit.last_used = tick;
             }
         }
     }
