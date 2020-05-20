@@ -166,8 +166,9 @@ void CGambitsContainer::Tick(time_point tick)
 
         if (target)
         {
-            /*
+            
             if (gambit.action.reaction == G_REACTION::MA)
+            /*
             {
                 if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_SPECIFIC)
                 {
@@ -239,13 +240,22 @@ void CGambitsContainer::Tick(time_point tick)
                         controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
                     }
                 }
+            } */
+            {
             }
-            else */
-            if (gambit.action.reaction == G_REACTION::JA)
+            else if (gambit.action.reaction == G_REACTION::JA)
             {
                 if (gambit.action.select == G_SELECT::SPECIFIC)
                 {
                     controller->Ability(target->targid, gambit.action.select_arg);
+                }
+            }
+            else if (gambit.action.reaction == G_REACTION::WS)
+            {
+                if (gambit.action.select == G_SELECT::SPECIFIC)
+                {
+                    auto mob = POwner->GetBattleTarget();
+                    controller->WeaponSkill(mob->targid, gambit.action.select_arg);
                 }
             }
 

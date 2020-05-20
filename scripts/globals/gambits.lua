@@ -44,6 +44,7 @@ ai.r =
     MA     = 2,
     JA     = 3,
     WS     = 4,
+    MS     = 5,
 }
 
 -- Select

@@ -209,6 +209,11 @@ void CTrustController::DoRoamTick(time_point tick)
 
 bool CTrustController::Ability(uint16 targid, uint16 abilityid)
 {
+    if (static_cast<CMobEntity*>(POwner)->PRecastContainer->Has(RECAST_ABILITY, abilityid))
+    {
+        return false;
+    }
+
     if (POwner->PAI->CanChangeState())
     {
         return POwner->PAI->Internal_Ability(targid, abilityid);

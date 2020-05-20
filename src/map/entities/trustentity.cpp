@@ -102,8 +102,9 @@ void CTrustEntity::OnAbility(CAbilityState& state, action_t& action)
         {
             return;
         }
-        if (battleutils::IsParalyzed(this)) {
-            // display paralyzed
+
+        if (battleutils::IsParalyzed(this))
+        {
             loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, PTarget, 0, 0, MSGBASIC_IS_PARALYZED));
             return;
         }
@@ -111,7 +112,7 @@ void CTrustEntity::OnAbility(CAbilityState& state, action_t& action)
         action.id = this->id;
         action.actiontype = PAbility->getActionType();
         //#TODO: unoffset this
-        action.actionid = PAbility->getID() + 16;
+        action.actionid = PAbility->getID();
         actionList_t& actionList = action.getNewActionList();
         actionList.ActionTargetID = PTarget->id;
         actionTarget_t& actionTarget = actionList.getNewActionTarget();
@@ -133,6 +134,8 @@ void CTrustEntity::OnAbility(CAbilityState& state, action_t& action)
         }
 
         state.ApplyEnmity();
+
+        PRecastContainer->Add(RECAST_ABILITY, action.actionid, action.recast);
     }
 }
 
@@ -166,3 +169,4 @@ void CTrustEntity::OnCastFinished(CMagicState& state, action_t& action)
 
     PRecastContainer->Add(RECAST_MAGIC, static_cast<uint16>(PSpell->getID()), action.recast);
 }
+

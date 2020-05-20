@@ -16,9 +16,10 @@ end
 
 function onMobSpawn(mob)
 
-    local THIRD_EYE = 46
-    local MEDITATE = 47
-    local HASSO = 157
+    local THIRD_EYE = 62
+    local MEDITATE = 63
+    local HASSO = 173
+    local TACHI_ENPI = 144
 
     -- Keep Hasso up.
     mob:addGambit({ ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO }, { ai.r.JA, ai.s.SPECIFIC, HASSO })
@@ -28,6 +29,8 @@ function onMobSpawn(mob)
 
     -- Pump TP with Meditate
     mob:addGambit({ ai.t.SELF, ai.c.TP_LT, 1000 }, { ai.r.JA, ai.s.SPECIFIC, MEDITATE })
+
+     mob:addGambit( { ai.t.SELF, ai.c.TP_GTE, 1000 }, { ai.r.WS, ai.s.SPECIFIC, TACHI_ENPI })
 
     --[[
     -- Uses Meditate if her summoner has over 1000TP and she is under 1000TP.

@@ -44,6 +44,7 @@ enum G_REACTION : uint16
     MA     = 2,
     JA     = 3,
     WS     = 4,
+    MS     = 5,
 };
 
 enum G_SELECT : uint16
