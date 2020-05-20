@@ -93,7 +93,7 @@ void CGambitsContainer::Tick(time_point tick)
             }
             case HAS_ENMITY:
             {
-                return controller->GetTopEnmity()->targid == POwner->targid;
+                return (controller->GetTopEnmity()) ? controller->GetTopEnmity()->targid == POwner->targid : false;
                 break;
             }
             case NOT_HAS_ENMITY:
@@ -256,6 +256,14 @@ void CGambitsContainer::Tick(time_point tick)
                 {
                     auto mob = POwner->GetBattleTarget();
                     controller->WeaponSkill(mob->targid, gambit.action.select_arg);
+                }
+            }
+            else if (gambit.action.reaction == G_REACTION::MS)
+            {
+                if (gambit.action.select == G_SELECT::SPECIFIC)
+                {
+                    auto mob = POwner->GetBattleTarget();
+                    controller->MobSkill(mob->targid, gambit.action.select_arg);
                 }
             }
 

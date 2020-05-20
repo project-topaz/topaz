@@ -21,6 +21,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 
 #include "trust_controller.h"
 
+#include "../../ability.h"
 #include "../ai_container.h"
 #include "../../status_effect_container.h"
 #include "../../enmity_container.h"
@@ -209,15 +210,27 @@ void CTrustController::DoRoamTick(time_point tick)
 
 bool CTrustController::Ability(uint16 targid, uint16 abilityid)
 {
-    if (static_cast<CMobEntity*>(POwner)->PRecastContainer->Has(RECAST_ABILITY, abilityid))
+    if (static_cast<CMobEntity*>(POwner)->PRecastContainer->Has(RECAST_ABILITY, abilityid + 16))
     {
         return false;
+    }
+
+    // TODO: Fix ugly hack
+    CAbility* PAbility = ability::GetAbility(abilityid);
+    if (PAbility->getValidTarget() == 1)
+    {
+        targid = POwner->targid;
+    }
+    else
+    {
+        targid = POwner->GetBattleTarget()->targid;
     }
 
     if (POwner->PAI->CanChangeState())
     {
         return POwner->PAI->Internal_Ability(targid, abilityid);
     }
+
     return false;
 }
 

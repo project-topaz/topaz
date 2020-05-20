@@ -1,9 +1,11 @@
 -----------------------------------------
 -- Trust: Ayame
 -----------------------------------------
+require("scripts/globals/ability")
 require("scripts/globals/gambits")
 require("scripts/globals/status")
 require("scripts/globals/trust")
+require("scripts/globals/weaponskillids")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
@@ -16,21 +18,16 @@ end
 
 function onMobSpawn(mob)
 
-    local THIRD_EYE = 62
-    local MEDITATE = 63
-    local HASSO = 173
-    local TACHI_ENPI = 144
-
     -- Keep Hasso up.
-    mob:addGambit({ ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO }, { ai.r.JA, ai.s.SPECIFIC, HASSO })
+    mob:addGambit({ ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO })
 
     -- Uses Third Eye if it available and she has enmity on a hostile target.
-    mob:addGambit({ ai.t.SELF, ai.c.HAS_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, THIRD_EYE })
+    mob:addGambit({ ai.t.SELF, ai.c.HAS_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.THIRD_EYE })
 
     -- Pump TP with Meditate
-    mob:addGambit({ ai.t.SELF, ai.c.TP_LT, 1000 }, { ai.r.JA, ai.s.SPECIFIC, MEDITATE })
+    mob:addGambit({ ai.t.SELF, ai.c.TP_LT, 1000 }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.MEDITATE })
 
-     mob:addGambit( { ai.t.SELF, ai.c.TP_GTE, 1000 }, { ai.r.WS, ai.s.SPECIFIC, TACHI_ENPI })
+    mob:addGambit( { ai.t.SELF, ai.c.TP_GTE, 1000 }, { ai.r.WS, ai.s.SPECIFIC, tpz.ws.TACHI_ENPI })
 
     --[[
     -- Uses Meditate if her summoner has over 1000TP and she is under 1000TP.
