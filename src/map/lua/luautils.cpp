@@ -2096,36 +2096,132 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(PSpell == nullptr);
 
-        lua_prepscript(
-            PSpell->getSpellGroup() == SPELLGROUP_BLUE ? "scripts/globals/spells/bluemagic/%s.lua" :
-            PSpell->getSpellGroup() == SPELLGROUP_TRUST ? "scripts/globals/spells/trust/%s.lua" :
-            "scripts/globals/spells/%s.lua", PSpell->getName()
-        );
+        /**
+         * This is a hack to test the new spell system design
+         *
+         * TODO: Remove this Hack
+         */
+        auto spellID = PSpell->getID();
 
-        if (prepFile(File, "onSpellCast"))
+        switch( spellID )
         {
-            return 0;
+            default:
+            {
+                lua_prepscript(
+                        PSpell->getSpellGroup() == SPELLGROUP_BLUE ? "scripts/globals/spells/bluemagic/%s.lua" :
+                        PSpell->getSpellGroup() == SPELLGROUP_TRUST ? "scripts/globals/spells/trust/%s.lua" :
+                        "scripts/globals/spells/%s.lua", PSpell->getName()
+                );
+
+                if (prepFile(File, "onSpellCast"))
+                {
+                    return 0;
+                }
+
+                CLuaBaseEntity LuaCasterEntity(PCaster);
+                Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaCasterEntity);
+
+                CLuaBaseEntity LuaTargetEntity(PTarget);
+                Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaTargetEntity);
+
+                CLuaSpell LuaSpell(PSpell);
+                Lunar<CLuaSpell>::push(LuaHandle, &LuaSpell);
+
+                if (lua_pcall(LuaHandle, 3, 1, 0))
+                {
+                    ShowError("luautils::onSpellCast: %s\n", lua_tostring(LuaHandle, -1));
+                    lua_pop(LuaHandle, 1);
+                    return 0;
+                }
+
+                uint32 retVal = (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1) ? (int32)lua_tonumber(LuaHandle, -1) : 0);
+                lua_pop(LuaHandle, 1);
+                return retVal;
+            }
+            case SpellID::Blizzaja:
+            case SpellID::Blizzard_IV:
+            case SpellID::Cryohelix:
+            case SpellID::Blizzaga_III:
+            case SpellID::Freeze_II:
+            {
+                int top = lua_gettop( LuaHandle );
+
+                auto ret = luaL_loadfile(LuaHandle, "scripts/globals/interfaces/core.lua");
+                if (ret)
+                {
+                    if (ret != LUA_ERRFILE)
+                        ShowError("luautils::interfaces::core: %s\n", lua_tostring(LuaHandle, -1));
+                    lua_pop(LuaHandle, 1);
+                    return -1;
+                }
+
+                ret = lua_pcall(LuaHandle, 0, 0, 0);
+                if (ret)
+                {
+                    ShowError("luautils::interfaces::core: %s\n", lua_tostring(LuaHandle, -1));
+                    lua_pop(LuaHandle, 1);
+                    return -1;
+                }
+
+                lua_getglobal( LuaHandle, "tpz" );
+                if( lua_isnil( LuaHandle, -1 ) )
+                {
+                    ShowError( "luautils::interfaces::core: Cannot load 'tpz' table from the global namespace.\n" );
+                    lua_pop( LuaHandle, top - lua_gettop( LuaHandle ) );
+                    return -1;
+                }
+
+                lua_pushstring( LuaHandle, "interfaces" );
+                lua_gettable( LuaHandle, -2 );
+                if( lua_isnil( LuaHandle, -1 ) )
+                {
+                    ShowError( "luautils::interfaces::core: interfaces table is missing from the tpz namespace.\n" );
+                    lua_pop( LuaHandle, top - lua_gettop( LuaHandle ) );
+                    return -1;
+                }
+
+                lua_pushstring( LuaHandle, "core" );
+                lua_gettable( LuaHandle, -2 );
+                if( lua_isnil( LuaHandle, -1 ) )
+                {
+                    ShowError( "luautils::interfaces::core: core table is missing from the interfaces namespace.\n" );
+                    lua_pop( LuaHandle, top - lua_gettop( LuaHandle ) );
+                    return -1;
+                }
+
+                lua_pushstring( LuaHandle, "castSpell" );
+                lua_gettable( LuaHandle, -2 );
+                if( lua_isnil( LuaHandle, -1 ) )
+                {
+                    ShowError( "luautils::cInterfaceFunctions: castSpell function missing from cInteface table.\n" );
+                    lua_pop( LuaHandle, top - lua_gettop( LuaHandle ) );
+                    return -1;
+                }
+
+                lua_pushinteger( LuaHandle, static_cast<int>(spellID) );
+
+                CLuaSpell LuaSpell(PSpell);
+                Lunar<CLuaSpell>::push(LuaHandle, &LuaSpell);
+
+                CLuaBaseEntity LuaCasterEntity(PCaster);
+                Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaCasterEntity);
+
+                CLuaBaseEntity LuaTargetEntity(PTarget);
+                Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaTargetEntity);
+
+                if (lua_pcall(LuaHandle, 4, 1, 0))
+                {
+                    ShowError("luautils::cIntefaceFunction:castSpell: %s\n", lua_tostring(LuaHandle, -1));
+                    lua_pop(LuaHandle, top - lua_gettop( LuaHandle ) );
+                    return -1;
+                }
+
+                // TODO: this eventually needs to be changed to support the difference between damage returns and msg returns
+                uint32 retVal = (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1) ? (int32)lua_tonumber(LuaHandle, -1) : 0);
+                lua_pop(LuaHandle, top - lua_gettop( LuaHandle ) );
+                return retVal;
+            }
         }
-
-        CLuaBaseEntity LuaCasterEntity(PCaster);
-        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaCasterEntity);
-
-        CLuaBaseEntity LuaTargetEntity(PTarget);
-        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaTargetEntity);
-
-        CLuaSpell LuaSpell(PSpell);
-        Lunar<CLuaSpell>::push(LuaHandle, &LuaSpell);
-
-        if (lua_pcall(LuaHandle, 3, 1, 0))
-        {
-            ShowError("luautils::onSpellCast: %s\n", lua_tostring(LuaHandle, -1));
-            lua_pop(LuaHandle, 1);
-            return 0;
-        }
-
-        uint32 retVal = (!lua_isnil(LuaHandle, -1) && lua_isnumber(LuaHandle, -1) ? (int32)lua_tonumber(LuaHandle, -1) : 0);
-        lua_pop(LuaHandle, 1);
-        return retVal;
     }
 
     /************************************************************************
