@@ -54,7 +54,7 @@ function onTrigger(player,npc)
         player:startEvent(10045,0,1,4,1);
     elseif (player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.BEYOND_INFINITY) == QUEST_ACCEPTED) then
         player:startEvent(10045,0,1,5,1); -- player:startEvent(10045,0,1,6,1);
-    elseif (player:hasKeyItem(tpz.ki.LIMIT_BREAKER) == true and player:getMainLvl() >= 75) then
+    elseif (player:hasKeyItem(tpz.ki.LIMIT_BREAKER) == true and player:getMainLvl() >= 76) then
         player:startEvent(10045,0,1,0,0);
     else
         player:startEvent(10045,0,2,0,0);

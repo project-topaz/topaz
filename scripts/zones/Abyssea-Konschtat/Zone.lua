@@ -27,6 +27,12 @@ function onZoneIn(player,prevZone)
         player:setCharVar("1stTimeAbyssea",1)
     end
 
+    local visitantEffect = tpz.effect.VISITANT
+    local visitantStatusEffect = player:getStatusEffect(visitantEffect)
+
+    if not player:hasStatusEffect(visitantEffect) then
+        player:addStatusEffect(tpz.effect.VISITANT,0,3,5400)
+    end
     return cs
 end
 

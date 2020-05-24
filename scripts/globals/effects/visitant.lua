@@ -5,6 +5,16 @@
 -----------------------------------
 
 function onEffectGain(target,effect)
+    -- Remove any older dedication effect
+    if target:hasStatusEffect(tpz.effect.DEDICATION) then
+        target:delStatusEffect(tpz.effect.DEDICATION)
+    end
+
+    target:addStatusEffect(tpz.effect.DEDICATION,60,3,0,0,5000000)
+    local expEffect = target:getStatusEffect(tpz.effect.DEDICATION)
+    local visEffect = target:getStatusEffect(tpz.effect.VISITANT)
+    expEffect:setFlag(tpz.effectFlag.ON_ZONE)
+    visEffect:setFlag(tpz.effectFlag.ON_ZONE)
 end
 
 function onEffectTick(target,effect)
@@ -18,4 +28,5 @@ function onEffectTick(target,effect)
 end
 
 function onEffectLose(target,effect)
+    target:warp()
 end
