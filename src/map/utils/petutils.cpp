@@ -57,6 +57,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/message_standard.h"
 #include "../packets/pet_sync.h"
 #include "../packets/trust_sync.h"
+#include "../mob_modifier.h"
 
 struct Pet_t
 {

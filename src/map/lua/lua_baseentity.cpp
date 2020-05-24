@@ -867,6 +867,7 @@ inline int32 CLuaBaseEntity::injectActionPacket(lua_State* L)
     if (actiontype == ACTION_MOBABILITY_FINISH || actiontype == ACTION_PET_MOBABILITY_FINISH)
     {
         CBattleEntity* PTarget = (CBattleEntity*)PChar->GetEntity(PChar->m_TargID);
+
         if (PTarget == nullptr)
         {
             ShowError("Cannot use MOBABILITY_FINISH on a nullptr battle target! Target a mob! \n");
@@ -2449,6 +2450,47 @@ inline int32 CLuaBaseEntity::getAngle(lua_State *L)
     TPZ_DEBUG_BREAK_IF(PLuaBaseEntity == nullptr);
 
     lua_pushnumber(L, getangle(m_PBaseEntity->loc.p, PLuaBaseEntity->GetBaseEntity()->loc.p));
+    return 1;
+}
+
+/************************************************************************
+*  Function: getCardinalQuadrant()
+*  Purpose : Will return a index of what direction you are facing from a target.
+*  Example : if player:getCardinalQuadrant(target) >= 7 and player:getCardinalQuadrant(target) <=11 then
+*  Example :     print("can use sneak attack!!!")
+*  Example : end
+*  Notes   : index is in scripts/globals/status
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getCardinalQuadrant(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+
+    auto angle = PLuaBaseEntity->GetBaseEntity()->loc.p.rotation - getangle(PLuaBaseEntity->GetBaseEntity()->loc.p, m_PBaseEntity->loc.p);
+    auto rotRad = rotationToRadian(angle);
+    auto cardinalAngle = radianToRotation(rotRad);
+    uint8 cardinalQuadrant = 0;
+
+    if ((cardinalAngle >= 0 && cardinalAngle < 8) || (cardinalAngle > 248 && cardinalAngle <= 256)){ cardinalQuadrant = 1; }// N
+    else if (cardinalAngle <= 248 && cardinalAngle > 216){ cardinalQuadrant = 2; } // NNE
+    else if (cardinalAngle <= 216 && cardinalAngle > 200){ cardinalQuadrant = 3; } // NE
+    else if (cardinalAngle <= 200 && cardinalAngle > 184){ cardinalQuadrant = 4; } // ENE
+    else if (cardinalAngle <= 184 && cardinalAngle > 168){ cardinalQuadrant = 5; } // E
+    else if (cardinalAngle <= 168 && cardinalAngle > 152){ cardinalQuadrant = 6; } // ESE
+    else if (cardinalAngle <= 152 && cardinalAngle > 136){ cardinalQuadrant = 7; } // SE
+    else if (cardinalAngle <= 136 && cardinalAngle > 120){ cardinalQuadrant = 8; } // SSE
+    else if (cardinalAngle <= 120 && cardinalAngle > 104){ cardinalQuadrant = 9; } // S
+    else if (cardinalAngle <= 104 && cardinalAngle > 88){ cardinalQuadrant = 10;}  // SSW
+    else if (cardinalAngle <= 88 && cardinalAngle > 72){ cardinalQuadrant = 11; }  // SW
+    else if (cardinalAngle <= 72 && cardinalAngle > 56){ cardinalQuadrant = 12; }  // WSW
+    else if (cardinalAngle <= 56 && cardinalAngle > 40){ cardinalQuadrant = 13; }  // W
+    else if (cardinalAngle <= 40 && cardinalAngle > 24){ cardinalQuadrant = 14; }  // WNW
+    else if (cardinalAngle <= 24 && cardinalAngle > 8){ cardinalQuadrant = 15; }   // NW
+    else if (cardinalAngle <= 8 && cardinalAngle > 0){ cardinalQuadrant = 16; }    // NNW
+    lua_pushinteger(L, cardinalQuadrant);
     return 1;
 }
 
@@ -11140,6 +11182,31 @@ inline int32 CLuaBaseEntity::healingWaltz(lua_State *L)
 }
 
 /************************************************************************
+*  Function: getItemSkillType()
+*  Purpose : 
+*  Example : 
+*  Notes   :
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getItemSkillType(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    auto slot = (SLOTTYPE)lua_tointeger(L, 1);
+    CItemWeapon* PItem = (CItemWeapon*)PChar->getEquip(slot);
+
+    if (PItem != nullptr)
+    {
+        lua_pushinteger(L, PItem->getSkillType());
+    }
+
+    return 1;
+}
+
+/************************************************************************
 *  Function: addBardSong()
 *  Purpose : Adds a song effect to Player(s') Status Effect Container(s); returns true if sucess
 *  Example : target:addBardSong(caster,EFFECT_BALLAD,power,0,duration,caster:getID(), 0, 1)
@@ -11438,6 +11505,31 @@ inline int32 CLuaBaseEntity::isSpellAoE(lua_State* L)
     else
     {
         lua_pushboolean(L, false);
+    }
+
+    return 1;
+}
+
+/************************************************************************
+*  Function: getSpellCost()
+*  Purpose : Returns the cost of the spell after calulations
+*  Example : local spellCost = caster:getSpellCost(spell:getID())
+*  Notes   : 
+************************************************************************/
+
+inline int32 CLuaBaseEntity::getSpellCost(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    CBattleEntity* PEntity = (CBattleEntity*)m_PBaseEntity;
+    CSpell* PSpell = spell::GetSpell(static_cast<SpellID>(lua_tointeger(L, 1)));
+    uint16 spellCost = 0;
+
+    if (PSpell != nullptr)
+    {
+        spellCost = battleutils::CalculateSpellCost(PEntity, PSpell);
+        lua_pushinteger(L, spellCost);
     }
 
     return 1;
@@ -12401,12 +12493,30 @@ inline int32 CLuaBaseEntity::petAttack(lua_State *L)
 /************************************************************************
 *  Function: petAbility()
 *  Purpose : Manually inserts the use of a pet ability into the queue
-*  Example : pet:petAbility(ABILITY)
-*  Notes   : If I had to guess, it's not coded
+*  Example : pet:petAbility(target, ABILITY)
 ************************************************************************/
 
 inline int32 CLuaBaseEntity::petAbility(lua_State *L)
 {
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+
+    CLuaBaseEntity* PEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+    uint16 abilityID = lua_tointeger(L, 2);
+
+    if (((CBattleEntity*)m_PBaseEntity)->PPet != nullptr)
+    {
+        if (((CBattleEntity*)m_PBaseEntity)->PPet->objtype == TYPE_PET)
+        {
+            ((CBattleEntity*)m_PBaseEntity)->PPet->PAI->Ability(PEntity->GetBaseEntity()->id, abilityID);
+        }
+        else
+        {
+            ((CMobEntity*)m_PBaseEntity)->PPet->PAI->MobSkill(PEntity->GetBaseEntity()->id, abilityID);
+        }
+    }
     return 0;
 }
 
@@ -14264,6 +14374,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isBehind),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isFacing),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getAngle),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCardinalQuadrant),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getZone),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getZoneID),
@@ -14306,6 +14417,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addTempItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasWornItem),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createWornItem),
+
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getItemSkillType),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,createShop),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,addShopItem),
@@ -14527,6 +14640,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,canLearnSpell),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,delSpell),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,getSpellCost),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,recalculateSkillsTable),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,recalculateAbilitiesTable),

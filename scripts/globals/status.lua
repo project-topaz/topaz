@@ -814,8 +814,8 @@ tpz.effect =
     DYNAMIS                  = 800,
     MEDITATE                 = 801, -- Dummy effect for SAM Meditate JA
     ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
-    -- PLACEHOLDER           = 803, -- Description
-    -- 803-1022
+    -- PLACEHOLDER              = 802, -- Description
+    -- 802-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
@@ -2858,4 +2858,26 @@ tpz.relicTiers =
     {
         15070, 16195, 16196, 16197, 16198, 11927, 16200
     },
+}
+
+-- currently only used for GEO cardinal Chant
+-- Mainly just a reference.
+tpz.cardinalDirection =
+{
+    [1]  = '[N]',
+    [2]  = '[NNE]',
+    [3]  = '[NE]',
+    [4]  = '[ENE]',
+    [5]  = '[E]',
+    [6]  = '[ESE]',
+    [7]  = '[SE]',
+    [8]  = '[SSE]',
+    [9]  = '[S]',
+    [10] = '[SSW]',
+    [11] = '[SW]',
+    [12] = '[WSW]',
+    [13] = '[W]',
+    [14] = '[WNW]',
+    [15] = '[NW]',
+    [16] = '[NNW]',
 }

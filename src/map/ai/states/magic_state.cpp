@@ -156,6 +156,14 @@ CSpell* CMagicState::GetSpell()
 bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
 {
     auto ret = m_PEntity->CanUseSpell(GetSpell());
+    float range = m_PSpell->getRange();
+
+    if (m_PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_THEURGIC_FOCUS) &&
+        (m_PSpell->getSpellFamily() >= SPELLFAMILY_FIRE && m_PSpell->getSpellFamily() <= SPELLFAMILY_FLOOD) ||
+        (m_PSpell->getSpellFamily() >= SPELLFAMILY_FIRA && m_PSpell->getSpellFamily() <= SPELLFAMILY_WATERA))
+    {
+        range = range / 2;
+    }
 
     if (!ret)
     {
@@ -190,7 +198,7 @@ bool CMagicState::CanCastSpell(CBattleEntity* PTarget)
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_TOO_FAR_AWAY);
         return false;
     }
-    if (m_PEntity->objtype == TYPE_PC && distance(m_PEntity->loc.p, PTarget->loc.p) > m_PSpell->getRange())
+    if (m_PEntity->objtype == TYPE_PC && distance(m_PEntity->loc.p, PTarget->loc.p) > range)
     {
         m_errorMsg = std::make_unique<CMessageBasicPacket>(m_PEntity, PTarget, static_cast<uint16>(m_PSpell->getID()), 0, MSGBASIC_OUT_OF_RANGE_UNABLE_CAST);
         return false;
