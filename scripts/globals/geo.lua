@@ -157,16 +157,16 @@ tpz.geo.spawnLuopan = function(player, target, tick_effect, target_type, spellCo
         luopan:addStatusEffect(tpz.effect.MAX_HP_BOOST, 50, 0, player:getStatusEffect(tpz.effect.BOLSTER):getTimeRemaining() / 1000)
     end
 
-    if player:hasStatusEffect(tpz.effect.BLAZE_OF_GLORY) then
-        player:delStatusEffectSilent(tpz.effect.BLAZE_OF_GLORY)
-    end
-
     if player:hasStatusEffect(tpz.effect.BLAZE_OF_GLORY) and not player:hasStatusEffect(tpz.effect.BOLSTER) then
         luopan:setHP(luopanMaxHP/2)
     elseif player:hasStatusEffect(tpz.effect.BLAZE_OF_GLORY) and player:hasStatusEffect(tpz.effect.BOLSTER) then
         luopan:setHP(luopanMaxHP)
     else
         luopan:setHP(luopanMaxHP)
+    end
+
+    if player:hasStatusEffect(tpz.effect.BLAZE_OF_GLORY) then
+        player:delStatusEffectSilent(tpz.effect.BLAZE_OF_GLORY)
     end
 
     -- DEBUG
