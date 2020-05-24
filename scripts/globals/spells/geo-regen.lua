@@ -1,12 +1,14 @@
 -----------------------------------------
 -- Spell: Geo-Regen
+-- Gradually restores HP for party members within area of effect. 
 -----------------------------------------
 require("scripts/globals/status")
+require("scripts/globals/msg")
 require("scripts/globals/geo")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
-    if caster:getPet() ~= nil then
+    if caster:getPetID() == 75 then
         return tpz.msg.basic.LUOPAN_ALREADY_PLACED
     elseif not caster:canUseMisc(tpz.zoneMisc.PET) then
         return tpz.msg.basic.CANT_BE_USED_IN_AREA
@@ -15,14 +17,7 @@ function onMagicCastingCheck(caster, target, spell)
     end
 end
 
-
 function onSpellCast(caster, target, spell)
-    local geo_skill = caster:getCharSkillLevel(tpz.skill.GEOMANCY)
-    local spellCost = 74
-    local power = (geo_skill / 20) / 10
-    if power < 1 then
-        power = 1
-    end
-
-    tpz.geo.spawnLuopan(caster, target, 2856, tpz.effect.REGEN_II, power, tpz.allegiance.PLAYER, spellCost)
+	local spellCost = caster:getSpellCost(spell:getID())
+    tpz.geo.spawnLuopan(caster, target, tpz.effect.GEO_REGEN, tpz.allegiance.PLAYER, spellCost)
 end

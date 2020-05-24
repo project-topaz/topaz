@@ -36,7 +36,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../entities/mobentity.h"
 #include "../entities/trustentity.h"
 #include "../entities/automatonentity.h"
-#include "../entities/luopanentity.h"
 #include "../ability.h"
 #include "../status_effect_container.h"
 #include "../latent_effect_container.h"
@@ -58,6 +57,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/message_standard.h"
 #include "../packets/pet_sync.h"
 #include "../packets/trust_sync.h"
+#include "../mob_modifier.h"
 
 struct Pet_t
 {
@@ -977,13 +977,6 @@ namespace petutils
             puppetutils::LoadAutomaton(static_cast<CCharEntity*>(PMaster));
             PMaster->PPet = static_cast<CCharEntity*>(PMaster)->PAutomaton;
         }
-        else if (PMaster->objtype == TYPE_PC && PetID == PETID_LUOPAN)
-        {
-            auto master = static_cast<CCharEntity*>(PMaster);
-            delete master->PLuopan;
-            master->PLuopan = new CLuopanEntity();
-            PMaster->PPet = master->PLuopan;
-        }
         else
         {
             LoadPet(PMaster, PetID, spawningFromZone);
@@ -1557,13 +1550,7 @@ namespace petutils
 
         PPet->loc = PMaster->loc;
 
-        if (petType == PETTYPE_LUOPAN)
-        {
-            PPet->loc.p = nearPosition(PMaster->GetEntity(PMaster->m_TargID)->loc.p, 0.5f, 0.0f);
-            // This sets the correct size for the luopan
-            PPet->setEntityFlags(131);
-        }
-        else
+        if (petType != PETTYPE_LUOPAN)
         {
             // spawn me randomly around master
             PPet->loc.p = nearPosition(PMaster->loc.p, CPetController::PetRoamDistance, (float)M_PI);
@@ -1750,15 +1737,14 @@ namespace petutils
         else if (PPet->getPetType() == PETTYPE_LUOPAN && PMaster->objtype == TYPE_PC)
         {
             PPet->SetMLevel(PMaster->GetMLevel());
-
-            PPet->health.maxhp = PMaster->GetMaxHP();
-            PPet->health.hp = PPet->health.maxhp;
-
             PPet->addModifier(Mod::DMG, -50);
-
+            PPet->setEntityFlags(131);
+            PPet->health.maxhp = (uint32)floor((250 *PPet->GetMLevel()) /15);
+            PPet->addModifier(Mod::REGEN_DOWN, PPet->GetMLevel() / 4);
+            PPet->health.hp = PPet->health.maxhp;
+            PPet->PAI->GetController()->SetWeaponSkillEnabled(true);
             // Just sit, do nothing
-            PPet->PAI->PathFind = nullptr;
-            PPet->PAI->SetController(nullptr);
+            PPet->speed = 0;
         }
 
         FinalizePetStatistics(PMaster, PPet);

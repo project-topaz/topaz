@@ -143,6 +143,7 @@ public:
     int32 isBehind(lua_State*);              // true if you're behind the input target
     int32 isFacing(lua_State*);              // true if you are facing the target
     int32 getAngle(lua_State* L);            // return angle (rot) between two points (vector from a to b)
+    int32 getCardinalQuadrant(lua_State* L); // returns a quadrant of a cardinal direction based on the entity around a target.
     int32 getZone(lua_State*);               // Get Entity zone
     int32 getZoneID(lua_State*);             // Get Entity zone ID
     int32 getZoneName(lua_State*);           // Get Entity zone name
@@ -188,6 +189,8 @@ public:
     int32 addTempItem(lua_State*);           // Add temp item to Entity Temp inventory
     int32 hasWornItem(lua_State*);           // Check if the item is already worn (player:hasWornItem(itemid))
     int32 createWornItem(lua_State*);        // Update this item in worn item (player:createWornItem(itemid))
+
+    int32 getItemSkillType(lua_State* L);
 
     int32 createShop(lua_State*);            // Prepare the container for work of shop ??
     int32 addShopItem(lua_State*);           // Adds item to shop container (16 max)
@@ -550,6 +553,7 @@ public:
     int32 getRATT(lua_State*);                  // Get total r.attack
     int32 getILvlMacc(lua_State *L);
     int32 isSpellAoE(lua_State* L);
+	int32 getSpellCost(lua_State* L);
 
     int32 physicalDmgTaken(lua_State* L);
     int32 magicDmgTaken(lua_State* L);

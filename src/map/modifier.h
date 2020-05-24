@@ -543,6 +543,10 @@ enum class Mod
     INDI_DURATION             = 960,
     GEOMANCY                  = 961,
     WIDENED_COMPASS           = 962,
+    MENDING_HALATION          = 968,
+    RADIAL_ARCANA             = 969,
+    CURATIVE_RECANTATION      = 970,
+    PRIMEVAL_ZEAL             = 971,
 
     ENSPELL                   = 341, // stores the type of enspell active (0 if nothing)
     ENSPELL_DMG               = 343, // stores the base damage of the enspell before reductions

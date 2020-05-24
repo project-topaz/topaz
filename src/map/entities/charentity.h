@@ -157,7 +157,6 @@ class CItemContainer;
 class CUContainer;
 class CItemEquipment;
 class CAutomatonEntity;
-class CLuopanEntity;
 class CAbilityState;
 class CRangeState;
 class CItemState;

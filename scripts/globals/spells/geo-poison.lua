@@ -1,12 +1,14 @@
 -----------------------------------------
 -- Spell: Geo-Poison
+-- Poisons enemies within area of effect and gradually reduces their HP. 
 -----------------------------------------
 require("scripts/globals/status")
+require("scripts/globals/msg")
 require("scripts/globals/geo")
 -----------------------------------------
 
 function onMagicCastingCheck(caster, target, spell)
-    if caster:getPet() ~= nil then
+    if caster:getPetID() == 75 then
         return tpz.msg.basic.LUOPAN_ALREADY_PLACED
     elseif not caster:canUseMisc(tpz.zoneMisc.PET) then
         return tpz.msg.basic.CANT_BE_USED_IN_AREA
@@ -15,14 +17,7 @@ function onMagicCastingCheck(caster, target, spell)
     end
 end
 
-
 function onSpellCast(caster, target, spell)
-    local geo_skill = caster:getCharSkillLevel(tpz.skill.GEOMANCY)
-    local spellCost = 37
-    local power = (geo_skill / 30) / 10
-    if power < 1 then
-        power = 1
-    end
-    
-    tpz.geo.spawnLuopan(caster, target, 2863, tpz.effect.POISON_II, power, tpz.allegiance.MOB, spellCost)
+    local spellCost = caster:getSpellCost(spell:getID())
+    tpz.geo.spawnLuopan(caster, target, tpz.effect.GEO_POISON, tpz.allegiance.MOB, spellCost)
 end

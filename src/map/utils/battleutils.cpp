@@ -5093,6 +5093,17 @@ namespace battleutils
             cast = (uint32)(cast * 2.0f);
         }
 
+        if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_THEURGIC_FOCUS) &&
+            (PSpell->getSpellFamily() >= SPELLFAMILY_FIRE && PSpell->getSpellFamily() <= SPELLFAMILY_FLOOD) ||
+            (PSpell->getSpellFamily() >= SPELLFAMILY_FIRA && PSpell->getSpellFamily() <= SPELLFAMILY_WATERA))
+        {
+            uint16 zealBonus = PEntity->getMod(Mod::PRIMEVAL_ZEAL);
+            if (zealBonus > 0)
+            {
+                cast = (uint32)(cast / zealBonus);
+            }
+        }
+
         if (PSpell->getSpellGroup() == SPELLGROUP_BLACK)
         {
             if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_ALACRITY))

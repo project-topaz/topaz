@@ -699,35 +699,35 @@ tpz.effect =
     GAMBIT                   = 536,
     LIEMENT                  = 537,
     ONE_FOR_ALL              = 538,
-    REGEN_II                 = 539,
-    POISON_II                = 540,
-    REFRESH_II               = 541,
-    STR_BOOST_III            = 542,
-    DEX_BOOST_III            = 543,
-    VIT_BOOST_III            = 544,
-    AGI_BOOST_III            = 545,
-    INT_BOOST_III            = 546,
-    MND_BOOST_III            = 547,
-    CHR_BOOST_III            = 548,
-    ATTACK_BOOST_II          = 549,
-    DEFENSE_BOOST_II         = 550,
-    MAGIC_ATK_BOOST_II       = 551,
-    MAGIC_DEF_BOOST_II       = 552,
-    ACCURACY_BOOST_II        = 553,
-    EVASION_BOOST_II         = 554,
-    MAGIC_ACC_BOOST_II       = 555,
-    MAGIC_EVASION_BOOST      = 556,
-    ATTACK_DOWN_II           = 557,
-    DEFENSE_DOWN_II          = 558,
-    MAGIC_ATK_DOWN_II        = 559,
-    MAGIC_DEF_DOWN_II        = 560,
-    ACCURACY_DOWN_II         = 561,
-    EVASION_DOWN_II          = 562,
-    MAGIC_ACC_DOWN_II        = 563,
-    MAGIC_EVASION_DOWN_II    = 564,
-    SLOW_II                  = 565,
-    PARALYSIS_II             = 566,
-    WEIGHT_II                = 567,
+    GEO_REGEN                = 539,
+    GEO_POISON               = 540,
+    GEO_REFRESH              = 541,
+    GEO_STR_BOOST            = 542,
+    GEO_DEX_BOOST            = 543,
+    GEO_VIT_BOOST            = 544,
+    GEO_AGI_BOOST            = 545,
+    GEO_INT_BOOST            = 546,
+    GEO_MND_BOOST            = 547,
+    GEO_CHR_BOOST            = 548,
+    GEO_ATTACK_BOOST         = 549,
+    GEO_DEFENSE_BOOST        = 550,
+    GEO_MAGIC_ATK_BOOST      = 551,
+    GEO_MAGIC_DEF_BOOST      = 552,
+    GEO_ACCURACY_BOOST       = 553,
+    GEO_EVASION_BOOST        = 554,
+    GEO_MAGIC_ACC_BOOST      = 555,
+    GEO_MAGIC_EVASION_BOOST  = 556,
+    GEO_ATTACK_DOWN          = 557,
+    GEO_DEFENSE_DOWN         = 558,
+    GEO_MAGIC_ATK_DOWN       = 559,
+    GEO_MAGIC_DEF_DOWN       = 560,
+    GEO_ACCURACY_DOWN        = 561,
+    GEO_EVASION_DOWN         = 562,
+    GEO_MAGIC_ACC_DOWN       = 563,
+    GEO_MAGIC_EVASION_DOWN   = 564,
+    GEO_SLOW                 = 565,
+    GEO_PARALYSIS            = 566,
+    GEO_WEIGHT               = 567,
     FOIL                     = 568,
     BLAZE_OF_GLORY           = 569,
     BATTUTA                  = 570,
@@ -740,7 +740,7 @@ tpz.effect =
     CAIT_SITH_S_FAVOR        = 577,
     FISHY_INTUITION          = 578,
     COMMITMENT               = 579,
-    HASTE_II                 = 580,
+    GEO_HASTE                = 580,
     FLURRY_II                = 581,
     APOGEE                   = 583,
     ENTRUST                  = 584,
@@ -814,8 +814,8 @@ tpz.effect =
     DYNAMIS                  = 800,
     MEDITATE                 = 801, -- Dummy effect for SAM Meditate JA
     ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
-    -- PLACEHOLDER           = 803, -- Description
-    -- 803-1022
+    -- PLACEHOLDER              = 802, -- Description
+    -- 802-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
@@ -1544,6 +1544,14 @@ tpz.mod =
     BERSERK_DURATION                = 954, -- Berserk Duration
     AGGRESSOR_DURATION              = 955, -- Aggressor Duration
     DEFENDER_DURATION               = 956, -- Defender Duration
+    CARDINAL_CHANT                  = 959,
+    INDI_DURATION                   = 960,
+    GEOMANCY                        = 961,
+    WIDENED_COMPASS                 = 962,
+    MENDING_HALATION                = 968,
+    RADIAL_ARCANA                   = 969,
+    CURATIVE_RECANTATION            = 970,
+    PRIMEVAL_ZEAL                   = 971,
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 - 825 used by WS DMG mods these are not spares.
@@ -1646,11 +1654,12 @@ local MCATEGORY_SCH_1 = 0x0640
 
 local MCATEGORY_WS = 0x0680
 
-local MCATEGORY_UNK_0 = 0x06C0
-local MCATEGORY_UNK_1 = 0x0700
-local MCATEGORY_UNK_2 = 0x0740
-local MCATEGORY_UNK_3 = 0x0780
-local MCATEGORY_UNK_4 = 0x07C0
+local MCATEGORY_GEO_1 = 0x06C0
+local MCATEGORY_RUN_1 = 0x0700
+
+local MCATEGORY_UNK_1 = 0x0740
+local MCATEGORY_UNK_2 = 0x0780
+local MCATEGORY_UNK_3 = 0x07C0
 
 local MCATEGORY_WAR_2 = 0x0800
 local MCATEGORY_MNK_2 = 0x0840
@@ -1672,9 +1681,12 @@ local MCATEGORY_COR_2 = 0x0C00
 local MCATEGORY_PUP_2 = 0x0C40
 local MCATEGORY_DNC_2 = 0x0C80
 local MCATEGORY_SCH_2 = 0x0CC0
+local MCATEGORY_UNK_2 = 0x0D00
+local MCATEGORY_GEO_2 = 0x0D40
+local MCATEGORY_RUN_2 = 0x0D80
 
 local MCATEGORY_START = 0x0040
-local MCATEGORY_COUNT = 0x0D00
+local MCATEGORY_COUNT = 0x0D80
 
 tpz.merit =
 {
@@ -1877,6 +1889,13 @@ tpz.merit =
     HELIX_MAGIC_ACC_ATT         = MCATEGORY_SCH_1 + 0x04,
     MAX_SUBLIMATION             = MCATEGORY_SCH_1 + 0x06,
 
+    -- GEO 1
+    FULL_CIRCLE_EFFECT          = MCATEGORY_GEO_1 + 0x00,
+    ECLIPTIC_ATT_RECAST         = MCATEGORY_GEO_1 + 0x02,
+    LIFE_CYCLE_RECAST           = MCATEGORY_GEO_1 + 0x04,
+    BLAZE_OF_GLORY_RECAST       = MCATEGORY_GEO_1 + 0x06,
+    DEMATERIALIZE_RECAST        = MCATEGORY_GEO_1 + 0x08,
+
     -- WEAPON SKILLS
     SHIJIN_SPIRAL               = MCATEGORY_WS + 0x00,
     EXENTERATOR                 = MCATEGORY_WS + 0x02,
@@ -1892,13 +1911,6 @@ tpz.merit =
     SHATTERSOUL                 = MCATEGORY_WS + 0x16,
     APEX_ARROW                  = MCATEGORY_WS + 0x18,
     LAST_STAND                  = MCATEGORY_WS + 0x1A,
-
-    -- unknown
-    -- UNKNOWN1                 = MCATEGORY_UNK_0 + 0x00,
-    -- UNKNOWN2                 = MCATEGORY_UNK_1 + 0x00,
-    -- UNKNOWN3                 = MCATEGORY_UNK_2 + 0x00,
-    -- UNKNOWN4                 = MCATEGORY_UNK_3 + 0x00,
-    -- UNKNOWN5                 = MCATEGORY_UNK_4 + 0x00,
 
     -- WAR 2
     WARRIORS_CHARGE             = MCATEGORY_WAR_2 + 0x00,
@@ -2051,6 +2063,12 @@ tpz.merit =
     EQUANIMITY                  = MCATEGORY_SCH_2 + 0x06,
     ENLIGHTENMENT               = MCATEGORY_SCH_2 + 0x08,
     STORMSURGE                  = MCATEGORY_SCH_2 + 0x0A,
+
+        -- GEO 2
+    MENDING_HALATION            = MCATEGORY_GEO_2 + 0x00,
+    RADIAL_ARCANA               = MCATEGORY_GEO_2 + 0x02,
+    CURATIVE_RECANTATION        = MCATEGORY_GEO_2 + 0x04,
+    PRIMEVAL_ZEAL               = MCATEGORY_GEO_2 + 0x06,
 }
 
 ------------------------------------
@@ -2353,7 +2371,7 @@ tpz.jobSpecialAbility =
     -- TRANCE               = 2710,
     -- ELEMENTAL_SFORZO     = 3265,
     -- ELEMENTAL_SFORZO     = 3479,
-    -- BOLSTER              = 3482,
+     BOLSTER              = 3482,
 }
 tpz.jsa = tpz.jobSpecialAbility
 
@@ -2405,7 +2423,7 @@ tpz.skill =
     WIND_INSTRUMENT = 42,
     BLUE_MAGIC = 43,
     GEOMANCY = 44,
-
+    HANDBELL = 45,
     -- 45~47 unused
 
     -- Crafting Skills
@@ -2840,4 +2858,26 @@ tpz.relicTiers =
     {
         15070, 16195, 16196, 16197, 16198, 11927, 16200
     },
+}
+
+-- currently only used for GEO cardinal Chant
+-- Mainly just a reference.
+tpz.cardinalDirection =
+{
+    [1]  = '[N]',
+    [2]  = '[NNE]',
+    [3]  = '[NE]',
+    [4]  = '[ENE]',
+    [5]  = '[E]',
+    [6]  = '[ESE]',
+    [7]  = '[SE]',
+    [8]  = '[SSE]',
+    [9]  = '[S]',
+    [10] = '[SSW]',
+    [11] = '[SW]',
+    [12] = '[WSW]',
+    [13] = '[W]',
+    [14] = '[WNW]',
+    [15] = '[NW]',
+    [16] = '[NNW]',
 }
