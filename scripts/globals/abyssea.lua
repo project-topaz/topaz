@@ -5,6 +5,7 @@
 -----------------------------------
 
 require("scripts/globals/keyitems")
+require("scripts/globals/utils")
 
 -- weaponskills for red weakness
 local red_weakness =
@@ -54,6 +55,22 @@ local blue_weakness =
     --22-6
     {165, 166, 167, 168, 169, 5, 6, 7, 8, 9, 176, 181, 182, 183, 184}
 }
+
+function canEnterAbyssea(player)
+    if player:getCharVar("lastEnteredAbyssea") <= os.time() and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) >= QUEST_ACCEPTED then
+        player:PrintToPlayer("If you have a Dedication effect from an experience ring, it will wear off upon entry to Abyssea.", 29)
+        return true
+    end
+
+    local lastEnterTable = {0,0,0}
+    lastEnterTable = utils.convertTimeDescending(os.time() - player:getCharVar("lastEnteredAbyssea"))
+
+    if player:getCharVar("lastEnteredAbyssea") ~= 0 then
+        player:PrintToPlayer("You must wait " ..lastEnterTable[1].. " hours, " ..lastEnterTable[2].. " minutes, and " ..lastEnterTable[3].. " seconds before you can enter Abyssea again.", 29)
+    end
+
+    return false
+end
 
 -- returns Traverser Stone KI cap
 function getMaxTravStones(player)

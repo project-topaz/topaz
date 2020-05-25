@@ -394,3 +394,25 @@ function utils.hasRelic(player, relic, tier)
 
     return false
 end
+
+function utils.convertTimeDescending(raw_time)
+    local rawSeconds = tonumber(raw_time)
+    local timeTable = {0,0,0}
+
+    timeTable[1] = string.format("%02.f", math.floor(-rawSeconds/3600))
+    timeTable[2] = string.format("%02.f", math.floor(-rawSeconds/60 - (timeTable[1]*60)))
+    timeTable[3] = string.format("%02.f", math.floor(-rawSeconds - timeTable[1]*3600 - timeTable[2] *60))
+
+    return timeTable
+end
+
+function utils.convertTimeAscending(raw_time)
+    local rawSeconds = tonumber(raw_time)
+    local timeTable = {0,0,0}
+
+    timeTable[1] = string.format("%02.f", math.floor(rawSeconds/3600))
+    timeTable[2] = string.format("%02.f", math.floor(rawSeconds/60 - (timeTable[1]*60)))
+    timeTable[3] = string.format("%02.f", math.floor(rawSeconds - timeTable[1]*3600 - timeTable[2] *60))
+    
+    return timeTable
+end

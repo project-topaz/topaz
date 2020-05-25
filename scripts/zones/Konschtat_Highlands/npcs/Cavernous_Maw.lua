@@ -15,14 +15,14 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if ENABLE_ABYSSEA == 1 and player:getMainLvl() >= 30 then
+    if ENABLE_ABYSSEA == 1 and player:getMainLvl() >= 70 then
         if
             getTravStonesTotal(player) >= 1 and
             player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.DAWN_OF_DEATH) == QUEST_ACCEPTED and
             player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.TO_PASTE_A_PEISTE) == QUEST_AVAILABLE
         then
             player:startEvent(0)
-        else
+        elseif canEnterAbyssea(player) then
             player:startEvent(107, 0, 1) -- No param = no entry.
         end
     else

@@ -5,6 +5,7 @@
 -----------------------------------
 
 function onEffectGain(target,effect)
+    target:setCharVar("visitantTick", 1)
     -- Remove any older dedication effect
     if target:hasStatusEffect(tpz.effect.DEDICATION) then
         target:delStatusEffect(tpz.effect.DEDICATION)
@@ -25,8 +26,14 @@ function onEffectTick(target,effect)
     end
     Some messages about remaining time.will need to handled outside of this effect (zone ejection warnings after visitant is gone).
     ]]
+    local tick = target:getCharVar("visitantTick")
+    tick = tick + 1
+    target:setCharVar("visitantTick", tick)
+    if tick >= 5040 then
+        target:warp()
+    end
 end
 
 function onEffectLose(target,effect)
-    target:warp()
+    target:setCharVar("lastEnteredAbyssea", os.time() + 14400)
 end
