@@ -12173,7 +12173,7 @@ inline int32 CLuaBaseEntity::getTrustID(lua_State* L)
 *  Notes   : Adds a behaviour to the gambit system
 ************************************************************************/
 
-void build_gambit(lua_State* L, int index, int depth = 0)
+inline void build_gambit(lua_State* L, std::vector<int>& nums, int index, int depth = 0)
 {
     lua_pushvalue(L, index);
     lua_pushnil(L);
@@ -12188,9 +12188,20 @@ void build_gambit(lua_State* L, int index, int depth = 0)
 
         printf("(depth: %d, type: %s) %s => %s\n", depth, type_name, key, value);
 
+        // TODO: This is bad.
+        if (depth == 3)
+        {
+            nums.push_back((int)lua_tonumber(L, -2));
+        }
+
         if (lua_istable(L, -2))
         {
-            build_gambit(L, -2, ++depth);
+            build_gambit(L, nums, -2, ++depth);
+        }
+        else
+        {
+            // TODO: Hack to keep depth constant for numbers
+            ++depth;
         }
 
         --depth;
@@ -12206,14 +12217,26 @@ inline int32 CLuaBaseEntity::addGambit(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_istable(L, 1));
 
-    /*
+    std::vector<int> nums;
+    build_gambit(L, nums, 1);
+
+    TPZ_DEBUG_BREAK_IF(nums.size() != 6);
+
+    // TODO: don't hardcode this...
+    auto target = static_cast<G_TARGET>(nums[0]);
+    auto condition = static_cast<G_CONDITION>(nums[1]);
+    auto condition_arg = static_cast<uint16>(nums[2]);
+
+    auto reaction = static_cast<G_REACTION>(nums[3]);
+    auto selector = static_cast<G_SELECT>(nums[4]);
+    auto selector_arg = static_cast<uint16>(nums[5]);
+
+    Gambit_t g{ { target, condition, condition_arg }, { reaction, selector, selector_arg } };
+
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
 
-    controller->m_GambitsContainer->AddGambit(gambit);
-    */
-
-    build_gambit(L, 1);
+    controller->m_GambitsContainer->AddGambit(g);
 
     return 0;
 }
