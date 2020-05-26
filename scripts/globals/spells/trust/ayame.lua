@@ -19,28 +19,14 @@ end
 function onMobSpawn(mob)
 
     -- Keep Hasso up.
-    --mob:addGambit({ ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO })
-
     mob:addGambit(
     {
         {
             {
-                { ai.t.SELF, ai.c.NOT_STATUS, 0 },
-                { ai.t.SELF, ai.c.NOT_STATUS, 1 }
+                { ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO }
             },
             {
-                { ai.r.JA, ai.s.SPECIFIC, 2 },
-                { ai.r.JA, ai.s.SPECIFIC, 3 }
-            }
-        },
-        {
-            {
-                { ai.t.SELF, ai.c.NOT_STATUS, 4 },
-                { ai.t.SELF, ai.c.NOT_STATUS, 5 }
-            },
-            {
-                { ai.r.JA, ai.s.SPECIFIC, 6 },
-                { ai.r.JA, ai.s.SPECIFIC, 7 }
+                { ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO }
             }
         }
     })
