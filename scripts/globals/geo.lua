@@ -88,11 +88,7 @@ tpz.geo.getPotency = function(player, effect)
         handbell_skill = 0
     end
     
-    local skillPotency = (handbell_skill + geo_skill)
-
-    -- DEBUG
-    player:PrintToPlayer(player:getName().. "'s Combined skill: " ..skillPotency, 32)
-    
+    local skillPotency = (handbell_skill + geo_skill)  
     local potency = utils.clamp(math.floor(skillPotency / potencyData[effect].divisor), potencyData[effect].minPotency, potencyData[effect].maxPotency)
     -- Note: need to add bonuses from bells and gear.
 
@@ -106,9 +102,6 @@ tpz.geo.doIndiSpell = function(caster, target, spell, tick_effect, target_type)
     local potency = tpz.geo.getPotency(caster, tick_effect)
     local element = caster:getStatusEffectElement(tick_effect)
     local bubbleEffect = playerBubbleEffect[element][target_type +1]
-
-    -- DEBUG
-    caster:PrintToPlayer("Effect: " ..tick_effect.. " Aura element: " ..bubbleEffect.. " Potency: " ..potency, 29)
 
     target:addStatusEffectEx(tpz.effect.COLURE_ACTIVE, tpz.effect.COLURE_ACTIVE, bubbleEffect, 3, 180, tick_effect, potency, target_type, tpz.effectFlag.AURA)
 end
@@ -130,19 +123,14 @@ tpz.geo.spawnLuopan = function(player, target, tick_effect, target_type, spellCo
     local petID  = luopan:getID()
     local targetPos = target:getPos()
     local luopanMaxHP = luopan:getMaxHP()
-    local BoLPotency = 0
-    local finalPotency = 0
 
     -- Set the luopans pos to the same as the targets pos.
     luopan:setPos(targetPos.x, targetPos.y -10, targetPos.z + 0.2, 0)
 
     if player:hasStatusEffect(tpz.effect.BLAZE_OF_GLORY) then
-        BoLPotency = potency * 0.5
+        potency = potency *2
     end
 
-    finalPotency = potency + BoLPotency
-    -- DEBUG
-    player:PrintToPlayer("model id: " ..modelID.. "\npotency for " ..tick_effect.. " is " ..finalPotency, 29)
     -- Attach effect
     luopan:addStatusEffectEx(tpz.effect.COLURE_ACTIVE, tpz.effect.COLURE_ACTIVE, 0, 3, 600, tick_effect, finalPotency, target_type, tpz.effectFlag.AURA)
     
@@ -168,9 +156,6 @@ tpz.geo.spawnLuopan = function(player, target, tick_effect, target_type, spellCo
     if player:hasStatusEffect(tpz.effect.BLAZE_OF_GLORY) then
         player:delStatusEffectSilent(tpz.effect.BLAZE_OF_GLORY)
     end
-
-    -- DEBUG
-    player:PrintToPlayer("Loupans max HP = " ..luopan:getMaxHP().. "\nLuopans pep cost is: " ..math.floor(luopan:getMainLvl()/4), 29)
 end
 -----------------------------------------
 -- Luopan model types

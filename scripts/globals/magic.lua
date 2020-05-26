@@ -740,21 +740,6 @@ function getSpellBonusAcc(caster, target, spell, params)
     local skill = spell:getSkillType()
     local spellGroup = spell:getSpellGroup()
     local element = spell:getElement()
-    local spellId = spell:getID()
-    local geoBonus = {0.00,0.00,0.00,0.00} -- {MATT, MACC, MAG_BURST_BONUS, MAGIC_CRITHITRATE}
-    local geoMACC = 0.0
-    
-
-    if caster:getMainJob() == tpz.job.GEO then
-        if spellId >= 828 and spellId <= 839 then
-            geoBonus = getCardinalStats(caster, target, 1, spell)
-        else
-            geoBonus = getCardinalStats(caster, target, 0, spell)
-        end
-        geoMACC = geoBonus[2]
-    end
-
-    magicAccBonus = magicAccBonus + geoMACC
 
     if caster:hasStatusEffect(tpz.effect.ALTRUISM) and spellGroup == tpz.magic.spellGroup.WHITE then
         magicAccBonus = magicAccBonus + caster:getStatusEffect(tpz.effect.ALTRUISM):getPower()
@@ -939,10 +924,11 @@ function calculateMagicBurst(caster, spell, target, params)
     local modburst = 1.0
     local geoBonus = {0.00,0.00,0.00,0.00}
     local geoMagicBurstBonus = 0.0
+    local spellGroup = spell:getSpellGroup()
     local spellId = spell:getID()
 
-    if caster:getMainJob() == tpz.job.GEO then
-        if spellId >= 828 and spellId <= 839 then
+    if caster:getMainJob() == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
+        if caster:isSpellAoE(spellId) then
             geoBonus = getCardinalStats(caster, target, 1, spell)
         else
             geoBonus = getCardinalStats(caster, target, 0, spell)
@@ -1073,6 +1059,7 @@ function addBonuses(caster, spell, target, dmg, params)
     local geoMACC = 0.0
     local geoMCHR = 0.0
     local spellId = spell:getID()
+    local spellGroup = spell:getSpellGroup()
 
     if (spellId >= 245 and spellId <= 248) then -- Drain/Aspir (II)
         mabbonus = 1 + caster:getMod(tpz.mod.ENH_DRAIN_ASPIR)/100
@@ -1082,8 +1069,9 @@ function addBonuses(caster, spell, target, dmg, params)
     else
         local mab = caster:getMod(tpz.mod.MATT) + params.bonusmab
 
-        if caster:getMainJob() == tpz.job.GEO then
-            if spellId >= 828 and spellId <= 839 then
+
+        if caster:getMainJob() == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
+            if caster:isSpellAoE(spellId) then
                 geoBonus = getCardinalStats(caster, target, 1, spell)
             else
                 geoBonus = getCardinalStats(caster, target, 0, spell)
@@ -1655,8 +1643,6 @@ function getCardinalStats(caster, target, is_araSpell, spell)
     local spellID = spell:getID()
     local cardinalQuarant = caster:getCardinalQuadrant(targ)
     local modTier = caster:getMod(tpz.mod.CARDINAL_CHANT)
-    local MATT = caster:getMod(tpz.mod.MATT)
-    local MACC = caster:getMod(tpz.mod.MACC)
     local MAG_BURST_BONUS = caster:getMod(tpz.mod.MAG_BURST_BONUS)
     local MAGIC_CRITHITRATE = caster:getMod(tpz.mod.MAGIC_CRITHITRATE)
     local base = 0.0
