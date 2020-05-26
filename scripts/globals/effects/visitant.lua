@@ -29,11 +29,13 @@ function onEffectTick(target,effect)
     local tick = target:getCharVar("visitantTick")
     tick = tick + 1
     target:setCharVar("visitantTick", tick)
-    if tick >= 5040 then
+    if tick >= 1890 and target:getGMLevel() <= 1 then
         target:warp()
     end
 end
 
 function onEffectLose(target,effect)
-    target:setCharVar("lastEnteredAbyssea", os.time() + 14400)
+    if target:getGMLevel() <= 1 then
+        target:setCharVar("lastEnteredAbyssea", os.time() + 14400)
+    end
 end

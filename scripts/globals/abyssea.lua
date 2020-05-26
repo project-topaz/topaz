@@ -58,7 +58,7 @@ local blue_weakness =
 
 function canEnterAbyssea(player)
     if player:getCharVar("lastEnteredAbyssea") <= os.time() and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) >= QUEST_ACCEPTED then
-        player:PrintToPlayer("If you have a Dedication effect from an experience ring, it will wear off upon entry to Abyssea.", 29)
+        player:PrintToPlayer("If you have a Dedication effect from an experience ring, it will wear off upon entering Abyssea.", 29)
         return true
     end
 
