@@ -210,7 +210,7 @@ void CTrustController::DoRoamTick(time_point tick)
 
 bool CTrustController::Ability(uint16 targid, uint16 abilityid)
 {
-    if (static_cast<CMobEntity*>(POwner)->PRecastContainer->Has(RECAST_ABILITY, abilityid + 16))
+    if (static_cast<CMobEntity*>(POwner)->PRecastContainer->HasRecast(RECAST_ABILITY, abilityid + 16, 0))
     {
         return false;
     }

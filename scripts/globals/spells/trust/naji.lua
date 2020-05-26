@@ -25,8 +25,17 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-        mob:addGambit({ ai.t.SELF, ai.c.ALWAYS, 0 }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE })
-        mob:addGambit( { ai.t.SELF, ai.c.TP_GTE, 1000 }, { ai.r.WS, ai.s.SPECIFIC, tpz.ws.BURNING_BLADE })
+    mob:addGambit(
+    {
+        {
+            {
+                { ai.t.SELF, ai.c.NOT_HAS_ENMITY, 0 }
+            },
+            {
+                { ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE }
+            }
+        }
+    })
 end
 
 function onMobDespawn(mob)

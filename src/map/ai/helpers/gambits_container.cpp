@@ -98,7 +98,7 @@ void CGambitsContainer::Tick(time_point tick)
             }
             case NOT_HAS_ENMITY:
             {
-                return controller->GetTopEnmity()->targid != POwner->targid;
+                return (controller->GetTopEnmity()) ? controller->GetTopEnmity()->targid != POwner->targid : false;
                 break;
             }
             case SC_AVAILABLE:
