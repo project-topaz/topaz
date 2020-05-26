@@ -19,15 +19,39 @@ end
 function onMobSpawn(mob)
 
     -- Keep Hasso up.
-    mob:addGambit({ ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO })
+    --mob:addGambit({ ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO })
+
+    mob:addGambit(
+    {
+        {
+            {
+                { ai.t.SELF, ai.c.NOT_STATUS, 0 },
+                { ai.t.SELF, ai.c.NOT_STATUS, 1 }
+            },
+            {
+                { ai.r.JA, ai.s.SPECIFIC, 2 },
+                { ai.r.JA, ai.s.SPECIFIC, 3 }
+            }
+        },
+        {
+            {
+                { ai.t.SELF, ai.c.NOT_STATUS, 4 },
+                { ai.t.SELF, ai.c.NOT_STATUS, 5 }
+            },
+            {
+                { ai.r.JA, ai.s.SPECIFIC, 6 },
+                { ai.r.JA, ai.s.SPECIFIC, 7 }
+            }
+        }
+    })
 
     -- Uses Third Eye if it available and she has enmity on a hostile target.
-    mob:addGambit({ ai.t.SELF, ai.c.HAS_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.THIRD_EYE })
+    --mob:addGambit({ ai.t.SELF, ai.c.HAS_ENMITY, 0 }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.THIRD_EYE })
 
     -- Pump TP with Meditate
-    mob:addGambit({ ai.t.SELF, ai.c.TP_LT, 1000 }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.MEDITATE })
+    --mob:addGambit({ ai.t.SELF, ai.c.TP_LT, 1000 }, { ai.r.JA, ai.s.SPECIFIC, tpz.ja.MEDITATE })
 
-    mob:addGambit( { ai.t.SELF, ai.c.TP_GTE, 1000 }, { ai.r.WS, ai.s.SPECIFIC, tpz.ws.TACHI_ENPI })
+    --mob:addGambit( { ai.t.SELF, ai.c.TP_GTE, 1000 }, { ai.r.WS, ai.s.SPECIFIC, tpz.ws.TACHI_ENPI })
 
     --[[
     -- Uses Meditate if her summoner has over 1000TP and she is under 1000TP.

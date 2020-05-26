@@ -12173,78 +12173,47 @@ inline int32 CLuaBaseEntity::getTrustID(lua_State* L)
 *  Notes   : Adds a behaviour to the gambit system
 ************************************************************************/
 
+void build_gambit(lua_State* L, int index, int depth = 0)
+{
+    lua_pushvalue(L, index);
+    lua_pushnil(L);
+    while (lua_next(L, -2))
+    {
+        lua_pushvalue(L, -2);
+
+        auto key = lua_tostring(L, -1);
+        auto value = lua_tostring(L, -2);
+        auto type = lua_type(L, -2);
+        auto type_name = lua_typename(L, -2);
+
+        printf("(depth: %d, type: %s) %s => %s\n", depth, type_name, key, value);
+
+        if (lua_istable(L, -2))
+        {
+            build_gambit(L, -2, ++depth);
+        }
+
+        --depth;
+        lua_pop(L, 2);
+    }
+    lua_pop(L, 1);
+    --depth;
+}
+
 inline int32 CLuaBaseEntity::addGambit(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_istable(L, 1));
 
     /*
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 6) || !lua_isnumber(L, 6));
-    // 7 is optional
-
-    auto selector = static_cast<G_SELECTOR>(lua_tointeger(L, 1));
-    auto trigger = static_cast<G_TRIGGER>(lua_tointeger(L, 2));
-    auto trigger_condition = static_cast<uint16>(lua_tointeger(L, 3));
-    auto reaction = static_cast<G_REACTION>(lua_tointeger(L, 4));
-    auto reaction_mod = static_cast<G_REACTION_MODIFIER>(lua_tointeger(L, 5));
-    auto reaction_arg = static_cast<uint16>(lua_tointeger(L, 6));
-    auto retry_delay = 0;
-    if (!lua_isnil(L, 7) && lua_isnumber(L, 7))
-    {
-        retry_delay = (uint16)lua_tointeger(L, 7);
-    }
-
-    auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
-    auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
-
-    controller->m_GambitsContainer->AddGambit(selector, trigger, trigger_condition, reaction, reaction_mod, reaction_arg, retry_delay);
-    */
-
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_istable(L, 1));
-    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_istable(L, 2));
-
-    std::vector<uint16> nums;
-
-    // { 3, 2, 157 }
-    // Action Table (2)
-    lua_pushnil(L);
-    while (lua_next(L, 2) != 0)
-    {
-        nums.push_back(lua_tointeger(L, -1));
-        lua_pop(L, 1);
-    }
-    lua_pop(L, 1);
-
-    // { 0, 7, 353}
-    // Predicate Table (1)
-    lua_pushnil(L);
-    while (lua_next(L, 1) != 0)
-    {
-        nums.push_back(lua_tointeger(L, -1));
-        lua_pop(L, 1);
-    }
-    lua_pop(L, 1);
-
-    Gambit_t gambit;
-    gambit.predicate.target = static_cast<G_TARGET>(nums[3]);
-    gambit.predicate.condition = static_cast<G_CONDITION>(nums[4]);
-    gambit.predicate.condition_arg = nums[5];
-
-    gambit.action.reaction = static_cast<G_REACTION>(nums[0]);
-    gambit.action.select = static_cast<G_SELECT>(nums[1]);
-    gambit.action.select_arg = nums[2];
-
-    gambit.retry_delay = 0;
-
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
 
     controller->m_GambitsContainer->AddGambit(gambit);
+    */
+
+    build_gambit(L, 1);
 
     return 0;
 }
