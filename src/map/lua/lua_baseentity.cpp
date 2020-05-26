@@ -12184,7 +12184,7 @@ void build_gambit(lua_State* L, int index, int depth = 0)
         auto key = lua_tostring(L, -1);
         auto value = lua_tostring(L, -2);
         auto type = lua_type(L, -2);
-        auto type_name = lua_typename(L, -2);
+        auto type_name = lua_typename(L, type);
 
         printf("(depth: %d, type: %s) %s => %s\n", depth, type_name, key, value);
 
