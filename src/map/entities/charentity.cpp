@@ -1449,14 +1449,6 @@ bool CCharEntity::IsMobOwner(CBattleEntity* PBattleTarget)
         return true;
     }
 
-    for (auto& trust : PTrusts)
-    {
-        if (PBattleTarget->m_OwnerID.id == trust->id)
-        {
-            return true;
-        }
-    }
-
     bool found = false;
 
     static_cast<CCharEntity*>(this)->ForAlliance([&PBattleTarget, &found](CBattleEntity* PEntity) {
