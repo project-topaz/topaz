@@ -213,7 +213,6 @@ public:
     CAutomatonEntity*       PAutomaton;                     // Automaton statistics
 
     std::vector<CTrustEntity*> PTrusts; // Active trusts
-    CBattleEntity*	PClaimedMob;
     template        <typename F, typename... Args>
     void            ForPartyWithTrusts(F func, Args&&... args)
     {
@@ -229,6 +228,8 @@ public:
             func(this, std::forward<Args>(args)...);
         }
     }
+
+    CBattleEntity*	PClaimedMob;
 
     // These missions do not need a list of completed, because client automatically
     // displays earlier missions completed

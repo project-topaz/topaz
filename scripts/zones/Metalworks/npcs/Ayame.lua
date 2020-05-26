@@ -5,13 +5,13 @@
 -- Starts and Finishes Quest: True Strength
 -- !pos 133 -19 34 237
 -----------------------------------
+require("scripts/globals/status")
+require("scripts/globals/settings")
+require("scripts/globals/titles")
+require("scripts/globals/keyitems")
+require("scripts/globals/missions")
+require("scripts/globals/quests")
 local ID = require("scripts/zones/Metalworks/IDs")
-require("scripts/globals/status");
-require("scripts/globals/settings");
-require("scripts/globals/titles");
-require("scripts/globals/keyitems");
-require("scripts/globals/missions");
-require("scripts/globals/quests");
 -----------------------------------
 
 local TrustMemory = function(player)
@@ -55,8 +55,9 @@ end
 
 function onTrigger(player,npc)
 
-    local trueStrength = player:getQuestStatus(BASTOK,tpz.quest.id.bastok.TRUE_STRENGTH);
-    local WildcatBastok = player:getCharVar("WildcatBastok");
+    local trueStrength = player:getQuestStatus(BASTOK,tpz.quest.id.bastok.TRUE_STRENGTH)
+    local WildcatBastok = player:getCharVar("WildcatBastok")
+    local FadedPromises = player:getQuestStatus(BASTOK,tpz.quest.id.bastok.FADED_PROMISES)
     local Rank3 = player:getRank() >= 3 and 1 or 0
 
     if (player:getQuestStatus(BASTOK,tpz.quest.id.bastok.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and player:getMaskBit(WildcatBastok,9) == false) then
@@ -64,7 +65,11 @@ function onTrigger(player,npc)
     elseif (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_CRYSTAL_LINE and player:hasKeyItem(tpz.ki.C_L_REPORTS)) then
         player:startEvent(712)
     elseif (trueStrength == QUEST_AVAILABLE and player:getMainJob() == tpz.job.MNK and player:getMainLvl() >= 50) then
-        player:startEvent(748); -- Start Quest "True Strength"
+        player:startEvent(748) -- Start Quest "True Strength"
+    elseif (player:getCharVar("FadedPromises") == 1) then
+        player:startEvent(803)
+    elseif (player:getCharVar("FadedPromises") == 3) then
+        player:startEvent(804)
     elseif player:hasKeyItem(tpz.ki.BASTOK_TRUST_PERMIT) and not player:hasSpell(900) then
         player:startEvent(985, 0, 0, 0, TrustMemory(player), 0, 0, 0, Rank3)
     else
@@ -95,7 +100,11 @@ function onEventFinish(player,csid,option)
             player:completeQuest(BASTOK,tpz.quest.id.bastok.TRUE_STRENGTH);
         end
     elseif (csid == 935) then
-        player:setMaskBit(player:getCharVar("WildcatBastok"),"WildcatBastok",9,true);
+        player:setMaskBit(player:getCharVar("WildcatBastok"),"WildcatBastok",9,true)
+    elseif (csid == 803 and option == 1) then
+        player:setCharVar("FadedPromises",2)
+    elseif (csid == 804) then
+        player:setCharVar("FadedPromises",4)
     elseif csid == 985 then
         player:addSpell(900, true, true)
         player:messageSpecial(ID.text.YOU_LEARNED_TRUST, 0, 900)
