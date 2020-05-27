@@ -229,7 +229,7 @@ public:
         }
     }
 
-    CBattleEntity* PClaimedMob;
+    CBattleEntity*	PClaimedMob;
 
     // These missions do not need a list of completed, because client automatically
     // displays earlier missions completed
