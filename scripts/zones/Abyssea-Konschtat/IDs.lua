@@ -118,6 +118,7 @@ zones[tpz.zone.ABYSSEA_KONSCHTAT] =
             --  [16839097] = {'qm20',     {},                                                     {tpz.ki.TATTERED_HIPPOGRYPH_WING,tpz.ki.CRACKED_WIVRE_HORN,tpz.ki.MUCID_AHRIMAN_EYEBALL}, 16839073}, -- Kukulkan
             --  [16839098] = {'qm21',     {},                                                                                                              {tpz.ki.TWISTED_TONBERRY_CROWN}, 16839074}, -- Bloodeye Vileberry
         },
+        sturdyPyxisBase = 16839114,
     },
 }
 

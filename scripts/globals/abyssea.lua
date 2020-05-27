@@ -7,6 +7,20 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/utils")
 
+local abyssea_zones =
+{
+    15, -- ABYSSEA_KONSCHTAT
+    45, -- ABYSSEA_TAHRONGI
+    132,-- ABYSSEA_LA_THEINE
+    215,-- ABYSSEA_ATTOHWA
+    216,-- ABYSSEA_MISAREAUX
+    217,-- ABYSSEA_VUNKERL
+    218,-- ABYSSEA_ALTEPA
+    253,-- ABYSSEA_ULEGUERAND
+    254 -- ABYSSEA_GRAUBERG
+    --255 -- ABYSSEA_EMPYREAL_PARADOX
+}
+
 -- weaponskills for red weakness
 local red_weakness =
 {
@@ -414,5 +428,137 @@ function abysseaOnEventFinish(player,csid,option)
         GetMobByID(nm):setSpawn(dx,dy,dz)
         SpawnMob(nm):updateClaim(player)
         return true
+    end
+end
+
+function isInAbysseaZone(player)
+    for index, zone in ipairs(abyssea_zones) do
+        if zone == player:getZoneID() then
+            return true
+        end
+    end
+    return false
+end
+
+function ResetPlayerLights(player)
+    player:setCharVar("pearlLight",0)
+    player:setCharVar("azureLight",0)
+    player:setCharVar("rubyLight",0)
+    player:setCharVar("amberLight",0)
+    player:setCharVar("goldLight",0)
+    player:setCharVar("silverLight",0)
+    player:setCharVar("ebonLight",0)
+end
+
+function SetPlayerLights(player, light, amount)
+    local zoneId = player:getZoneID()
+    local ID = zones[zoneId]
+
+    local tiermsg     = 0
+    local lightamount = amount or 0
+    local pearl       = player:getCharVar("pearlLight")
+    local azure       = player:getCharVar("azureLight")
+    local ruby        = player:getCharVar("rubyLight")
+    local amber       = player:getCharVar("amberLight")
+    local gold        = player:getCharVar("goldLight")
+    local silver      = player:getCharVar("silverLight")
+    local ebon        = player:getCharVar("ebonLight")
+
+    --printf("light amount = %s", tostring(lightamount))
+
+    if lightamount <= 8 then
+        tiermsg = 0
+    elseif lightamount > 8 and lightamount <= 16 then
+        tiermsg = 1
+    elseif lightamount > 16 and lightamount <= 32 then
+        tiermsg = 2
+    elseif lightamount > 32 and lightamount <= 64 then
+        tiermsg = 3
+    elseif lightamount > 64 then
+        tiermsg = 4
+    end
+
+    if light == 1 or light == 5 or light == 6 or light == 7 then
+        if tiermsg > 2 then
+            tiermsg = 2
+        end
+    end
+    -------------------------------------------------------------------------------------
+    -- lights: 1: pearl, 2: azure, 3: ruby, 4: amber, 5: gold, 6: silver, 7: ebon 
+    -------------------------------------------------------------------------------------
+    if light == 1 then
+        if pearl + lightamount > 230 then
+            player:setCharVar("pearlLight",230)
+        else
+            player:setCharVar("pearlLight",pearl + lightamount)
+        end
+
+        player:messageSpecial(ID.text.BODY_EMITS_PEARL_LIGHT,tiermsg)
+    elseif light == 2 then
+        if azure + lightamount > 255 then
+            player:setCharVar("azureLight",255)
+        else
+            player:setCharVar("azureLight",azure + lightamount)
+        end
+
+        player:messageSpecial(ID.text.BODY_EMITS_AZURE_LIGHT,tiermsg)
+    elseif light == 3 then
+        if ruby + lightamount > 255 then
+            player:setCharVar("rubyLight",255)
+        else
+            player:setCharVar("rubyLight",ruby + lightamount)
+        end
+
+        player:messageSpecial(ID.text.BODY_EMITS_RUBY_LIGHT,tiermsg)
+    elseif light == 4 then
+        if amber + lightamount > 255 then
+            player:setCharVar("amberLight",255)
+        else
+            player:setCharVar("amberLight",amber + lightamount)
+        end
+
+        player:messageSpecial(ID.text.BODY_EMITS_AMBER_LIGHT,tiermsg)
+    elseif light == 5 then
+        if gold + lightamount > 200 then
+            player:setCharVar("goldLight",200)
+        else
+            player:setCharVar("goldLight",gold + lightamount)
+        end
+
+        player:messageSpecial(ID.text.BODY_EMITS_GOLDEN_LIGHT,tiermsg)
+    elseif light == 6 then
+        if silver + lightamount > 200 then
+            player:setCharVar("silverLight",200)
+        else
+            player:setCharVar("silverLight",silver + lightamount)
+        end
+
+        player:messageSpecial(ID.text.BODY_EMITS_SILVERY_LIGHT,tiermsg)
+    elseif light == 7 then
+        if ebon + lightamount > 200 then
+            player:setCharVar("ebonLight",200)
+        else
+            player:setCharVar("ebonLight",ebon + lightamount)
+        end
+
+        player:messageSpecial(ID.text.BODY_EMITS_EBON_LIGHT,tiermsg)
+    end
+end
+
+function GetAbysseaStats(player)
+    local zoneId = player:getZoneID()
+    local ID = zones[zoneId]
+
+    if isInAbysseaZone(player) then
+        local pearl  = player:getCharVar("pearlLight")
+        local azure  = player:getCharVar("azureLight")
+        local ruby   = player:getCharVar("rubyLight")
+        local amber  = player:getCharVar("amberLight")
+        local gold   = player:getCharVar("goldLight")
+        local silver = player:getCharVar("silverLight")
+        local ebon   = player:getCharVar("ebonLight")
+
+        player:messageSpecial(ID.text.LIGHTS_MESSAGE_1, pearl, ebon, gold, silver)
+        player:messageSpecial(ID.text.LIGHTS_MESSAGE_2, azure, ruby, amber)
     end
 end

@@ -11,6 +11,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Konschtat/IDs")
 require("scripts/globals/quests")
+require("scripts/globals/abyssea")
 -----------------------------------
 
 function onInitialize(zone)
@@ -26,6 +27,8 @@ function onZoneIn(player,prevZone)
     if player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_ACCEPTED and player:getCharVar("1stTimeAbyssea") == 0 then
         player:setCharVar("1stTimeAbyssea",1)
     end
+
+    ResetPlayerLights(player)
 
     local visitantEffect = tpz.effect.VISITANT
     local visitantStatusEffect = player:getStatusEffect(visitantEffect)

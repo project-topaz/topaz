@@ -37,7 +37,8 @@ function onEffectTick(target,effect)
 end
 
 function onEffectLose(target,effect)
-    if target:getGMLevel() <= 1 then
+    if target:getGMLevel() <= 1 and isInAbysseaZone(target) then
         target:setCharVar("lastEnteredAbyssea", os.time() + 14400)
+        target:warp()
     end
 end
