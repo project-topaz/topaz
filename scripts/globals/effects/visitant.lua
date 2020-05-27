@@ -29,7 +29,7 @@ function onEffectTick(target,effect)
     local tick = target:getCharVar("visitantTick")
     tick = tick + 1
     target:setCharVar("visitantTick", tick)
-    if tick >= 1890 and target:getGMLevel() <= 1 then
+    if tick >= 1889 and target:getGMLevel() <= 1 then
         target:warp()
     end
 end
