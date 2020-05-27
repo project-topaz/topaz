@@ -10,7 +10,7 @@
 #include "../../status_effect.h"
 #include "../../status_effect_container.h"
 
-
+// TODO: Gambits namespace
 enum class G_TARGET : uint16
 {
     SELF   = 0,

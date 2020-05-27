@@ -12166,8 +12166,38 @@ inline int32 CLuaBaseEntity::getTrustID(lua_State* L)
     return 1;
 }
 
+inline int32 CLuaBaseEntity::addSimpleGambit(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST);
+
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 4) || !lua_isnumber(L, 4));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 6) || !lua_isnumber(L, 6));
+
+    auto target = static_cast<G_TARGET>(lua_tointeger(L, 1));
+    auto condition = static_cast<G_CONDITION>(lua_tointeger(L, 2));
+    auto condition_arg = static_cast<uint16>(lua_tointeger(L, 3));
+
+    auto reaction = static_cast<G_REACTION>(lua_tointeger(L, 4));
+    auto selector = static_cast<G_SELECT>(lua_tointeger(L, 5));
+    auto selector_arg = static_cast<uint16>(lua_tointeger(L, 6));
+
+    Gambit_t g{ { target, condition, condition_arg }, { reaction, selector, selector_arg } };
+
+    auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
+    auto controller = static_cast<CTrustController*>(trust->PAI->GetController());
+
+    controller->m_GambitsContainer->AddGambit(g);
+
+    return 0;
+}
+
 /************************************************************************
-*  Function: addGambit()
+*  Function: addFullGambit()
 *  Purpose :
 *  Example : mob:addGambit(PARTY, HPP_LTE, 25, MA, SELECT_HIGHEST, tpz.magic.spellFamily.CURE)
 *  Notes   : Adds a behaviour to the gambit system
@@ -12211,7 +12241,7 @@ inline void build_gambit(lua_State* L, std::vector<int>& nums, int index, int de
     --depth;
 }
 
-inline int32 CLuaBaseEntity::addGambit(lua_State* L)
+inline int32 CLuaBaseEntity::addFullGambit(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST);
@@ -12221,6 +12251,12 @@ inline int32 CLuaBaseEntity::addGambit(lua_State* L)
     build_gambit(L, nums, 1);
 
     TPZ_DEBUG_BREAK_IF(nums.size() != 6);
+
+    if (nums.size() != 6)
+    {
+        ShowWarning("Invalid Gambit");
+        return 0;
+    }
 
     // TODO: don't hardcode this...
     auto target = static_cast<G_TARGET>(nums[0]);
@@ -14886,7 +14922,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     // Trust related
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,spawnTrust),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getTrustID),
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addGambit),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addSimpleGambit),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,addFullGambit),
 
     // Mob Entity-Specific
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobLevel),

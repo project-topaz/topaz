@@ -9,16 +9,17 @@ require("scripts/globals/utils")
 ai = ai or {}
 
 -- Target
-ai.t =
+ai.target =
 {
     SELF   = 0,
     PARTY  = 1,
     TARGET = 2,
     MASTER = 3,
 }
+ai.t = ai.target
 
 -- Condition
-ai.c =
+ai.condition =
 {
     ALWAYS           = 0,
     HPP_LT           = 1,
@@ -35,9 +36,10 @@ ai.c =
     NOT_SC_AVAILABLE = 12,
     MB_AVAILABLE     = 13,
 }
+ai.c = ai.condition
 
 -- Reaction
-ai.r =
+ai.reaction =
 {
     ATTACK = 0,
     ASSIST = 1,
@@ -46,9 +48,10 @@ ai.r =
     WS     = 4,
     MS     = 5,
 }
+ai.r = ai.reaction
 
 -- Select
-ai.s =
+ai.select =
 {
     HIGHEST    = 0,
     LOWEST     = 1,
@@ -56,3 +59,4 @@ ai.s =
     RANDOM     = 3,
     MB_ELEMENT = 4,
 }
+ai.s = ai.select
