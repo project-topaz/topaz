@@ -12,6 +12,12 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onTrade(player,npc,trade)
+    if npcUtil.tradeHas(trade, 2490) then -- forbidden key
+        local cruorReward = math.floor(math.random(10, 100) * math.random(1.2, 2.5))
+        player:addCurrency("cruor", cruorReward)
+        player:PrintToPlayer("You receive " ..cruorReward.. " cruor.",29)
+        player:confirmTrade()
+    end
 end
 
 function onTrigger(player,npc)
