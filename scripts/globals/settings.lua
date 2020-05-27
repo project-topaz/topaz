@@ -19,7 +19,7 @@ require("scripts/globals/status");
 ENABLE_COP     = 1;
 ENABLE_TOAU    = 1;
 ENABLE_WOTG    = 1;
-ENABLE_ACP     = 0;
+ENABLE_ACP     = 1;
 ENABLE_AMK     = 0;
 ENABLE_ASA     = 0;
 ENABLE_ABYSSEA = 1;

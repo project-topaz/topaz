@@ -16,7 +16,7 @@ function onEffectGain(target,effect)
     target:setAnimation(33)
 
     -- Abyssea Lights check
-    if isInAbysseaZone(target) then
+    if isInAbysseaZone(target) and target:isPC() then
         GetAbysseaStats(target)
     end
 

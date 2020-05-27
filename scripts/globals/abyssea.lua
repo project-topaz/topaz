@@ -7,6 +7,9 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/utils")
 
+tpz = tpz or {}
+tpz.abyssea= tpz.abyssea or {}
+
 local abyssea_zones =
 {
     15, -- ABYSSEA_KONSCHTAT
@@ -70,8 +73,18 @@ local blue_weakness =
     {165, 166, 167, 168, 169, 5, 6, 7, 8, 9, 176, 181, 182, 183, 184}
 }
 
+tpz.abyssea.lightType =
+{
+    PEARL   = 1,
+    AZURE   = 2,
+    RUBY    = 3,
+    AMBER   = 4,
+    GOLDEN  = 5,
+    SILVERY = 6,
+    EBON    = 7,
+}
 function canEnterAbyssea(player)
-    if player:getCharVar("lastEnteredAbyssea") <= os.time() and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) >= QUEST_ACCEPTED then
+    if player:getCharVar("lastEnteredAbyssea") <= os.time() and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) >= QUEST_ACCEPTED and player:getMainLvl() >= 65 then
         player:PrintToPlayer("If you have a Dedication effect from an experience ring, it will wear off upon entering Abyssea.", 29)
         return true
     end
@@ -450,7 +463,7 @@ function ResetPlayerLights(player)
     player:setCharVar("ebonLight",0)
 end
 
-function SetPlayerLights(player, light, amount)
+function AddPlayerLights(player, light, amount)
     local zoneId = player:getZoneID()
     local ID = zones[zoneId]
 
@@ -484,7 +497,7 @@ function SetPlayerLights(player, light, amount)
         end
     end
     -------------------------------------------------------------------------------------
-    -- lights: 1: pearl, 2: azure, 3: ruby, 4: amber, 5: gold, 6: silver, 7: ebon 
+    -- lights: 1: pearl, 2: azure, 3: ruby, 4: amber, 5: gold, 6: silver, 7: ebon
     -------------------------------------------------------------------------------------
     if light == 1 then
         if pearl + lightamount > 230 then
@@ -560,5 +573,28 @@ function GetAbysseaStats(player)
 
         player:messageSpecial(ID.text.LIGHTS_MESSAGE_1, pearl, ebon, gold, silver)
         player:messageSpecial(ID.text.LIGHTS_MESSAGE_2, azure, ruby, amber)
+    end
+end
+
+function DropLights(player, lightColor, lightAmount, preferredLight)
+    local dropLight = 0
+    local usePreferred = math.random() * 100
+
+    if lightColor == 0 then
+        if usePreferred > 70 then
+            dropLight = preferredLight
+        else
+            dropLight = math.random(5, 6)
+        end
+    else
+        dropLight = lightColor
+    end
+
+    local party = {}
+    party = player:getAlliance()
+    for _,member in ipairs(party) do
+        if member:getZoneID() == player:getZoneID() then
+            AddPlayerLights(player, dropLight, lightAmount)
+        end
     end
 end
