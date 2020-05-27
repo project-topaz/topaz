@@ -8,7 +8,6 @@
 void CGambitsContainer::AddGambit(Gambit_t gambit)
 {
     bool available = true;
-    /*
     if (gambit.action.reaction == G_REACTION::MA && gambit.action.select == G_SELECT::SPECIFIC)
     {
         if (!spell::CanUseSpell(static_cast<CBattleEntity*>(POwner), static_cast<SpellID>(gambit.action.select_arg)))
@@ -16,7 +15,6 @@ void CGambitsContainer::AddGambit(Gambit_t gambit)
             available = false;
         }
     }
-    */
     if (available)
     {
         gambits.push_back(gambit);
@@ -171,35 +169,33 @@ void CGambitsContainer::Tick(time_point tick)
         {
 
             if (gambit.action.reaction == G_REACTION::MA)
-            /*
             {
-                if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_SPECIFIC)
+                if (gambit.action.select == G_SELECT::SPECIFIC)
                 {
-                    auto spell_id = POwner->SpellContainer->GetAvailable(static_cast<SpellID>(action.reaction_arg));
+                    auto spell_id = POwner->SpellContainer->GetAvailable(static_cast<SpellID>(gambit.action.select_arg));
                     if (spell_id.has_value())
                     {
                         controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
                     }
                 }
-                else if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_HIGHEST)
+                else if (gambit.action.select == G_SELECT::HIGHEST)
                 {
-                    auto spell_id = POwner->SpellContainer->GetBestAvailable(static_cast<SPELLFAMILY>(action.reaction_arg));
+                    auto spell_id = POwner->SpellContainer->GetBestAvailable(static_cast<SPELLFAMILY>(gambit.action.select_arg));
                     if (spell_id.has_value())
                     {
                         controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
                     }
                 }
-                else if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_LOWEST)
+                else if (gambit.action.select == G_SELECT::LOWEST)
                 {
-
-                    auto spell_id = POwner->SpellContainer->GetWorstAvailable(static_cast<SPELLFAMILY>(action.reaction_arg));
-                    if (spell_id.has_value())
-                    {
-                        controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
-                    }
-
+                    // TODO
+                    //auto spell_id = POwner->SpellContainer->GetWorstAvailable(static_cast<SPELLFAMILY>(gambit.action.select_arg));
+                    //if (spell_id.has_value())
+                    //{
+                    //    controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
+                    //}
                 }
-                else if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_RANDOM)
+                else if (gambit.action.select == G_SELECT::RANDOM)
                 {
                     auto spell_id = POwner->SpellContainer->GetSpell();
                     if (spell_id.has_value())
@@ -207,7 +203,7 @@ void CGambitsContainer::Tick(time_point tick)
                         controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
                     }
                 }
-                else if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_MB_ELEMENT)
+                else if (gambit.action.select == G_SELECT::MB_ELEMENT)
                 {
                     CStatusEffect* PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN, 0);
                     std::list<SKILLCHAIN_ELEMENT> resonanceProperties;
@@ -237,14 +233,11 @@ void CGambitsContainer::Tick(time_point tick)
                             }
                         }
                     }
-
                     if (spell_id.has_value())
                     {
                         controller->Cast(target->targid, static_cast<SpellID>(spell_id.value()));
                     }
                 }
-            } */
-            {
             }
             else if (gambit.action.reaction == G_REACTION::JA)
             {
