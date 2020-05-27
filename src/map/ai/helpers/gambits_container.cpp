@@ -140,7 +140,10 @@ void CGambitsContainer::Tick(time_point tick)
             for (uint8 i = 0; i < master->PParty->members.size(); ++i)
             {
                 auto member = master->PParty->members.at(i);
-                if (checkTrigger(member, gambit.predicate))
+                if (member->isAlive() &&
+                    POwner->loc.zone == member->loc.zone &&
+                    distance(POwner->loc.p, member->loc.p) <= 15.0f &&
+                    checkTrigger(member, gambit.predicate))
                 {
                     target = member;
                     break;
@@ -166,7 +169,7 @@ void CGambitsContainer::Tick(time_point tick)
 
         if (target)
         {
-            
+
             if (gambit.action.reaction == G_REACTION::MA)
             /*
             {
@@ -188,7 +191,7 @@ void CGambitsContainer::Tick(time_point tick)
                 }
                 else if (action.reaction_mod == G_REACTION_MODIFIER::SELECT_LOWEST)
                 {
-                   
+
                     auto spell_id = POwner->SpellContainer->GetWorstAvailable(static_cast<SPELLFAMILY>(action.reaction_arg));
                     if (spell_id.has_value())
                     {
