@@ -16,6 +16,8 @@ function onEffectGain(target,effect)
     local visEffect = target:getStatusEffect(tpz.effect.VISITANT)
     expEffect:setFlag(tpz.effectFlag.ON_ZONE)
     visEffect:setFlag(tpz.effectFlag.ON_ZONE)
+    visEffect:setFlag(tpz.effectFlag.INFLUENCE)
+    expEffect:setFlag(tpz.effectFlag.INFLUENCE)
 end
 
 function onEffectTick(target,effect)
