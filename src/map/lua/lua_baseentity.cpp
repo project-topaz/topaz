@@ -12166,6 +12166,13 @@ inline int32 CLuaBaseEntity::getTrustID(lua_State* L)
     return 1;
 }
 
+/************************************************************************
+*  Function: addSimpleGambit()
+*  Purpose :
+*  Example : trust:addSimpleGambit(target, condition, condition_arg, reaction, selector, selector_arg)
+*  Notes   : Adds a behaviour to the gambit system
+************************************************************************/
+
 inline int32 CLuaBaseEntity::addSimpleGambit(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
@@ -12207,7 +12214,7 @@ inline int32 CLuaBaseEntity::addSimpleGambit(lua_State* L)
 /************************************************************************
 *  Function: addFullGambit()
 *  Purpose :
-*  Example : mob:addGambit(PARTY, HPP_LTE, 25, MA, SELECT_HIGHEST, tpz.magic.spellFamily.CURE)
+*  Example : mob:addGambit(...)
 *  Notes   : Adds a behaviour to the gambit system
 ************************************************************************/
 
