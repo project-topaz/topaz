@@ -163,10 +163,46 @@ void CGambitsContainer::Tick(time_point tick)
         {
             target = POwner->PMaster;
         }
+        else if (gambit.predicate.target == G_TARGET::TANK)
+        {
+            // TODO: This is awful
+            CBattleEntity* tank = nullptr;
+            CCharEntity* master = static_cast<CCharEntity*>(POwner->PMaster);
+            for (uint8 i = 0; i < master->PParty->members.size(); ++i)
+            {
+                auto member = master->PParty->members.at(i);
+                auto job = member->GetMJob();
+                if (member->isAlive() &&
+                    POwner->loc.zone == member->loc.zone &&
+                    distance(POwner->loc.p, member->loc.p) <= 15.0f &&
+                    (job == JOB_PLD || job == JOB_RUN || JOB_WAR || JOB_NIN))
+                {
+                    tank = member;
+                    break;
+                }
+            }
+            if (!tank)
+            {
+                for (uint8 i = 0; i < master->PTrusts.size(); ++i)
+                {
+                    auto member = master->PTrusts.at(i);
+                    auto job = member->GetMJob();
+                    if (job == JOB_PLD || job == JOB_RUN || JOB_WAR || JOB_NIN)
+                    {
+                        tank = member;
+                        break;
+                    }
+                }
+            }
+            if (checkTrigger(tank, gambit.predicate))
+            {
+                target = tank;
+                break;
+            }
+        }
 
         if (target)
         {
-
             if (gambit.action.reaction == G_REACTION::MA)
             {
                 if (gambit.action.select == G_SELECT::SPECIFIC)

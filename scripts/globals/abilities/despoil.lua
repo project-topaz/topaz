@@ -34,7 +34,11 @@ function onUseAbility(player, target, ability, action)
 
     local stolen = target:getDespoilItem()
     if target:isMob() and math.random(100) < despoilChance and stolen then
-        player:addItem(stolen)
+        if player:getObjType() == tpz.objType.TRUST then
+            player:getMaster():addItem(stolen)
+        else
+            player:addItem(stolen)
+        end
         target:itemStolen()
 
         -- Attempt to grab the debuff from the DB

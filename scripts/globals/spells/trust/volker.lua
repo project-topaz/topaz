@@ -17,7 +17,7 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_ENMITY, 0,
+    mob:addSimpleGambit(ai.t.TANK, ai.c.HPP_LT, 50,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000,

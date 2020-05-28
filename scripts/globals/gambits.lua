@@ -15,6 +15,7 @@ ai.target =
     PARTY  = 1,
     TARGET = 2,
     MASTER = 3,
+    TANK   = 4,
 }
 ai.t = ai.target
 
