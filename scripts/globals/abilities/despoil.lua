@@ -24,6 +24,12 @@ function onAbilityCheck(player, target, ability)
         return tpz.msg.basic.FULL_INVENTORY, 0
     end
 
+    if player:getObjType() == tpz.objType.TRUST then
+        if player:getMaster():getFreeSlotsCount() == 0 then
+            return 1, 0
+        end
+    end
+
     return 0, 0
 end
 
