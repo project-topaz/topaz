@@ -585,6 +585,7 @@ public:
     int32 despawnPet(lua_State*);            // Despawns Pet
 
     int32 spawnTrust(lua_State*);            // Spawns trust
+    int32 clearTrusts(lua_State*);
     int32 getTrustID(lua_State*);
     int32 addSimpleGambit(lua_State*);
     int32 addFullGambit(lua_State*);
