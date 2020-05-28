@@ -12186,7 +12186,15 @@ inline int32 CLuaBaseEntity::addSimpleGambit(lua_State* L)
     auto selector = static_cast<G_SELECT>(lua_tointeger(L, 5));
     auto selector_arg = static_cast<uint16>(lua_tointeger(L, 6));
 
+    // Optional
+    auto retry_delay = 0;
+    if (!lua_isnil(L, 7) && lua_isnumber(L, 7))
+    {
+        retry_delay = (uint16)lua_tointeger(L, 7);
+    }
+
     Gambit_t g{ { target, condition, condition_arg }, { reaction, selector, selector_arg } };
+    g.retry_delay = retry_delay;
 
     auto trust = static_cast<CTrustEntity*>(m_PBaseEntity);
     auto controller = static_cast<CTrustController*>(trust->PAI->GetController());

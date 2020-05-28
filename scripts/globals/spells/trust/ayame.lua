@@ -17,27 +17,15 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-    mob:addGambit(
-    {
-        {
-            {
-                { ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO }
-            },
-            {
-                { ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO }
-            }
-        }
-    })
+    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO,
+                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO)
 
-    mob:addGambit(
-    {
-        {
-            {
-                { ai.t.SELF, ai.c.HAS_ENMITY, 0 }
-            },
-            {
-                { ai.r.JA, ai.s.SPECIFIC, tpz.ja.THIRD_EYE }
-            }
-        }
-    })
+    mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_ENMITY, 0,
+                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.THIRD_EYE)
+
+    mob:addSimpleGambit(ai.t.SELF, ai.c.TP_LT, 1000,
+                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.MEDITATE)
+
+    mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000,
+                        ai.r.WS, ai.s.SPECIFIC, tpz.ws.TACHI_ENPI)
 end
