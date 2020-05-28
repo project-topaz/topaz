@@ -73,3 +73,9 @@ end
 
 function onMobDeath(mob)
 end
+
+function onMobDespawn(mob)
+end
+
+function onMobDeath(mob)
+end
