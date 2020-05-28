@@ -33,3 +33,9 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000,
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.RED_LOTUS_BLADE)
 end
+
+function onMobDespawn(mob)
+end
+
+function onMobDeath(mob)
+end

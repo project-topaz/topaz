@@ -21,3 +21,9 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_SC_AVAILABLE, 0,
                         ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.NONE, 30)
 end
+
+function onMobDespawn(mob)
+end
+
+function onMobDeath(mob)
+end

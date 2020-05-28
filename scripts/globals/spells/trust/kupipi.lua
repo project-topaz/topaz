@@ -64,3 +64,9 @@ function onMobSpawn(mob)
 
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH, ai.r.MA, ai.s.SPECIFIC, FLASH, 60)
 end
+
+function onMobDespawn(mob)
+end
+
+function onMobDeath(mob)
+end

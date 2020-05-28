@@ -165,6 +165,7 @@ void CGambitsContainer::Tick(time_point tick)
         }
         else if (gambit.predicate.target == G_TARGET::TANK)
         {
+            /*
             // TODO: This is awful
             CBattleEntity* tank = nullptr;
             CCharEntity* master = static_cast<CCharEntity*>(POwner->PMaster);
@@ -199,6 +200,7 @@ void CGambitsContainer::Tick(time_point tick)
                 target = tank;
                 break;
             }
+            */
         }
 
         if (target)
