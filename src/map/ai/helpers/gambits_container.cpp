@@ -23,13 +23,12 @@ void CGambitsContainer::AddGambit(Gambit_t gambit)
 
 void CGambitsContainer::Tick(time_point tick)
 {
-    // TODO: This could be a setting?
-    // Do something every second
-    if (tick < m_lastAction + 1s)
+    if (tick < m_lastAction)
     {
         return;
     }
-    m_lastAction = tick;
+    auto random_offset = static_cast<std::chrono::milliseconds>(tpzrand::GetRandomNumber(1000, 2500));
+    m_lastAction = tick + random_offset;
 
     auto controller = static_cast<CTrustController*>(POwner->PAI->GetController());
 
