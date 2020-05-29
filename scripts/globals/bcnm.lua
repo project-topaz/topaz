@@ -400,7 +400,7 @@ local battlefields = {
      -- {17,  529,    0},   -- Mirror Images (Quest)
         {18,  530, 2556},   -- A Furious Finale (DNC LB5)
      -- {19,  531,    0},   -- Clash of the Comrades (Quest)
-     -- {20,  532,    0},   -- Those Who Lurk in Shadows (ACP7)
+        {20,  532,    0},   -- Those Who Lurk in Shadows (ACP7)
      -- {21,  533,    0},   -- Beyond Infinity (Quest)
      -- {22,    ?, 4062},   -- *Factory Rejects (SKC10)
      -- {23,    ?, 4063},   -- *Demolition Squad (SKC20)
@@ -522,6 +522,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 518] = function() return ( mjob == tpz.job.DRK and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRK LB5)
         [ 519] = function() return ( mjob == tpz.job.BRD and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (BRD LB5)
         [ 530] = function() return ( mjob == tpz.job.DNC and mlvl >= 66                                                                                                     ) end, -- Quest: A Furious Finale (DNC LB5)
+        [ 532] = function() return ( player:hasKeyItem(tpz.ki.MARK_OF_SEED)                                                                                                 ) end, -- ACP: Those Who Lurk in Shadows III
         [ 544] = function() return ( player:hasKeyItem(tpz.ki.TUNING_FORK_OF_FIRE)                                                                                          ) end, -- Quest: Trial by Fire
         [ 545] = function() return ( mjob == tpz.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Fire
         [ 547] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(tpz.ki.DOMINAS_SCARLET_SEAL)                                                ) end, -- ASA4: Sugar-coated Directive

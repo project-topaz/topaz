@@ -39,12 +39,12 @@ end;
 
 function onTrigger(player,npc)
 
-    -- if (player:hasKeyItem(tpz.ki.MARK_OF_SEED) and player:getCurrentMission(ACP) == tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II) then
-        --player:startEvent(5);
-    --elseif (EventTriggerBCNM(player,npc)) then
+    if player:hasKeyItem(tpz.ki.MARK_OF_SEED) and player:getCharVar("ACPShadowsCSSeen") == 0 then -- and player:getCurrentMission(ACP) == tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II) then
+        player:startEvent(5);
+    elseif EventTriggerBCNM(player,npc) then
     -- Temp disabled pending fixes for the BCNM mobs.
-
-    EventTriggerBCNM(player,npc)
+        return 1
+    end
 end;
 
 function onEventUpdate(player,csid,option,extras)
@@ -65,6 +65,7 @@ function onEventFinish(player,csid,option)
 
     if (csid == 5) then
         player:completeMission(ACP,tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_II);
+        player:setCharVar("ACPShadowsCSSeen", 1);
         player:addMission(ACP,tpz.mission.id.acp.THOSE_WHO_LURK_IN_SHADOWS_III);
     else
         EventFinishBCNM(player,csid,option)
