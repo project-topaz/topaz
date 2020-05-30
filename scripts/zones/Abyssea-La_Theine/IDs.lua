@@ -94,6 +94,7 @@ zones[tpz.zone.ABYSSEA_LA_THEINE] =
     },
     npc =
     {
+        Sturdy_Pyxis_Base = 17318509,
         QM_POPS =
         {
             --  [17318473] = { 'qm1', {2891},                                                                                                                      {}, 17318434}, -- Dozing Dorian

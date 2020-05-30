@@ -94,6 +94,7 @@ zones[tpz.zone.ABYSSEA_TAHRONGI] =
     },
     npc =
     {
+        Sturdy_Pyxis_Base = 16961991,
         QM_POPS =
         {
             --  [16961954] = { 'qm1',           {2915},                                                                                                                     {}, 16961917}, -- Halimede
