@@ -636,6 +636,9 @@ public:
     int32 getModelSize(lua_State *L);       // Gets model size
     int32 setMobFlags(lua_State*);          // Used to manipulate the mob's flags for testing.
     int32 getMobFlags(lua_State*);
+	int32 setMobSize(lua_State* L);         // Only used for mobs that support it, i.e Abyssea mobs.
+
+    int32 setNpcFlags(lua_State* L);        // Used to manipulate an npc's flags for testing.
 
     int32 spawn(lua_State* L);
     int32 isSpawned(lua_State*);
@@ -686,6 +689,7 @@ public:
     int32 hasTPMoves(lua_State*);
 
     int32 weaknessTrigger(lua_State* L);
+    int32 restoreFromChest(lua_State* L);
     int32 hasPreventActionEffect(lua_State*);
     int32 stun(lua_State* L);
 
