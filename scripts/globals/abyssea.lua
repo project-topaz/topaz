@@ -593,7 +593,7 @@ function DropLights(player, lightColor, lightAmount, preferredLight)
     local party = {}
     party = player:getAlliance()
     for _,member in ipairs(party) do
-        if member:getZoneID() == player:getZoneID() then
+        if player:getZoneID() == player:getZoneID() then
             AddPlayerLights(player, dropLight, lightAmount)
         end
     end

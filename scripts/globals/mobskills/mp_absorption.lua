@@ -19,8 +19,10 @@ function onMobWeaponSkill(target, mob, skill)
     local info = MobMagicalMove(mob,target,skill,mob:getWeaponDmg()*1.5,tpz.magic.ele.DARK,dmgmod,TP_MAB_BONUS,1)
 
     local dmg = MobFinalAdjustments(info.dmg,mob,skill,target,tpz.attackType.MAGICAL,tpz.damageType.DARK,MOBPARAM_IGNORE_SHADOWS)
-	if dmg >= target.mp then
-		dmg=target.mp
+    if target.mp == 0 or target.mp == nil then
+		dmg = 0
+    elseif dmg >= target.mp then
+		dmg = target.mp
 	end
     skill:setMsg(MobPhysicalDrainMove(mob, target, skill, MOBDRAIN_MP, dmg))
 
