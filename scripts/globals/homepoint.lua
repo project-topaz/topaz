@@ -180,6 +180,7 @@ tpz.homepoint.onTrigger = function(player, csid, index)
     end
 
     if HOMEPOINT_TELEPORT ~= 1 then -- Settings.lua Homepoints disabled
+        player:PrintToPlayer("Home point teleportation is disabled on Dawnbreak.\nYou may use the Explorer Moogles to move between the starting nations.", 29)
         player:startEvent(csid, 0, 0, 0, 0, 0, player:getGil(), 4095, index)
         return
     end

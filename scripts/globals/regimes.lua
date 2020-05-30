@@ -1002,7 +1002,7 @@ tpz.regime.bookOnTrigger = function(player, regimeType)
                 arg2 = arg2 + 2^i
             end
         end
-
+        player:PrintToPlayer("The books do not yield experience points on Dawnbreak.\nThey do, however, offer increased gil and tabs.", 29)
         player:startEvent(info.event, 0, arg2, 0, 0, 0, 0, player:getCurrency("valor_point"), player:getCharVar("[regime]id"))
     else
         player:PrintToPlayer("Disabled.")
