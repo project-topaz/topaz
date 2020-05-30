@@ -13120,6 +13120,90 @@ inline int32 CLuaBaseEntity::getMobFlags(lua_State* L)
 }
 
 /************************************************************************
+*  Function: setMobSize()
+*  Purpose : Manually set Mob size
+*  Example : mob:setMobSize(1)
+*  Notes   : only works if mobs model supports it, can also set flags
+*  Notes   : mainly used with onMobSpawn in mob script
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setMobSize(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_MOB);
+
+    CMobEntity* PMob = (CMobEntity*)m_PBaseEntity;
+
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
+        ((CMobEntity*)PMob)->setEntityFlags((uint32)(lua_tointeger(L, 1)));
+        PMob->updatemask |= UPDATE_ALL_MOB;
+    }
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: setNpcFlags()
+*  Purpose : Manually set Npc flags
+*  Example : npc:setFlags(3);
+*  Notes   : used also with !setNpcFlags command
+************************************************************************/
+
+inline int32 CLuaBaseEntity::setNpcFlags(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
+
+    if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+    {
+        uint32 npcid = (uint32)lua_tointeger(L, 2);
+        CNpcEntity* PNpc = nullptr;
+
+        if (!lua_isnil(L, 2) && lua_isuserdata(L, 2))
+        {
+            CLuaInstance* PLuaInstance = Lunar<CLuaInstance>::check(L, 2);
+            PNpc = (CNpcEntity*)PLuaInstance->GetInstance()->GetEntity(npcid & 0xFFF, TYPE_NPC);
+        }
+        else
+        {
+            PNpc = (CNpcEntity*)zoneutils::GetEntity(npcid, TYPE_NPC);
+        }
+
+        if (PNpc != nullptr)
+        {
+            if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+            {
+                ((CNpcEntity*)PNpc)->setEntityFlags((uint32)(lua_tointeger(L, 1)));
+                PNpc->updatemask |= UPDATE_HP;
+            }
+        }
+    }
+    else
+    {
+        CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+        CBattleEntity* PTarget = (CBattleEntity*)PChar->GetEntity(PChar->m_TargID);
+
+        if (PTarget == nullptr)
+        {
+            ShowError("Must target an npc to use for setNpcFlags \n");
+            return 0;
+        }
+        else if (PTarget->objtype != TYPE_NPC)
+        {
+            ShowError("target must be an npc to use setNpcFlags \n");
+            return 0;
+        }
+        if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+        {
+            ((CMobEntity*)PTarget)->setEntityFlags((uint32)(lua_tointeger(L, 1)));
+            PTarget->updatemask |= UPDATE_HP;
+        }
+    }
+    return 0;
+}
+
+/************************************************************************
 *  Function: spawn()
 *  Purpose : Forces a mob to spawn with optional Despawn/Respawn values
 *  Example : mob:spawn(60,3600); mob:spawn()
@@ -14082,6 +14166,72 @@ inline int32 CLuaBaseEntity::weaknessTrigger(lua_State* L)
 }
 
 /************************************************************************
+*  Function: restoreFromChest()
+*  Purpose : adding effects for restore chests in abyssea
+*  Example : player:restoreFromChest(npc,0)
+*  1 = restore HP effect, 2 = restore MP effect
+************************************************************************/
+
+inline int32 CLuaBaseEntity::restoreFromChest(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+
+    uint32 restoreType = 0;
+
+    if (PLuaBaseEntity != nullptr)
+    {
+        CBaseEntity* PTarget = PLuaBaseEntity->GetBaseEntity();
+
+        if (!lua_isnil(L, 2) && lua_isnumber(L, 2))
+            restoreType = (uint32)lua_tointeger(L, 2);
+
+        uint16 animationID = 0;
+        int messageParam = 0;
+        int messageID = 0;
+        int addedHP = 0;
+        int addedMP = 0;
+
+        if (PChar->animation != ANIMATION_DEATH)
+        {
+            addedHP = PChar->GetMaxHP() - PChar->health.hp;
+            addedMP = PChar->GetMaxMP() - PChar->health.mp;
+
+            switch (restoreType)
+            {
+            case 1:
+                messageParam = addedHP;
+                messageID = 587;
+                animationID = 772;
+                break;
+            case 2:
+                messageParam = addedHP;
+                messageID = 588;
+                animationID = 773;
+                break;
+            }
+
+            action_t Action;
+            Action.id = PTarget->id;
+            Action.actiontype = ACTION_MOBABILITY_FINISH;
+            actionList_t& list = Action.getNewActionList();
+            list.ActionTargetID = PChar->id;
+            actionTarget_t& target = list.getNewActionTarget();
+            target.animation = animationID;
+            target.messageID = 0;
+            target.param = 0;
+            PTarget->loc.zone->PushPacket(PTarget, CHAR_INRANGE, new CActionPacket(Action));
+        }
+    }
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: hasPreventActionEffect()
 *  Purpose : Returns true if a non-NPC entity has a preventative status effect
 *  Example : if (not pet:hasPreventActionEffect()) then
@@ -14427,6 +14577,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,releaseAllFromNPC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,despawnNPC),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,updateNPCHideTime),
+     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setNpcFlags),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getWeather),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setWeather),
@@ -14935,6 +15086,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getModelSize),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getMobFlags),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,setMobSize),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,spawn),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isSpawned),
@@ -14985,6 +15137,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasTPMoves),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,weaknessTrigger),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,restoreFromChest),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,hasPreventActionEffect),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,stun),
 
