@@ -73,7 +73,7 @@ zones[tpz.zone.FEIYIN] =
     },
     npc =
     {
-        AFTERGRLOW_OFFSET       = 17613148,
+        AFTERGLOW_OFFSET       = 17613148,
         CASKET_BASE             = 17613157,
         TREASURE_CHEST          = 17613242,
         UNDERGROUND_POOL_OFFSET = 17613247,
