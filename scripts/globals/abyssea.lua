@@ -115,15 +115,15 @@ end
 -- returns total Traverser Stone KI
 -- (NOT the reserve value from currency menu)
 function getTravStonesTotal(player)
-    local STONES = 0
+    local stones = 0
 
     for ki = tpz.ki.TRAVERSER_STONE1, tpz.ki.TRAVERSER_STONE6 do
         if player:hasKeyItem(ki) then
-            STONES = STONES + 1
+            stones = stones + 1
         end
     end
 
-    return STONES
+    return stones
 end
 
 -- removes Traverser Stone KIs
