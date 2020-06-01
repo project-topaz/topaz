@@ -126,7 +126,7 @@ enum SKILLTYPE
     SKILL_WIND_INSTRUMENT = 42,
     SKILL_BLUE_MAGIC = 43,
     SKILL_GEOMANCY = 44,
-    SKILL_HND = 45,
+    SKILL_HANDBELL = 45,
     // 46-47 unused
     SKILL_FISHING = 48,
     SKILL_WOODWORKING = 49,
@@ -365,7 +365,8 @@ enum TARGETTYPE
     TARGET_PLAYER_DEAD = 0x20,
     TARGET_NPC = 0x40,		// скорее всего подразумевается mob, выглядящий как npc и воюющий на стороне персонажа
     TARGET_PLAYER_PARTY_PIANISSIMO = 0x80,
-    TARGET_PET = 0x100
+    TARGET_PET = 0x100,
+    TARGET_PLAYER_PARTY_ENTRUST = 0x200
 };
 
 enum SKILLCHAIN_ELEMENT

@@ -183,6 +183,7 @@
       <AdditionalOptions>
       </AdditionalOptions>
       <WholeProgramOptimization>false</WholeProgramOptimization>
+      <TreatWarningAsError>false</TreatWarningAsError>
     </ClCompile>
     <Link>
       <AdditionalDependencies>libmariadb64.lib;lua51_64.lib;libzmq_64.lib;WS2_32.Lib;%(AdditionalDependencies)</AdditionalDependencies>

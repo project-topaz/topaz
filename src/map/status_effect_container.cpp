@@ -51,10 +51,12 @@ When a status effect is gained twice on a player. It can do one or more of the f
 #include "entities/battleentity.h"
 #include "entities/charentity.h"
 #include "entities/automatonentity.h"
+#include "entities/mobentity.h"
 #include "utils/itemutils.h"
 #include "map.h"
 #include "latent_effect_container.h"
 #include "status_effect_container.h"
+#include "enmity_container.h"
 #include "utils/zoneutils.h"
 #include "utils/petutils.h"
 #include "utils/puppetutils.h"
@@ -209,6 +211,7 @@ bool CStatusEffectContainer::CanGainStatusEffect(CStatusEffect* PStatusEffect)
             break;
         }
         case EFFECT_WEIGHT:
+        case EFFECT_GEO_WEIGHT:
             if (m_POwner->hasImmunity(IMMUNITY_GRAVITY)) return false;
             break;
         case EFFECT_BIND:
@@ -221,15 +224,18 @@ bool CStatusEffectContainer::CanGainStatusEffect(CStatusEffect* PStatusEffect)
             if (m_POwner->hasImmunity(IMMUNITY_SILENCE)) return false;
             break;
         case EFFECT_PARALYSIS:
+        case EFFECT_GEO_PARALYSIS:
             if (m_POwner->hasImmunity(IMMUNITY_PARALYZE)) return false;
             break;
         case EFFECT_BLINDNESS:
             if (m_POwner->hasImmunity(IMMUNITY_BLIND)) return false;
             break;
         case EFFECT_SLOW:
+        case EFFECT_GEO_SLOW:
             if (m_POwner->hasImmunity(IMMUNITY_SLOW)) return false;
             break;
         case EFFECT_POISON:
+        case EFFECT_GEO_POISON:
             if (m_POwner->hasImmunity(IMMUNITY_POISON)) return false;
             break;
         case EFFECT_ELEGY:
@@ -1453,6 +1459,182 @@ void CStatusEffectContainer::CheckEffectsExpiry(time_point tick)
     DeleteStatusEffects();
 }
 
+
+void CStatusEffectContainer::TickAuras(time_point tick)
+{
+    TPZ_DEBUG_BREAK_IF(m_POwner == nullptr);
+
+    if (!m_POwner->isDead())
+    {
+        for (const auto& PStatusEffect : m_StatusEffectList)
+        {
+            bool isAura = PStatusEffect->GetFlag() & EFFECTFLAG_AURA;
+            if (isAura && PStatusEffect->GetTickTime() != 0 && 
+                PStatusEffect->GetElapsedTickCount() <= std::chrono::duration_cast<std::chrono::milliseconds>(tick - PStatusEffect->GetStartTime()).count() / PStatusEffect->GetTickTime())
+            {
+                CBattleEntity* PEntity = static_cast<CBattleEntity*>(m_POwner);
+                uint16 targetType = (uint16)PStatusEffect->GetTier();
+                uint8 potencyBonus = 100;
+                float sizeBonus = 1;
+
+                if (PEntity->objtype == TYPE_PET && PEntity->allegiance == ALLEGIANCE_PLAYER)
+                {
+                    auto PPet = static_cast<CPetEntity*>(PEntity);
+
+                    if (PPet->StatusEffectContainer->HasStatusEffect(EFFECT_ECLIPTIC_ATTRITION))
+                    {
+                        // this is here so if the master has Bolster active, 
+                        // Bolster will overwrite this bonus as per retail.
+                        potencyBonus = 125;
+                    }
+                    PEntity = PPet->PMaster;
+                }
+
+                //------------------------------------------------------------------------------
+                // GEO stuff
+                //------------------------------------------------------------------------------
+                if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_BOLSTER))
+                {
+                    potencyBonus = 200;
+                }
+
+                if (PEntity->StatusEffectContainer->HasStatusEffect(EFFECT_WIDENED_COMPASS))
+                {
+                    sizeBonus = 2.0;
+                }
+                //-------------------------------------------------------------------------------
+
+                float auraRadius = (6.5f * (PEntity->m_ModelSize + 1)) * sizeBonus;
+
+                // percentage bonus, 100 is base, 125 = 25% increase, 150 = 50% increase ect.
+                uint16 potency = (PStatusEffect->GetSubPower() * potencyBonus) / 100;
+
+                
+
+                switch (targetType)
+                {
+                case ALLEGIANCE_PLAYER: // Targeting Players
+                    if (PEntity->allegiance != ALLEGIANCE_MOB)
+                    {
+                        // Players only or Entity with players allegiance targeting players in a party.
+                        if (PEntity->objtype == TYPE_PC && PEntity->PParty)
+                        {
+                            PEntity->ForParty([&](CBattleEntity* PMember)
+                            {
+                                if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID() &&
+                                   distance(m_POwner->loc.p, PMember->loc.p) <= auraRadius)
+                                {
+                                    if (!PMember->isDead())
+                                    {
+                                        CStatusEffect* PEffect = new CStatusEffect(
+                                            (EFFECT)PStatusEffect->GetSubID(), // Effect ID
+                                            (uint16)PStatusEffect->GetSubID(), // Effect Icon (Associated with ID)
+                                            potency, // Power
+                                            3,       // Tick
+                                            4);      // Duration
+                                        PMember->StatusEffectContainer->AddStatusEffect(PEffect, true);
+                                    }
+                                }
+                            });
+                        }
+                        else
+                        {
+                            // Player only or Entity with players allegiance targeting players with no party.
+                            if (PEntity != nullptr && PEntity->loc.zone->GetID() == m_POwner->loc.zone->GetID() &&
+                                distance(m_POwner->loc.p, PEntity->loc.p) <= auraRadius)
+                            {
+                                if (!PEntity->isDead())
+                                {
+                                    CStatusEffect* PEffect = new CStatusEffect(
+                                        (EFFECT)PStatusEffect->GetSubID(), // Effect ID
+                                        (uint16)PStatusEffect->GetSubID(), // Effect Icon (Associated with ID)
+                                        potency, // Power
+                                        3,       // Tick
+                                        4);      // Duration
+                                    PEntity->StatusEffectContainer->AddStatusEffect(PEffect, true);
+                                }
+                            }
+                        }
+                        break;
+                    }
+                    else
+                    {
+                        // Mobs and Entities with Mob allegiance targeting players.
+                        PEntity->PAI->TargetFind->reset();
+                        PEntity->PAI->TargetFind->addAllInRange(PEntity, auraRadius, ALLEGIANCE_PLAYER);
+                        uint16 size = (uint16)PEntity->PAI->TargetFind->m_targets.size();
+
+                        for (auto PTarget : PEntity->PAI->TargetFind->m_targets)
+                        {
+                            if (!PTarget->isDead())
+                            {
+                                CStatusEffect* PEffect = new CStatusEffect(
+                                    (EFFECT)PStatusEffect->GetSubID(), // Effect ID
+                                    (uint16)PStatusEffect->GetSubID(), // Effect Icon (Associated with ID)
+                                    potency, // Power
+                                    3,       // Tick
+                                    4);      // Duration
+                                PTarget->StatusEffectContainer->AddStatusEffect(PEffect, true);
+                            }
+                        };
+                        break;
+                    }  
+                case ALLEGIANCE_MOB:
+                    if (PEntity->allegiance != ALLEGIANCE_MOB)
+                    {
+                        // Players or entities with player allegiance targeting mobs.
+                        PEntity->PAI->TargetFind->reset();
+                        PEntity->PAI->TargetFind->addAllInRange(PEntity, auraRadius, ALLEGIANCE_MOB);
+                        uint16 size = (uint16)PEntity->PAI->TargetFind->m_targets.size();
+
+                        for (auto PTarget : PEntity->PAI->TargetFind->m_targets)
+                        {
+                            auto PMob = static_cast<CMobEntity*>(PTarget);
+
+                            if (PMob->PEnmityContainer->HasID(PEntity->id))
+                            {
+                                if (!PMob->isDead())
+                                {
+                                    CStatusEffect* PEffect = new CStatusEffect(
+                                        (EFFECT)PStatusEffect->GetSubID(), // Effect ID
+                                        (uint16)PStatusEffect->GetSubID(), // Effect Icon (Associated with ID)
+                                        potency, // Power
+                                        3,       // Tick
+                                        4);      // Duration
+                                    PMob->StatusEffectContainer->AddStatusEffect(PEffect, true);
+                                }
+                            }
+                        };
+                        break;
+                    }
+                    else
+                    {
+                        // Mobs or entities with Mob allegiance targeting mobs.
+                        PEntity->PAI->TargetFind->reset();
+                        PEntity->PAI->TargetFind->addAllInRange(PEntity, auraRadius, ALLEGIANCE_MOB);
+                        uint16 size = (uint16)PEntity->PAI->TargetFind->m_targets.size();
+
+                        for (auto PTarget : PEntity->PAI->TargetFind->m_targets)
+                        {
+                            if (!PTarget->isDead())
+                            {
+                                CStatusEffect* PEffect = new CStatusEffect(
+                                    (EFFECT)PStatusEffect->GetSubID(), // Effect ID
+                                    (uint16)PStatusEffect->GetSubID(), // Effect Icon (Associated with ID)
+                                    potency, // Power
+                                    3,       // Tick
+                                    4);      // Duration
+                                PTarget->StatusEffectContainer->AddStatusEffect(PEffect, true);
+                            }
+                        };
+                        break;
+                    } 
+                }
+            } 
+        }
+    }
+}
+
 /************************************************************************
 *                                                                       *
 *  Runs OnEffectTick for all status effects                             *
@@ -1467,7 +1649,7 @@ void CStatusEffectContainer::TickEffects(time_point tick)
     {
         for (const auto& PStatusEffect : m_StatusEffectList)
         {
-            if (PStatusEffect->GetTickTime() != 0 &&
+            if (PStatusEffect->GetTickTime() != 0 && 
                 PStatusEffect->GetElapsedTickCount() <= std::chrono::duration_cast<std::chrono::milliseconds>(tick - PStatusEffect->GetStartTime()).count() / PStatusEffect->GetTickTime())
             {
                 PStatusEffect->IncrementElapsedTickCount();

@@ -4,6 +4,7 @@ require("scripts/globals/weather")
 require("scripts/globals/status")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
+require("scripts/globals.geo")
 ------------------------------------
 
 tpz = tpz or {}
@@ -41,6 +42,7 @@ tpz.magic.spellGroup =
     NINJUTSU  = 4,
     SUMMONING = 5,
     WHITE     = 6,
+    GEOMANCY  = 7,
 }
 
 ------------------------------------
@@ -198,7 +200,7 @@ tpz.magic.spellFamily =
     GEO_BUFF           = 146,
     GEO_DEBUFF         = 147,
     FIRA               = 148,
-    LIZZARA            = 149,
+    BLIZZARA           = 149,
     AERORA             = 150,
     STONERA            = 151,
     THUNDARA           = 152,
@@ -233,6 +235,26 @@ tpz.magic.spellFlag =
     HIT_ALL        = 0x01, -- Hit all targets in range regardless of party
     WIPE_SHADOWS   = 0x02, -- Wipe shadows even if single target and miss/resist (example: "Maiden's Virelai")
     IGNORE_SHADOWS = 0x04  -- Ignore shadows and hit player anyways (example: Mobs "Death" spell)
+}
+
+tpz.magic.geoCardinalQuadStats =
+{
+    [1]  = {direction = '[N]',   MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 1.00},
+    [2]  = {direction = '[NNE]', MATT = 0.25, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.75},
+    [3]  = {direction = '[NE]',  MATT = 0.50, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.50},
+    [4]  = {direction = '[ENE]', MATT = 0.75, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.25},
+    [5]  = {direction = '[E]',   MATT = 1.00, MACC = 0.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [6]  = {direction = '[ESE]', MATT = 0.75, MACC = 0.25, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [7]  = {direction = '[SE]',  MATT = 0.50, MACC = 0.50, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [8]  = {direction = '[SSE]', MATT = 0.25, MACC = 0.75, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [9]  = {direction = '[S]',   MATT = 0.00, MACC = 1.00, MAG_BURST_BONUS = 0.00, MAGIC_CRITHITRATE = 0.00},
+    [10] = {direction = '[SSW]', MATT = 0.00, MACC = 0.75, MAG_BURST_BONUS = 0.25, MAGIC_CRITHITRATE = 0.00},
+    [11] = {direction = '[SW]',  MATT = 0.00, MACC = 0.50, MAG_BURST_BONUS = 0.50, MAGIC_CRITHITRATE = 0.00},
+    [12] = {direction = '[WSW]', MATT = 0.00, MACC = 0.25, MAG_BURST_BONUS = 0.75, MAGIC_CRITHITRATE = 0.00},
+    [13] = {direction = '[W]',   MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 1.00, MAGIC_CRITHITRATE = 0.00},
+    [14] = {direction = '[WNW]', MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.75, MAGIC_CRITHITRATE = 0.25},
+    [15] = {direction = '[NW]',  MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.50, MAGIC_CRITHITRATE = 0.50},
+    [16] = {direction = '[NNW]', MATT = 0.00, MACC = 0.00, MAG_BURST_BONUS = 0.25, MAGIC_CRITHITRATE = 0.75},
 }
 
 ------------------------------------
@@ -700,7 +722,7 @@ function getEffectResistance(target, effect)
         effectres = tpz.mod.BINDRES
     elseif (effect == tpz.effect.CURSE_I or effect == tpz.effect.CURSE_II or effect == tpz.effect.BANE) then
         effectres = tpz.mod.CURSERES
-    elseif (effect == tpz.effect.WEIGHT) then
+    elseif (effect == tpz.effect.WEIGHT or tpz.effect.GEO_WEIGHT) then
         effectres = tpz.mod.GRAVITYRES
     elseif (effect == tpz.effect.SLOW or effect == tpz.effect.ELEGY) then
         effectres = tpz.mod.SLOWRES
@@ -908,6 +930,19 @@ function calculateMagicBurst(caster, spell, target, params)
     local burst = 1.0
     local skillchainburst = 1.0
     local modburst = 1.0
+    local geoBonus = {0.00,0.00,0.00,0.00}
+    local geoMagicBurstBonus = 0.0
+    local spellGroup = spell:getSpellGroup()
+    local spellId = spell:getID()
+
+    if caster:getMainJob() == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
+        if caster:isSpellAoE(spellId) then
+            geoBonus = getCardinalStats(caster, target, 1, spell)
+        else
+            geoBonus = getCardinalStats(caster, target, 0, spell)
+        end
+        geoMagicBurstBonus = geoBonus[3]
+    end
 
     if (spell:getSpellGroup() == 3 and not caster:hasStatusEffect(tpz.effect.BURST_AFFINITY)) then
         return burst
@@ -915,6 +950,8 @@ function calculateMagicBurst(caster, spell, target, params)
 
     -- Obtain first multiplier from gear, atma and job traits
     modburst = modburst + (caster:getMod(tpz.mod.MAG_BURST_BONUS) / 100) + params.AMIIburstBonus
+
+    modburst = modburst + geoMagicBurstBonus
 
     if caster:isBehind(target) and caster:hasStatusEffect(tpz.effect.INNIN) then
         modburst = modburst + (caster:getMerit(tpz.merit.INNIN_EFFECT)/100)
@@ -1025,7 +1062,12 @@ function addBonuses(caster, spell, target, dmg, params)
 
     dmg = math.floor(dmg * burst)
     local mabbonus = 0
+    local geoBonus = {0.00,0.00,0.00,0.00} -- {MATT, MACC, MAG_BURST_BONUS, MAGIC_CRITHITRATE}
+    local geoMATT = 0.0
+    local geoMACC = 0.0
+    local geoMCHR = 0.0
     local spellId = spell:getID()
+    local spellGroup = spell:getSpellGroup()
 
     if (spellId >= 245 and spellId <= 248) then -- Drain/Aspir (II)
         mabbonus = 1 + caster:getMod(tpz.mod.ENH_DRAIN_ASPIR)/100
@@ -1035,11 +1077,26 @@ function addBonuses(caster, spell, target, dmg, params)
     else
         local mab = caster:getMod(tpz.mod.MATT) + params.bonusmab
 
+
+        if caster:getMainJob() == tpz.job.GEO and spellGroup == tpz.magic.spellGroup.BLACK then
+            if caster:isSpellAoE(spellId) then
+                geoBonus = getCardinalStats(caster, target, 1, spell)
+            else
+                geoBonus = getCardinalStats(caster, target, 0, spell)
+            end
+            geoMATT = geoBonus[1]
+            geoMACC = geoBonus[2]
+            geoMCHR = geoBonus[4]
+        end
+
+        mab = mab + geoMATT
+
         if spell:getSkillType() == tpz.skill.NINJUTSU then
             mab = mab + caster:getMerit(tpz.merit.NIN_MAGIC_BONUS)
         end
 
-        local mab_crit = caster:getMod(tpz.mod.MAGIC_CRITHITRATE)
+        local mab_crit = caster:getMod(tpz.mod.MAGIC_CRITHITRATE) + geoMCHR
+
         if ( math.random(1,100) < mab_crit ) then
            mab = mab + ( 10 + caster:getMod(tpz.mod.MAGIC_CRIT_DMG_INCREASE ) )
         end
@@ -1388,6 +1445,10 @@ function doElementalNuke(caster, spell, target, spellParams)
     --add in final adjustments
     DMG = finalMagicAdjustments(caster, target, spell, DMG)
 
+    if caster:hasStatusEffect(tpz.effect.THEURGIC_FOCUS) then
+        caster:delStatusEffectSilent(tpz.effect.THEURGIC_FOCUS)
+    end
+
     return DMG
 end
 
@@ -1567,6 +1628,49 @@ function outputMagicHitRateInfo()
 
         end
     end
+end
+
+local geoCardinalTierStat =
+{
+    [1] = {8.0,  5.0},
+    [2] = {10.0, 7.0},
+    [3] = {14.0, 10.0},
+    [4] = {17.0, 13.0},
+}
+
+local geoBurstBonus =
+{
+    [1] = {15.0, 10.0},
+    [2] = {19.0, 14.0},
+    [3] = {24.0, 18.0},
+    [4] = {28.0, 22.0},
+}
+
+function getCardinalStats(caster, target, is_araSpell, spell)
+    local targ = target
+    local spellID = spell:getID()
+    local cardinalQuarant = caster:getCardinalQuadrant(targ)
+    local modTier = caster:getMod(tpz.mod.CARDINAL_CHANT)
+    local MAG_BURST_BONUS = caster:getMod(tpz.mod.MAG_BURST_BONUS)
+    local MAGIC_CRITHITRATE = caster:getMod(tpz.mod.MAGIC_CRITHITRATE)
+    local base = 0.0
+    local burstbase = 0.0
+    local cardinalStats = {0.00,0.00,0.00,0.00}
+    
+    if is_araSpell == 1 then
+        base = geoCardinalTierStat[modTier][1]
+        burstbase = geoBurstBonus[modTier][1]
+    else
+        base = geoCardinalTierStat[modTier][2]
+        burstbase = geoBurstBonus[modTier][2]
+    end
+
+    cardinalStats[1] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MATT 
+    cardinalStats[2] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MACC
+    cardinalStats[3] = burstbase *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MAG_BURST_BONUS
+    cardinalStats[4] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MAGIC_CRITHITRATE
+
+    return cardinalStats
 end
 
 -- outputMagicHitRateInfo()
