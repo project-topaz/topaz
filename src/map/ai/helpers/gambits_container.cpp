@@ -305,7 +305,6 @@ void CGambitsContainer::Tick(time_point tick)
 
                 if (gambit.action.select == G_SELECT::SPECIFIC)
                 {
-                    
                     controller->WeaponSkill(target->targid, PWeaponSkill->getID());
                 }
             }
