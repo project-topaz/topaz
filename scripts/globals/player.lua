@@ -82,6 +82,12 @@ local function CharCreate(player)
         player:unlockJob(0)
     end
 
+    -- unlock geo and run
+    if UNLOCK_ADOULIN_JOBS == 1 then
+        player:unlockJob(GEO)
+    --  player:unlockJob(RUN)
+    end
+
     -- give all maps
     if ALL_MAPS == 1 then
         for i = tpz.ki.MAP_OF_THE_SAN_DORIA_AREA, tpz.ki.MAP_OF_DIO_ABDHALJS_GHELSBA do
@@ -127,7 +133,6 @@ local function CharCreate(player)
     player:setCharVar("spokePyropox", 1) -- Pyropox introduction
     player:setCharVar("TutorialProgress", 1) -- Has not started tutorial
     player:setNewPlayer(true) -- apply new player flag
-    -- player:addItem(
 end
 
 -----------------------------------
@@ -187,7 +192,7 @@ function onGameIn(player, firstLogin, zoning)
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
 
-    player:timer(2500, function (player)
+    player:timer(1500, function (player)
         if player:getCharVar("GMCostume") > 0 then
             player:costume(player:getCharVar("GMCostume"))
         end

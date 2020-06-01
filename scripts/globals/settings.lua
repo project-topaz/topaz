@@ -56,7 +56,7 @@ SUBJOB_QUEST_LEVEL = 18; -- Minimum level to accept either subjob quest.  Set to
 ADVANCED_JOB_LEVEL = 30; -- Minimum level to accept advanced job quests.  Set to 0 to start the game with advanced jobs.
 ALL_MAPS = 0; -- Set to 1 to give starting characters all the maps.
 UNLOCK_OUTPOST_WARPS = 0; -- Set to 1 to give starting characters all outpost warps.  2 to add Tu'Lia and Tavnazia.
---UNLOCK_ADOULIN_JOBS = 1; -- Set to unlock Rune Fencer and Geomancer automatically.
+UNLOCK_ADOULIN_JOBS  = 0; -- Set to unlock Rune Fencer and Geomancer automatically.
 
 SHOP_PRICE      = 1.000; -- Multiplies prices in NPC shops.
 GIL_RATE        = 1.600; -- Multiplies gil earned from quests.  Won't always display in game. Normal: 1.6
