@@ -6,6 +6,7 @@ require("scripts/globals/gambits")
 require("scripts/globals/status")
 require("scripts/globals/trust")
 require("scripts/globals/utils")
+require("scripts/globals/weaponskillids")
 require("scripts/globals/zone")
 -----------------------------------------
 
@@ -63,6 +64,8 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.SLOW, ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.SLOW, 60)
 
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH, ai.r.MA, ai.s.SPECIFIC, FLASH, 60)
+
+    mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000, ai.r.WS, ai.s.SPECIFIC, tpz.ws.STARLIGHT)
 end
 
 function onMobDespawn(mob)

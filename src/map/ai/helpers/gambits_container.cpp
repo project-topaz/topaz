@@ -1,6 +1,8 @@
 #include "gambits_container.h"
 
+#include "../../ability.h"
 #include "../../spell.h"
+#include "../../weapon_skill.h"
 #include "../../utils/battleutils.h"
 
 // Validate gambit before it's inserted into the gambit list
@@ -278,17 +280,33 @@ void CGambitsContainer::Tick(time_point tick)
             }
             else if (gambit.action.reaction == G_REACTION::JA)
             {
+                CAbility* PAbility = ability::GetAbility(gambit.action.select_arg);
+                if (PAbility->getValidTarget() == TARGET_SELF)
+                {
+                    target = POwner;
+                }
+
                 if (gambit.action.select == G_SELECT::SPECIFIC)
                 {
-                    controller->Ability(target->targid, gambit.action.select_arg);
+                    controller->Ability(target->targid, PAbility->getID());
                 }
             }
             else if (gambit.action.reaction == G_REACTION::WS)
             {
+                CWeaponSkill* PWeaponSkill = battleutils::GetWeaponSkill(gambit.action.select_arg);
+                if (battleutils::isValidSelfTargetWeaponskill(PWeaponSkill->getID()))
+                {
+                    target = POwner;
+                }
+                else
+                {
+                    target = POwner->GetBattleTarget();
+                }
+
                 if (gambit.action.select == G_SELECT::SPECIFIC)
                 {
-                    auto mob = POwner->GetBattleTarget();
-                    controller->WeaponSkill(mob->targid, gambit.action.select_arg);
+                    
+                    controller->WeaponSkill(target->targid, PWeaponSkill->getID());
                 }
             }
             else if (gambit.action.reaction == G_REACTION::MS)

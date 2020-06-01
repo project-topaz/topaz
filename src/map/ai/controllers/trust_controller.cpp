@@ -215,17 +215,6 @@ bool CTrustController::Ability(uint16 targid, uint16 abilityid)
         return false;
     }
 
-    // TODO: Fix ugly hack
-    CAbility* PAbility = ability::GetAbility(abilityid);
-    if (PAbility->getValidTarget() == 1)
-    {
-        targid = POwner->targid;
-    }
-    else
-    {
-        targid = POwner->GetBattleTarget()->targid;
-    }
-
     if (POwner->PAI->CanChangeState())
     {
         return POwner->PAI->Internal_Ability(targid, abilityid);
