@@ -624,7 +624,7 @@ namespace conquest
             charutils::AddPoints(PChar, charutils::GetConquestPointsName(PChar).c_str(), points);
             if (rank == 1)
             {
-                GainInfluencePoints(PChar, (uint32)round(points / 1.6));
+                GainInfluencePoints(PChar, (uint32)round(points / 1.3));
                 return 0;
             }
             if (rank == 2)
@@ -634,7 +634,7 @@ namespace conquest
             }
             if (rank == 3)
             {
-                GainInfluencePoints(PChar, (uint32)round(points * 1.8));
+                GainInfluencePoints(PChar, (uint32)round(points * 1.7));
                 return 0;
             }
         }
