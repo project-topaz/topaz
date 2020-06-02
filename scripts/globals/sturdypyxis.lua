@@ -322,7 +322,6 @@ function GetPyxisID(player)
         if timeElapsedCheck(GetNPCByID(i)) then
             if GetNPCByID(i):getStatus() == tpz.status.DISAPPEAR then
                 chestId = i
-                print(chestId)
                 break
             end
         end

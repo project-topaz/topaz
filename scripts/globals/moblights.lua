@@ -513,7 +513,6 @@ local lightTypes =
 }
 
 function DropLights(killer, mobName, killType, mob)
-    print(killType)
     mob:removeListener("ABYSSEA_MAGIC_DEATH_CHECK")
     mob:removeListener("ABYSSEA_WS_DEATH_CHECK")
     mob:removeListener("ABYSSEA_ABILITY_DEATH_CHECK")
