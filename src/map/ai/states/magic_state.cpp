@@ -121,6 +121,14 @@ bool CMagicState::Update(time_point tick)
             m_PEntity->OnCastFinished(*this,action);
             m_PEntity->PAI->EventHandler.triggerListener("MAGIC_USE", m_PEntity, PTarget, m_PSpell.get(), &action);
             PTarget->PAI->EventHandler.triggerListener("MAGIC_TAKE", PTarget, m_PEntity, m_PSpell.get(), &action);
+            if (m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ALTEPA || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ATTOHWA ||
+                m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_GRAUBERG || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_KONSCHTAT ||
+                m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_LA_THEINE || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_MISAREAUX ||
+                m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_TAHRONGI || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ULEGUERAND ||
+                m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_VUNKERL)
+            {
+                PTarget->PAI->EventHandler.triggerListener("ABYSSEA_MAGIC_TAKE", PTarget, m_PEntity, m_PSpell.get(), &action);
+            }
         }
 
         if (PTarget && PTarget->objtype == TYPE_TRUST)

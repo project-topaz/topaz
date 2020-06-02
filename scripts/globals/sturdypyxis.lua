@@ -322,6 +322,7 @@ function GetPyxisID(player)
         if timeElapsedCheck(GetNPCByID(i)) then
             if GetNPCByID(i):getStatus() == tpz.status.DISAPPEAR then
                 chestId = i
+                print(chestId)
                 break
             end
         end
@@ -348,8 +349,7 @@ end
 tpz.pyxis.spawnPyxis = function(player, x, y, z, r)
     local chestId = GetPyxisID(player)
     local npc     = GetNPCByID(chestId)
-    
-    --print(chestId)
+
     if chestId == 0 then
         return
     end

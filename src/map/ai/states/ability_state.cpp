@@ -111,6 +111,14 @@ bool CAbilityState::Update(time_point tick)
             if (auto target = GetTarget())
             {
                 target->PAI->EventHandler.triggerListener("ABILITY_TAKE", target, m_PEntity, m_PAbility.get(), &action);
+                if (m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ALTEPA || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ATTOHWA ||
+                    m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_GRAUBERG || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_KONSCHTAT ||
+                    m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_LA_THEINE || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_MISAREAUX ||
+                    m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_TAHRONGI || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ULEGUERAND ||
+                    m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_VUNKERL)
+                {
+                    target->PAI->EventHandler.triggerListener("ABYSSEA_ABILITY_TAKE", target, m_PEntity, m_PAbility.get(), &action);
+                }
             }
         }
         Complete();
