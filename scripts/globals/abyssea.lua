@@ -3,7 +3,7 @@
 -- DO NOT mess with the order
 -- or change things to "elseif"!
 -----------------------------------
-
+require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/utils")
 
@@ -454,13 +454,13 @@ function isInAbysseaZone(player)
 end
 
 function ResetPlayerLights(player)
-    player:setCharVar("pearlLight",0)
-    player:setCharVar("azureLight",0)
-    player:setCharVar("rubyLight",0)
-    player:setCharVar("amberLight",0)
-    player:setCharVar("goldLight",0)
-    player:setCharVar("silverLight",0)
-    player:setCharVar("ebonLight",0)
+    player:setCharVar("pearlLight", 0 + ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:setCharVar("azureLight", 0 + ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:setCharVar("rubyLight",  0 + ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:setCharVar("amberLight", 0 + ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:setCharVar("goldLight",  0 + ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:setCharVar("silverLight",0 + ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:setCharVar("ebonLight",  0 + ABYSSEA_BONUSLIGHT_AMOUNT)
 end
 
 function AddPlayerLights(player, light, amount)

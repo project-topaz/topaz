@@ -348,8 +348,7 @@ end
 tpz.pyxis.spawnPyxis = function(player, x, y, z, r)
     local chestId = GetPyxisID(player)
     local npc     = GetNPCByID(chestId)
-    
-    --print(chestId)
+
     if chestId == 0 then
         return
     end

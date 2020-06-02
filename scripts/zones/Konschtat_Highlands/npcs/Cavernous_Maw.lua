@@ -16,11 +16,9 @@ end
 
 function onTrigger(player,npc)
     if ENABLE_ABYSSEA == 1 and player:getMainLvl() >= 65 then
-        if
-			getTravStonesTotal(player)>=1 and
-			player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_ACCEPTED and
-			player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.TO_PASTE_A_PEISTE) == QUEST_AVAILABLE
-		then
+        if getTravStonesTotal(player)>=1 and
+            player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_ACCEPTED and
+            player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.TO_PASTE_A_PEISTE) == QUEST_AVAILABLE then
             player:startEvent(0)
         else
             if canEnterAbyssea(player) then

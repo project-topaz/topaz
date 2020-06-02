@@ -115,6 +115,14 @@ bool CWeaponSkillState::Update(time_point tick)
         auto PTarget {GetTarget()};
         m_PEntity->PAI->EventHandler.triggerListener("WEAPONSKILL_USE", m_PEntity, PTarget, m_PSkill->getID(), m_spent, &action);
         PTarget->PAI->EventHandler.triggerListener("WEAPONSKILL_TAKE", PTarget, m_PEntity, m_PSkill->getID(), m_spent, &action);
+        if (m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ALTEPA || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ATTOHWA ||
+            m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_GRAUBERG || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_KONSCHTAT ||
+            m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_LA_THEINE || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_MISAREAUX ||
+            m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_TAHRONGI || m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_ULEGUERAND ||
+            m_PEntity->loc.zone->GetID() == ZONE_ABYSSEA_VUNKERL)
+        {
+            PTarget->PAI->EventHandler.triggerListener("ABYSSEA_WEAPONSKILL_TAKE", PTarget, m_PEntity, m_PSkill->getID(), m_spent, &action);
+        }
         auto delay = m_PSkill->getAnimationTime();
         m_finishTime = tick + delay;
         Complete();

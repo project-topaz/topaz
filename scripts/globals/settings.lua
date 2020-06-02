@@ -38,6 +38,16 @@ REGIME_WAIT = 0; -- Make people wait till 00:00 game time as in retail. If it's 
 -- max is clamped to 1.0 (100%)
 CASKET_DROP_RATE = 0.20;
 
+-- Abyssea lights
+-- retail is around 60% except for certain mobs that reduces this automatically depending on the light.
+-- pearl light is a dramaticly lower drop rate.
+-- min is 0 max is 100 (1 = 1%)
+ABYSSEA_LIGHTS_DROP_RATE = 60
+
+-- This bonus will be added to players lights apon entering abyssea, it is mainly used during events
+-- recomended amount 0 - 100
+ABYSSEA_BONUSLIGHT_AMOUNT = 0
+
 -- Setting to lock content more accurately to the content you have defined above
 -- This generally results in a more accurate presentation of your selected expansions
 -- as well as a less confusing player experience for things that are disabled (things that are disabled are not loaded)
