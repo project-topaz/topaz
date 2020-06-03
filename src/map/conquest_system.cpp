@@ -634,7 +634,7 @@ namespace conquest
             }
             if (rank == 3)
             {
-                GainInfluencePoints(PChar, (uint32)round(points * 1.7));
+                GainInfluencePoints(PChar, (uint32)round(points * 1.7   ));
                 return 0;
             }
         }

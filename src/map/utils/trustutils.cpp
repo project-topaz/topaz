@@ -429,13 +429,13 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         sVIT = 0;
     }
 
-    PTrust->stats.STR = fSTR + mSTR + sSTR;
-    PTrust->stats.DEX = fDEX + mDEX + sDEX;
-    PTrust->stats.VIT = fVIT + mVIT + sVIT;
-    PTrust->stats.AGI = fAGI + mAGI + sAGI;
-    PTrust->stats.INT = fINT + mINT + sINT;
-    PTrust->stats.MND = fMND + mMND + sMND;
-    PTrust->stats.CHR = fCHR + mCHR + sCHR;
+    PTrust->stats.STR = std::floor((fSTR + mSTR + sSTR) * 0.85);
+    PTrust->stats.DEX = std::floor((fDEX + mDEX + sDEX) * 0.85);
+    PTrust->stats.VIT = std::floor((fVIT + mVIT + sVIT) * 0.85);
+    PTrust->stats.AGI = std::floor((fAGI + mAGI + sAGI) * 0.85);
+    PTrust->stats.INT = std::floor((fINT + mINT + sINT) * 0.85);
+    PTrust->stats.MND = std::floor((fMND + mMND + sMND) * 0.85);
+    PTrust->stats.CHR = std::floor((fCHR + mCHR + sCHR) * 0.85);
 
     // cap all stats for mLvl / job
     for (int i = SKILL_DIVINE_MAGIC; i <= SKILL_BLUE_MAGIC; i++)
@@ -443,7 +443,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         uint16 maxSkill = battleutils::GetMaxSkill((SKILLTYPE)i, mJob, mLvl > 99 ? 99 : mLvl);
         if (maxSkill != 0)
         {
-            PTrust->WorkingSkills.skill[i] = maxSkill;
+            PTrust->WorkingSkills.skill[i] = std::floor(maxSkill * 0.7);
         }
         else //if the mob is WAR/BLM and can cast spell
         {
@@ -452,7 +452,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 
             if (maxSubSkill != 0)
             {
-                PTrust->WorkingSkills.skill[i] = maxSubSkill;
+                PTrust->WorkingSkills.skill[i] = std::floor(maxSubSkill * 0.7);
             }
         }
     }
@@ -462,7 +462,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         uint16 maxSkill = battleutils::GetMaxSkill((SKILLTYPE)i, mLvl > 99 ? 99 : mLvl);
         if (maxSkill != 0)
         {
-            PTrust->WorkingSkills.skill[i] = maxSkill;
+            PTrust->WorkingSkills.skill[i] = std::floor(maxSkill * 0.7);
         }
     }
 
