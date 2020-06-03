@@ -2205,7 +2205,7 @@ end
     ----------------------------------------------------------------------
     -- Desc: Despawn a chest and reset its local var's
     ----------------------------------------------------------------------
-function RemoveChest(player, npc, addcruor, delay)
+function RemoveChest(npc, addcruor, delay)
     local zoneId = player:getZoneID()
     local ID = zones[zoneId]
     local chestid = npc:getID()
@@ -2282,7 +2282,7 @@ function OpenChest(player, npc)
 
     if loottype == 9 then
         for p,member in ipairs(party) do
-            if member:getZoneID() == player:getZoneID() then
+            if member:getZoneID() == player:getZoneID() and member:isPC() then
                 member:addExp(exp)
                 --printf("giving exp to %s for %s", member:getName(), exp)
             end
@@ -2290,12 +2290,10 @@ function OpenChest(player, npc)
         RemoveChest(player, npc, 0, 3)
     elseif loottype == 7 then       
         for p,member in ipairs(party) do
-            if member:getZoneID() == player:getZoneID() then
-                if member:isPC() then
-                    member:addCurrency("cruor",cruoramout)
+            if member:getZoneID() == player:getZoneID() and member:isPC() then
+                member:addCurrency("cruor",cruoramout)
                 --printf("giving cruor to %s", member:getName())
-                    member:messageSpecial(ID.text.CRUOR_OBTAINED,cruoramout)
-                end
+                member:messageSpecial(ID.text.CRUOR_OBTAINED,cruoramout)
             end
         end
         RemoveChest(player, npc, 0, 3)
@@ -2352,7 +2350,6 @@ function OpenChest(player, npc)
     elseif loottype == 6 then
         if restoretype == 1 then
             player:restoreFromChest(npc,1)
-
             for p,member in ipairs(party) do
                 if member:getZoneID() == player:getZoneID() then
                     local hp = member:getMaxHP() - member:getHP()
@@ -2410,8 +2407,8 @@ function OpenChest(player, npc)
                     member:addHP(hp)
                     member:addMP(mp)
                     member:addTP(3000)
-                    member:resetRecasts()
                     if member:isPC() then
+                        member:resetRecasts()
                         member:messageBasic(tpz.msg.basic.RECOVERS_HP_AND_MP)
                         member:messageBasic(tpz.msg.basic.ALL_ABILITIES_RECHARGED)
                     end
