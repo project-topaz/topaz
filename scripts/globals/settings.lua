@@ -42,7 +42,7 @@ CASKET_DROP_RATE = 0.20;
 -- retail is around 60% except for certain mobs that reduces this automatically depending on the light.
 -- pearl light is a dramaticly lower drop rate.
 -- min is 0 max is 100 (1 = 1%)
-ABYSSEA_LIGHTS_DROP_RATE = 60
+ABYSSEA_LIGHTS_DROP_RATE = 80
 
 -- This bonus will be added to players lights apon entering abyssea, it is mainly used during events
 -- recomended amount 0 - 100
