@@ -18,3 +18,6 @@ function onMobSpawn(mob)
     mob:addGambit(ai.s.TARGET, ai.t.MB_AVAILABLE, 0, ai.r.MA, ai.rm.SELECT_MB_ELEMENT, tpz.magic.spellFamily.NONE)
     mob:addGambit(ai.s.TARGET, ai.t.NOT_SC_AVAILABLE, 0, ai.r.MA, ai.rm.SELECT_HIGHEST, tpz.magic.spellFamily.NONE, 30)
 end
+
+function onMobDeath(mob, player, isKiller)
+end
