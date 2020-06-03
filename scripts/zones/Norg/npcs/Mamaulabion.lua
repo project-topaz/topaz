@@ -174,6 +174,7 @@ function onEventFinish(player,csid,option)
         else
             player:addItem(14625); -- Evokers Ring
             player:messageSpecial(ID.text.ITEM_OBTAINED,14625); -- Evokers Ring
+            player:addExp(3000*EXP_RATE);
             player:addFame(NORG,30); --idk how much fame the quest adds, just left at 30 which the levi quest gave.
             player:completeQuest(OUTLANDS,tpz.quest.id.outlands.MAMA_MIA);
             player:setCharVar("tradesMamaMia",0)
