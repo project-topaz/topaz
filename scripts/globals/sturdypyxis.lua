@@ -2205,7 +2205,7 @@ end
     ----------------------------------------------------------------------
     -- Desc: Despawn a chest and reset its local var's
     ----------------------------------------------------------------------
-function RemoveChest(npc, addcruor, delay)
+function RemoveChest(player, npc, addcruor, delay)
     local zoneId = player:getZoneID()
     local ID = zones[zoneId]
     local chestid = npc:getID()
