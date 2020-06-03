@@ -337,7 +337,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
     float growth = 1.06f;
     float base   = 18.0f;
 
-    PTrust->health.maxhp = (int16)(base * pow(mLvl, growth) * PTrust->HPscale);
+    PTrust->health.maxhp = (int16)(base * pow(mLvl, growth) * PTrust->HPscale * 0.8);
 
     bool hasMp = false;
     switch (mJob)
@@ -374,7 +374,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 
     if (hasMp)
     {
-        PTrust->health.maxmp = (int16)(base * pow(mLvl, growth) * PTrust->MPscale);
+        PTrust->health.maxmp = (int16)(base * pow(mLvl, growth) * PTrust->MPscale * 0.8);
     }
 
     PTrust->health.tp = 0;
