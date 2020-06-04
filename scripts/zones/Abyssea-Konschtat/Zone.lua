@@ -3,13 +3,8 @@
 -- Zone: Abyssea - Konschtat
 --
 -----------------------------------
--- Research
--- EventID 1024-1029 aura of boundless rage
--- EventID 2048-2179 The treasure chest will disappear is 180 seconds menu.
--- EventID 2180 Teleport?
--- EventID 2181 DEBUG Menu
------------------------------------
 local ID = require("scripts/zones/Abyssea-Konschtat/IDs")
+require("scripts/globals/abyssea")
 require("scripts/globals/quests")
 -----------------------------------
 
@@ -22,6 +17,8 @@ function onZoneIn(player,prevZone)
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(153,-72,-840,140)
     end
+
+    ResetPlayerLights(player)
 
     if player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_ACCEPTED and player:getCharVar("1stTimeAbyssea") == 0 then
         player:setCharVar("1stTimeAbyssea",1)

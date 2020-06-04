@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Uleguerand/IDs")
+require("scripts/globals/abyssea")
 require("scripts/globals/quests")
 -----------------------------------
 
@@ -16,6 +17,8 @@ function onZoneIn(player,prevZone)
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(-238, -40, -520.5, 0)
     end
+
+    ResetPlayerLights(player)
 
     if player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_ACCEPTED and player:getCharVar("1stTimeAbyssea") == 0 then
         player:setCharVar("1stTimeAbyssea",1)

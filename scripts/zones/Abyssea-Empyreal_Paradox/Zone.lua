@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Empyreal_Paradox/IDs")
+require("scripts/globals/abyssea")
 -----------------------------------
 
 function onInitialize(zone)
@@ -15,6 +16,8 @@ function onZoneIn(player,prevZone)
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(540,-500,-565,64)
     end
+
+    ResetPlayerLights(player)
 
     return cs
 end

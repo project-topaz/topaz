@@ -7,12 +7,18 @@
 require("scripts/globals/keyitems")
 require("scripts/globals/quests")
 require("scripts/globals/settings")
+require("scripts/globals/abyssea")
 require("scripts/globals/status")
 require("scripts/globals/zone")
 -----------------------------------
 
 function onEffectGain(target,effect)
     target:setAnimation(33)
+
+    -- Abyssea Lights check
+    if isInAbysseaZone(target) and target:isPC() then
+        GetAbysseaStats(target)
+    end
 
     -- Dances with Luopans
     if target:getLocalVar("GEO_DWL_Locus_Area") == 1 and target:getCharVar("GEO_DWL_Luopan") == 0 then

@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Grauberg/IDs")
 require("scripts/globals/quests")
+require("scripts/globals/abyssea")
 require("scripts/globals/helm")
 -----------------------------------
 
@@ -18,6 +19,8 @@ function onZoneIn(player,prevZone)
     if player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0 then
         player:setPos(-555,31,-760,0)
     end
+
+    ResetPlayerLights(player)
 
     if player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_ACCEPTED and player:getCharVar("1stTimeAbyssea") == 0 then
         player:setCharVar("1stTimeAbyssea",1)
