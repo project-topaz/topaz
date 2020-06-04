@@ -516,12 +516,6 @@ local lightTypes =
 }
 
 function DropLights(killer, mobName, killType, mob)
-    mob:removeListener("ABYSSEA_MAGIC_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_WS_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_ABILITY_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_PHYSICAL_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_DEATH_NO_ACTION")
-
     if killer then
         if not killer:isPC() and killer:getAllegiance() == 1 then
            local master = killer:getMaster()
