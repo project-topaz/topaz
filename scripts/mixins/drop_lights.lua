@@ -48,7 +48,7 @@ g_mixins.drop_lights = function(mob)
 
     mob:addListener("ABILITY_TAKE", "ABYSSEA_ABILITY_DEATH_CHECK", function(mob, user, ability, action)
         if mob:getHP() <= 0 then
-            DropLights(user, mob:getName(), "physical")
+            DropLights(user, mob:getName(), "physical", mob)
             mob:removeListener("ABYSSEA_DEATH_NO_ACTION")
             mob:removeListener("ABYSSEA_MAGIC_DEATH_CHECK")
             mob:removeListener("ABYSSEA_WS_DEATH_CHECK")
@@ -69,7 +69,7 @@ g_mixins.drop_lights = function(mob)
     end)
 
     mob:addListener("DEATH", "ABYSSEA_DEATH_NO_ACTION", function(mob, player, isKiller)
-        DropLights(attacker, mob:getName(), "physical", mob)
+        DropLights(player, mob:getName(), "physical", mob)
         mob:removeListener("ABYSSEA_MAGIC_DEATH_CHECK")
         mob:removeListener("ABYSSEA_WS_DEATH_CHECK")
         mob:removeListener("ABYSSEA_ABILITY_DEATH_CHECK")
