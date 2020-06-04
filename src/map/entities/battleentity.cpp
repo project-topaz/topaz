@@ -1716,14 +1716,7 @@ bool CBattleEntity::OnAttack(CAttackState& state, action_t& action)
     battleutils::ClaimMob(PTarget, this);
     PAI->EventHandler.triggerListener("ATTACK", this, PTarget, &action);
     PTarget->PAI->EventHandler.triggerListener("ATTACKED", PTarget, this, &action);
-    if (PTarget->loc.zone->GetID() == ZONE_ABYSSEA_ALTEPA || PTarget->loc.zone->GetID() == ZONE_ABYSSEA_ATTOHWA ||
-        PTarget->loc.zone->GetID() == ZONE_ABYSSEA_GRAUBERG || PTarget->loc.zone->GetID() == ZONE_ABYSSEA_KONSCHTAT ||
-        PTarget->loc.zone->GetID() == ZONE_ABYSSEA_LA_THEINE || PTarget->loc.zone->GetID() == ZONE_ABYSSEA_MISAREAUX ||
-        PTarget->loc.zone->GetID() == ZONE_ABYSSEA_TAHRONGI || PTarget->loc.zone->GetID() == ZONE_ABYSSEA_ULEGUERAND ||
-        PTarget->loc.zone->GetID() == ZONE_ABYSSEA_VUNKERL && PTarget->objtype == TYPE_MOB)
-    {
-        PTarget->PAI->EventHandler.triggerListener("ABYSSEA_ATTACKED_DEATH", PTarget, this, &action);
-    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////
     // End of attack loop
     /////////////////////////////////////////////////////////////////////////////////////////////
