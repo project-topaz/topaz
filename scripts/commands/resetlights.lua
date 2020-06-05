@@ -28,6 +28,6 @@ function onTrigger(player,target)
         end
     end
 
-    ResetPlayerLights(targ)
+    tpz.abyssea.ResetPlayerLights(targ)
     player:PrintToPlayer(string.format("%s's lights have been reset!. ",targ:getName()))
 end

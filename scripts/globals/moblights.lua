@@ -515,7 +515,15 @@ local lightTypes =
     ws_magical  = {light = tpz.abyssea.lightType.AMBER, lightType = "amber"}, -- Amber
 }
 
-function DropLights(killer, mobName, killType, mob)
+tpz.abyssea_mob.RemoveDeathListeners = function(mob)
+    mob:removeListener("ABYSSEA_DEATH_NO_ACTION")
+    mob:removeListener("ABYSSEA_MAGIC_DEATH_CHECK")
+    mob:removeListener("ABYSSEA_WS_DEATH_CHECK")
+    mob:removeListener("ABYSSEA_ABILITY_DEATH_CHECK")
+    mob:removeListener("ABYSSEA_PHYSICAL_DEATH_CHECK")
+end
+
+tpz.abyssea_mob.DropLights = function(killer, mobName, killType, mob)
     if killer then
         if not killer:isPC() and killer:getAllegiance() == 1 then
            local master = killer:getMaster()
@@ -588,7 +596,7 @@ function DropLights(killer, mobName, killType, mob)
     if canDrop <= dropRate then
         for _, member in pairs(killer:getAlliance()) do
             if member:getZoneID() == killer:getZoneID() and member:isPC() then
-                AddPlayerLights(member, dropLight, amount)
+                tpz.abyssea.AddPlayerLights(member, dropLight, amount)
             end
         end
     end

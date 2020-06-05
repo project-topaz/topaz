@@ -18,7 +18,7 @@ function onZoneIn(player,prevZone)
         player:setPos(-238, -40, -520.5, 0)
     end
 
-    ResetPlayerLights(player)
+    tpz.abyssea.ResetPlayerLights(player)
 
     if player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) == QUEST_ACCEPTED and player:getCharVar("1stTimeAbyssea") == 0 then
         player:setCharVar("1stTimeAbyssea",1)

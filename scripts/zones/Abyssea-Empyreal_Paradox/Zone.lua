@@ -17,8 +17,6 @@ function onZoneIn(player,prevZone)
         player:setPos(540,-500,-565,64)
     end
 
-    ResetPlayerLights(player)
-
     return cs
 end
 

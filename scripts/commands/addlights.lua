@@ -42,10 +42,16 @@ function onTrigger(player,light,amount,target)
     end
 
     local selectedLight = tostring(light)
-    local setLight = lightType[selectedLight]
-    if (light == nil or setLight == nil) then
+    
+    if lightType[selectedLight] == nil  or selectedLight == nil then
         error(player, "Invalid light type.\nValid light types: pearl, azure, ruby, amber, gold, silver, ebon")
         return
+    end
+
+    local setLight = 0
+
+    if lightType[selectedLight] ~= nil then
+        setLight = lightType[selectedLight]
     end
 
     -- validate amount
@@ -54,7 +60,7 @@ function onTrigger(player,light,amount,target)
         return
     end
 
-    AddPlayerLights(targ, setLight, amount)
+    tpz.abyssea.AddPlayerLights(targ, setLight, amount)
     local newAmount = targ:getCharVar(light.."Light")
     player:PrintToPlayer(string.format("%s was given %i %s light, for a total of %i.",targ:getName(),amount,light,newAmount))
 end
