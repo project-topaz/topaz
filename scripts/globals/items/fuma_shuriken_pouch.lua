@@ -1,6 +1,6 @@
 -----------------------------------------
--- ID: 17304
--- Fuma Shuriken Pouch
+-- ID: 6302
+-- Item: Fuma Sh. Pouch
 -- When used, you will obtain one stack of Fuma Shurikens
 -----------------------------------------
 require("scripts/globals/msg")

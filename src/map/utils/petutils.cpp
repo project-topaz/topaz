@@ -1462,12 +1462,12 @@ namespace petutils
             if (PMaster->GetMJob() == JOB_PUP)
             {
                 PPet->SetMLevel(PMaster->GetMLevel());
-                PPet->SetSLevel(PMaster->GetMLevel() / 2);
+                PPet->SetSLevel(PMaster->GetMLevel() / 2); //Todo: SetSLevel() already reduces the level?
             }
             else
             {
                 PPet->SetMLevel(PMaster->GetSLevel());
-                PPet->SetSLevel(PMaster->GetSLevel() / 2);
+                PPet->SetSLevel(PMaster->GetSLevel() / 2); //Todo: SetSLevel() already reduces the level?
             }
             LoadAutomatonStats((CCharEntity*)PMaster, PPet, PPetData); //temp
             if (PMaster->objtype == TYPE_PC)
