@@ -3,25 +3,23 @@
 -- DO NOT mess with the order
 -- or change things to "elseif"!
 -----------------------------------
+
 require("scripts/globals/settings")
 require("scripts/globals/keyitems")
 require("scripts/globals/utils")
 
 tpz = tpz or {}
-tpz.abyssea= tpz.abyssea or {}
+tpz.abyssea = tpz.abyssea or {}
 
-local abyssea_zones =
+tpz.abyssea.lightType =
 {
-    15, -- ABYSSEA_KONSCHTAT
-    45, -- ABYSSEA_TAHRONGI
-    132,-- ABYSSEA_LA_THEINE
-    215,-- ABYSSEA_ATTOHWA
-    216,-- ABYSSEA_MISAREAUX
-    217,-- ABYSSEA_VUNKERL
-    218,-- ABYSSEA_ALTEPA
-    253,-- ABYSSEA_ULEGUERAND
-    254 -- ABYSSEA_GRAUBERG
-    --255 -- ABYSSEA_EMPYREAL_PARADOX
+    PEARL   = 1,
+    AZURE   = 2,
+    RUBY    = 3,
+    AMBER   = 4,
+    GOLDEN  = 5,
+    SILVERY = 6,
+    EBON    = 7,
 }
 
 -- weaponskills for red weakness
@@ -72,32 +70,6 @@ local blue_weakness =
     --22-6
     {165, 166, 167, 168, 169, 5, 6, 7, 8, 9, 176, 181, 182, 183, 184}
 }
-
-tpz.abyssea.lightType =
-{
-    PEARL   = 1,
-    AZURE   = 2,
-    RUBY    = 3,
-    AMBER   = 4,
-    GOLDEN  = 5,
-    SILVERY = 6,
-    EBON    = 7,
-}
-function canEnterAbyssea(player)
-    if player:getCharVar("lastEnteredAbyssea") <= os.time() and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) >= QUEST_ACCEPTED and player:getMainLvl() >= 65 then
-        player:PrintToPlayer("If you have a Dedication effect from an experience ring, it will wear off upon entering Abyssea.", tpz.msg.channel.SYSTEM_3)
-        return true
-    end
-
-    local lastEnterTable = {0,0,0}
-    lastEnterTable = utils.convertTimeDescending(os.time() - player:getCharVar("lastEnteredAbyssea"))
-
-    if player:getCharVar("lastEnteredAbyssea") ~= 0 then
-        player:PrintToPlayer("You must wait " ..lastEnterTable[1].. " hours, " ..lastEnterTable[2].. " minutes, and " ..lastEnterTable[3].. " seconds before you can enter Abyssea again.", tpz.msg.channel.SYSTEM_3)
-    end
-
-    return false
-end
 
 -- returns Traverser Stone KI cap
 function getMaxTravStones(player)
@@ -444,6 +416,20 @@ function abysseaOnEventFinish(player,csid,option)
     end
 end
 
+local abyssea_zones =
+{
+    15, -- ABYSSEA_KONSCHTAT
+    45, -- ABYSSEA_TAHRONGI
+    132,-- ABYSSEA_LA_THEINE
+    215,-- ABYSSEA_ATTOHWA
+    216,-- ABYSSEA_MISAREAUX
+    217,-- ABYSSEA_VUNKERL
+    218,-- ABYSSEA_ALTEPA
+    253,-- ABYSSEA_ULEGUERAND
+    254 -- ABYSSEA_GRAUBERG
+    --255 -- ABYSSEA_EMPYREAL_PARADOX
+}
+
 function isInAbysseaZone(player)
     for index, zone in ipairs(abyssea_zones) do
         if zone == player:getZoneID() then
@@ -597,4 +583,20 @@ function DropLights(player, lightColor, lightAmount, preferredLight)
             AddPlayerLights(player, dropLight, lightAmount)
         end
     end
+end
+
+function canEnterAbyssea(player)
+    if player:getCharVar("lastEnteredAbyssea") <= os.time() and player:getQuestStatus(ABYSSEA, tpz.quest.id.abyssea.THE_TRUTH_BECKONS) >= QUEST_ACCEPTED and player:getMainLvl() >= 65 then
+        player:PrintToPlayer("If you have a Dedication effect from an experience ring, it will wear off upon entering Abyssea.", tpz.msg.channel.SYSTEM_3)
+        return true
+    end
+
+    local lastEnterTable = {0,0,0}
+    lastEnterTable = utils.convertTimeDescending(os.time() - player:getCharVar("lastEnteredAbyssea"))
+
+    if player:getCharVar("lastEnteredAbyssea") ~= 0 then
+        player:PrintToPlayer("You must wait " ..lastEnterTable[1].. " hours, " ..lastEnterTable[2].. " minutes, and " ..lastEnterTable[3].. " seconds before you can enter Abyssea again.", tpz.msg.channel.SYSTEM_3)
+    end
+
+    return false
 end

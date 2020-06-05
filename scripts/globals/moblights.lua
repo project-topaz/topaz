@@ -2,8 +2,11 @@ require("scripts/globals/abyssea")
 require("scripts/globals/status")
 require("scripts/globals/settings")
 
+tpz = tpz or {}
+tpz.abyssea_mob = tpz.abyssea_mob or {}
+
 -- if the amount is 100 or 50 it is a special number and is randomised as per retail
-local lightAmount =
+tpz.abyssea_mob.info =
 {
     ------------------------------------------------------------------------------------------------------------
     -- Abyssea - Konschtat
@@ -448,7 +451,7 @@ local lightAmount =
     ["Sand_Sweeper"]           = {azure = 8,   pearl = 5,   ruby = 8,   amber = 8  }, -- Dolls   
     ["Surveyor"]               = {azure = 8,   pearl = 5,   ruby = 8,   amber = 8  }, -- Spheroids
     ["Badlands_Crab"]          = {azure = 8,   pearl = 5,   ruby = 8,   amber = 8  }, -- Crabs
-    ["Sand Pugil"]             = {azure = 8,   pearl = 5,   ruby = 8,   amber = 8  }, -- Pugils
+    ["Sand_Pugil"]             = {azure = 8,   pearl = 5,   ruby = 8,   amber = 8  }, -- Pugils
     -------------------
     -- NM's
     -------------------
@@ -513,12 +516,6 @@ local lightTypes =
 }
 
 function DropLights(killer, mobName, killType, mob)
-    mob:removeListener("ABYSSEA_MAGIC_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_WS_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_ABILITY_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_PHYSICAL_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_DEATH_NO_ACTION")
-
     if killer then
         if not killer:isPC() and killer:getAllegiance() == 1 then
            local master = killer:getMaster()
@@ -532,7 +529,7 @@ function DropLights(killer, mobName, killType, mob)
         return
     end
 
-    if lightAmount[mobName] == nil then
+    if tpz.abyssea_mob.info[mobName] == nil then
         return
     end
 
@@ -540,8 +537,8 @@ function DropLights(killer, mobName, killType, mob)
     local amount = 0
     local dropRate = ABYSSEA_LIGHTS_DROP_RATE
 
-    if lightAmount[mobName][lightTypes[killType].lightType] ~= nil then
-        amount = lightAmount[mobName][lightTypes[killType].lightType]
+    if tpz.abyssea_mob.info[mobName][lightTypes[killType].lightType] ~= nil then
+        amount = tpz.abyssea_mob.info[mobName][lightTypes[killType].lightType]
     end
 
     if amount == 0 then
@@ -586,11 +583,11 @@ function DropLights(killer, mobName, killType, mob)
         end
     end
     
-    local canDrop = math.random(1,100)
+    local canDrop = math.random() * 100
 
     if canDrop <= dropRate then
         for _, member in pairs(killer:getAlliance()) do
-            if member:getZoneID() == killer:getZoneID() then
+            if member:getZoneID() == killer:getZoneID() and member:isPC() then
                 AddPlayerLights(member, dropLight, amount)
             end
         end
