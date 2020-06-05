@@ -6,6 +6,10 @@ import unnamed_flags
 import char_unlock_table_columns
 import HP_masks_to_blobs
 import crystal_storage
+import broken_linkshells
+import spell_family_column
+import mission_blob_extra
+import cop_mission_ids
 
 credentials = {}
 db = None
@@ -44,7 +48,8 @@ def connect():
             user=login,
             passwd=password,
             db=database,
-            port=port)
+            port=port,
+            use_pure=True)
 
     cur = db.cursor()
 
@@ -78,6 +83,10 @@ def run_all_migrations():
     run_migration(char_unlock_table_columns)
     run_migration(HP_masks_to_blobs)
     run_migration(crystal_storage)
+    run_migration(broken_linkshells)
+    run_migration(spell_family_column)
+    run_migration(mission_blob_extra)
+    run_migration(cop_mission_ids)
     close()
 
     print("Finished running all migrations")

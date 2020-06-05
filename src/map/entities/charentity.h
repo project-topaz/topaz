@@ -36,7 +36,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #define MAX_QUESTAREA	 11
 #define MAX_QUESTID     256
 #define MAX_MISSIONAREA	 15
-#define MAX_MISSIONID    226
+#define MAX_MISSIONID    851
 
 class CItemWeapon;
 class CTrustEntity;
@@ -44,7 +44,7 @@ class CFellowEntity;
 
 struct jobs_t
 {
-    uint32 unlocked;				// a bit field of the jobs unlocked. The bit indices are stored inside of of the JOBTYPE enumeration 
+    uint32 unlocked;				// a bit field of the jobs unlocked. The bit indices are stored inside of of the JOBTYPE enumeration
     uint8  job[MAX_JOBTYPE];		// the current levels of each of the jobs from above
     uint16 exp[MAX_JOBTYPE];		// the experience points for each of the jobs above
     uint8  genkai;					// the maximum genkai level achieved
@@ -226,6 +226,7 @@ public:
     CFellowEntity*          m_PFellow;
 
     std::vector<CTrustEntity*> PTrusts; // Active trusts
+    CBattleEntity*	PClaimedMob;
 
 
     // Эти миссии не нуждаются в списке пройденных, т.к. клиент автоматически
@@ -334,7 +335,7 @@ public:
 
     CItemEquipment*	getEquip(SLOTTYPE slot);
 
-    void		ReloadPartyInc();
+    void        ReloadPartyInc();
     void        ReloadPartyDec();
     bool        ReloadParty();
     void        ClearTrusts();

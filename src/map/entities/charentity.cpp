@@ -144,8 +144,15 @@ CCharEntity::CCharEntity()
         m_missionLog[i].current = 0xFFFF;
     }
 
-    m_missionLog[4].current = 0; // MISSION_TOAU
-    m_missionLog[5].current = 0; // MISSION_WOTG
+    m_missionLog[4].current = 0;   // MISSION_TOAU
+    m_missionLog[5].current = 0;   // MISSION_WOTG
+    m_missionLog[6].current = 101; // MISSION_COP
+    for (uint8 i = 0; i < MAX_MISSIONAREA; ++i)
+    {
+        m_missionLog[i].logExUpper = 0;
+        m_missionLog[i].logExLower = 0;
+    }
+
 
     m_copCurrent = 0;
     m_acpCurrent = 0;
@@ -184,6 +191,7 @@ CCharEntity::CCharEntity()
     PWideScanTarget = nullptr;
 
     PAutomaton = nullptr;
+    PClaimedMob = nullptr;
     PRecastContainer = std::make_unique<CCharRecastContainer>(this);
     PLatentEffectContainer = new CLatentEffectContainer(this);
 
@@ -652,6 +660,7 @@ bool CCharEntity::CanUseSpell(CSpell* PSpell)
 
 void CCharEntity::OnChangeTarget(CBattleEntity* PNewTarget)
 {
+    battleutils::RelinquishClaim(this);
     pushPacket(new CLockOnPacket(this, PNewTarget));
     PLatentEffectContainer->CheckLatentsTargetChange();
 }
@@ -664,6 +673,7 @@ void CCharEntity::OnEngage(CAttackState& state)
 
 void CCharEntity::OnDisengage(CAttackState& state)
 {
+    battleutils::RelinquishClaim(this);
     CBattleEntity::OnDisengage(state);
     if (state.HasErrorMsg())
     {
@@ -931,6 +941,7 @@ void CCharEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& acti
                 }
             }
         }
+        battleutils::ClaimMob(PBattleTarget, this);
     }
     else
     {
@@ -1353,9 +1364,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
             actionTarget.reaction = REACTION_EVADE;
             actionTarget.speceffect = SPECEFFECT_NONE;
             actionTarget.messageID = 354;
-
-            battleutils::ClaimMob(PTarget, this);
-
             hitCount = i; // end barrage, shot missed
         }
 
@@ -1424,8 +1432,6 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
         actionTarget.messageID = 0;
         actionTarget.reaction = REACTION_EVADE;
         PTarget->loc.zone->PushPacket(PTarget, CHAR_INRANGE_SELF, new CMessageBasicPacket(PTarget, PTarget, 0, shadowsTaken, MSGBASIC_SHADOW_ABSORB));
-
-        battleutils::ClaimMob(PTarget, this);
     }
 
     if (actionTarget.speceffect == SPECEFFECT_HIT && actionTarget.param > 0)
@@ -1444,7 +1450,7 @@ void CCharEntity::OnRangedAttack(CRangeState& state, action_t& action)
 
         StatusEffectContainer->DelStatusEffect(EFFECT_SANGE);
     }
-
+    battleutils::ClaimMob(PTarget, this);
     battleutils::RemoveAmmo(this, ammoConsumed);
     // only remove detectables
     StatusEffectContainer->DelStatusEffectsByFlag(EFFECTFLAG_DETECTABLE);
@@ -1690,6 +1696,7 @@ void CCharEntity::Die()
     else
         loc.zone->PushPacket(this, CHAR_INRANGE_SELF, new CMessageBasicPacket(this, this, 0, 0, MSGBASIC_FALLS_TO_GROUND));
 
+    battleutils::RelinquishClaim(this);
     Die(death_duration);
     SetDeathTimestamp((uint32)time(nullptr));
 

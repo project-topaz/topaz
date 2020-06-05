@@ -298,7 +298,7 @@ local battlefields = {
         { 3,  195, 1438},   -- Shattering Stars (NIN LB5)
         { 4,  196, 1439},   -- Shattering Stars (DRG LB5)
      -- { 5,  197, 1175},   -- Cactuar Suave (KS30)
-     -- { 6,  198, 1178},   -- Eye of the Storm (KS30)
+        { 6,  198, 1178},   -- Eye of the Storm (KS30)
      -- { 7,  199, 1180},   -- The Scarlet King (KS30)
      -- { 8,  200,    0},   -- Roar! A Cat Burglar Bares Her Fangs (MKD10)
      -- { 9,  201, 3352},   -- Dragon Scales (KC50)
@@ -389,7 +389,7 @@ local battlefields = {
         { 6,  518, 1433},   -- Shattering Stars (DRK LB5)
         { 7,  519, 1435},   -- Shattering Stars (BRD LB5)
         { 8,  520, 1130},   -- Demolition Squad (BS60)
-     -- { 9,  521, 1552},   -- Die by the Sword (BS30) -- TODO: mob damage type rotation; mobskills furious flurry, smite of fury, whispers of ire
+     -- { 9,  521, 1552},   -- Die by the Sword (BS30) -- TODO: mob damage type rotation mobskills furious flurry, smite of fury, whispers of ire
         {10,  522, 1552},   -- Let Sleeping Dogs Die (BS30)
         {11,  523, 1130},   -- Brothers D'Aurphe (BS60)
         {12,  524, 1131},   -- Undying Promise (BS40) -- TODO: model size increases with each reraise
@@ -488,7 +488,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 102] = function() return ( mjob == tpz.job.WHM and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (WHM LB5)
         [ 103] = function() return ( mjob == tpz.job.SMN and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (SMN LB5)
         [ 128] = function() return ( roz == mi.zilart.THE_TEMPLE_OF_UGGALEPIH                                                                                               ) end, -- ZM4: The Temple of Uggalepih
-        [ 160] = function() return ( nat == 15 and natStat == 3                                                                                                             ) end, -- Mission 5-2
+        [ 160] = function() return ( nat == mi.nation.SHADOW_LORD and natStat == 3                                                                                          ) end, -- Mission 5-2
         [ 161] = function() return ( basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat == 1                                                                           ) end, -- Basty 9-2: Where Two Paths Converge
         [ 163] = function() return ( mjob == tpz.job.SCH and mlvl >= 66                                                                                                     ) end, -- Quest: Survival of the Wisest (SCH LB5)
         [ 192] = function() return ( roz == mi.zilart.THROUGH_THE_QUICKSAND_CAVES                                                                                           ) end, -- ZM6: Through the Quicksand Caves
@@ -517,7 +517,7 @@ function checkReqs(player, npc, bfid, registrant)
         [ 481] = function() return ( player:getCharVar("ClassReunionProgress") == 5                                                                                         ) end, -- Quest: Class Reunion
         [ 482] = function() return ( mjob == tpz.job.SMN and mlvl >= 20                                                                                                     ) end, -- Quest: Trial-size Trial by Ice
         [ 484] = function() return ( asa == mi.asa.SUGAR_COATED_DIRECTIVE and player:hasKeyItem(tpz.ki.DOMINAS_AZURE_SEAL)                                                  ) end, -- ASA4: Sugar-coated Directive
-        [ 512] = function() return ( nat == 14 and natStat == 11                                                                                                            ) end, -- Mission 5-1
+        [ 512] = function() return ( nat == mi.nation.ARCHLICH and natStat == 11                                                                                            ) end, -- Mission 5-1
         [ 516] = function() return ( sandy == mi.sandoria.THE_HEIR_TO_THE_LIGHT and natStat == 3                                                                            ) end, -- Sandy 9-2: The Heir to the Light
         [ 517] = function() return ( mjob == tpz.job.PLD and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (PLD LB5)
         [ 518] = function() return ( mjob == tpz.job.DRK and mlvl >= 66                                                                                                     ) end, -- Quest: Shattering Stars (DRK LB5)
@@ -681,7 +681,7 @@ function checkSkip(player, bfid)
         [  67] = function() return ( player:hasCompletedMission(BASTOK, mi.bastok.ON_MY_WAY) or (basty == mi.bastok.ON_MY_WAY and natStat > 2)                                                       ) end, -- Basty 7-2: On My Way
         [  96] = function() return ( mission2_3c                                                                                                                                                     ) end, -- Mission 2-3
         [  99] = function() return ( player:hasCompletedMission(WINDURST, mi.windurst.SAINTLY_INVITATION) or (windy == mi.windurst.SAINTLY_INVITATION and natStat > 1)                               ) end, -- Windy 6-2: A Saintly Invitation
-        [ 160] = function() return ( player:hasCompletedMission(player:getNation(), 15) or (nat == 15 and natStat > 3)                                                                               ) end, -- Mission 5-2
+        [ 160] = function() return ( player:hasCompletedMission(player:getNation(), mi.nation.SHADOW_LORD) or (nat == mi.nation.SHADOW_LORD and natStat > 3)                                         ) end, -- Mission 5-2
         [ 161] = function() return ( player:hasCompletedMission(BASTOK, mi.bastok.WHERE_TWO_PATHS_CONVERGE) or (basty == mi.bastok.WHERE_TWO_PATHS_CONVERGE and natStat > 4)                         ) end, -- Basty 9-2: Where Two Paths Converge
         [ 192] = function() return ( player:hasCompletedMission(ZILART, mi.zilart.THROUGH_THE_QUICKSAND_CAVES)                                                                                       ) end, -- ZM6: Through the Quicksand Caves
         [ 224] = function() return ( player:hasCompletedQuest(WINDURST, tpz.quest.id.windurst.THE_MOONLIT_PATH) or player:hasKeyItem(tpz.ki.WHISPER_OF_THE_MOON)                                     ) end, -- Quest: The Moonlit Path
@@ -696,7 +696,7 @@ function checkSkip(player, bfid)
         [ 416] = function() return ( player:hasCompletedQuest(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_WIND) or player:hasKeyItem(tpz.ki.WHISPER_OF_GALES)                                           ) end, -- Quest: Trial by Wind
         [ 448] = function() return ( player:hasCompletedQuest(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.TRIAL_BY_LIGHTNING) or player:hasKeyItem(tpz.ki.WHISPER_OF_STORMS)                            ) end, -- Quest: Trial by Lightning
         [ 480] = function() return ( player:hasCompletedQuest(SANDORIA, tpz.quest.id.sandoria.TRIAL_BY_ICE) or player:hasKeyItem(tpz.ki.WHISPER_OF_FROST)                                            ) end, -- Quest: Trial by Ice
-        [ 512] = function() return ( player:hasCompletedMission(player:getNation(), 14) or (nat == 14 and natStat > 11)                                                                              ) end, -- Mission 5-1
+        [ 512] = function() return ( player:hasCompletedMission(player:getNation(), mi.nation.ARCHLICH) or (nat == mi.nation.ARCHLICH and natStat > 11)                                              ) end, -- Mission 5-1
         [ 516] = function() return ( player:hasCompletedMission(SANDORIA, mi.sandoria.THE_HEIR_TO_THE_LIGHT) or (sandy == mi.sandoria.THE_HEIR_TO_THE_LIGHT and natStat > 4)                         ) end, -- Sandy 9-2: The Heir to the Light
         [ 544] = function() return ( player:hasCompletedQuest(OUTLANDS, tpz.quest.id.outlands.TRIAL_BY_FIRE) or player:hasKeyItem(tpz.ki.WHISPER_OF_FLAMES)                                          ) end, -- Quest: Trial by Fire
         [ 576] = function() return ( player:hasCompletedQuest(BASTOK, tpz.quest.id.bastok.TRIAL_BY_EARTH) or player:hasKeyItem(tpz.ki.WHISPER_OF_TREMORS)                                            ) end, -- Quest: Trial by Earth
@@ -740,7 +740,7 @@ function findBattlefields(player, npc, itemId)
         return 0
     end
     for k, v in pairs(zbfs) do
-        if v[3] == itemId and checkReqs(player, npc, v[2], true) then
+        if v[3] == itemId and checkReqs(player, npc, v[2], true) and not player:battlefieldAtCapacity(v[2]) then
             mask = bit.bor(mask,math.pow(2,v[1]))
         end
     end
@@ -827,8 +827,7 @@ function TradeBCNM(player, npc, trade, onUpdate)
 
     -- open menu of valid battlefields
     local validBattlefields = findBattlefields(player, npc, itemId)
-    local battlefieldId = getBattlefieldIdByBit(player, validBattlefields)
-    if validBattlefields ~= 0 and not player:battlefieldAtCapacity(battlefieldId) then
+    if validBattlefields ~= 0 then
         if not onUpdate then
             player:startEvent(32000, 0, 0, 0, validBattlefields, 0, 0, 0, 0)
         end
@@ -843,7 +842,6 @@ end
 -----------------------------------------------
 
 function EventTriggerBCNM(player, npc)
-
     -- player is in battlefield and clicks to leave
     if player:getBattlefield() then
         player:startEvent(32003)
@@ -852,9 +850,9 @@ function EventTriggerBCNM(player, npc)
     -- player wants to register a new battlefield
     elseif not player:hasStatusEffect(tpz.effect.BATTLEFIELD) then
         local mask = findBattlefields(player, npc, 0)
+
         -- mask = 268435455 -- uncomment to open menu with all possible battlefields
-        local battlefieldId = getBattlefieldIdByBit(player, mask)
-        if mask ~= 0 and not player:battlefieldAtCapacity(battlefieldId) then
+        if mask ~= 0 then
             player:startEvent(32000, 0, 0, 0, mask, 0, 0, 0, 0)
             return true
         end
