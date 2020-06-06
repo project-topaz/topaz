@@ -439,7 +439,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         uint16 maxSkill = battleutils::GetMaxSkill((SKILLTYPE)i, mJob, mLvl > 99 ? 99 : mLvl);
         if (maxSkill != 0)
         {
-            PTrust->WorkingSkills.skill[i] = (uint16)std::floor(maxSkill * 0.7);
+            PTrust->WorkingSkills.skill[i] = (uint16)std::floor(maxSkill * 0.8);
         }
         else //if the mob is WAR/BLM and can cast spell
         {
@@ -448,7 +448,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
 
             if (maxSubSkill != 0)
             {
-                PTrust->WorkingSkills.skill[i] = (uint16)std::floor(maxSubSkill * 0.7);
+                PTrust->WorkingSkills.skill[i] = (uint16)std::floor(maxSubSkill * 0.8);
             }
         }
     }
@@ -458,7 +458,7 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
         uint16 maxSkill = battleutils::GetMaxSkill((SKILLTYPE)i, mLvl > 99 ? 99 : mLvl);
         if (maxSkill != 0)
         {
-            PTrust->WorkingSkills.skill[i] = (uint16)std::floor(maxSkill * 0.7);
+            PTrust->WorkingSkills.skill[i] = (uint16)std::floor(maxSkill * 0.8);
         }
     }
 
