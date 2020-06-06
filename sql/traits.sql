@@ -611,8 +611,8 @@ INSERT INTO `traits` VALUES (112,'elemental celerity',4,70,3,901,20,'ABYSSEA',0)
 INSERT INTO `traits` VALUES (112,'elemental celerity',4,80,4,901,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (112,'elemental celerity',4,90,5,901,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (112,'elemental celerity',21,55,1,901,10,'SOA',0);
-INSERT INTO `traits` VALUES (112,'elemental celerity',21,75,2,901,15,'SOA',0); -- level needs to be verified
-INSERT INTO `traits` VALUES (112,'elemental celerity',21,95,3,901,20,'SOA',0); -- level needs to be verified (there's possibly a 4th tier)
+INSERT INTO `traits` VALUES (112,'elemental celerity',21,75,2,901,15,'SOA',0);
+INSERT INTO `traits` VALUES (112,'elemental celerity',21,95,3,901,25,'SOA',0);
 INSERT INTO `traits` VALUES (114,'tranquil heart',3,21,1,0,0,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (114,'tranquil heart',5,26,1,0,0,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (114,'tranquil heart',20,30,1,0,0,'ABYSSEA',0);
@@ -620,6 +620,10 @@ INSERT INTO `traits` VALUES (115,'stalwart soul',8,45,1,907,15,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (115,'stalwart soul',8,60,2,907,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (115,'stalwart soul',8,75,3,907,40,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (115,'stalwart soul',8,90,4,907,50,'ABYSSEA',0);
+INSERT INTO `traits` VALUES (116,'cardinal chant',21,25,1,959,1,'SOA',0);
+INSERT INTO `traits` VALUES (116,'cardinal chant',21,45,2,959,2,'SOA',0);
+INSERT INTO `traits` VALUES (116,'cardinal chant',21,65,3,959,3,'SOA',0);
+INSERT INTO `traits` VALUES (116,'cardinal chant',21,85,4,959,4,'SOA',0);
 INSERT INTO `traits` VALUES (117,'tenacity',22,5,1,240,5,'SOA',0);
 INSERT INTO `traits` VALUES (117,'tenacity',22,5,1,241,5,'SOA',0);
 INSERT INTO `traits` VALUES (117,'tenacity',22,5,1,242,5,'SOA',0);
@@ -674,6 +678,10 @@ INSERT INTO `traits` VALUES (117,'tenacity',22,95,6,245,15,'SOA',0);
 INSERT INTO `traits` VALUES (117,'tenacity',22,95,6,246,15,'SOA',0);
 INSERT INTO `traits` VALUES (117,'tenacity',22,95,6,247,15,'SOA',0);
 INSERT INTO `traits` VALUES (117,'tenacity',22,95,6,248,15,'SOA',0);
+
+INSERT INTO `traits` VALUES (119,'curative recantation',21,75,1,970,0,'SOA',3396);
+INSERT INTO `traits` VALUES (120,'primeval zeal',21,75,1,971,0,'SOA',3398);
+
 INSERT INTO `traits` VALUES (123,'daken',13,25,1,911,20,'SOA',0);
 INSERT INTO `traits` VALUES (123,'daken',13,40,2,911,25,'SOA',0);
 INSERT INTO `traits` VALUES (123,'daken',13,55,3,911,30,'SOA',0);

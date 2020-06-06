@@ -3611,18 +3611,22 @@ INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1140,816); -- Fang Rush
 INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1140,817); -- Dread Shriek
 INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1140,818); -- Tail Crush
 INSERT INTO `mob_skill_lists` VALUES ('Blizzard_Wyvern',1140,819); -- Blizzard Breath
-INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1141,823); -- Fire Blade
-INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1141,824); -- Frost Blade
-INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1141,825); -- Wind Blade
-INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1141,826); -- Earth Blade
-INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1141,827); -- Lightning Blade
-INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1141,828); -- Water Blade
-INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1141,829); -- Great Wheel
-INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1141,830); -- Light Blade
-INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1142,985); -- Stellar Burst
-INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1142,986); -- Vortex
-INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1142,988); -- Warp In (Works the same as Ealdnarche's)
-INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1142,989); -- Warp Out (Works the same as Ealdnarche's)
-INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1142,1006); -- Omega Javelin
 
--- Next available ID: 1143
+INSERT INTO `mob_skill_lists` VALUES ('Luopan',1141,3045); -- Concentric Pulse 
+INSERT INTO `mob_skill_lists` VALUES ('Luopan',1141,3051); -- Mending Halation
+INSERT INTO `mob_skill_lists` VALUES ('Luopan',1141,3052); -- Radial Arcana
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1142,823); -- Fire Blade
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1142,824); -- Frost Blade
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1142,825); -- Wind Blade
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1142,826); -- Earth Blade
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1142,827); -- Lightning Blade
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1142,828); -- Water Blade
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1142,829); -- Great Wheel
+INSERT INTO `mob_skill_lists` VALUES ('Kamlanaut (Apoc Nigh)',1142,830); -- Light Blade
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1143,985); -- Stellar Burst
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1143,986); -- Vortex
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1143,988); -- Warp In (Works the same as Ealdnarche's)
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1143,989); -- Warp Out (Works the same as Ealdnarche's)
+INSERT INTO `mob_skill_lists` VALUES ('Ealdnarche (Apoc Nigh)',1143,1006); -- Omega Javelin
+
+-- Next available ID: 1144
