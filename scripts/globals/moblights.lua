@@ -175,8 +175,6 @@ tpz.abyssea_mob.info =
     ["Tefenet"]                = {azure = 16,  pearl = 16,  ruby = 16,  amber = 16 },
     ["Treble_Noctules"]        = {azure = 16,  pearl = 16,  ruby = 16,  amber = 16 },
     ["Vetehinen"]              = {azure = 16,  pearl = 16,  ruby = 16,  amber = 16 },
-
-
     ------------------------------------------------------------------------------------------------------------
     -- Abyssea - Misareaux
     ------------------------------------------------------------------------------------------------------------
@@ -230,7 +228,6 @@ tpz.abyssea_mob.info =
     ["Sirrush"]                = {azure = 16,  pearl = 5,   ruby = 16,  amber = 16 },
     ["Sobek"]                  = {azure = 16,  pearl = 5,   ruby = 16,  amber = 16 },
     ["Tuskertrap"]             = {azure = 16,  pearl = 5,   ruby = 16,  amber = 16 },
-
     ------------------------------------------------------------------------------------------------------------
     -- Abyssea - Vunkerl
     ------------------------------------------------------------------------------------------------------------
@@ -516,11 +513,11 @@ local lightTypes =
 }
 
 tpz.abyssea_mob.RemoveDeathListeners = function(mob)
-    mob:removeListener("ABYSSEA_DEATH_NO_ACTION")
-    mob:removeListener("ABYSSEA_MAGIC_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_WS_DEATH_CHECK")
-    mob:removeListener("ABYSSEA_ABILITY_DEATH_CHECK")
     mob:removeListener("ABYSSEA_PHYSICAL_DEATH_CHECK")
+    mob:removeListener("ABYSSEA_ABILITY_DEATH_CHECK")
+    mob:removeListener("ABYSSEA_MAGIC_DEATH_CHECK")
+    mob:removeListener("ABYSSEA_DEATH_NO_ACTION")
+    mob:removeListener("ABYSSEA_WS_DEATH_CHECK")
 end
 
 tpz.abyssea_mob.DropLights = function(killer, mobName, killType, mob)

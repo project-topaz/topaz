@@ -3,8 +3,16 @@
 -- tpz.effect.VISITANT
 --
 -----------------------------------
+require("scripts/globals/settings")
+require("scripts/globals/abyssea")
+require("scripts/globals/status")
 
 function onEffectGain(target,effect)
+    tpz.abyssea.ResetPlayerLights(target)
+
+    if ABYSSEA_BONUSLIGHT_AMOUNT > 0 then
+        tpz.abyssea.SetBonusLights(target)
+    end
 end
 
 function onEffectTick(target,effect)
@@ -18,4 +26,5 @@ function onEffectTick(target,effect)
 end
 
 function onEffectLose(target,effect)
+    tpz.abyssea.ResetPlayerLights(target)
 end

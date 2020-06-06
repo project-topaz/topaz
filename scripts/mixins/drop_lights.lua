@@ -52,7 +52,7 @@ g_mixins.drop_lights = function(mob)
         end
     end)
 
-    mob:addListener("DEATH", "ABYSSEA_DEATH_NO_ACTION", function(mob, player, isKiller)
+    mob:addListener("DEATH", "ABYSSEA_DEATH_NO_ACTION", function(mob, player)
         tpz.abyssea_mob.DropLights(player, mob:getName(), "physical", mob)
         tpz.abyssea_mob.RemoveDeathListeners(mob)
     end)
