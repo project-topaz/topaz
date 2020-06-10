@@ -8,7 +8,7 @@ require("scripts/globals/abyssea")
 
 cmdprops =
 {
-    permission = 3,
+    permission = 4,
     parameters = "sis"
 }
 
