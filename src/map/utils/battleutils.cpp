@@ -3864,6 +3864,10 @@ namespace battleutils
             case EMobDifficulty::IncrediblyTough:
                 CharmTime = 22500;
                 break;
+
+            default:
+                // no-op
+                break;
             }
 
             //apply charm time extension from gear
@@ -4021,6 +4025,9 @@ namespace battleutils
             break;
         case EMobDifficulty::IncrediblyTough:
             charmChance = 10.f;
+            break;
+        default:
+            // no-op
             break;
         }
 
@@ -4446,7 +4453,6 @@ namespace battleutils
         if (PDefender->StatusEffectContainer->HasStatusEffect(EFFECT_BIND))
         {
             uint16 BindBreakChance = 0; // 0-1000 (100.0%) scale. Maybe change to a float later..
-            uint16 LvDiffByExp = charutils::GetRealExp(PAttacker->GetMLevel(), PDefender->GetMLevel()); // This is temp.
             EMobDifficulty mobCheck = charutils::CheckMob(PAttacker->GetMLevel(), PDefender->GetMLevel());
 
             // Todo: replace with an actual calculated value based on level difference. Not it, Bro!
@@ -4475,6 +4481,10 @@ namespace battleutils
             case EMobDifficulty::VeryTough:
             case EMobDifficulty::IncrediblyTough:
                 BindBreakChance = 990;
+                break;
+
+            default:
+                // no-op
                 break;
             }
 
