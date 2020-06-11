@@ -440,6 +440,9 @@
     <ClInclude Include="..\..\src\map\packets\synth_message.h">
       <Filter>Header Files\packets</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\map\packets\timer_bar_util.h">
+      <Filter>Header Files\packets</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\map\packets\treasure_find_item.h">
       <Filter>Header Files\packets</Filter>
     </ClInclude>
@@ -1208,6 +1211,9 @@
       <Filter>Source Files\packets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\map\packets\synth_message.cpp">
+      <Filter>Source Files\packets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\map\packets\timer_bar_util.cpp">
       <Filter>Source Files\packets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\map\packets\treasure_find_item.cpp">

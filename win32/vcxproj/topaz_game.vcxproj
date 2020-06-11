@@ -397,6 +397,7 @@
     <ClInclude Include="..\..\src\map\packets\status_effects.h" />
     <ClInclude Include="..\..\src\map\packets\synth_result.h" />
     <ClInclude Include="..\..\src\map\packets\synth_suggestion.h" />
+    <ClInclude Include="..\..\src\map\packets\timer_bar_util.h" />
     <ClInclude Include="..\..\src\map\packets\trade_action.h" />
     <ClInclude Include="..\..\src\map\packets\trade_item.h" />
     <ClInclude Include="..\..\src\map\packets\trade_request.h" />
@@ -648,6 +649,7 @@
     <ClCompile Include="..\..\src\map\packets\status_effects.cpp" />
     <ClCompile Include="..\..\src\map\packets\synth_result.cpp" />
     <ClCompile Include="..\..\src\map\packets\synth_suggestion.cpp" />
+    <ClCompile Include="..\..\src\map\packets\timer_bar_util.cpp" />
     <ClCompile Include="..\..\src\map\packets\trade_action.cpp" />
     <ClCompile Include="..\..\src\map\packets\trade_item.cpp" />
     <ClCompile Include="..\..\src\map\packets\trade_request.cpp" />
