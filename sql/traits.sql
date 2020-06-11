@@ -611,8 +611,8 @@ INSERT INTO `traits` VALUES (112,'elemental celerity',4,70,3,901,20,'ABYSSEA',0)
 INSERT INTO `traits` VALUES (112,'elemental celerity',4,80,4,901,25,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (112,'elemental celerity',4,90,5,901,30,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (112,'elemental celerity',21,55,1,901,10,'SOA',0);
-INSERT INTO `traits` VALUES (112,'elemental celerity',21,75,2,901,15,'SOA',0);
-INSERT INTO `traits` VALUES (112,'elemental celerity',21,95,3,901,25,'SOA',0);
+INSERT INTO `traits` VALUES (112,'elemental celerity',21,75,2,901,15,'SOA',0); -- level needs to be verified
+INSERT INTO `traits` VALUES (112,'elemental celerity',21,95,3,901,20,'SOA',0); -- level needs to be verified (there's possibly a 4th tier)
 INSERT INTO `traits` VALUES (114,'tranquil heart',3,21,1,0,0,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (114,'tranquil heart',5,26,1,0,0,'ABYSSEA',0);
 INSERT INTO `traits` VALUES (114,'tranquil heart',20,30,1,0,0,'ABYSSEA',0);
