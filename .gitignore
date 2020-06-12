@@ -207,3 +207,5 @@ scripts/globals/settings.lua
 /conf/server_message_fr.conf
 
 settings.ini
+
+*.rdp
