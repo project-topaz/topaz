@@ -12,14 +12,13 @@ CTimerBarUtilPacket::CTimerBarUtilPacket(CCharEntity* PChar)
 
 void CTimerBarUtilPacket::addCountdown(uint32 seconds)
 {
-    uint32 pktTime = CVanaTime::getInstance()->getVanaTime();
-
-    // Static data
+    // Non-zero shows timer, zero hides it
     ref<uint16>(0x04) = 0xFFFF;
 
-    ref<uint32>(0x08) = pktTime + seconds;
+    ref<uint32>(0x08) = CVanaTime::getInstance()->getVanaTime();
+    ref<uint32>(0x0C) = seconds;
 
-    // Static data
+    // Static data ("_unknown1" in Windower fields)
     ref<uint8>(0x10) = 0x3C;
     ref<uint8>(0x24) = 0x03;
 }

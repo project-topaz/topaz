@@ -356,6 +356,7 @@
     <ClInclude Include="..\..\src\map\packets\delivery_box.h" />
     <ClInclude Include="..\..\src\map\packets\downloading_data.h" />
     <ClInclude Include="..\..\src\map\packets\entity_update.h" />
+    <ClInclude Include="..\..\src\map\packets\entity_enable_list.h" />
     <ClInclude Include="..\..\src\map\packets\event.h" />
     <ClInclude Include="..\..\src\map\packets\event_string.h" />
     <ClInclude Include="..\..\src\map\packets\event_update.h" />
@@ -608,6 +609,7 @@
     <ClCompile Include="..\..\src\map\packets\delivery_box.cpp" />
     <ClCompile Include="..\..\src\map\packets\downloading_data.cpp" />
     <ClCompile Include="..\..\src\map\packets\entity_update.cpp" />
+    <ClCompile Include="..\..\src\map\packets\entity_enable_list.cpp" />
     <ClCompile Include="..\..\src\map\packets\event.cpp" />
     <ClCompile Include="..\..\src\map\packets\event_string.cpp" />
     <ClCompile Include="..\..\src\map\packets\event_update.cpp" />

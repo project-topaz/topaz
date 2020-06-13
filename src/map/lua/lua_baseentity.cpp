@@ -101,6 +101,7 @@
 #include "../packets/change_music.h"
 #include "../packets/conquest_map.h"
 #include "../packets/entity_animation.h"
+#include "../packets/entity_enable_list.h"
 #include "../packets/entity_update.h"
 #include "../packets/entity_visual.h"
 #include "../packets/event.h"
@@ -9561,7 +9562,6 @@ int32 CLuaBaseEntity::countdown(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     auto seconds = static_cast<uint32>(lua_tonumber(L, 1));
-
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     auto packet = new CTimerBarUtilPacket(PChar);
 
@@ -9581,6 +9581,37 @@ int32 CLuaBaseEntity::countdown(lua_State* L)
     }
 
     PChar->pushPacket(packet);
+
+    return 0;
+}
+
+/************************************************************************
+*  Function: enableEntities()
+*  Purpose : Enables/disables the list of given special hidden entities for just the target char
+*  Example : player:enableEntities({ 17207972, 17207973})
+*  Notes   : Default is all off, so sending the ID enables the special entity
+************************************************************************/
+int32 CLuaBaseEntity::enableEntities(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+    std::vector<uint32> data;
+
+    if (lua_istable(L, 1))
+    {
+        lua_pushnil(L);
+        while (lua_next(L, -2))
+        {
+            lua_pushvalue(L, -2);
+            auto value = (uint32)lua_tonumber(L, -2);
+            data.push_back(value);
+            lua_pop(L, 2);
+        }
+    }
+
+    PChar->pushPacket(new CEntityEnableList(data));
 
     return 0;
 }
@@ -14586,6 +14617,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendTractor),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,countdown),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,enableEntities),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isEngaged),

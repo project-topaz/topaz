@@ -338,6 +338,9 @@
     <ClInclude Include="..\..\src\map\packets\entity_update.h">
       <Filter>Header Files\packets</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\map\packets\entity_enable_list.h">
+      <Filter>Header Files\packets</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\map\packets\event.h">
       <Filter>Header Files\packets</Filter>
     </ClInclude>
@@ -1109,6 +1112,9 @@
       <Filter>Source Files\packets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\map\packets\entity_update.cpp">
+      <Filter>Source Files\packets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\map\packets\entity_enable_list.cpp">
       <Filter>Source Files\packets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\map\packets\event.cpp">
