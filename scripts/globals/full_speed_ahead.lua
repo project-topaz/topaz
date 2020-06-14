@@ -28,8 +28,8 @@ tpz.full_speed_ahead.tick = function(player)
     local food_count = player:getLocalVar("FSA_FoodCount")
 
     local food_data = {}
-    for i = 0, 7 do 
-        if bit.band(player:getLocalVar("FSA_Food"), bit.lshift(1, i)) then
+    for i = 0, 7 do
+        if bit.band(food_byte, bit.lshift(1, i)) > 0 then
             table.insert(food_data, ID.npc.BLUE_BEAM_BASE + i)
             table.insert(food_data, ID.npc.RAPTOR_FOOD_BASE + i)
         end
@@ -48,7 +48,7 @@ end
 tpz.full_speed_ahead.onRegionEnter = function(player, index)
     local food_byte = player:getLocalVar("FSA_Food")
 
-    if bit.band(food_byte, bit.lshift(1, index - 1)) then
+    if bit.band(food_byte, bit.lshift(1, index - 1)) > 0 then
         local new_food_byte = food_byte - bit.lshift(1, index - 1)
         player:setLocalVar("FSA_Food", new_food_byte)
         player:setLocalVar("FSA_FoodCount", player:getLocalVar("FSA_FoodCount") + 1)
