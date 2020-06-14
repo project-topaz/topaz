@@ -25,12 +25,12 @@ tpz.full_speed_ahead.tick = function(player)
 
     player:countdown(timeLeft, "Motivation", motivation, "Pep", pep)
 
+    -- TODO: Store me
     local entity_data = {}
     for i = 0, 7 do 
         table.insert(entity_data, ID.npc.BLUE_BEAM_BASE + i)
         table.insert(entity_data, ID.npc.RAPTOR_FOOD_BASE + i) 
     end
-
     player:enableEntities(entity_data)
 
     if motivation == 0 then
@@ -42,6 +42,18 @@ end
 
 tpz.full_speed_ahead.onRegionEnter = function(player, index)
     printf("onRegionEnter")
+
+    -- TODO: Store me
+    local entity_data = {}
+    for i = 0, 7 do 
+        table.insert(entity_data, ID.npc.BLUE_BEAM_BASE + i)
+        table.insert(entity_data, ID.npc.RAPTOR_FOOD_BASE + i) 
+    end
+
+    entity_data[index] = 0
+    entity_data[index + 8] = 0
+
+    player:enableEntities(entity_data)
 end
 
 tpz.fsa = tpz.full_speed_ahead
