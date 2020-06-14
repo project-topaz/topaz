@@ -22,6 +22,7 @@ function onEffectGain(target,effect)
 end
 
 function onEffectTick(target,effect)
+    -- Only called in quest: Full Speed Ahead!
     if target:getLocalVar("FSA_Motivation") > 0 then
         tpz.fsa.tick(target)
     end

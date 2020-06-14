@@ -1,16 +1,14 @@
 -----------------------------------
--- Full Speed Ahead Helper
+-- Full Speed Ahead! Helper
 -----------------------------------
+local ID = require("scripts/zones/Batallia_Downs/IDs")
 require("scripts/globals/status")
 -----------------------------------
 
 tpz = tpz or {}
 tpz.full_speed_ahead = tpz.full_speed_ahead or {}
 
-tpz.full_speed_ahead.onZoneIn = function(player, ID)
-
-    printf("onZoneIn")
-
+tpz.full_speed_ahead.onZoneIn = function(player)
     player:setLocalVar("FSA_Time", os.time() + 600)
     player:setLocalVar("FSA_Motivation", 100)
     player:setLocalVar("FSA_Pep", 100)
@@ -27,15 +25,19 @@ tpz.full_speed_ahead.tick = function(player)
 
     player:countdown(timeLeft, "Motivation", motivation, "Pep", pep)
 
-    player:enableEntities({ 17207972, 17207973 })
+    local entity_data = {}
+    for i = 0, 7 do 
+        table.insert(entity_data, ID.npc.BLUE_BEAM_BASE + i)
+        table.insert(entity_data, ID.npc.RAPTOR_FOOD_BASE + i) 
+    end
+
+    player:enableEntities(entity_data)
 
     if motivation == 0 then
         player:countdown(0)
         player:delStatusEffect(tpz.effect.MOUNTED)
         player:enableEntities({})
     end
-
-    printf("Tick %s", player:getLocalVar("FSA_Motivation"))
 end
 
 tpz.full_speed_ahead.onRegionEnter = function(player, index)

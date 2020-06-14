@@ -45,7 +45,7 @@ function onZoneIn( player, prevZone)
     end
 
     --if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
-        tpz.fsa.onZoneIn(player, ID)
+        tpz.fsa.onZoneIn(player)
     --end
 
     return cs;
@@ -55,19 +55,19 @@ function onConquestUpdate(zone, updatetype)
     tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
-function onRegionEnter( player, region)
+function onRegionEnter(player, region)
     --if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
         tpz.fsa.onRegionEnter(player, region:GetRegionID())
     --end
 end;
 
-function onEventUpdate( player, csid, option)
+function onEventUpdate(player, csid, option)
     if (csid == 901) then
         lightCutsceneUpdate(player); -- Quest: I Can Hear A Rainbow
     end
 end;
 
-function onEventFinish( player, csid, option)
+function onEventFinish(player, csid, option)
     if (csid == 901) then
         lightCutsceneFinish(player); -- Quest: I Can Hear A Rainbow
     elseif (csid == 903) then
