@@ -3,7 +3,9 @@
 -- tpz.effect.MOUNTED
 --
 -----------------------------------
+require("scripts/globals/full_speed_ahead")
 require("scripts/globals/status")
+-----------------------------------
 
 function onEffectGain(target,effect)
     --[[
@@ -20,6 +22,9 @@ function onEffectGain(target,effect)
 end
 
 function onEffectTick(target,effect)
+    if target:getLocalVar("FSA_Motivation") > 0 then
+        tpz.fsa.tick(target)
+    end
 end
 
 function onEffectLose(target,effect)

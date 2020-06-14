@@ -27,7 +27,9 @@ function onTrade(player,npc,trade)
 end
 
 function onTrigger(player,npc)
-    -- Minigame complete
+    -- Not started = 0
+    -- Game active = 1
+    -- Minigame complete = 2
     local fullSpeedAheadStatus = player:getCharVar("[QUEST]FullSpeedAhead")
     local hasTrainersWhistle = player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE)
 
@@ -39,7 +41,7 @@ function onTrigger(player,npc)
       player:hasKeyItem(tpz.ki.MAP_OF_THE_JEUNO_AREA)
     then
         player:startEvent(10223, 0, 0, 4)
-    elseif fullSpeedAheadStatus == 1 then
+    elseif fullSpeedAheadStatus == 2 then
         player:startEvent(10225, tpz.ki.TRAINERS_WHISTLE)
     else
         player:startEvent(10222)
@@ -51,6 +53,7 @@ end
 
 function onEventFinish(player,csid,option)
     if csid == 10223 and option == 1 then
+        player:setCharVar("[QUEST]FullSpeedAhead", 1)
         player:setPos(475, 8.8, -159, 128, 105)
     elseif csid == 10225 then
         -- Complete quest

@@ -6,6 +6,7 @@
 local ID = require("scripts/zones/Batallia_Downs/IDs")
 require("scripts/globals/icanheararainbow");
 require("scripts/globals/chocobo_digging");
+require("scripts/globals/full_speed_ahead")
 require("scripts/globals/missions");
 require("scripts/globals/zone");
 -----------------------------------
@@ -43,8 +44,9 @@ function onZoneIn( player, prevZone)
         cs = 903;
     end
 
-    -- TODO: If Full Speed Ahead, send enable packet
-    -- Also add FSA status, ticking info
+    --if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
+        tpz.fsa.onZoneIn(player, ID)
+    --end
 
     return cs;
 end;
@@ -53,25 +55,10 @@ function onConquestUpdate(zone, updatetype)
     tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
-local function fsaHelper(player, offset)
-    -- If quest status FSA etc.
-    -- TODO: remove from map
-    -- ID.npc.BLUE_BEAM_BASE + offset
-    -- ID.npc.RAPTOR_FOOD_BASE + offset
-end
-
 function onRegionEnter( player, region)
-    switch (region:GetRegionID()): caseof
-    {
-        [1] = function(x) fsaHelper(player, 0) end,
-        [2] = function(x) fsaHelper(player, 1) end,
-        [3] = function(x) fsaHelper(player, 2) end,
-        [4] = function(x) fsaHelper(player, 3) end,
-        [5] = function(x) fsaHelper(player, 4) end,
-        [6] = function(x) fsaHelper(player, 5) end,
-        [7] = function(x) fsaHelper(player, 6) end,
-        [8] = function(x) fsaHelper(player, 7) end,
-    }
+    --if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
+        tpz.fsa.onRegionEnter(player, region:GetRegionID())
+    --end
 end;
 
 function onEventUpdate( player, csid, option)
