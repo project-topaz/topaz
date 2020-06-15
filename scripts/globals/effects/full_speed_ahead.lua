@@ -3,7 +3,7 @@
 -- tpz.effect.FULL_SPEED_AHEAD
 --
 -----------------------------------
-require("scripts/globals/full_speed_ahead")
+require("scripts/quests/full_speed_ahead")
 require("scripts/globals/status")
 -----------------------------------
 
