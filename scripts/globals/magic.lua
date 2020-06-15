@@ -1,3 +1,4 @@
+require("scripts/globals/spell_data")
 require("scripts/globals/magicburst")
 require("scripts/globals/settings")
 require("scripts/globals/weather")
@@ -1674,5 +1675,4 @@ function getCardinalStats(caster, target, is_araSpell, spell)
 end
 
 -- outputMagicHitRateInfo()
-
-tpz.mag = tpz.magic
+tpz.ma = tpz.magic
