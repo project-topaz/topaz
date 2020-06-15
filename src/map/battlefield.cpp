@@ -41,6 +41,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/entity_update.h"
 #include "packets/message_basic.h"
 #include "packets/position.h"
+#include "packets/timer_bar_util.h"
 
 #include "status_effect_container.h"
 #include "treasure_pool.h"
@@ -289,6 +290,12 @@ bool CBattlefield::InsertEntity(CBaseEntity* PEntity, bool enter, BATTLEFIELDMOB
                 ApplyLevelRestrictions(PChar);
                 m_EnteredPlayers.emplace(PEntity->id);
                 luautils::OnBattlefieldEnter(PChar, this);
+
+                // TODO: Cleanup
+                auto seconds = (uint32)std::chrono::duration_cast<std::chrono::seconds>(GetTimeLimit()).count();
+                auto packet = new CTimerBarUtilPacket(PChar);
+                packet->addCountdown(seconds);
+                PChar->pushPacket(packet);
             }
             else if (!IsRegistered(PChar))
             {

@@ -5,7 +5,7 @@ require("scripts/globals/weather")
 require("scripts/globals/status")
 require("scripts/globals/utils")
 require("scripts/globals/msg")
-require("scripts/globals.geo")
+require("scripts/globals/geo")
 ------------------------------------
 
 tpz = tpz or {}
@@ -1657,7 +1657,7 @@ function getCardinalStats(caster, target, is_araSpell, spell)
     local base = 0.0
     local burstbase = 0.0
     local cardinalStats = {0.00,0.00,0.00,0.00}
-    
+
     if is_araSpell == 1 then
         base = geoCardinalTierStat[modTier][1]
         burstbase = geoBurstBonus[modTier][1]
@@ -1666,7 +1666,7 @@ function getCardinalStats(caster, target, is_araSpell, spell)
         burstbase = geoBurstBonus[modTier][2]
     end
 
-    cardinalStats[1] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MATT 
+    cardinalStats[1] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MATT
     cardinalStats[2] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MACC
     cardinalStats[3] = burstbase *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MAG_BURST_BONUS
     cardinalStats[4] = base *tpz.magic.geoCardinalQuadStats[cardinalQuarant].MAGIC_CRITHITRATE
