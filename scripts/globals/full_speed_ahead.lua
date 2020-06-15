@@ -85,7 +85,7 @@ tpz.full_speed_ahead.onCheer = function(player)
 
     player:messageSpecial(ID.text.RAPTOR_SECOND_WIND)
 
-    player:countdown(timeLeft, "Motivation", motivation, "Pep", pep)
+    player:countdown(timeLeft, "Motivation", new_motivation, "Pep", 0)
 end
 
 tpz.full_speed_ahead.completeGame = function(player)
