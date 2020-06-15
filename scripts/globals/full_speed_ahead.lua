@@ -46,6 +46,7 @@ tpz.full_speed_ahead.tick = function(player)
 
     if motivation <= 0 or timeLeft <= 0 or not player:hasStatusEffect(tpz.effect.MOUNTED) then
         player:delStatusEffect(tpz.effect.FULL_SPEED_AHEAD)
+        player:messageSpecial(ID.text.RAPTOR_SPEEDS_OFF)
     else
         player:countdown(timeLeft, "Motivation", motivation, "Pep", pep)
         player:enableEntities(food_data)

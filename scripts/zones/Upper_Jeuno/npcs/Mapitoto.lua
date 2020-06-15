@@ -29,7 +29,7 @@ end
 function onTrigger(player,npc)
     local fullSpeedAheadStatus = player:getCharVar("[QUEST]FullSpeedAhead")
     local hasTrainersWhistle = player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE)
-    
+
     if hasTrainersWhistle then
         player:startEvent(10226)
     elseif fullSpeedAheadStatus == 2 then -- Retry
