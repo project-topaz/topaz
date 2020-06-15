@@ -1,3 +1,4 @@
+require("scripts/globals/full_speed_ahead")
 require("scripts/globals/gear_sets")
 require("scripts/globals/keyitems")
 require("scripts/globals/settings")
@@ -187,4 +188,10 @@ function onPlayerLevelUp(player)
 end
 
 function onPlayerLevelDown(player)
+end
+
+function onPlayerEmote(player, emoteId)
+    if emoteId == tpz.emote.CHEER then
+        tpz.fsa.onCheer(player)
+    end
 end

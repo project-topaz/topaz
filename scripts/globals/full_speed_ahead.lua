@@ -55,4 +55,7 @@ tpz.full_speed_ahead.onRegionEnter = function(player, index)
     end
 end
 
+tpz.full_speed_ahead.onCheer = function(player)
+end
+
 tpz.fsa = tpz.full_speed_ahead
