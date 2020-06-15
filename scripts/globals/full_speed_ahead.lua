@@ -21,7 +21,7 @@ tpz.full_speed_ahead.onEffectGain = function(player)
 end
 
 tpz.full_speed_ahead.onEffectLose = function(player)
-    player:delStatusEffect(tpz.effect.MOUNTED)
+    player:delStatusEffectSilent(tpz.effect.MOUNTED)
     player:countdown(0) 
     player:enableEntities({})
 end
@@ -45,7 +45,7 @@ tpz.full_speed_ahead.tick = function(player)
     end
 
     if motivation <= 0 or timeLeft <= 0 or not player:hasStatusEffect(tpz.effect.MOUNTED) then
-        player:delStatusEffect(tpz.effect.FULL_SPEED_AHEAD)
+        player:delStatusEffectSilent(tpz.effect.FULL_SPEED_AHEAD)
         player:messageSpecial(ID.text.RAPTOR_SPEEDS_OFF)
     else
         player:countdown(timeLeft, "Motivation", motivation, "Pep", pep)
@@ -89,7 +89,7 @@ tpz.full_speed_ahead.onCheer = function(player)
 end
 
 tpz.full_speed_ahead.completeGame = function(player)
-    player:delStatusEffect(tpz.effect.FULL_SPEED_AHEAD)
+    player:delStatusEffectSilent(tpz.effect.FULL_SPEED_AHEAD)
     player:setCharVar("[QUEST]FullSpeedAhead", 3)
     player:setPos(-104.5, 0, 187.4, 64, 244)
 end
