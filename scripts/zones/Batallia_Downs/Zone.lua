@@ -15,21 +15,25 @@ function onChocoboDig(player, precheck)
     return tpz.chocoboDig.start(player, precheck)
 end;
 
+local function registerRegionAroundNPC(zone, NPCID, zoneID)
+    local npc = GetNPCByID(NPCID)
+    local x = npc:getXPos()
+    local y = npc:getYPos()
+    local z = npc:getZPos()
+    local distance = 7
+    zone:registerRegion(zoneID, 
+        x - distance, y - distance, z - distance,
+        x + distance, y + distance, z + distance)
+end
+
 function onInitialize(zone)
     UpdateNMSpawnPoint(ID.mob.AHTU);
     GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800));
 
-    -- TODO: If the circle is infinite height, use a cube
-    zone:registerRegion(1, 357.819, 11, -250.201, 0, 0, 0)
-    zone:registerRegion(2, 357.819, 11, -250.201, 0, 0, 0)
-    zone:registerRegion(3, 357.819, 11, -250.201, 0, 0, 0)
-    zone:registerRegion(4, 357.819, 11, -250.201, 0, 0, 0)
-    zone:registerRegion(5, 357.819, 11, -250.201, 0, 0, 0)
-    zone:registerRegion(6, 357.819, 11, -250.201, 0, 0, 0)
-    zone:registerRegion(7, 357.819, 11, -250.201, 0, 0, 0)
-    zone:registerRegion(8, 357.819, 11, -250.201, 0, 0, 0)
-
-end;
+    for i = 0, 7 do
+        registerRegionAroundNPC(zone, ID.npc.RAPTOR_FOOD_BASE + i, i + 1)
+    end
+end
 
 function onZoneIn( player, prevZone)
     local cs = -1;
@@ -44,9 +48,9 @@ function onZoneIn( player, prevZone)
         cs = 903;
     end
 
-    --if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
+    if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
         tpz.fsa.onZoneIn(player)
-    --end
+    end
 
     return cs;
 end;
@@ -56,9 +60,9 @@ function onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)
-    --if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
+    if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
         tpz.fsa.onRegionEnter(player, region:GetRegionID())
-    --end
+    end
 end;
 
 function onEventUpdate(player, csid, option)

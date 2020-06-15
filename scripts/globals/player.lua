@@ -191,7 +191,7 @@ function onPlayerLevelDown(player)
 end
 
 function onPlayerEmote(player, emoteId)
-    if emoteId == tpz.emote.CHEER then
+    if emoteId == tpz.emote.CHEER and player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
         tpz.fsa.onCheer(player)
     end
 end
