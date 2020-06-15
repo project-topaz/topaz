@@ -14,7 +14,7 @@ Notes:
 Values for player:getCharVar("[QUEST]FullSpeedAhead"):
 1: Minigame active, mounted on quest raptor and in Batallia Downs
 2: Minigame not active, set after fail or zone. Mapitoto checks for this for retries
-
+3: Minigame completed, can go speak to Mapitoto to complete quest
 ]]--
 
 tpz.full_speed_ahead.onZoneIn = function(player)
@@ -72,7 +72,7 @@ tpz.full_speed_ahead.onRegionEnter = function(player, index)
     player:messageSpecial(ID.text.RAPTOR_OVERCOME_MUNCHIES, player:getLocalVar("FSA_FoodCount"), 5)
 
     -- TODO: Find little hearts animation
-    player:entityAnimationPacket("kesu_")
+    player:entityAnimationPacket("kesus.")
 end
 
 tpz.full_speed_ahead.onCheer = function(player)
