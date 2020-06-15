@@ -33,6 +33,7 @@ function onInitialize(zone)
     for i = 0, 7 do
         registerRegionAroundNPC(zone, ID.npc.RAPTOR_FOOD_BASE + i, i + 1)
     end
+    registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 8)
 end
 
 function onZoneIn( player, prevZone)
@@ -44,12 +45,12 @@ function onZoneIn( player, prevZone)
 
     if (triggerLightCutscene(player)) then -- Quest: I Can Hear A Rainbow
         cs = 901;
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==1) then
+    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1) then
         cs = 903;
     end
 
     if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
-        tpz.fsa.onZoneIn(player)
+        player:addStatusEffect(tpz.effect.FULL_SPEED_AHEAD, 0, 2, tpz.fsa.duration)
     end
 
     return cs;
@@ -60,7 +61,7 @@ function onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)
-    if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
+    if player:hasStatusEffect(tpz.effect.FULL_SPEED_AHEAD) then
         tpz.fsa.onRegionEnter(player, region:GetRegionID())
     end
 end;
@@ -80,5 +81,7 @@ function onEventFinish(player, csid, option)
         else
             player:updateEvent(0,0,0,0,0,2);
         end
+    elseif csid == 24 then
+        tpz.fsa.completeGame(player)
     end
 end;

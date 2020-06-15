@@ -57,6 +57,7 @@ zones[tpz.zone.BATALLIA_DOWNS] =
     npc =
     {
         CASKET_BASE      = 17207794,
+        SYRILLIA         = 17207971,
         BLUE_BEAM_BASE   = 17207972,
         RAPTOR_FOOD_BASE = 17207980,
     },

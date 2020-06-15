@@ -8,28 +8,22 @@ require("scripts/globals/status")
 tpz = tpz or {}
 tpz.full_speed_ahead = tpz.full_speed_ahead or {}
 
---[[
+tpz.full_speed_ahead.duration = 600
 
-Notes:
-Values for player:getCharVar("[QUEST]FullSpeedAhead"):
-1: Minigame active, mounted on quest raptor and in Batallia Downs
-2: Minigame not active, set after fail or zone. Mapitoto checks for this for retries
-3: Minigame completed, can go speak to Mapitoto to complete quest
-]]--
-
-tpz.full_speed_ahead.onZoneIn = function(player)
-    player:setLocalVar("FSA_Time", os.time() + 600)
+tpz.full_speed_ahead.onEffectGain = function(player)
+    player:setLocalVar("FSA_Time", os.time() + tpz.full_speed_ahead.duration)
     player:setLocalVar("FSA_Motivation", 100)
     player:setLocalVar("FSA_Pep", 0)
     player:setLocalVar("FSA_Food", 0xFF)
     player:setLocalVar("FSA_FoodCount", 0)
-
-    player:addStatusEffectEx(tpz.effect.MOUNTED, tpz.effect.MOUNTED, tpz.mount.QUEST_RAPTOR, 2, 0, true)
+    player:addStatusEffect(tpz.effect.MOUNTED, tpz.mount.QUEST_RAPTOR, 2, 0)
+    player:setCharVar("[QUEST]FullSpeedAhead", 2)
 end
 
-tpz.full_speed_ahead.onZoneOut = function(player)
-
-    player:addStatusEffectEx(tpz.effect.MOUNTED, tpz.effect.MOUNTED, tpz.mount.QUEST_RAPTOR, 2, 0, true)
+tpz.full_speed_ahead.onEffectLose = function(player)
+    player:delStatusEffect(tpz.effect.MOUNTED)
+    player:countdown(0) 
+    player:enableEntities({})
 end
 
 tpz.full_speed_ahead.tick = function(player)
@@ -50,10 +44,8 @@ tpz.full_speed_ahead.tick = function(player)
         end
     end
 
-    if motivation == 0 then
-        player:delStatusEffect(tpz.effect.MOUNTED)
-        player:countdown(0) 
-        player:enableEntities({})
+    if motivation <= 0 or timeLeft <= 0 or not player:hasStatusEffect(tpz.effect.MOUNTED) then
+        player:delStatusEffect(tpz.effect.FULL_SPEED_AHEAD)
     else
         player:countdown(timeLeft, "Motivation", motivation, "Pep", pep)
         player:enableEntities(food_data)
@@ -62,17 +54,22 @@ end
 
 tpz.full_speed_ahead.onRegionEnter = function(player, index)
     local food_byte = player:getLocalVar("FSA_Food")
+    local food_count = player:getLocalVar("FSA_FoodCount")
 
-    if bit.band(food_byte, bit.lshift(1, index - 1)) > 0 then
-        local new_food_byte = food_byte - bit.lshift(1, index - 1)
-        player:setLocalVar("FSA_Food", new_food_byte)
-        player:setLocalVar("FSA_FoodCount", player:getLocalVar("FSA_FoodCount") + 1)
+    if index == 8 and food_count >= 5 then -- Syrillia
+        player:startEvent(24) -- End CS and teleport
+    else
+        if bit.band(food_byte, bit.lshift(1, index - 1)) > 0 then
+            local new_food_byte = food_byte - bit.lshift(1, index - 1)
+            player:setLocalVar("FSA_Food", new_food_byte)
+            player:setLocalVar("FSA_FoodCount", food_count + 1)
+        end
+
+        player:messageSpecial(ID.text.RAPTOR_OVERCOME_MUNCHIES, player:getLocalVar("FSA_FoodCount"), 5)
+
+        -- TODO: Find little hearts animation
+        --player:entityAnimationPacket("kesus.")
     end
-
-    player:messageSpecial(ID.text.RAPTOR_OVERCOME_MUNCHIES, player:getLocalVar("FSA_FoodCount"), 5)
-
-    -- TODO: Find little hearts animation
-    player:entityAnimationPacket("kesus.")
 end
 
 tpz.full_speed_ahead.onCheer = function(player)
@@ -88,6 +85,12 @@ tpz.full_speed_ahead.onCheer = function(player)
     player:messageSpecial(ID.text.RAPTOR_SECOND_WIND)
 
     player:countdown(timeLeft, "Motivation", motivation, "Pep", pep)
+end
+
+tpz.full_speed_ahead.completeGame = function(player)
+    player:delStatusEffect(tpz.effect.FULL_SPEED_AHEAD)
+    player:setCharVar("[QUEST]FullSpeedAhead", 3)
+    player:setPos(-104.5, 0, 187.4, 64, 244)
 end
 
 tpz.fsa = tpz.full_speed_ahead
