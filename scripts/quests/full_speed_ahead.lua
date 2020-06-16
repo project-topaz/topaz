@@ -59,17 +59,12 @@ tpz.full_speed_ahead.onRegionEnter = function(player, index)
 
     if index == 8 and food_count >= 5 then -- Syrillia
         player:startEvent(24) -- End CS and teleport
-    else
-        if bit.band(food_byte, bit.lshift(1, index - 1)) > 0 then
-            local new_food_byte = food_byte - bit.lshift(1, index - 1)
-            player:setLocalVar("FSA_Food", new_food_byte)
-            player:setLocalVar("FSA_FoodCount", food_count + 1)
-        end
-
+    elseif bit.band(food_byte, bit.lshift(1, index - 1)) > 0 then
+        local new_food_byte = food_byte - bit.lshift(1, index - 1)
+        player:setLocalVar("FSA_Food", new_food_byte)
+        player:setLocalVar("FSA_FoodCount", food_count + 1)
+        player:independantAnimation(251, 4, 193)
         player:messageSpecial(ID.text.RAPTOR_OVERCOME_MUNCHIES, player:getLocalVar("FSA_FoodCount"), 5)
-
-        -- TODO: Find little hearts animation
-        --player:entityAnimationPacket("kesus.")
     end
 end
 
@@ -84,6 +79,8 @@ tpz.full_speed_ahead.onCheer = function(player)
     player:setLocalVar("FSA_Pep", 0)
 
     player:messageSpecial(ID.text.RAPTOR_SECOND_WIND)
+
+    player:independantAnimation(251, 4, 193)
 
     player:countdown(timeLeft, "Motivation", new_motivation, "Pep", 0)
 end

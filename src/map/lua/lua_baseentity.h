@@ -464,6 +464,7 @@ public:
 
     int32 countdown(lua_State* L);
     int32 enableEntities(lua_State* L);
+    int32 independantAnimation(lua_State* L);
 
     int32 engage(lua_State* L);
     int32 isEngaged(lua_State* L);
