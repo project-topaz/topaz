@@ -2901,6 +2901,9 @@ namespace luautils
             case TYPE_TRUST:
                 snprintf((char*)File, sizeof(File), "scripts/globals/spells/trust/%s.lua", PMob->GetName());
                 break;
+            default:
+                ShowWarning("luautils::onMobDeath (%d): unknown objtype\n", PMob->objtype);
+                break;
             }
 
             lua_pushnil(LuaHandle);
@@ -2959,6 +2962,9 @@ namespace luautils
             break;
         case TYPE_TRUST:
             snprintf((char*)File, sizeof(File), "scripts/globals/spells/trust/%s.lua", PMob->GetName());
+            break;
+        default:
+            ShowWarning("luautils::onMobSpawn (%d): unknown objtype\n", PMob->objtype);
             break;
         }
 
@@ -3056,6 +3062,9 @@ namespace luautils
             break;
         case TYPE_TRUST:
             snprintf((char*)File, sizeof(File), "scripts/globals/spells/trust/%s.lua", PMob->GetName());
+            break;
+        default:
+            ShowWarning("luautils::onMobDespawn (%d): unknown objtype\n", PMob->objtype);
             break;
         }
 

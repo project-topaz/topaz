@@ -21,7 +21,7 @@ function onMobSpawn(mob)
     -- TODO: Spells table /cry
     local FLASH  = 112
 
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_ENMITY, 0,
+    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_HAS_TOP_ENMITY, 0,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)
 
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH,

@@ -12464,6 +12464,8 @@ inline int32 CLuaBaseEntity::addSimpleGambit(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 5) || !lua_isnumber(L, 5));
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 6) || !lua_isnumber(L, 6));
 
+    using namespace gambits;
+
     auto target = static_cast<G_TARGET>(lua_tointeger(L, 1));
     auto condition = static_cast<G_CONDITION>(lua_tointeger(L, 2));
     auto condition_arg = static_cast<uint16>(lua_tointeger(L, 3));
@@ -12540,6 +12542,8 @@ inline int32 CLuaBaseEntity::addFullGambit(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_TRUST);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_istable(L, 1));
+
+    using namespace gambits;
 
     std::vector<int> nums;
     build_gambit(L, nums, 1);

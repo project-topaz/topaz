@@ -79,6 +79,3 @@ end
 
 function onMobDeath(mob)
 end
-
-function onMobDeath(mob)
-end

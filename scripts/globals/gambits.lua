@@ -22,20 +22,20 @@ ai.t = ai.target
 -- Condition
 ai.condition =
 {
-    ALWAYS           = 0,
-    HPP_LT           = 1,
-    HPP_GTE          = 2,
-    MPP_LT           = 3,
-    TP_LT            = 4,
-    TP_GTE           = 5,
-    STATUS           = 6,
-    NOT_STATUS       = 7,
-    STATUS_FLAG      = 8,
-    HAS_ENMITY       = 9,
-    NOT_HAS_ENMITY   = 10,
-    SC_AVAILABLE     = 11,
-    NOT_SC_AVAILABLE = 12,
-    MB_AVAILABLE     = 13,
+    ALWAYS             = 0,
+    HPP_LT             = 1,
+    HPP_GTE            = 2,
+    MPP_LT             = 3,
+    TP_LT              = 4,
+    TP_GTE             = 5,
+    STATUS             = 6,
+    NOT_STATUS         = 7,
+    STATUS_FLAG        = 8,
+    HAS_TOP_ENMITY     = 9,
+    NOT_HAS_TOP_ENMITY = 10,
+    SC_AVAILABLE       = 11,
+    NOT_SC_AVAILABLE   = 12,
+    MB_AVAILABLE       = 13,
 }
 ai.c = ai.condition
 

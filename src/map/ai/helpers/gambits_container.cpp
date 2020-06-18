@@ -5,6 +5,9 @@
 #include "../../weapon_skill.h"
 #include "../../utils/battleutils.h"
 
+namespace gambits
+{
+
 // Validate gambit before it's inserted into the gambit list
 // Check levels, etc.
 void CGambitsContainer::AddGambit(Gambit_t gambit)
@@ -45,74 +48,74 @@ void CGambitsContainer::Tick(time_point tick)
         {
             switch (predicate.condition)
             {
-            case ALWAYS:
+            case G_CONDITION::ALWAYS:
             {
                 return true;
                 break;
             }
-            case HPP_LT:
+            case G_CONDITION::HPP_LT:
             {
                 return target->GetHPP() < predicate.condition_arg;
                 break;
             }
-            case HPP_GTE:
+            case G_CONDITION::HPP_GTE:
             {
                 return target->GetHPP() >= predicate.condition_arg;
                 break;
             }
-            case MPP_LT:
+            case G_CONDITION::MPP_LT:
             {
                 return target->GetMPP() < predicate.condition_arg;
                 break;
             }
-            case TP_LT:
+            case G_CONDITION::TP_LT:
             {
                 return target->health.tp < predicate.condition_arg;
                 break;
             }
-            case TP_GTE:
+            case G_CONDITION::TP_GTE:
             {
                 return target->health.tp >= predicate.condition_arg;
                 break;
             }
-            case STATUS:
+            case G_CONDITION::STATUS:
             {
                 return target->StatusEffectContainer->HasStatusEffect(static_cast<EFFECT>(predicate.condition_arg));
                 break;
             }
-            case NOT_STATUS:
+            case G_CONDITION::NOT_STATUS:
             {
                 return !target->StatusEffectContainer->HasStatusEffect(static_cast<EFFECT>(predicate.condition_arg));
                 break;
             }
-            case STATUS_FLAG:
+            case G_CONDITION::STATUS_FLAG:
             {
                 return target->StatusEffectContainer->HasStatusEffectByFlag(static_cast<EFFECTFLAG>(predicate.condition_arg));
                 break;
             }
-            case HAS_ENMITY:
+            case G_CONDITION::HAS_TOP_ENMITY:
             {
                 return (controller->GetTopEnmity()) ? controller->GetTopEnmity()->targid == POwner->targid : false;
                 break;
             }
-            case NOT_HAS_ENMITY:
+            case G_CONDITION::NOT_HAS_TOP_ENMITY:
             {
                 return (controller->GetTopEnmity()) ? controller->GetTopEnmity()->targid != POwner->targid : false;
                 break;
             }
-            case SC_AVAILABLE:
+            case G_CONDITION::SC_AVAILABLE:
             {
                 auto PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
                 return PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now() && PSCEffect->GetTier() == 0;
                 break;
             }
-            case NOT_SC_AVAILABLE:
+            case G_CONDITION::NOT_SC_AVAILABLE:
             {
                 auto PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
                 return PSCEffect == nullptr;
                 break;
             }
-            case MB_AVAILABLE:
+            case G_CONDITION::MB_AVAILABLE:
             {
                 auto PSCEffect = target->StatusEffectContainer->GetStatusEffect(EFFECT_SKILLCHAIN);
                 return PSCEffect && PSCEffect->GetStartTime() + 3s < server_clock::now() && PSCEffect->GetTier() > 0;
@@ -285,6 +288,10 @@ void CGambitsContainer::Tick(time_point tick)
                 {
                     target = POwner;
                 }
+                else
+                {
+                    target = POwner->GetBattleTarget();
+                }
 
                 if (gambit.action.select == G_SELECT::SPECIFIC)
                 {
@@ -325,3 +332,5 @@ void CGambitsContainer::Tick(time_point tick)
         }
     }
 }
+
+} // namespace gambits

@@ -20,7 +20,7 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.HASSO,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.HASSO)
 
-    mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_ENMITY, 0,
+    mob:addSimpleGambit(ai.t.SELF, ai.c.HAS_TOP_ENMITY, 0,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.THIRD_EYE)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_LT, 1000,

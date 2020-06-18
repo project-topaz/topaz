@@ -166,7 +166,6 @@ void CTrustEntity::OnCastFinished(CMagicState& state, action_t& action)
     CBattleEntity::OnCastFinished(state, action);
 
     auto PSpell = state.GetSpell();
-    auto PTarget = static_cast<CBattleEntity*>(state.GetTarget());
 
     PRecastContainer->Add(RECAST_MAGIC, static_cast<uint16>(PSpell->getID()), action.recast);
 }
@@ -186,7 +185,6 @@ void CTrustEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& act
     int16 tp = state.GetSpentTP();
     tp = battleutils::CalculateWeaponSkillTP(this, PWeaponSkill, tp);
 
-    SLOTTYPE damslot = SLOT_MAIN;
     if (distance(loc.p, PBattleTarget->loc.p) - PBattleTarget->m_ModelSize <= PWeaponSkill->getRange())
     {
         PAI->TargetFind->reset();
@@ -225,9 +223,9 @@ void CTrustEntity::OnWeaponSkillFinished(CWeaponSkillState& state, action_t& act
                     luautils::OnWeaponskillHit(PBattleTarget, this, PWeaponSkill->getID());
                 }
             }
-            else
+            else // Self-targetting WS restoring MP
             {
-                actionTarget.messageID = primary ? 224 : 276; //restores mp msg
+                actionTarget.messageID = primary ? 224 : 276; // Restores mp msg
                 actionTarget.reaction = REACTION_HIT;
                 damage = std::max(damage, 0);
                 actionTarget.param = addMP(damage);

@@ -29,7 +29,10 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 class CCharEntity;
 class CTrustEntity;
 
-class CGambitsContainer;
+namespace gambits
+{
+    class CGambitsContainer;
+}
 
 class CTrustController : public CMobController
 {
@@ -50,7 +53,7 @@ public:
     // TODO: Replace with reverse enmity container
     CBattleEntity* GetTopEnmity();
 
-    std::unique_ptr<CGambitsContainer> m_GambitsContainer;
+    std::unique_ptr<gambits::CGambitsContainer> m_GambitsContainer;
 
 private:
     void DoCombatTick(time_point tick) override;

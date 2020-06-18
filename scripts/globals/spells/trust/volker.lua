@@ -20,9 +20,6 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.MASTER, ai.c.HPP_LT, 50,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.PROVOKE)
 
-    mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.BERSERK,
-                        ai.r.JA, ai.s.SPECIFIC, tpz.ja.BERSERK)
-
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000,
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.RED_LOTUS_BLADE)
 end

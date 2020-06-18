@@ -10,7 +10,9 @@
 #include "../../status_effect.h"
 #include "../../status_effect_container.h"
 
-// TODO: Gambits namespace
+namespace gambits
+{
+
 enum class G_TARGET : uint16
 {
     SELF   = 0,
@@ -20,25 +22,25 @@ enum class G_TARGET : uint16
     TANK   = 4,
 };
 
-enum G_CONDITION : uint16
+enum class G_CONDITION : uint16
 {
-    ALWAYS           = 0,
-    HPP_LT           = 1,
-    HPP_GTE          = 2,
-    MPP_LT           = 3,
-    TP_LT            = 4,
-    TP_GTE           = 5,
-    STATUS           = 6,
-    NOT_STATUS       = 7,
-    STATUS_FLAG      = 8,
-    HAS_ENMITY       = 9,
-    NOT_HAS_ENMITY   = 10,
-    SC_AVAILABLE     = 11,
-    NOT_SC_AVAILABLE = 12,
-    MB_AVAILABLE     = 13,
+    ALWAYS             = 0,
+    HPP_LT             = 1,
+    HPP_GTE            = 2,
+    MPP_LT             = 3,
+    TP_LT              = 4,
+    TP_GTE             = 5,
+    STATUS             = 6,
+    NOT_STATUS         = 7,
+    STATUS_FLAG        = 8,
+    HAS_TOP_ENMITY     = 9,
+    NOT_HAS_TOP_ENMITY = 10,
+    SC_AVAILABLE       = 11,
+    NOT_SC_AVAILABLE   = 12,
+    MB_AVAILABLE       = 13,
 };
 
-enum G_REACTION : uint16
+enum class G_REACTION : uint16
 {
     ATTACK = 0,
     ASSIST = 1,
@@ -48,7 +50,7 @@ enum G_REACTION : uint16
     MS     = 5,
 };
 
-enum G_SELECT : uint16
+enum class G_SELECT : uint16
 {
     HIGHEST    = 0,
     LOWEST     = 1,
@@ -102,5 +104,7 @@ private:
     time_point m_lastAction;
     std::vector<Gambit_t> gambits;
 };
+
+} // namespace gambits
 
 #endif // _GAMBITSCONTAINER
