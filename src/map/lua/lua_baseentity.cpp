@@ -115,6 +115,7 @@
 #include "../packets/event_update_string.h"
 #include "../packets/guild_menu.h"
 #include "../packets/guild_menu_buy.h"
+#include "../packets/independant_animation.h"
 #include "../packets/instance_entry.h"
 #include "../packets/inventory_finish.h"
 #include "../packets/inventory_modify.h"
@@ -9778,6 +9779,30 @@ int32 CLuaBaseEntity::enableEntities(lua_State* L)
 }
 
 /************************************************************************
+*  Function: independantAnimation()
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+int32 CLuaBaseEntity::independantAnimation(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    auto animId = (uint16)lua_tointeger(L, 1);
+    auto mode = (uint8)lua_tointeger(L, 2);
+    auto unknown = (uint8)lua_tointeger(L, 3);
+
+    //PChar->pushPacket(new CIndependantAnimationPacket(PChar, 251, 4, 193));
+
+    PChar->pushPacket(new CIndependantAnimationPacket(PChar, animId, mode, unknown));
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: engage()
 *  Purpose : Instructs a Battle Entity to engage in combat
 *  Example : pet:engage(target)
@@ -15241,6 +15266,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,countdown),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,enableEntities),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,independantAnimation),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isEngaged),

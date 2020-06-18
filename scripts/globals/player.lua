@@ -1,4 +1,3 @@
-require("scripts/globals/full_speed_ahead")
 require("scripts/globals/gear_sets")
 require("scripts/globals/keyitems")
 require("scripts/globals/settings")
@@ -7,6 +6,8 @@ require("scripts/globals/teleports")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
 require("scripts/globals/msg")
+-----------------------------------
+require("scripts/quests/full_speed_ahead")
 -----------------------------------
 
 local startingRaceInfo =

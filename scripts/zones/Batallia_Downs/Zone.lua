@@ -6,9 +6,10 @@
 local ID = require("scripts/zones/Batallia_Downs/IDs")
 require("scripts/globals/icanheararainbow");
 require("scripts/globals/chocobo_digging");
-require("scripts/globals/full_speed_ahead")
 require("scripts/globals/missions");
 require("scripts/globals/zone");
+-----------------------------------
+require("scripts/quests/full_speed_ahead")
 -----------------------------------
 
 function onChocoboDig(player, precheck)
