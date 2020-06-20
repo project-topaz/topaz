@@ -24,7 +24,7 @@ function onTrigger(player, npc)
     -- ON SABBATICAL
     if offset == 0 and onSabbatical == QUEST_ACCEPTED and onSabbaticalProgress == 2 then
         player:startEvent(2)
-    elseif offset == 1 and seeingBloodRed == QUEST_ACCEPTED and seeingBloodRedProgress == 1 then
+    elseif offset == 0 and seeingBloodRed == QUEST_ACCEPTED and seeingBloodRedProgress == 1 then
         player:startEvent(5)
 
     -- SCH AF SIDEQUEST: PANTS
