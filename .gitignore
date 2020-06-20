@@ -121,7 +121,7 @@ UpgradeLog*.XML
 *.obj
 
 # Executables
-*.exe
+
 *.out
 *.app
 
@@ -192,7 +192,6 @@ scripts/zones/promathia.rar
 
 scripts/commands/exec.lua
 
-scripts/globals/settings.lua
 /conf.rar
 
 # non-default config files containing server specific things
