@@ -38,7 +38,9 @@ function onTrigger(player,npc)
     local mJob = player:getMainJob();
     local onSabbatical = player:getQuestStatus(CRYSTAL_WAR,tpz.quest.id.crystalWar.ON_SABBATICAL);
     local onSabbaticalProgress = player:getCharVar("OnSabbatical");
+    local seeingBloodRedProgress = player:getCharVar("SeeingBloodRed");
     local downwardHelix = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.DOWNWARD_HELIX);
+    local seeingBloodRed = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED);
 
     if (ALittleKnowledge == QUEST_AVAILABLE) then
         if (mLvl >= ADVANCED_JOB_LEVEL) then
@@ -79,6 +81,16 @@ function onTrigger(player,npc)
         else
             player:startEvent(27);
         end
+    elseif (seeingBloodRed == QUEST_AVAILABLE and mJob == tpz.job.SCH and mLvl >= AF3_QUEST_LEVEL) then
+        player:startEvent(29);
+    elseif (seeingBloodRed == QUEST_ACCEPTED and seeingBloodRedProgress == 1) then
+        player:startEvent(30);
+    elseif (seeingBloodRedProgress == 2 and player:seenKeyItem(tpz.ki.UNADDRESSED_SEALED_LETTER ~= 1)
+        player:startEvent(31);
+    elseif (seeingBloodRedProgress == 2 and player:seenKeyItem(tpz.ki.UNADDRESSED_SEALED_LETTER == 1)
+        player:startEvent(32);
+    elseif (seeingBloodRedProgress == 3) then
+        player:startEvent(33);
     else
         player:startEvent(15);
     end
@@ -119,13 +131,12 @@ function onEventFinish(player,csid,option)
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED);
         else
-
             player:addItem(6058); --klimaform
             player:delKeyItem(tpz.ki.ULBRECHTS_SEALED_LETTER);
             player:delKeyItem(tpz.ki.SCHULTS_SEALED_LETTER);
             player:completeQuest(CRYSTAL_WAR,tpz.quest.id.crystalWar.ON_SABBATICAL);
             player:messageSpecial(ID.text.ITEM_OBTAINED, 6058);
-            player:setCharVar("onSabbatical",0);
+            player:setCharVar("OnSabbatical",0);
             player:setCharVar("Erlene_Sabbatical_Timer",VanadielDayOfTheYear());
         end
     elseif (csid == 23) then
@@ -143,5 +154,12 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_OBTAINED, 15004);
             player:setCharVar("DownwardHelix",0);
         end
+    elseif (csid == 29) then
+        player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED);
+        player:setCharVar("SeeingBloodRed",1);
+    elseif (csid == 31)
+        player:setCharVar("SeeingBloodRed",2);
+    elseif (csid == 32)
+        player:setCharVar("SeeingBloodRed",3);
     end
 end;

@@ -13,15 +13,19 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local offset                = npc:getID() - ID.npc.INDESCRIPT_MARKINGS_OFFSET
-    local onSabbatical          = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.ON_SABBATICAL)
-    local onSabbaticalProgress  = player:getCharVar("OnSabbatical")
-    local pantsQuestProgress    = player:getCharVar("AF_SCH_PANTS")
-    local gownQuestProgress     = player:getCharVar("AF_SCH_BODY")
+    local offset                 = npc:getID() - ID.npc.INDESCRIPT_MARKINGS_OFFSET
+    local onSabbatical           = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.ON_SABBATICAL)
+    local onSabbaticalProgress   = player:getCharVar("OnSabbatical")
+    local seeingBloodRed         = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED)
+    local seeingBloodRedProgress = player:getCharVar("SeeingBloodRed")
+    local pantsQuestProgress     = player:getCharVar("AF_SCH_PANTS")
+    local gownQuestProgress      = player:getCharVar("AF_SCH_BODY")
 
     -- ON SABBATICAL
     if offset == 0 and onSabbatical == QUEST_ACCEPTED and onSabbaticalProgress == 2 then
         player:startEvent(2)
+    elseif offset == 1 and seeingBloodRed == QUEST_ACCEPTED and seeingBloodRedProgress == 1 then
+        player:startEvent(5)
 
     -- SCH AF SIDEQUEST: PANTS
     elseif offset == 1 and pantsQuestProgress > 0 and pantsQuestProgress < 3 and not player:hasKeyItem(tpz.ki.SLUG_MUCUS) then
@@ -78,5 +82,8 @@ function onEventFinish(player, csid, option)
     if csid == 2 then
         npcUtil.giveKeyItem(player, tpz.ki.SCHULTS_SEALED_LETTER)
         player:setCharVar("OnSabbatical", 3)
+    elseif csid == 5 then
+        npcUtil.giveKeyItem(player, tpz.ki.UNADDRESSED_SEALED_LETTER)
+        player:setCharVar("SeeingBloodRed", 2)
     end
 end
