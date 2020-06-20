@@ -17,33 +17,34 @@ function onTrigger(player,npc)
         {
 			5867,	3500,     -- Toolbag (Ino)
 			5868,	8000,     -- Toolbag (Shika)
-			5869,	8000	   -- Toolbag (Cho)
-			-- 704,    144,    -- Bamboo Stick
-            -- 829,  21000,    -- Silk Cloth
-            -- 1240,   220,    -- Koma
-            -- 657,   7000,    -- Tama-Hagane
-            -- 1415, 73530,    -- Urushi
-            -- 1161,    40,    -- Uchitake
-            -- 1164,    40,    -- Tsurara
-            -- 1167,    40,    -- Kawahori-Ogi
-            -- 1170,    40,    -- Makibishi
-            -- 1173,    40,    -- Hiraishin
-            -- 1176,    40,    -- Mizu-Deppo
-            -- 1179,   125,    -- Shihei
-            -- 1182,   125,    -- Jusatsu
-            -- 1185,   125,    -- Kaginawa
-            -- 1188,   125,    -- Sairui-Ran
-            -- 1191,   125,    -- Kodoku
-            -- 1194,   125,    -- Shinobi-Tabi
-            -- 1471,   316,    -- Sticky Rice
-            -- 1554,   645,    -- Turmeric
-            -- 1555,  1585,    -- Coriander
-            -- 1590,   800,    -- Holy Basil
-            -- 1475,   990,    -- Curry Powder
-            -- 5164,  2595,    -- Ground Wasabi
-            -- 1652,   200,    -- Rice Vinegar
-            -- 5237,   492,    -- Shirataki
-            -- 2702,  5000,    -- Buckwheat Flour
+			5869,	8000,     -- Toolbag (Cho)
+			704,    144,      -- Bamboo Stick
+            829,  21000,      -- Silk Cloth
+            1240,   220,      -- Koma
+            657,   7000,      -- Tama-Hagane
+            1415, 73530,      -- Urushi
+            1161,    40,      -- Uchitake
+            1164,    40,      -- Tsurara
+            1167,    40,      -- Kawahori-Ogi
+            1170,    40,      -- Makibishi
+            1173,    40,      -- Hiraishin
+            1176,    40,      -- Mizu-Deppo
+            1179,   125,      -- Shihei
+            1182,   125,      -- Jusatsu
+            1185,   125,      -- Kaginawa
+            1188,   125,      -- Sairui-Ran
+            1191,   125,      -- Kodoku
+            1194,   125,      -- Shinobi-Tabi
+            1471,   316,      -- Sticky Rice
+            1554,   645,      -- Turmeric
+            1555,  1585,      -- Coriander
+            1590,   800,      -- Holy Basil
+            626,    980,      -- Black Pepper
+            1475,   990,      -- Curry Powder
+            5164,  2595,      -- Ground Wasabi
+            1652,   200,      -- Rice Vinegar
+            5237,   492,      -- Shirataki
+            2702,  5000,      -- Buckwheat Flour
             -- 4928,  2331,    -- Katon: Ichi
             -- 4931,  2331,    -- Hyoton: Ichi
             -- 4934,  2331,    -- Huton: Ichi
