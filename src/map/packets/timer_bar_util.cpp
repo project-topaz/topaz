@@ -42,3 +42,13 @@ void CTimerBarUtilPacket::addBar2(std::string name, uint8 value)
         ref<char>(0x40 + i) = name.at(i);
     }
 }
+
+void CTimerBarUtilPacket::addBattlefieldRadius(uint32 distance)
+{
+    ref<uint8>(0x1C) = distance;
+}
+
+void CTimerBarUtilPacket::addRenderRadius(uint32 distance)
+{
+    ref<uint8>(0x20) = distance;
+}

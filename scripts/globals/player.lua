@@ -207,7 +207,7 @@ end
 function onPlayerLevelDown(player)
 end
 
-function onPlayerEmote(player, emoteId)
+function onPlayerEmote(player, emoteId)   
     if emoteId == tpz.emote.CHEER and player:hasStatusEffect(tpz.effect.FULL_SPEED_AHEAD) then
         tpz.fsa.onCheer(player)
     end
