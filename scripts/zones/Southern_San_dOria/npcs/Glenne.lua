@@ -4,112 +4,92 @@
 -- Starts and Finishes Quest: A Sentry's Peril
 -- !pos -122 -2 15 230
 -------------------------------------
-require("scripts/globals/settings");
-require("scripts/globals/titles");
-require("scripts/globals/shop");
-require("scripts/globals/quests");
-local ID = require("scripts/zones/Southern_San_dOria/IDs");
-
-require("scripts/globals/pathfind");
+local ID = require("scripts/zones/Southern_San_dOria/IDs")
+require("scripts/globals/settings")
+require("scripts/globals/titles")
+require("scripts/globals/shop")
+require("scripts/globals/quests")
+require("scripts/globals/pathfind")
 
 local path =
 {
-    -121.512833, -2.000000, 14.492509,
-    -122.600044, -2.000000, 14.535807,
-    -123.697128, -2.000000, 14.615446,
-    -124.696846, -2.000000, 14.707844,
-    -123.606018, -2.000000, 14.601295,
-    -124.720863, -2.000000, 14.709210,
-    -123.677681, -2.000000, 14.608237,
-    -124.752579, -2.000000, 14.712106,
-    -123.669525, -2.000000, 14.607473,
-    -124.788277, -2.000000, 14.715488,
-    -123.792847, -2.000000, 14.619405,
-    -124.871826, -2.000000, 14.723736
-};
+    {-126.185, -2.000, 14.758},
+    {-121.511, -2.000, 14.814},
+}
 
 function onSpawn(npc)
-    npc:initNpcAi();
-    npc:setPos(tpz.path.first(path));
-    onPath(npc);
-end;
+    npc:initNpcPathing(path[2][1], path[2][2], path[2][3])
+    onPath(npc)
+end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path);
-end;
+    tpz.path.pingPong(npc, path, 0)
+end
 
 function onTrade(player,npc,trade)
+    local count = trade:getItemCount()
 
-    local count = trade:getItemCount();
     if (player:getQuestStatus(SANDORIA,tpz.quest.id.sandoria.FLYERS_FOR_REGINE) == QUEST_ACCEPTED and
         trade:hasItemQty(532,1) and count == 1) then
-            player:messageSpecial(ID.text.FLYER_REFUSED);
-
+            player:messageSpecial(ID.text.FLYER_REFUSED)
     elseif (player:getQuestStatus(SANDORIA,tpz.quest.id.sandoria.A_SENTRY_S_PERIL) == QUEST_ACCEPTED and
         trade:hasItemQty(601,1) and count == 1) then
-            player:startEvent(513);
-            npc:wait();
+            player:startEvent(513)
+            npc:pathStop()
     end
-
-end;
+end
 
 function onTrigger(player,npc)
-
-    local aSentrysPeril = player:getQuestStatus(SANDORIA,tpz.quest.id.sandoria.A_SENTRY_S_PERIL);
-
-    npc:wait();
+    local aSentrysPeril = player:getQuestStatus(SANDORIA,tpz.quest.id.sandoria.A_SENTRY_S_PERIL)
 
     if (aSentrysPeril == QUEST_AVAILABLE) then
-        player:startEvent(510);
+        player:startEvent(510)
+        npc:pathStop()
     elseif (aSentrysPeril == QUEST_ACCEPTED) then
         if (player:hasItem(600) == true or player:hasItem(601) == true) then
-            player:startEvent(520);
+            player:startEvent(520)
+            npc:pathStop()
         else
-            player:startEvent(644);
+            player:startEvent(644)
+            npc:pathStop()
         end
     elseif (aSentrysPeril == QUEST_COMPLETED) then
-        player:startEvent(521);
-    else
-        npc:wait(0);
+        player:startEvent(521)
+        npc:pathStop()
     end
-
-end;
+end
 
 function onEventUpdate(player,csid,option)
-    -- printf("CSID2: %u",csid);
-    -- printf("RESULT2: %u",option);
-end;
+end
 
 function onEventFinish(player,csid,option,npc)
-
-    npc:wait(5000);
-
     if (csid == 510 and option == 0) then
         if (player:getFreeSlotsCount() > 0) then
-            player:addQuest(SANDORIA,tpz.quest.id.sandoria.A_SENTRY_S_PERIL);
-            player:addItem(600);
-            player:messageSpecial(ID.text.ITEM_OBTAINED,600);
+            player:addQuest(SANDORIA,tpz.quest.id.sandoria.A_SENTRY_S_PERIL)
+            player:addItem(600)
+            player:messageSpecial(ID.text.ITEM_OBTAINED,600)
         else
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,600); -- Dose of ointment
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,600) -- Dose of ointment
         end
     elseif (csid == 644) then
         if (player:getFreeSlotsCount() > 0) then
-            player:addItem(600);
-            player:messageSpecial(ID.text.ITEM_OBTAINED,600);
+            player:addItem(600)
+            player:messageSpecial(ID.text.ITEM_OBTAINED,600)
         else
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,600); -- Dose of ointment
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,600) -- Dose of ointment
         end
     elseif (csid == 513) then
         if (player:getFreeSlotsCount() == 0) then
-            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,12832); -- Bronze Subligar
+            player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED,12832) -- Bronze Subligar
         else
-            player:tradeComplete();
-            player:addTitle(tpz.title.RONFAURIAN_RESCUER);
-            player:addItem(12832);
-            player:messageSpecial(ID.text.ITEM_OBTAINED,12832); -- Bronze Subligar
-            player:addFame(SANDORIA,30);
-            player:completeQuest(SANDORIA,tpz.quest.id.sandoria.A_SENTRY_S_PERIL);
+            player:tradeComplete()
+            player:addTitle(tpz.title.RONFAURIAN_RESCUER)
+            player:addItem(12832)
+            player:messageSpecial(ID.text.ITEM_OBTAINED,12832) -- Bronze Subligar
+            player:addFame(SANDORIA,30)
+            player:completeQuest(SANDORIA,tpz.quest.id.sandoria.A_SENTRY_S_PERIL)
         end
     end
 
-end;
+    npc:pathResume()
+end

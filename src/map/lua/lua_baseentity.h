@@ -99,7 +99,7 @@ public:
     int32 isAlly(lua_State*);
 
     // AI and Control
-    int32 initNpcAi(lua_State* L);
+    int32 initNpcPathing(lua_State* L);
     int32 resetAI(lua_State* L);
     int32 getStatus(lua_State*);
     int32 setStatus(lua_State*);             // Sets Character's Status
@@ -112,8 +112,12 @@ public:
     int32 setPathPoint(lua_State* L);
     int32 atPoint(lua_State* L);             // is at given point
     int32 pathTo(lua_State* L);              // set new path to point without changing action
+	int32 stepTo(lua_State* L);
     int32 pathThrough(lua_State* L);         // walk at normal speed through the given points
-    int32 isFollowingPath(lua_State* L);     // checks if the entity is following a path
+    int32 isFollowingPath(lua_State* L);
+    int32 pathStop(lua_State* L);
+    int32 pathResume(lua_State* L);
+    // checks if the entity is following a path
     int32 clearPath(lua_State* L);           // removes current pathfind and stops moving
     int32 checkDistance(lua_State*);         // Check Distacnce and returns distance number
     int32 wait(lua_State* L);                // make the npc wait a number of ms and then back into roam

@@ -43,7 +43,7 @@ enum PATHFLAG {
   PATHFLAG_WALLHACK		= 0x02, // run through walls if path is too long
   PATHFLAG_REVERSE		= 0x04, // reverse the path
   PATHFLAG_SCRIPT		= 0x08,	// don't overwrite this path before completion (except via another script)
-  PATHFLAG_SLIDE                = 0x10  // Slide to end point if close enough (so no over shoot)
+  PATHFLAG_SLIDE        = 0x10  // Slide to end point if close enough (so no over shoot)
 };
 
 class CPathFind
@@ -57,6 +57,7 @@ class CPathFind
 
     // find and walk to the given point
     bool PathTo(const position_t& point, uint8 pathFlags = 0, bool clear = true);
+
     // walk to the given point until in range
     bool PathInRange(const position_t& point, float range, uint8 pathFlags = 0, bool clear = true);
 

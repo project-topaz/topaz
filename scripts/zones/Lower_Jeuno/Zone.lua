@@ -95,13 +95,13 @@ function onGameHour(zone)
     elseif VanadielHour == 1 then
         if playerOnQuestId == 0 then
             local npc = GetNPCByID(ID.npc.VHANA_EHGAKLYWHA)
-            npc:clearPath()
-            npc:setStatus(0)
-            npc:initNpcAi()
-            npc:setPos(tpz.path.first(LOWER_JEUNO.lampPath))
-            npc:pathThrough(tpz.path.fromStart(LOWER_JEUNO.lampPath), bit.bor(tpz.path.flag.WALLHACK))
+            npc:setStatus(tpz.status.NORMAL)
+            npc:initNpcPathing()
+            npc:setPos(LOWER_JEUNO.lampPath[1][1], LOWER_JEUNO.lampPath[1][2], LOWER_JEUNO.lampPath[1][3])
+            npc:setPathPoint(1)
+            npc:pathResume()
+            tpz.path.advancedPath(npc, LOWER_JEUNO.lampPath, false)
         end
-
     end
 end
 

@@ -1549,18 +1549,46 @@ inline int32 CLuaBaseEntity::isAlly(lua_State *L)
 }
 
 /************************************************************************
-*  Function: initNpcAi()
-*  Purpose : Initiate pre-defined NPC AI
-*  Example : npc:initNpcAi(); -- Red Ghost in Port Jeuno (walks a path)
-*  Notes   : To Do: Change name, this is ugly
+*  Function: initNpcPathing()
+*  Purpose : Initiate pre-defined NPC pathfinding AI
+*  Example : npc:initNpcPathing(); -- Red Ghost in Port Jeuno (walks a path)
+*  Notes   : can set a start position by passing an x,y,z
+*  Notes   : can override starting pathpoint by passing an int as the point
+*  Extra   : npc:initNpcPathing(0,0,0,5) -- passing 0 as the x,y,z but setting
+*  #####   : the pathpoint to 5, setting x,y,z to 0 will bypass setting the pos
 ************************************************************************/
 
-inline int32 CLuaBaseEntity::initNpcAi(lua_State* L)
+inline int32 CLuaBaseEntity::initNpcPathing(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
 
+    uint16 pathpoint = 1;
+
+    // Set a starting position by passing an x,y,z pos.
+    if (!lua_isnil(L, 1) && lua_isnumber(L, 1))
+    {
+        if (lua_tonumber(L, 1) != 0 && lua_tonumber(L, 2) != 0 && lua_tonumber(L, 3) != 0)
+        {
+            m_PBaseEntity->loc.p.x = (float)lua_tonumber(L, 1);
+            m_PBaseEntity->loc.p.y = (float)lua_tonumber(L, 2);
+            m_PBaseEntity->loc.p.z = (float)lua_tonumber(L, 3);
+
+            m_PBaseEntity->updatemask |= UPDATE_POS;
+        }
+    }
+
+    // override pathpoint if need to when setting up.
+    if (!lua_isnil(L, 4) && lua_isnumber(L, 4))
+    {
+        pathpoint = (uint16)lua_tonumber(L, 4);
+    }
+    
     m_PBaseEntity->PAI = std::make_unique<CAIContainer>(m_PBaseEntity, std::make_unique<CPathFind>(m_PBaseEntity), nullptr, nullptr);
+    // All mobs/npc's now have a pathpoint to refrence from,
+    // so can call last pathpoint to get back on track.
+    // see getPathPoint(), setPathPoint
+    m_PBaseEntity->SetPathPoint(pathpoint);
     return 0;
 }
 
@@ -1771,7 +1799,7 @@ inline int32 CLuaBaseEntity::getPathPoint(lua_State* L)
 inline int32 CLuaBaseEntity::setPathPoint(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_NPC);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
 
     uint16 pathPoint = (uint16)lua_tonumber(L, 1);
@@ -1838,22 +1866,69 @@ inline int32 CLuaBaseEntity::pathTo(lua_State* L)
     TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
 
     position_t point;
+    uint32 flags = 0;
+    bool clear = false;
 
     point.x = (float)lua_tonumber(L, 1);
     point.y = (float)lua_tonumber(L, 2);
     point.z = (float)lua_tonumber(L, 3);
+
     if (!lua_isnil(L, 4) && lua_isnumber(L, 4))
     {
         point.rotation = (uint8)lua_tonumber(L, 4);
     }
 
+    if (!lua_isnil(L, 5) && lua_isnumber(L, 5))
+    {
+        flags = (uint32)lua_tonumber(L, 5);
+    }
+
+    if (!lua_isnil(L, 6) && lua_isboolean(L, 6))
+    {
+        clear = (bool)lua_toboolean(L, 6);
+    }
+
     if (m_PBaseEntity->PAI->PathFind)
     {
-        m_PBaseEntity->PAI->PathFind->PathTo(point, PATHFLAG_RUN | PATHFLAG_WALLHACK | PATHFLAG_SCRIPT);
+        m_PBaseEntity->PAI->PathFind->PathTo(point, flags, clear);
     }
 
     return 0;
 }
+
+/************************************************************************
+*  Function: stepTo()
+*  Purpose : Makes a non-PC move toward a target without changing action
+*  Example : mob:stepTo(Pos.x, Pos.y, Pos.z, true)
+************************************************************************/
+
+inline int32 CLuaBaseEntity::stepTo(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 2) || !lua_isnumber(L, 2));
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 3) || !lua_isnumber(L, 3));
+
+    position_t point;
+    bool run = false;
+
+    point.x = (float)lua_tonumber(L, 1);
+    point.y = (float)lua_tonumber(L, 2);
+    point.z = (float)lua_tonumber(L, 3);
+
+    if (!lua_isnil(L, 4) && lua_isboolean(L, 4))
+    {
+        run = (bool)lua_toboolean(L, 4);
+    }
+
+    if (m_PBaseEntity->PAI->PathFind)
+    {
+        m_PBaseEntity->PAI->PathFind->StepTo(point, run);
+    }
+
+    return 0;
+}
+
 
 /************************************************************************
 *  Function: pathThrough()
@@ -1920,6 +1995,82 @@ inline int32 CLuaBaseEntity::isFollowingPath(lua_State* L)
         PBattle->PAI->PathFind->IsFollowingPath());
 
     return 1;
+}
+
+/************************************************************************
+* Function: pathStop()
+* Purpose : stops an npc from pathing until pathResume() is used
+* Example : npc:pathStop()
+* Notes   : used in conjunction with pathResume()
+************************************************************************/
+
+inline int32 CLuaBaseEntity::pathStop(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+
+    CBattleEntity* PBattle = (CBattleEntity*)m_PBaseEntity;
+
+    PBattle->speed = 0;
+
+    return 1;
+}
+
+/************************************************************************
+* Function: pathResume()
+* Purpose : resumes an entity's pathing by looking at it's speed set in the DB 
+* Example : npc:pathResume()
+* Notes   : used in conjunction with pathStop()
+************************************************************************/
+
+inline int32 CLuaBaseEntity::pathResume(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+
+    uint8 default_speed = 0;
+
+    if (m_PBaseEntity != nullptr)
+    {
+        if (m_PBaseEntity->objtype == TYPE_NPC)
+        {
+            auto PNpc = static_cast<CNpcEntity*>(m_PBaseEntity);
+            uint32 npcID = PNpc->id;
+            const char* NPCQuery = "SELECT speed FROM npc_list WHERE npcid = %u";
+
+            int32 retNPC = Sql_Query(SqlHandle, NPCQuery, npcID);
+
+            if (retNPC != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+            {
+                if (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    default_speed = (uint8)Sql_GetIntData(SqlHandle, 0);
+                }
+            }
+        }
+
+        if (m_PBaseEntity->objtype == TYPE_MOB)
+        {
+            auto PMob = static_cast<CMobEntity*>(m_PBaseEntity);
+            uint16 familyID = PMob->m_Family;
+            const char* MOBQuery = "SELECT speed FROM mob_family_system WHERE familyid = %u";
+
+            int32 retMOB = Sql_Query(SqlHandle, MOBQuery, familyID);
+
+            if (retMOB != SQL_ERROR && Sql_NumRows(SqlHandle) != 0)
+            {
+                if (Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+                {
+                    default_speed = (uint8)Sql_GetIntData(SqlHandle, 0);
+                }
+            }
+        }
+
+        m_PBaseEntity->speed = default_speed;
+        return 1;
+    }
+    
+    return 0;
 }
 
 /************************************************************************
@@ -14234,7 +14385,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isAlly),
 
     // AI and Control
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,initNpcAi),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,initNpcPathing),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,resetAI),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getStatus),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setStatus),
@@ -14247,10 +14398,13 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setPathPoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,atPoint),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathTo),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,stepTo),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathThrough),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isFollowingPath),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearPath),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkDistance),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathStop),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathResume),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,wait),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,openDoor),

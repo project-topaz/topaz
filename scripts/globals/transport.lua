@@ -2,6 +2,7 @@
 -- Transport
 ------------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/pathfind")
 ------------------------------------
 
 tpz = tpz or {}
@@ -59,8 +60,8 @@ tpz.transport.pos =
 {
     mhaura =
     {
-        ARRIVING  = {7.06, -1.36, 2.20},
-        DEPARTING = {8.26, -1.36, 2.20}
+        ARRIVING  = {{7.06, -1.36, 2.48}, {7.07, -1.36, 2.58}},
+        DEPARTING = {{8.26, -1.36, 2.20}, {8.26, -1.36, 2.30}},
     }
 }
 
@@ -78,8 +79,14 @@ end
 tpz.transport.dockMessage = function(npc, triggerID, messages, dock)
     npc:showText(npc, messages[triggerID])
     if (triggerID % 2) == 0 then
-        npc:pathThrough(tpz.transport.pos[dock].ARRIVING, PATHFLAG_WALLHACK)
+        npc:setLocalVar("[PATHING]DEPARTING", 2)
+        npc:setPathPoint(1)
+        npc:pathResume()
+        --tpz.path.toPoint(npc, tpz.transport.pos[dock].ARRIVING, false)
     else
-        npc:pathThrough(tpz.transport.pos[dock].DEPARTING, PATHFLAG_WALLHACK)
+        npc:setLocalVar("[PATHING]DEPARTING", 1)
+        npc:setPathPoint(1)
+        npc:pathResume()
+        --tpz.path.toPoint(npc, tpz.transport.pos[dock].DEPARTING, false)
     end
 end
