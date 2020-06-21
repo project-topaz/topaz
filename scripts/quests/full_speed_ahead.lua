@@ -9,6 +9,8 @@ tpz = tpz or {}
 tpz.full_speed_ahead = tpz.full_speed_ahead or {}
 
 tpz.full_speed_ahead.duration = 600
+tpz.full_speed_ahead.motivation_decay = 2
+tpz.full_speed_ahead.pep_growth = 1
 
 tpz.full_speed_ahead.onEffectGain = function(player)
     player:setLocalVar("FSA_Time", os.time() + tpz.full_speed_ahead.duration)
@@ -27,8 +29,8 @@ tpz.full_speed_ahead.onEffectLose = function(player)
 end
 
 tpz.full_speed_ahead.tick = function(player)
-    player:setLocalVar("FSA_Motivation", player:getLocalVar("FSA_Motivation") - 1)
-    player:setLocalVar("FSA_Pep", player:getLocalVar("FSA_Pep") + 1)
+    player:setLocalVar("FSA_Motivation", player:getLocalVar("FSA_Motivation") - tpz.full_speed_ahead.motivation_decay)
+    player:setLocalVar("FSA_Pep", player:getLocalVar("FSA_Pep") + tpz.full_speed_ahead.pep_growth)
 
     local timeLeft = player:getLocalVar("FSA_Time") - os.time()
     local motivation = player:getLocalVar("FSA_Motivation")
@@ -56,6 +58,7 @@ end
 tpz.full_speed_ahead.onRegionEnter = function(player, index)
     local food_byte = player:getLocalVar("FSA_Food")
     local food_count = player:getLocalVar("FSA_FoodCount")
+    local motivation = player:getLocalVar("FSA_Motivation")
 
     if index == 8 and food_count >= 5 then -- Syrillia
         player:startEvent(24) -- End CS and teleport
@@ -63,6 +66,9 @@ tpz.full_speed_ahead.onRegionEnter = function(player, index)
         local new_food_byte = food_byte - bit.lshift(1, index - 1)
         player:setLocalVar("FSA_Food", new_food_byte)
         player:setLocalVar("FSA_FoodCount", food_count + 1)
+
+        local new_motivation = motivation + 10
+        player:setLocalVar("FSA_Motivation", new_motivation)
         
         -- Hearts
         player:independantAnimation(player, 251, 4)

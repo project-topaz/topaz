@@ -37,7 +37,7 @@ function onInitialize(zone)
     registerRegionAroundNPC(zone, ID.npc.SYRILLIA, 8)
 end
 
-function onZoneIn( player, prevZone)
+function onZoneIn(player, prevZone)
     local cs = -1;
 
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
@@ -52,6 +52,7 @@ function onZoneIn( player, prevZone)
 
     if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
         player:addStatusEffect(tpz.effect.FULL_SPEED_AHEAD, 0, 2, tpz.fsa.duration)
+        return -1
     end
 
     return cs;
