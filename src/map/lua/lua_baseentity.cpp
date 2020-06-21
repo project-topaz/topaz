@@ -9630,13 +9630,21 @@ int32 CLuaBaseEntity::independantAnimation(lua_State* L)
 
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
 
-    auto animId = (uint16)lua_tointeger(L, 1);
-    auto mode = (uint8)lua_tointeger(L, 2);
-    auto unknown = (uint8)lua_tointeger(L, 3);
+    CBaseEntity* PTarget;
+    if (!lua_isnil(L, 1) && lua_isuserdata(L, 1))
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        PTarget = PLuaBaseEntity->m_PBaseEntity;
+    }
+    else
+    {
+        PTarget = m_PBaseEntity;
+    }
 
-    //PChar->pushPacket(new CIndependantAnimationPacket(PChar, 251, 4, 193));
+    auto animId = (uint16)lua_tointeger(L, 2);
+    auto mode = (uint8)lua_tointeger(L, 3);
 
-    PChar->pushPacket(new CIndependantAnimationPacket(PChar, animId, mode, unknown));
+    PChar->pushPacket(new CIndependantAnimationPacket(PChar, PTarget, animId, mode));
 
     return 0;
 }

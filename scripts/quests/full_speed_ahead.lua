@@ -63,7 +63,10 @@ tpz.full_speed_ahead.onRegionEnter = function(player, index)
         local new_food_byte = food_byte - bit.lshift(1, index - 1)
         player:setLocalVar("FSA_Food", new_food_byte)
         player:setLocalVar("FSA_FoodCount", food_count + 1)
-        player:independantAnimation(251, 4, 193)
+        
+        -- Hearts
+        player:independantAnimation(player, 251, 4)
+
         player:messageSpecial(ID.text.RAPTOR_OVERCOME_MUNCHIES, player:getLocalVar("FSA_FoodCount"), 5)
     end
 end
@@ -80,7 +83,8 @@ tpz.full_speed_ahead.onCheer = function(player)
 
     player:messageSpecial(ID.text.RAPTOR_SECOND_WIND)
 
-    player:independantAnimation(251, 4, 193)
+    -- Music Notes
+    player:independantAnimation(player, 252, 4)
 
     player:countdown(timeLeft, "Motivation", new_motivation, "Pep", 0)
 end

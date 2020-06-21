@@ -4,7 +4,7 @@
 
 #include "independant_animation.h"
 
-CIndependantAnimationPacket::CIndependantAnimationPacket(CBaseEntity* PEntity, uint16 animId, uint8 mode, uint8 unknown)
+CIndependantAnimationPacket::CIndependantAnimationPacket(CBaseEntity* PEntity, CBaseEntity* PTarget, uint16 animId, uint8 type)
 {
 	this->type = 0x3A;
 	this->size = 0x14;
@@ -12,14 +12,13 @@ CIndependantAnimationPacket::CIndependantAnimationPacket(CBaseEntity* PEntity, u
 	if (PEntity)
 	{
         ref<uint32>(0x04) = PEntity->id;
-        ref<uint32>(0x08) = PEntity->id;
+        ref<uint32>(0x08) = PTarget->id;
 
         ref<uint16>(0x0C) = PEntity->targid;
-        ref<uint16>(0x0E) = PEntity->targid;
+        ref<uint16>(0x0E) = PTarget->targid;
 
         ref<uint16>(0x10) = animId;
 
-        ref<uint8>(0x12) = mode;
-        ref<uint8>(0x13) = unknown;
+        ref<uint8>(0x12) = type;
 	}
 }
