@@ -40,6 +40,11 @@ end
 function onZoneIn(player, prevZone)
     local cs = -1;
 
+    if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
+        player:addStatusEffect(tpz.effect.FULL_SPEED_AHEAD, 0, 2, tpz.fsa.duration)
+        return -1
+    end
+
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
         player:setPos( -693.609, -14.583, 173.59, 30);
     end
@@ -48,11 +53,6 @@ function onZoneIn(player, prevZone)
         cs = 901;
     elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1) then
         cs = 903;
-    end
-
-    if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then
-        player:addStatusEffect(tpz.effect.FULL_SPEED_AHEAD, 0, 2, tpz.fsa.duration)
-        return -1
     end
 
     return cs;
