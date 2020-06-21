@@ -9619,9 +9619,9 @@ int32 CLuaBaseEntity::enableEntities(lua_State* L)
 
 /************************************************************************
 *  Function: independantAnimation()
-*  Purpose :
-*  Example :
-*  Notes   :
+*  Purpose : Play an animation independant of action messages
+*  Example : player:independantAnimation(player, 251, 4) -- Plays little hearts
+*  Notes   : Accepts a target, but works perfectly fine on self
 ************************************************************************/
 int32 CLuaBaseEntity::independantAnimation(lua_State* L)
 {
