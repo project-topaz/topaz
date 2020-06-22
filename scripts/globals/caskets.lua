@@ -4,6 +4,7 @@
 require("scripts/globals/casket_loot")
 require("scripts/globals/settings")
 require("scripts/globals/status")
+require("scripts/globals/zones")
 require("scripts/globals/msg")
 
 -----------------------------------------------
@@ -115,7 +116,7 @@ local function timeElapsedCheck(npc)
     if npc:getLocalVar("[caskets]SPAWNTIME") then
         spawnTime = npc:getLocalVar("[caskets]SPAWNTIME")
     end
-
+    
     local lastSpawned = os.time() - spawnTime
 
     timeTable = convertTime(lastSpawned)
@@ -131,7 +132,8 @@ end
 -- Desc: Grabs an id for a casket if one is available if not, no casket will spawn.
 ---------------------------------------------------------------------------------------------
 local function getCasketID(mob)
-    local baseChestId = zones[mob:getZoneID()].npc.CASKET_BASE
+    local ID          = require("scripts/zones/" ..mob:getZoneName().. "/IDs")
+    local baseChestId = ID.npc.CASKET_BASE
     local chestId     = 0
 
     for i = baseChestId, baseChestId + 15 do
@@ -186,7 +188,7 @@ end
 -- Desc: Sends the message: "The monster was concealing a treasure chest!" to all in party/alliance
 ---------------------------------------------------------------------------------------------------
 local function sendChestDropMessage(player)
-    local ID          = zones[player:getZoneID()]
+    local ID          = require("scripts/zones/" ..player:getZoneName().. "/IDs")
     local dropMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM + casketInfo.messageOffset.MONSTER_CONCEALED_CHEST
     local party       = {}
 
@@ -308,7 +310,7 @@ end
 ----------------------------------------------------------------------
 local function messageChest(player, messageString, param1, param2, param3, param4, npc)
     local zoneId      = player:getZoneID()
-    local ID          = zones[zoneId]
+    local ID          = require("scripts/zones/" ..player:getZoneName().. "/IDs")
     local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM
     local msg         = 0
 
@@ -334,7 +336,7 @@ end
 ----------------------------------------------------------------------------------
 local function checkRemainingAttempts(player, npc, remaining, correctNumber)
     local zoneId      = player:getZoneID()
-    local ID          = zones[zoneId]
+    local ID          = require("scripts/zones/" ..player:getZoneName().. "/IDs")
     local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM
 
     if remaining == 1 then
@@ -490,7 +492,6 @@ function getDrops(npc, dropType, zoneId)
             if item == 0 or item == nil then
                 items[i] = 4112 -- default to potion
             else
-                math.randomseed(os.time())
                 if math.random() < 0.05 then
                     items[1] = tpz.casket_loot.casketItems[zoneId].regionalItems[math.random(1, #tpz.casket_loot.casketItems[zoneId].regionalItems)]
                 else
@@ -546,8 +547,7 @@ end
 local function giveTempItem(player, npc, tempNum)
     local tempQuery   = string.format("[caskets]TEMP" ..tempNum.. "")
     local tempID      = npc:getLocalVar(tempQuery)
-    local zoneId      = player:getZoneID()
-    local ID          = zones[zoneId]
+    local ID          = require("scripts/zones/" ..player:getZoneName().. "/IDs")
     local spawnStatus = npc:getLocalVar("[caskets]SPAWNSTATUS")
 
     if spawnStatus == casketInfo.spawnStatus.DESPAWNED then
@@ -593,8 +593,7 @@ end
 local function giveItem(player, npc, itemNum)
     local itemQuery   = string.format("[caskets]ITEM" ..itemNum.. "")
     local itemID      = npc:getLocalVar(itemQuery)
-    local zoneId      = player:getZoneID()
-    local ID          = zones[zoneId]
+    local ID          = require("scripts/zones/" ..player:getZoneName().. "/IDs")
     local spawnStatus = npc:getLocalVar("[caskets]SPAWNSTATUS")
 
     if spawnStatus == casketInfo.spawnStatus.DESPAWNED then
@@ -658,7 +657,8 @@ tpz.caskets.onTrigger = function(player, npc)
     local chestOwner        = npc:getLocalVar("[caskets]PARTYID")     -- the id of the party that has rights to the chest.
     local leaderId          = player:getLeaderID()
     --local aumentflag      = 0x0202                                  -- Used for Evoliths (not implemented yet).
-    local eventBase         = zones[npc:getZoneID()].npc.CASKET_BASE           -- base id of the current chest.
+    local ID                = require("scripts/zones/" ..player:getZoneName().. "/IDs")
+    local eventBase         = ID.npc.CASKET_BASE                       -- base id of the current chest.
     local lockedEvent       = casketInfo.cs[chestId - eventBase] + 2  -- Chest locked cs's.
     local unlockedEvent     = casketInfo.cs[chestId - eventBase]      -- Chest unlocked cs's.
 
@@ -714,11 +714,10 @@ end
 -- Multiple tools may be used, however there is a low rate of success after the first.
 -------------------------------------------------------------------------------------------------------------------
 tpz.caskets.onTrade = function(player, npc, trade)
-    local zoneId            = player:getZoneID()
-    local ID                = zones[zoneId]
+    local ID          = require("scripts/zones/" ..player:getZoneName().. "/IDs")
     local baseMessage       = ID.text.PLAYER_OBTAINS_TEMP_ITEM
     local locked            = npc:getLocalVar("[caskets]LOCKED")
-    local eventBase         = zones[zoneId].npc.CASKET_BASE               -- base id of the current chest.
+    local eventBase         = ID.npc.CASKET_BASE               -- base id of the current chest.
     local correctNumber     = npc:getLocalVar("[caskets]CORRECT_NUM")
     local chestOwner        = npc:getLocalVar("[caskets]PARTYID")         -- the id of the player,party or alliance that has rights to the chest.
     local leaderId          = player:getLeaderID()
@@ -774,8 +773,7 @@ tpz.caskets.onTrade = function(player, npc, trade)
 end
 
 tpz.caskets.onEventFinish = function(player, csid, option, npc)
-    local zoneId = player:getZoneID()
-    local ID = zones[zoneId]
+    local ID          = require("scripts/zones/" ..player:getZoneName().. "/IDs")
     local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM
     ------------------------------------------------------------------
     -- Basic chest var's
@@ -785,7 +783,7 @@ tpz.caskets.onEventFinish = function(player, csid, option, npc)
     local spawnStatus       = npc:getLocalVar("[caskets]SPAWNSTATUS")
     local locked            = npc:getLocalVar("[caskets]LOCKED")
     local lootType          = npc:getLocalVar("[caskets]LOOT_TYPE")
-    local eventBase         = zones[zoneId].npc.CASKET_BASE
+    local eventBase         = ID.npc.CASKET_BASE
     local lockedEvent       = casketInfo.cs[chestId - eventBase] + 2
     local unlockedEvent     = casketInfo.cs[chestId - eventBase]
     local lockedChoice      = bit.lshift(1, option -1)
