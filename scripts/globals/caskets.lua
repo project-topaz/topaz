@@ -4,7 +4,7 @@
 require("scripts/globals/casket_loot")
 require("scripts/globals/settings")
 require("scripts/globals/status")
-require("scripts/globals/zones")
+require("scripts/globals/zone")
 require("scripts/globals/msg")
 
 -----------------------------------------------
