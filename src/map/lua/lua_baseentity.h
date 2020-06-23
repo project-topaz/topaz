@@ -110,6 +110,14 @@ public:
 
     int32 atPoint(lua_State* L);             // is at given point
     int32 pathTo(lua_State* L);              // set new path to point without changing action
+    int32 pathBehindTarget(lua_State* L);    // moves an entity directly behind a target
+    int32 pathInfrontTarget(lua_State* L);   // moves an entity directly infront of a target
+    int32 pathToSafeDistance(lua_State* L);  // moves an entity to a safe distance from a target
+    int32 pathToMeeleRange(lua_State* L);    // moves an entity within meele distance of a target
+    int32 pathToCastingRange(lua_State* L);  // moves an entity into casting range of a target
+    int32 pathToSongRollRange(lua_State* L); // moves an entity into song/cor roll range of a target
+    int32 pathToRangedRange(lua_State* L);   // moves an entity into ranged attack range of a target 
+    int32 pathToCoverTarget(lua_State* L);   // moves an entity directly between a target and a cover target 
     int32 pathThrough(lua_State* L);         // walk at normal speed through the given points
     int32 isFollowingPath(lua_State* L);     // checks if the entity is following a path
     int32 clearPath(lua_State* L);           // removes current pathfind and stops moving

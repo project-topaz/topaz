@@ -1812,6 +1812,240 @@ inline int32 CLuaBaseEntity::pathTo(lua_State* L)
 }
 
 /************************************************************************
+*  Function: pathBehindTarget()
+*  Purpose : Makes a non-PC move behind a target without changing action
+*  Example : mob:pathBehindTarget(mob:getTarget())
+*  Notes   : keep calling this function to keep the position
+************************************************************************/
+inline int32 CLuaBaseEntity::pathBehindTarget(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    if (m_PBaseEntity != nullptr)
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        CBattleEntity* PEntity = (CBattleEntity*)PLuaBaseEntity->GetBaseEntity();
+
+        if (PEntity != nullptr)
+        {
+            if (m_PBaseEntity->PAI->PathFind)
+            {
+                m_PBaseEntity->PAI->PathFind->PathBehindTarget(PEntity->loc.p, PEntity->m_ModelSize);
+            }
+        }
+    }
+    
+    return 0;
+}
+
+/************************************************************************
+*  Function: pathInfrontTarget()
+*  Purpose : Makes a non-PC move infront of a target without changing action
+*  Example : mob:pathInfrontTarget(mob:getTarget())
+*  Notes   : keep calling this function to keep the position
+************************************************************************/
+inline int32 CLuaBaseEntity::pathInfrontTarget(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    if (m_PBaseEntity != nullptr)
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        CBattleEntity* PEntity = (CBattleEntity*)PLuaBaseEntity->GetBaseEntity();
+
+        if (PEntity != nullptr)
+        {
+            if (m_PBaseEntity->PAI->PathFind)
+            {
+                m_PBaseEntity->PAI->PathFind->PathInfrontTarget(PEntity->loc.p, PEntity->m_ModelSize);
+            }
+        }
+    }
+    
+    return 0;
+}
+
+/************************************************************************
+*  Function: pathToSafeDistance()
+*  Purpose : Makes a non-PC move to a safe distance away from a target
+*  Example : mob:pathToSafeDistance(mob:getTarget())
+*  Notes   : keep calling this function to keep the position
+************************************************************************/
+inline int32 CLuaBaseEntity::pathToSafeDistance(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    if (m_PBaseEntity != nullptr)
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        CBattleEntity* PEntity = (CBattleEntity*)PLuaBaseEntity->GetBaseEntity();
+
+        if (PEntity != nullptr)
+        {
+            if (m_PBaseEntity->PAI->PathFind)
+            {
+                m_PBaseEntity->PAI->PathFind->PathToSafeDistance(PEntity->loc.p, PEntity->m_ModelSize);
+            }
+        }
+    }
+    
+    return 0;
+}
+
+/************************************************************************
+*  Function: pathToMeeleRange()
+*  Purpose : Makes a non-PC move or keep within meele range of a target
+*  Example : mob:pathToMeeleRange(mob:getTarget())
+*  Notes   : keep calling this function to keep the position
+************************************************************************/
+inline int32 CLuaBaseEntity::pathToMeeleRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    if (m_PBaseEntity != nullptr)
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        CBattleEntity* PEntity = (CBattleEntity*)PLuaBaseEntity->GetBaseEntity();
+
+        if (PEntity != nullptr)
+        {
+            if (m_PBaseEntity->PAI->PathFind)
+            {
+                m_PBaseEntity->PAI->PathFind->PathToMeeleRange(PEntity->loc.p, PEntity->m_ModelSize);
+            }
+        }
+    }
+    
+    return 0;
+}
+
+/************************************************************************
+*  Function: pathToCastingRange()
+*  Purpose : Makes a non-PC move or keep within casting range of a target
+*  Example : mob:pathToCastingRange(mob:getTarget())
+*  Notes   : keep calling this function to keep the position
+************************************************************************/
+inline int32 CLuaBaseEntity::pathToCastingRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    if (m_PBaseEntity != nullptr)
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        CBattleEntity* PEntity = (CBattleEntity*)PLuaBaseEntity->GetBaseEntity();
+
+        if (PEntity != nullptr)
+        {
+            if (m_PBaseEntity->PAI->PathFind)
+            {
+                m_PBaseEntity->PAI->PathFind->PathToCastingRange(PEntity->loc.p, PEntity->m_ModelSize);
+            }
+        }
+    }
+    
+    return 0;
+}
+
+/************************************************************************
+*  Function: pathToSongRollRange()
+*  Purpose : Makes a non-PC move or keep within song/cor roll range of a target
+*  Example : mob:pathToSongRollRange(mob:getTarget())
+*  Notes   : keep calling this function to keep the position
+************************************************************************/
+inline int32 CLuaBaseEntity::pathToSongRollRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    if (m_PBaseEntity != nullptr)
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        CBattleEntity* PEntity = (CBattleEntity*)PLuaBaseEntity->GetBaseEntity();
+
+        if (PEntity != nullptr)
+        {
+            if (m_PBaseEntity->PAI->PathFind)
+            {
+                m_PBaseEntity->PAI->PathFind->PathToSongRollRange(PEntity->loc.p, PEntity->m_ModelSize);
+            }
+        }
+    }
+    
+    return 0;
+}
+
+/************************************************************************
+*  Function: pathToRangedRange()
+*  Purpose : Makes a non-PC move or keep within ranged attack range of a target
+*  Example : mob:pathToRangedRange(mob:getTarget())
+*  Notes   : keep calling this function to keep the position
+************************************************************************/
+inline int32 CLuaBaseEntity::pathToRangedRange(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    if (m_PBaseEntity != nullptr)
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        CBattleEntity* PEntity = (CBattleEntity*)PLuaBaseEntity->GetBaseEntity();
+
+        if (PEntity != nullptr)
+        {
+            if (m_PBaseEntity->PAI->PathFind)
+            {
+                m_PBaseEntity->PAI->PathFind->PathToRangedRange(PEntity->loc.p, PEntity->m_ModelSize);
+            }
+        }
+    }
+    
+    return 0;
+}
+
+/************************************************************************
+*  Function: pathToCoverTarget()
+*  Purpose : Makes a non-PC move to a position between a two targets
+*  Example : pet:pathToCoverTarget(mob:getTarget(), player)
+*  Notes   : keep calling this function to keep the position
+************************************************************************/
+inline int32 CLuaBaseEntity::pathToCoverTarget(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isuserdata(L, 1));
+
+    if (m_PBaseEntity != nullptr)
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        CLuaBaseEntity* CoverEntity = Lunar<CLuaBaseEntity>::check(L, 2);
+        CBattleEntity* PEntity = (CBattleEntity*)PLuaBaseEntity->GetBaseEntity();
+        CBattleEntity* PTarget = (CBattleEntity*)CoverEntity->GetBaseEntity();
+
+        if (PTarget != nullptr && PEntity != nullptr)
+        {
+            if (m_PBaseEntity->PAI->PathFind)
+            {
+                m_PBaseEntity->PAI->PathFind->PathToCoverTarget(PEntity->loc.p, PTarget->loc.p);
+            }
+        } 
+    }
+    
+    return 0;
+}
+
+/************************************************************************
 *  Function: pathThrough()
 *  Purpose : Makes an Entity follow a given set of points
 *  Example : mob:pathThrough(pathfind.first(path), PATHFLAG_RUN)
@@ -14206,6 +14440,14 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearPath),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkDistance),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,wait),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathBehindTarget),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathInfrontTarget),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToSafeDistance),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToMeeleRange),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToCastingRange),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToSongRollRange),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToRangedRange),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToCoverTarget),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,openDoor),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,closeDoor),

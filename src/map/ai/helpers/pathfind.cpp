@@ -392,6 +392,188 @@ bool CPathFind::FindClosestPath(const position_t& start, const position_t& end)
     return true;
 }
 
+void CPathFind::PathBehindTarget(const position_t& pos, uint16 modelSize)
+{
+    position_t entityPos = m_PTarget->loc.p;
+    uint16 offset = modelSize + 4;
+    float rotation = ((float)pos.rotation / 256) * 2 * (float)M_PI;
+
+    rotation += (float)M_PI;
+
+    position_t newPos;
+    newPos.x = pos.x + cosf(2 * (float)M_PI - rotation) * offset;
+    newPos.y = pos.y;
+    newPos.z = pos.z + sinf(2 * (float)M_PI - rotation) * offset;
+
+    PathTo(newPos, PATHFLAG_SCRIPT, false);
+    m_PTarget->updatemask |= UPDATE_POS;
+}
+
+void CPathFind::PathInfrontTarget(const position_t& pos, uint16 modelSize)
+{
+    position_t entityPos = m_PTarget->loc.p;
+    uint16 offset = modelSize + 4;
+    float rotation = ((float)pos.rotation / 256) * 2 * (float)M_PI;
+
+    position_t newPos;
+    newPos.x = pos.x + cosf(2 * (float)M_PI - rotation) * offset;
+    newPos.y = pos.y;
+    newPos.z = pos.z + sinf(2 * (float)M_PI - rotation) * offset;
+
+    PathTo(newPos, PATHFLAG_SCRIPT, false);
+    m_PTarget->updatemask |= UPDATE_POS;
+}
+
+void CPathFind::PathToSafeDistance(const position_t& pos, uint16 modelSize)
+{
+    position_t entityPos = m_PTarget->loc.p;
+    uint16 offset = modelSize + 22;
+    position_t newPos;
+
+    if (isNavMeshEnabled())
+    {
+        newPos = m_PTarget->loc.zone->m_navMesh->findRandomPosition(pos, (float)offset).second;
+    }
+    else
+    {
+        newPos.x = pos.x + cosf(2 * (float)M_PI) * offset;
+        newPos.y = pos.y;
+        newPos.z = pos.z + sinf(2 * (float)M_PI) * offset;
+    }
+
+    float dx = pos.x - m_PTarget->loc.p.x;
+    float dz = pos.z - m_PTarget->loc.p.z;
+    float distance = sqrt(dx * dx + dz * dz);
+
+    if (distance < offset)
+    {
+        if (ValidPosition(newPos))
+        {
+            PathTo(newPos, PATHFLAG_SCRIPT, false);
+            m_PTarget->updatemask |= UPDATE_POS;
+        }
+    }  
+}
+
+void CPathFind::PathToMeeleRange(const position_t& pos, uint16 modelSize)
+{
+    position_t entityPos = m_PTarget->loc.p;
+    uint16 offset = modelSize + 4;
+    position_t newPos;
+    newPos.x = pos.x + cosf(2 * (float)M_PI) * offset;
+    newPos.y = pos.y;
+    newPos.z = pos.z + sinf(2 * (float)M_PI) * offset;
+
+    float dx = pos.x - m_PTarget->loc.p.x;
+    float dz = pos.z - m_PTarget->loc.p.z;
+    float distance = sqrt(dx * dx + dz * dz);
+
+    if (distance > offset)
+    {
+        PathTo(newPos, PATHFLAG_SCRIPT, false);
+        m_PTarget->updatemask |= UPDATE_POS;
+    }
+}
+
+void CPathFind::PathToCastingRange(const position_t& pos, uint16 modelSize)
+{
+    position_t entityPos = m_PTarget->loc.p;
+    uint16 offset = modelSize + 18;
+    position_t newPos;
+
+    if (isNavMeshEnabled())
+    {
+        newPos = m_PTarget->loc.zone->m_navMesh->findRandomPosition(pos, (float)offset).second;
+    }
+    else
+    {
+        newPos.x = pos.x + cosf(2 * (float)M_PI) * offset;
+        newPos.y = pos.y;
+        newPos.z = pos.z + sinf(2 * (float)M_PI) * offset;
+    }
+
+    float dx = pos.x - m_PTarget->loc.p.x;
+    float dz = pos.z - m_PTarget->loc.p.z;
+    float distance = sqrt(dx * dx + dz * dz);
+
+    if (distance < modelSize + 10 || distance > offset)
+    {
+        if (ValidPosition(newPos))
+        {
+            PathTo(newPos, PATHFLAG_SCRIPT, false);
+            m_PTarget->updatemask |= UPDATE_POS;
+        }
+    }
+}
+
+void CPathFind::PathToSongRollRange(const position_t& pos, uint16 modelSize)
+{
+    position_t entityPos = m_PTarget->loc.p;
+    uint16 offset = modelSize + 2;
+    position_t newPos;
+    newPos.x = pos.x + cosf(2 * (float)M_PI) * offset;
+    newPos.y = pos.y;
+    newPos.z = pos.z + sinf(2 * (float)M_PI) * offset;
+
+    float dx = pos.x - m_PTarget->loc.p.x;
+    float dz = pos.z - m_PTarget->loc.p.z;
+    float distance = sqrt(dx * dx + dz * dz);
+
+    if (distance > offset)
+    {
+        PathTo(newPos, PATHFLAG_SCRIPT, false);
+        m_PTarget->updatemask |= UPDATE_POS;
+    }
+}
+
+void CPathFind::PathToRangedRange(const position_t& pos, uint16 modelSize)
+{
+    position_t entityPos = m_PTarget->loc.p;
+    uint16 offset = modelSize + 15;
+    position_t newPos;
+
+    if (isNavMeshEnabled())
+    {
+        newPos = m_PTarget->loc.zone->m_navMesh->findRandomPosition(pos, (float)offset).second;
+    }
+    else
+    {
+        newPos.x = pos.x + cosf(2 * (float)M_PI) * offset;
+        newPos.y = pos.y;
+        newPos.z = pos.z + sinf(2 * (float)M_PI) * offset;
+    }
+
+    float dx = pos.x - m_PTarget->loc.p.x;
+    float dz = pos.z - m_PTarget->loc.p.z;
+    float distance = sqrt(dx * dx + dz * dz);
+
+    if (distance > offset || distance < modelSize + 5)
+    {
+        if (ValidPosition(newPos))
+        {
+            PathTo(newPos, PATHFLAG_SCRIPT, false);
+            m_PTarget->updatemask |= UPDATE_POS;
+        } 
+    } 
+}
+
+void CPathFind::PathToCoverTarget(const position_t& pos, const position_t& coverPos)
+{
+    position_t entityPos = m_PTarget->loc.p;
+    float rotation = ((float)pos.rotation / 256) * 2 * (float)M_PI;
+    float dx = pos.x - coverPos.x;
+    float dz = pos.z - coverPos.z;
+    float midpoint = sqrt(dx * dx + dz * dz) / 2;
+
+    position_t newPos;
+    newPos.x = pos.x + cosf(2 * (float)M_PI - rotation) * midpoint;
+    newPos.y = pos.y;
+    newPos.z = pos.z + sinf(2 * (float)M_PI - rotation) * midpoint;
+
+    PathTo(newPos, PATHFLAG_SCRIPT, false);
+    m_PTarget->updatemask |= UPDATE_POS;
+}
+
 void CPathFind::LookAt(const position_t& point)
 {
     // don't look if i'm at that point

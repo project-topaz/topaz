@@ -88,6 +88,22 @@ class CPathFind
     // tells entity to take one step towards position
     void StepTo(const position_t& pos, bool run = false);
 
+    void PathBehindTarget(const position_t& pos, uint16 modelSize);
+
+    void PathInfrontTarget(const position_t& pos, uint16 modelSize);
+
+    void PathToSafeDistance(const position_t& pos, uint16 modelSize);
+
+    void PathToMeeleRange(const position_t& pos, uint16 modelSize);
+
+    void PathToCastingRange(const position_t& pos, uint16 modelSize);
+
+    void PathToSongRollRange(const position_t& pos, uint16 modelSize);
+
+    void PathToRangedRange(const position_t& pos, uint16 modelSize);
+
+    void PathToCoverTarget(const position_t& pos, const position_t& coverPos);
+
     // checks if mob is currently following a path
     bool IsFollowingPath();
     bool IsFollowingScriptedPath();
