@@ -92,6 +92,7 @@ function onEventFinish(player,csid,option)
         player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.RED_SENTINEL_BADGE);
     elseif (csid == 815) then
         player:completeQuest(SANDORIA,tpz.quest.id.sandoria.LURE_OF_THE_WILDCAT);
+        player:addExp(1500 * EXP_RATE)
         player:addFame(SANDORIA,150);
         player:setCharVar("WildcatSandy",0);
         player:delKeyItem(tpz.ki.RED_SENTINEL_BADGE);
