@@ -35,6 +35,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/message_system.h"
 #include "packets/party_invite.h"
 #include "packets/server_ip.h"
+#include "packets/chat_message.h"
 
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
@@ -525,6 +526,43 @@ namespace message
                     }
                 }
             }
+            break;
+        }
+        case MSG_SEND_LUA_COMMAND:
+        {
+            auto caller = ref<uint32>((uint8*)extra->data(), 0);
+            auto PChar = zoneutils::GetCharByName((int8*)extra->data() + 4);
+
+            if (PChar)
+            {
+                auto result = CmdHandler.call(caller, PChar, (const int8*)extra->data() + 19);
+                if (result != 0)
+                {
+                    ShowWarning("Message: bad commandhandler::call result %d", result);
+                }
+            }
+            else
+            {
+                // send unable find player to caller
+                char buf[279];
+                memset(&buf[0], 0, sizeof(buf));
+                std::string message = "Player named ";
+                message.append((const char*)extra->data() + 4);
+                message.append(" not found");
+
+                ref<uint32>(&buf, 0) = caller;
+                memcpy(buf + 4, message.c_str(), message.length());
+                message::send(MSG_REMOTE_PRINT_TO_PLAYER, &buf, sizeof(buf), nullptr);
+            }
+            break;
+        }
+        case MSG_REMOTE_PRINT_TO_PLAYER:
+        {
+            auto PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra->data(), 0));
+            const char* message = (const char*)extra->data() + 4;
+
+            PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, message, PChar->name));
+
             break;
         }
         default:

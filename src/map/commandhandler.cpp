@@ -23,6 +23,9 @@
 #include "commandhandler.h"
 #include "entities/charentity.h"
 #include "lua/lua_baseentity.h"
+#include "message.h"
+#include "../common/utils.h"
+#include "utils/zoneutils.h"
 
 void CCommandHandler::init(lua_State* L)
 {
@@ -30,7 +33,7 @@ void CCommandHandler::init(lua_State* L)
     m_LState = L;
 }
 
-int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
+int32 CCommandHandler::call(uint32 caller, CCharEntity* PChar, const int8* commandline)
 {
     std::istringstream clstream((char*)commandline);
     std::string cmdname;
@@ -162,12 +165,17 @@ int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
         return -1;
     }
 
-    // Push the calling character (if exists)..
-    CLuaBaseEntity LuaCmdCaller(PChar);
     int32 cntparam = 0;
 
+    // Push the caller
+    lua_pushnumber(m_LState, caller);
+    ++cntparam;
+
+    // Push the calling character (if exists)..
+    CLuaBaseEntity LuaCmdCaller(PChar);
+
     Lunar<CLuaBaseEntity>::push(m_LState, &LuaCmdCaller);
-    cntparam += 1;
+    ++cntparam;
 
     // Prepare parameters..
     std::string param;
@@ -181,6 +189,39 @@ int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
 
         switch (*parameter)
         {
+        case 't':
+            if (cmdparameters.size() == 1)
+            {
+                std::string str = param;
+                while (!clstream.eof())
+                {
+                    clstream >> param;
+                    str += " " + param;
+                }
+                lua_pushstring(m_LState, str.c_str());
+                ++cntparam;
+                break;
+            }
+
+            if (zoneutils::GetCharByName((int8*)param.c_str()))
+            {
+                lua_pushstring(m_LState, param.c_str());
+                ++cntparam;
+            }
+            else
+            {
+                // send a request to message server
+                char buf[279];
+                memset(&buf[0], 0, sizeof(buf));
+
+                ref<uint32>(&buf, 0) = caller;
+                memcpy(buf + 4, param.c_str(), param.length());
+                memcpy(buf + 19, commandline, 236);
+                message::send(MSG_SEND_LUA_COMMAND, &buf, sizeof(buf), nullptr);
+
+                lua_pushnil(m_LState);
+                return 0;
+            }
         case 'b':
             lua_pushstring(m_LState, (const char*)commandline);
             ++cntparam;

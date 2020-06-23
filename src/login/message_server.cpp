@@ -141,6 +141,8 @@ void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_
         case MSG_PT_INV_RES:
         case MSG_DIRECT:
         case MSG_SEND_TO_ZONE:
+        case MSG_SEND_LUA_COMMAND:
+        case MSG_REMOTE_PRINT_TO_PLAYER:
         {
             const char* query = "SELECT server_addr, server_port FROM accounts_sessions WHERE charid = %d;";
             ret = Sql_Query(ChatSqlHandle, query, ref<uint32>((uint8*)extra->data(), 0));

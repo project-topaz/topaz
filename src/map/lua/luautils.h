@@ -287,6 +287,8 @@ namespace luautils
 
     void OnFurniturePlaced(CCharEntity* PChar, CItemFurnishing* itemId);
     void OnFurnitureRemoved(CCharEntity* PChar, CItemFurnishing* itemId);
+
+    int32 RemotePrintToPlayer(lua_State* L);
 };
 
 #endif //- _LUAUTILS_H -
