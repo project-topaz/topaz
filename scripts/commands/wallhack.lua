@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!wallhack {player}")
 end
 
-function onTrigger(player, target)
+function onTrigger(caller, player, target)
 
     -- validate target
     local targ

@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!setrank <player> <new rank>")
 end
 
-function onTrigger(player, target, rank)
+function onTrigger(caller, player, target, rank)
     if target == nil then
         error(player, "Set who's rank?")
         return

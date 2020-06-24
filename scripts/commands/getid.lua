@@ -9,7 +9,7 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(player)
+function onTrigger(caller, player)
     local targ = player:getCursorTarget()
     if (targ ~= nil) then
         player:PrintToPlayer(string.format("%s's ID is: %u ", targ:getName(),targ:getID()))

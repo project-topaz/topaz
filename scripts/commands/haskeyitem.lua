@@ -17,7 +17,7 @@ function error(player, msg)
     player:PrintToPlayer("!haskeyitem <key item ID> {player}")
 end
 
-function onTrigger(player, keyId, target)
+function onTrigger(caller, player, keyId, target)
     -- validate itemId
     if (keyId == nil) then
         error(player, "You must provide a key item ID.")

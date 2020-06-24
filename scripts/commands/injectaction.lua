@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!injectaction <action ID> <animation ID> {speceffect} {reaction} {message}")
 end
 
-function onTrigger(player, actionId, animationId, speceffect, reaction, message)
+function onTrigger(caller, player, actionId, animationId, speceffect, reaction, message)
     -- validate actionId
     if (actionId == nil) then
         error(player, "You must provide an action ID.")

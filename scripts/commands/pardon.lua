@@ -9,7 +9,7 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(player, target)
+function onTrigger(caller, player, target)
     if (target == nil) then
         player:PrintToPlayer("You must enter a valid player name.")
         return

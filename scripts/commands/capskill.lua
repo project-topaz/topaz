@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!capskill <skillID>")
 end
 
-function onTrigger(player, skillId)
+function onTrigger(caller, player, skillId)
     -- validate skillId
     if (skillId == nil) then
         error(player, "You must provide a skillID.")

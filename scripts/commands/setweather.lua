@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!setweather <weather ID>")
 end
 
-function onTrigger(player, weather)
+function onTrigger(caller, player, weather)
 
     local weatherList =
     {

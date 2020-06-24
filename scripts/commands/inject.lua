@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!inject <packet>")
 end
 
-function onTrigger(player, packet)
+function onTrigger(caller, player, packet)
     -- validate packet
     if (packet == nil) then
         error(player, "You must enter a packet file name.")

@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!addweaponskillpoints <slot> <points> {player} (main=0, sub=1, ranged=2)")
 end
 
-function onTrigger(player, slot, points, target)
+function onTrigger(caller, player, slot, points, target)
 
     -- validate slot
     if slot < tpz.slot.MAIN or slot > tpz.slot.RANGED then

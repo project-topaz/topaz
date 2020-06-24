@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!speed <0-255>")
 end
 
-function onTrigger(player, speed)
+function onTrigger(caller, player, speed)
 
     -- validate speed amount
     if (speed == nil or speed < 0 or speed > 255) then

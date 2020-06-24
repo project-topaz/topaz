@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!despawnmob {mobID}")
 end
 
-function onTrigger(player, mobId)
+function onTrigger(caller, player, mobId)
 
     -- validate mobId
     local targ

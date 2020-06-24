@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!takegil <amount> {player}")
 end
 
-function onTrigger(player, amount, target)
+function onTrigger(caller, player, amount, target)
 
     -- validate target
     local targ

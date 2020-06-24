@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!hastitle <title ID> {player}")
 end
 
-function onTrigger(player, titleId, target)
+function onTrigger(caller, player, titleId, target)
 
     -- validate titleId
     if (titleId == nil) then

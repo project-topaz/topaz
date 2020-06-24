@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!mobhere {mobID} {noDepop}")
 end
 
-function onTrigger(player, mobId, noDepop)
+function onTrigger(caller, player, mobId, noDepop)
     -- validate mobId
     local targ
     if (mobId == nil) then

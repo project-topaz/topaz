@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!cp <amount>")
 end
 
-function onTrigger(player, cp)
+function onTrigger(caller, player, cp)
     -- validate amount
     if (cp == nil or cp == 0) then
         error(player, "Invalid amount.")

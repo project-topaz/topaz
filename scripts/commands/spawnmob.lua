@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!spawnmob <mob ID> {despawntime} {respawntime}")
 end
 
-function onTrigger(player, mobId, despawntime, respawntime)
+function onTrigger(caller, player, mobId, despawntime, respawntime)
 
     -- validate mobId
     if (mobId == nil) then

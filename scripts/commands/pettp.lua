@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!pettp {amount}")
 end
 
-function onTrigger(player, tp)
+function onTrigger(caller, player, tp)
     -- validate target
     local targ = player:getPet()
     if (targ == nil) then

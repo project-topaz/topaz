@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!delmission <logID> <missionID> {player}")
 end
 
-function onTrigger(player, logId, missionId, target)
+function onTrigger(caller, player, logId, missionId, target)
     -- validate logId
     local logName
     local logInfo = GetMissionLogInfo(logId)

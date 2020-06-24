@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!getskill <skill name or ID> {player}")
 end
 
-function onTrigger(player, skillName, target)
+function onTrigger(caller, player, skillName, target)
     if (skillName == nil) then
         error(player, "You must specify a skill to check!")
         return

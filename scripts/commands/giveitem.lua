@@ -9,7 +9,7 @@ cmdprops =
     parameters = "siiiiiiiiii"
 }
 
-function onTrigger(player, target, itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val)
+function onTrigger(caller, player, target, itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val)
     if (target == nil or itemId == nil) then
         player:PrintToPlayer("You must enter a valid player name and item ID.")
         return

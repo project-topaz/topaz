@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!timeoffset <offset>")
 end
 
-function onTrigger(player, offset)
+function onTrigger(caller, player, offset)
 
     -- validate offset
     if (offset == nil) then

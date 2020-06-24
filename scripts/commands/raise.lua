@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!raise {power} {player}")
 end
 
-function onTrigger(player, arg1, arg2)
+function onTrigger(caller, player, arg1, arg2)
     local power
     local target
     local targ

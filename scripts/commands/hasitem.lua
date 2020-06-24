@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!hasitem <itemID> {player}")
 end
 
-function onTrigger(player, itemId, target)
+function onTrigger(caller, player, itemId, target)
     -- validate itemId
     if (itemId == nil) then
         error(player, "You must provide an itemID.")

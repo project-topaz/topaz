@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!setmoblevel <level>")
 end
 
-function onTrigger(player, lv)
+function onTrigger(caller, player, lv)
     local target = player:getCursorTarget()
 
     -- set level

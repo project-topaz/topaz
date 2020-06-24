@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!getmobaction {mobID}")
 end
 
-function onTrigger(player, mobId)
+function onTrigger(caller, player, mobId)
 
     -- validate mobid
     local targ

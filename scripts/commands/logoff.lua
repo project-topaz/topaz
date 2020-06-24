@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!logoff {player}")
 end
 
-function onTrigger(player, target)
+function onTrigger(caller, player, target)
     -- validate target
     local targ
     if (target == nil) then

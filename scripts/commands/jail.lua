@@ -9,7 +9,7 @@ cmdprops =
     parameters = "sis"
 }
 
-function onTrigger(player, target, cellId, reason)
+function onTrigger(caller, player, target, cellId, reason)
     local jailCells =
     {
         -- Floor 1 (Bottom)

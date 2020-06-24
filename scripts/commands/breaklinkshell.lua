@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!breaklinkshell <linkshell name>");
 end;
 
-function onTrigger(player, target)
+function onTrigger(caller, player, target)
 
     -- validate target
     if not target then

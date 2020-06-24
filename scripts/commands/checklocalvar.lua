@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!checklocalvar <variable name> {'player', 'mob', or 'npc'} {name or ID}")
 end
 
-function onTrigger(player, arg1, arg2, arg3)
+function onTrigger(caller, player, arg1, arg2, arg3)
     local zone = player:getZone()
     local varName = arg1
     local targ = arg3

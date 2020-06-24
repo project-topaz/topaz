@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!mobsub {mob ID} <animation ID>")
 end
 
-function onTrigger(player, arg1, arg2)
+function onTrigger(caller, player, arg1, arg2)
     local target
     local animationId
 

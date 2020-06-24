@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!exec <Lua string>")
 end
 
-function onTrigger(player, str)
+function onTrigger(caller, player, str)
     -- Ensure a command was given..
     if (str == nil or string.len(str) == 0) then
         error(player, "You must enter a string to execute.")

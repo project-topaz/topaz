@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!pos {x} {y} {z} {zone ID} {player}")
 end
 
-function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
+function onTrigger(caller, player, arg1, arg2, arg3, arg4, arg5)
     local target
     local zoneId
     local x
