@@ -3,29 +3,27 @@
 -- desc: Sets the custom time offset of the CVanaTime instance.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
     parameters = "i"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!timeoffset <offset>")
-end
-
 function onTrigger(caller, player, offset)
+    local usage = "!timeoffset <offset>"
 
     -- validate offset
     if (offset == nil) then
-        error(player, "Invalid offset.")
+        tpz.commands.error(caller, player, "Invalid offset.", usage)
         return
     end
 
     -- time offset
-    local result = SetVanadielTimeOffset( offset )
+    local result = SetVanadielTimeOffset(offset)
     if (result == nil) then
-        error(player, "Time offset was not successful.")
+        tpz.commands.error(player, "Time offset was not successful.")
         return
     end
 end
