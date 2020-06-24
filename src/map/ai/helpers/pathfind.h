@@ -94,7 +94,7 @@ class CPathFind
 
     void PathToSafeDistance(const position_t& pos, uint16 modelSize);
 
-    void PathToMeeleRange(const position_t& pos, uint16 modelSize);
+    void PathToMeleeRange(const position_t& pos, uint16 modelSize);
 
     void PathToCastingRange(const position_t& pos, uint16 modelSize);
 

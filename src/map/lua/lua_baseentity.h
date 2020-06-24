@@ -113,7 +113,7 @@ public:
     int32 pathBehindTarget(lua_State* L);    // moves an entity directly behind a target
     int32 pathInfrontTarget(lua_State* L);   // moves an entity directly infront of a target
     int32 pathToSafeDistance(lua_State* L);  // moves an entity to a safe distance from a target
-    int32 pathToMeeleRange(lua_State* L);    // moves an entity within meele distance of a target
+    int32 pathToMeleeRange(lua_State* L);    // moves an entity within meele distance of a target
     int32 pathToCastingRange(lua_State* L);  // moves an entity into casting range of a target
     int32 pathToSongRollRange(lua_State* L); // moves an entity into song/cor roll range of a target
     int32 pathToRangedRange(lua_State* L);   // moves an entity into ranged attack range of a target 

@@ -455,7 +455,7 @@ void CPathFind::PathToSafeDistance(const position_t& pos, uint16 modelSize)
     }  
 }
 
-void CPathFind::PathToMeeleRange(const position_t& pos, uint16 modelSize)
+void CPathFind::PathToMeleeRange(const position_t& pos, uint16 modelSize)
 {
     position_t entityPos = m_PTarget->loc.p;
     uint16 offset = modelSize + 4;

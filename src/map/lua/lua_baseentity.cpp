@@ -1904,7 +1904,7 @@ inline int32 CLuaBaseEntity::pathToSafeDistance(lua_State* L)
 *  Example : mob:pathToMeeleRange(mob:getTarget())
 *  Notes   : keep calling this function to keep the position
 ************************************************************************/
-inline int32 CLuaBaseEntity::pathToMeeleRange(lua_State* L)
+inline int32 CLuaBaseEntity::pathToMeleeRange(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype == TYPE_PC);
@@ -14443,7 +14443,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathBehindTarget),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathInfrontTarget),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToSafeDistance),
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToMeeleRange),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToMeleeRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToCastingRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToSongRollRange),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,pathToRangedRange),
