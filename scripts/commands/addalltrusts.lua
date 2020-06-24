@@ -3,18 +3,15 @@
 -- desc: Adds all trust spells to the given target. If no target then to the current player.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "s"
+    parameters = "t"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!addalltrusts {player}")
-end
-
-function onTrigger(player, target)
+function onTrigger(caller, player, target)
     local ValidSpells =
     {
         896,897,898,899,900,901,902,903,904,905,906,907,908,909,910,911,912,913,914,915,916,917,918,919,920,
@@ -24,17 +21,7 @@ function onTrigger(player, target)
         1010,1011,1012,1013,1014,1015,1016
     }
 
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
-    end
+    local targ = tpz.commands.getTarget(player, target)
 
     -- add all spells
     local save = true
@@ -45,5 +32,6 @@ function onTrigger(player, target)
         end
         targ:addSpell(ValidSpells[i], silent, save)
     end
-    player:PrintToPlayer(string.format("%s now has all spells.", targ:getName()))
+
+    tpz.commands.print(caller, player, string.format("%s now has all spells.", targ:getName()))
 end

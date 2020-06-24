@@ -6,37 +6,25 @@
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!adddynatime <minutes> {player}")
-end
+require("scripts/globals/commands")
 
-function onTrigger(player, minutes, target)
-    -- validate target
-    local targ
-    if target == nil then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if targ == nil then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
-    end
+function onTrigger(caller, player, minutes, target)
+    local usage = "!adddynatime <minutes> {player}"
+    local targ = tpz.commands.getTarget(player, target)
 
     -- target must be in dynamis
     local effect = targ:getStatusEffect(tpz.effect.DYNAMIS)
     if not effect then
-        error(player, string.format("%s is not in Dynamis.", targ:getName()))
+        tpz.commands.error(caller, player, string.format("%s is not in Dynamis.", targ:getName()), usage)
         return
     end
 
     -- validate amount
     if minutes == nil or minutes < 1 then
-        error(player, "Invalid number of minutes.")
+        tpz.commands.error(caller, player, "Invalid number of minutes.", usage)
         return
     end
 
