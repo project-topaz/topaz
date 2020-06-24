@@ -296,7 +296,7 @@ end
 -- func: onTrigger
 -- desc: Called when this command is invoked.
 ---------------------------------------------------------------------------------------------------
-function onTrigger(player, bytes)
+function onTrigger(caller, player, bytes)
     local x = 0
     local y = 0
     local z = 0

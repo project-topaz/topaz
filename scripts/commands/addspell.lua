@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!addspell <spellID> {player}")
 end
 
-function onTrigger(player, spellId, target)
+function onTrigger(caller, player, spellId, target)
     -- validate spellId
     if (spellId == nil) then
         error(player, "Invalid spellID.")

@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!givegil <amount> {player}")
 end
 
-function onTrigger(player, amount, target)
+function onTrigger(caller, player, amount, target)
 
     -- validate amount
     if (amount == nil or amount < 1) then

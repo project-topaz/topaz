@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!entityvisual <animation string>")
 end
 
-function onTrigger(player, visualstring)
+function onTrigger(caller, player, visualstring)
     -- validate visualstring
     if (visualstring == nil) then
         error(player, "You must enter a valid animation string.")

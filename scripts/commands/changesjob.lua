@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!changesjob <jobID> {level}")
 end
 
-function onTrigger(player, jobId, level)
+function onTrigger(caller, player, jobId, level)
     -- validate jobId
     if (jobId == nil) then
         error(player, "You must enter a job short-name, e.g. WAR, or its equivalent numeric ID.")

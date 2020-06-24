@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!delcurrency <currency type> <amount> {player}")
 end
 
-function onTrigger(player,currency,amount,target)
+function onTrigger(caller, player, currency, amount, target)
     -- validate target
     local targ
     if (target == nil) then

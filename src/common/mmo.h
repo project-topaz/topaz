@@ -101,6 +101,8 @@ enum MSGSERVTYPE : uint8
     // gm commands
     MSG_SEND_TO_ZONE,
     MSG_SEND_TO_ENTITY,
+    MSG_SEND_LUA_COMMAND,
+    MSG_REMOTE_PRINT_TO_PLAYER
 };
 
 typedef std::string string_t;

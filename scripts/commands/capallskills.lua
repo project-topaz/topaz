@@ -9,7 +9,7 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(player)
+function onTrigger(caller, player)
     player:capAllSkills()
     player:PrintToPlayer( 'All skills capped!' )
 end

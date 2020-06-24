@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("mode: 0 = Not a mentor, 1 = Unlocked but inactive.")
 end
 
-function onTrigger(player, mentorMode, target)
+function onTrigger(caller, player, mentorMode, target)
     -- validate mode
     if (mentorMode == nil or mentorMode < 0 or mentorMode > 1) then
         error(player, "Invalid mode.")

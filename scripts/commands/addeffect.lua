@@ -18,7 +18,7 @@ function error(player, msg)
     player:PrintToPlayer("!addeffect {player} <effect> {power} {duration} {subid} {subPower}")
 end
 
-function onTrigger(player, arg1, arg2, arg3, arg4, arg5, arg6)
+function onTrigger(caller, player, arg1, arg2, arg3, arg4, arg5, arg6)
 
     local targ
     local id

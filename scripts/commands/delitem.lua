@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!delitem <itemID> {player}")
 end
 
-function onTrigger(player, itemId, target)
+function onTrigger(caller, player, itemId, target)
 
     -- validate itemId
     if (itemId == nil or itemId < 1) then

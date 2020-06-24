@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!getcraftRank <craft skill or ID> {player}")
 end
 
-function onTrigger(player, craftName, target)
+function onTrigger(caller, player, craftName, target)
     if craftName == nil then
         error(player, "You must specify a craft skill to check!")
         return

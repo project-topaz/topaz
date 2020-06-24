@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!getmod <modID>")
 end
 
-function onTrigger(player, id)
+function onTrigger(caller, player, id)
     -- invert tpz.mod table
     local modNameByNum = {}
     for k,v in pairs(tpz.mod) do

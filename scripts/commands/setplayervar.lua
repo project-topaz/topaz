@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!setplayervar <player> <variable> <value>")
 end
 
-function onTrigger(player, target, variable, value)
+function onTrigger(caller, player, target, variable, value)
 
     -- validate target
     local targ

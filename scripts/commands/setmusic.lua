@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("type IDs: 0 = BGM (Day), 1 = BGM (Night), 2 = Solo-Battle, 3 = Party-Battle, 4 = Chocobo")
 end
 
-function onTrigger(player, typeId, songId)
+function onTrigger(caller, player, typeId, songId)
 
     -- validate typeId
     if (typeId == nil or typeId < 0 or typeId > 4) then

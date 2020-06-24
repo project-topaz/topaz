@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!setlocalvar <variable name> <value> {'player', 'mob', or 'npc'} {name or ID}")
 end
 
-function onTrigger(player, arg1, arg2, arg3, arg4)
+function onTrigger(caller, player, arg1, arg2, arg3, arg4)
     local zone = player:getZone()
     local varName = arg1
     local varValue = arg2

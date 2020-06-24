@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!addtempitem <itemID> <quantity>")
 end
 
-function onTrigger(player, itemId, quantity)
+function onTrigger(caller, player, itemId, quantity)
     -- validate itemId
     if (itemId ~= nil) then
         itemId = tonumber(itemId)

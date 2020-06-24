@@ -82,6 +82,7 @@
 #include "../battlefield.h"
 #include "../daily_system.h"
 #include "../packets/char_emotion.h"
+#include "../message.h"
 
 namespace luautils
 {
@@ -153,6 +154,7 @@ namespace luautils
         lua_register(LuaHandle, "getAbility", luautils::getAbility);
         lua_register(LuaHandle, "getSpell", luautils::getSpell);
         lua_register(LuaHandle, "SelectDailyItem", luautils::SelectDailyItem);
+        lua_register(LuaHandle, "RemotePrintToPlayer", luautils::RemotePrintToPlayer);
 
         Lunar<CLuaAbility>::Register(LuaHandle);
         Lunar<CLuaAction>::Register(LuaHandle);
@@ -4569,6 +4571,41 @@ namespace luautils
             lua_pop(LuaHandle, 1);
             return;
         }
+    }
+
+    int32 RemotePrintToPlayer(lua_State* L)
+    {
+        int n = lua_gettop(L);
+        if (n != 2)
+        {
+            ShowError("luautils::RemotePrintToPlayer called with more/less than two arguments: %d\n", n);
+            return -1;
+        }
+
+        if (lua_isnil(L, 1) || !lua_isnumber(L, 1))
+        {
+            ShowError("luautils::RemotePrintToPlayer first argument is nil or not a number\n");
+            return -1;
+        }
+
+        if (lua_isnil(L, 2) || !lua_isstring(L, 2))
+        {
+            ShowError("luautils::RemotePrintToPlayer second argument is nil or not a string\n");
+            return -1;
+        };
+
+        auto id = lua_tointeger(L, 1);
+        auto message = std::string(lua_tostring(L, 2));
+
+        // send remote message to player
+        char buf[279];
+        memset(&buf[0], 0, sizeof(buf));
+
+        ref<uint32>(&buf, 0) = id;
+        memcpy(buf + 4, message.c_str(), message.length());
+        message::send(MSG_REMOTE_PRINT_TO_PLAYER, &buf, sizeof(buf), nullptr);
+
+        return 0;
     }
 
 }; // namespace luautils

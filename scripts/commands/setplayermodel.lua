@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("Slots: 0=main 1=sub 2=ranged 3=ammo 4=head 5=body 6=hands 7=legs 8=feet")
 end
 
-function onTrigger(player, model, slot, target)
+function onTrigger(caller, player, model, slot, target)
     -- validate model
     if (model == nil) then
         error(player, "Invalid model ID.")

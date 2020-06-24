@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!checkvar {'server', or player} <variable name>")
 end
 
-function onTrigger(player, arg1, arg2)
+function onTrigger(caller, player, arg1, arg2)
     local targ
     local varName
 

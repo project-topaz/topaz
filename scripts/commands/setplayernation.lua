@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("Nations: 0=San d'Oria 1=Bastok 2=Windurst")
 end
 
-function onTrigger(player, arg1, arg2)
+function onTrigger(caller, player, arg1, arg2)
     local targ
     local nation
 

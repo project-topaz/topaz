@@ -6,42 +6,30 @@
 cmdprops =
 {
     permission = 4,
-    parameters = "sis"
+    parameters = "sit"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!addcurrency <currency type> <amount> {player}")
-end
+require("scripts/globals/commands")
 
-function onTrigger(player,currency,amount,target)
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
-    end
+function onTrigger(caller, player, currency, amount, target)
+    local usage = "!addcurrency <currency type> <amount> {player}"
+    local targ = tpz.commands.getTarget(player, target)
 
     -- validate currency
     -- note: getCurrency does not ever return nil at the moment.  will work on this in future update.
     if (currency == nil or targ:getCurrency(currency) == nil) then
-        error(player, "Invalid currency type.")
+        tpz.commands.error(caller, player, "Invalid currency type.", usage)
         return
     end
 
     -- validate amount
     if (amount == nil or amount < 1) then
-        error(player, "Invalid amount.")
+        tpz.commands.error(caller, player, "Invalid amount.", usage)
         return
     end
 
     -- add currency
     targ:addCurrency(currency,amount)
     local newAmount = targ:getCurrency(currency)
-    player:PrintToPlayer(string.format("%s was given %i %s, for a total of %i.",targ:getName(),amount,currency,newAmount))
+    tpz.commands.print(caller, player, string.format("%s was given %i %s, for a total of %i." ,targ:getName(), amount, currency, newAmount))
 end

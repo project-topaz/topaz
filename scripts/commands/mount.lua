@@ -11,7 +11,7 @@ function error(player, msg)
     player:PrintToPlayer("!mount <mount ID> {player}")
 end
 
-function onTrigger(player, mount, target)
+function onTrigger(caller, player, mount, target)
 
     -- Default to Chocobo (0)
     if (mount == nil) then

@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!setflag <flags> {player}")
 end
 
-function onTrigger(player, flags, target)
+function onTrigger(caller, player, flags, target)
 
     -- validate flags
     if (flags == nil) then

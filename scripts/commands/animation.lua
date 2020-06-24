@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!animation {animationID}")
 end
 
-function onTrigger(player, animationId)
+function onTrigger(caller, player, animationId)
     local oldAnimation = player:getAnimation()
 
     if (animationId == nil) then

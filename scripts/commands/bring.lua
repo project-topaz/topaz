@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!bring <player> {forceZone}")
 end
 
-function onTrigger(player, target, forceZone)
+function onTrigger(caller, player, target, forceZone)
     -- validate target
     if (target == nil) then
         error(player, "You must enter a target player name.")

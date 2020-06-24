@@ -16,7 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!delkeyitem <key item ID> {player}")
 end
 
-function onTrigger(player, keyId, target)
+function onTrigger(caller, player, keyId, target)
 
     -- validate key item id
     if (keyId == nil) then

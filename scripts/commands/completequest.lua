@@ -30,7 +30,7 @@ function error(player, msg)
     player:PrintToPlayer("!completequest <logID> <questID> {player}")
 end
 
-function onTrigger(player, logId, questId, target)
+function onTrigger(caller, player, logId, questId, target)
 
     -- validate logId
     local questLog = GetQuestLogInfo(logId)

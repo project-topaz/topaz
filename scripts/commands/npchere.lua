@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!npchere {npcID} {noDepop}")
 end
 
-function onTrigger(player, npcId, noDepop)
+function onTrigger(caller, player, npcId, noDepop)
     require("scripts/globals/status")
 
     -- validate npc

@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!cnation <player> <campaign allegiance>")
 end
 
-function onTrigger(player, target, nation)
+function onTrigger(caller, player, target, nation)
     -- nation xref tables
     local nationNameToNum = {
         ["NONE"]     =  0,

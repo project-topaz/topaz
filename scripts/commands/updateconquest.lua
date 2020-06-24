@@ -4,6 +4,7 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/conquest")
+require("scripts/globals/commands")
 
 cmdprops =
 {
@@ -11,15 +12,12 @@ cmdprops =
     parameters = "i"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!updateconquest <type>")
-    player:PrintToPlayer("Type: 0 = Conquest_Tally_Start, 1 = Conquest_Tally_End, 2 = Conquest_Update")
-end
+function onTrigger(caller, player, updatetype)
+    local usage = "!updateconquest <type>"
 
-function onTrigger(player, updatetype)
     if (updatetype == nil or updatetype < 0 or updatetype > 2) then
-        error(player, "Invalid update type.")
+        tpz.commands.error(caller, player, "Invalid update type.", usage)
+        tpz.commands.print(caller, player, "Type: 0 = Conquest_Tally_Start, 1 = Conquest_Tally_End, 2 = Conquest_Update")
         return
     end
 

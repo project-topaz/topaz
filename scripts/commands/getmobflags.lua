@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!getmobflags {mob ID}")
 end
 
-function onTrigger(player, target)
+function onTrigger(caller, player, target)
     -- validate target
     local targ
     if not target then

@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!costume <costumeID>")
 end
 
-function onTrigger(player, costumeId)
+function onTrigger(caller, player, costumeId)
     -- validate costumeId
     if (costumeId == nil or costumeId < 0) then
         error(player, "Invalid costumeID.")

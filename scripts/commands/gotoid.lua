@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!gotoid <mobId|npcId>")
 end
 
-function onTrigger(player, target)
+function onTrigger(caller, player, target)
 
     -- validate npc
     if not target or target == 0 then

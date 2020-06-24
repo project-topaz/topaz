@@ -9,7 +9,7 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(player, cmd)
+function onTrigger(caller, player, cmd)
     -- Obtain the players hide status..
     local isHidden = player:getCharVar("GMHidden")
     if (cmd ~= nil) then

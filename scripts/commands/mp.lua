@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!mp <amount> {player}")
 end
 
-function onTrigger(player, mp, target)
+function onTrigger(caller, player, mp, target)
     -- validate amount
     if (mp == nil or tonumber(mp) == nil) then
         error(player, "You must provide an amount.")

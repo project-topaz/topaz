@@ -292,6 +292,8 @@ namespace luautils
     int32 SelectDailyItem(lua_State* L);
 
     void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
+
+    int32 RemotePrintToPlayer(lua_State* L);
 };
 
 #endif //- _LUAUTILS_H -

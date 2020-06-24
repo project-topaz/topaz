@@ -40,7 +40,7 @@ public:
     ~CCommandHandler()  {}
 
     void  init(lua_State* L);
-    int32 call(CCharEntity* PChar, const int8* commandline);
+    int32 call(uint32 caller, CCharEntity* PChar, const int8* commandline);
 };
 
 #endif

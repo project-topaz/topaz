@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!release {name}")
 end
 
-function onTrigger(player, name)
+function onTrigger(caller, player, name)
     local target
     if name == nil then
         target = player

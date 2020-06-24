@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!addtreasure <itemID> {player} {npcID}")
 end
 
-function onTrigger(player, itemId, target, dropper)
+function onTrigger(caller, player, itemId, target, dropper)
     -- validate itemId
     if (itemId ~= nil) then
         itemId = tonumber(itemId)
