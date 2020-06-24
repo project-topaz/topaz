@@ -1899,9 +1899,9 @@ inline int32 CLuaBaseEntity::pathToSafeDistance(lua_State* L)
 }
 
 /************************************************************************
-*  Function: pathToMeeleRange()
-*  Purpose : Makes a non-PC move or keep within meele range of a target
-*  Example : mob:pathToMeeleRange(mob:getTarget())
+*  Function: pathToMeleeRange()
+*  Purpose : Makes a non-PC move or keep within melee range of a target
+*  Example : mob:pathToMeleeRange(mob:getTarget())
 *  Notes   : keep calling this function to keep the position
 ************************************************************************/
 inline int32 CLuaBaseEntity::pathToMeleeRange(lua_State* L)
@@ -1919,7 +1919,7 @@ inline int32 CLuaBaseEntity::pathToMeleeRange(lua_State* L)
         {
             if (m_PBaseEntity->PAI->PathFind)
             {
-                m_PBaseEntity->PAI->PathFind->PathToMeeleRange(PEntity->loc.p, PEntity->m_ModelSize);
+                m_PBaseEntity->PAI->PathFind->PathToMeleeRange(PEntity->loc.p, PEntity->m_ModelSize);
             }
         }
     }
