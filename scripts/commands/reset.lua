@@ -18,7 +18,7 @@ function onTrigger(caller, player, target)
 
     -- reset target recasts
     targ:resetRecasts()
-    if (targ:getID() ~= player:getID()) then
+    if (targ:getID() ~= caller) then
         tpz.commands.print(caller, player, string.format("Reset %s's recast timers.", targ:getName()))
     end
 end

@@ -1,17 +1,20 @@
+---------------------------------------------------------------------------------------------------
+-- func: mount <mount ID> {player}
+-- desc: Adds mounted status effect and sets mount by ID
+---------------------------------------------------------------------------------------------------
+
 require("scripts/globals/status")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 1,
-    parameters = "sss"
+    parameters = "sst"
 };
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!mount <mount ID> {player}")
-end
-
 function onTrigger(caller, player, mount, target)
+    local usage = "!mount <mount ID> {player}"
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- Default to Chocobo (0)
     if (mount == nil) then
@@ -21,20 +24,8 @@ function onTrigger(caller, player, mount, target)
     -- validate mount
     mount = tonumber(mount) or tpz.mount[string.upper(mount)]
     if (mount == nil or mount < 0 or mount > 27) then
-        error(player, "Invalid mount ID.")
+        tpz.commands.error(caller, player, "Invalid mount ID.", usage)
         return
-    end
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
     end
 
     targ:addStatusEffectEx(tpz.effect.MOUNTED, tpz.effect.MOUNTED, mount, 0, 0, true)

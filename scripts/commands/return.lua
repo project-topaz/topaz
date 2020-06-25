@@ -29,7 +29,7 @@ function onTrigger(caller, player, target)
 	local z_pos = targ:getCharVar("prev_z");
 	local rot_pos = targ:getCharVar("prev_rot");
 	targ:setPos( x_pos, y_pos, z_pos, rot_pos, zoneId );
-    if (targ:getID() ~= player:getID()) then
+    if (targ:getID() ~= caller) then
         tpz.commands.print(caller, player, string.format("%s was returned to zone %i.", targ:getName(), zoneId))
     end
 end

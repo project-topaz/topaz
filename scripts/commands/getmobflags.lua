@@ -4,35 +4,18 @@
 --       MUST either target a mob first or else specify a Mob ID.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 5,
     parameters = "i"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!getmobflags {mob ID}")
-end
-
 function onTrigger(caller, player, target)
-    -- validate target
-    local targ
-    if not target then
-        targ = player:getCursorTarget()
-        if not targ or not targ:isMob() then
-            error(player, "You must either supply a mob ID or target a mob.")
-            return
-        end
-    else
-        targ = GetMobByID(target)
-        if not targ then
-            error(player, "Invalid mob ID.")
-            return
-        end
-    end
+    local targ = tpz.commands.getTargetMob(caller, player, target)
 
     -- set flags
     local flags = targ:getMobFlags()
-    player:PrintToPlayer(string.format("%s's flags: %u", targ:getName(), flags))
+    tpz.commands.print(caller, player, string.format("%s's flags: %u", targ:getName(), flags))
 end

@@ -3,6 +3,8 @@
 -- desc: Hides the GM from other players.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 2,
@@ -14,7 +16,7 @@ function onTrigger(caller, player, cmd)
     local isHidden = player:getCharVar("GMHidden")
     if (cmd ~= nil) then
         if (cmd == "status") then
-            player:PrintToPlayer(string.format('Current hide status: %s', tostring(isHidden)))
+            tpz.commands.print(caller, player, string.format('Current hide status: %s', tostring(isHidden)))
             return
         end
     end
@@ -28,12 +30,12 @@ function onTrigger(caller, player, cmd)
 
     -- If hidden animate us beginning our hide..
     if (isHidden == 1) then
-        player:setCharVar( "GMHidden", 1 )
+        player:setCharVar("GMHidden", 1)
         player:setGMHidden(true)
-        player:PrintToPlayer( "You are now GM hidden from other players." )
+        tpz.commands.print(caller, player, "You are now GM hidden from other players.")
     else
-        player:setCharVar( "GMHidden", 0 )
+        player:setCharVar("GMHidden", 0)
         player:setGMHidden(false)
-        player:PrintToPlayer( "You are no longer GM hidden from other players." )
+        tpz.commands.print(caller, player, "You are no longer GM hidden from other players.")
     end
 end

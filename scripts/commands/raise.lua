@@ -25,7 +25,7 @@ function onTrigger(caller, player, power, target)
     -- raise target
     if (targ:isDead()) then
         targ:sendRaise(power)
-        if (targ:getID() ~= player:getID()) then
+        if (targ:getID() ~= caller) then
             tpz.commands.print(caller, player, string.format("Raise %i sent to %s.", power, targ:getName()))
         end
     else

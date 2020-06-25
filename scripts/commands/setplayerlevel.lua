@@ -33,7 +33,7 @@ function onTrigger(caller, player, arg1, arg2)
 
     -- set level
     targ:setLevel( level )
-    if (targ:getID() ~= player:getID()) then
+    if (targ:getID() ~= caller) then
         tpz.commands.print(caller, player, string.format("Set %s's level to %i.", targ:getName(), level))
     end
 end

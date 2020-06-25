@@ -4,46 +4,32 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/titles")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 2,
-    parameters = "ss"
+    parameters = "st"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!hastitle <title ID> {player}")
-end
-
 function onTrigger(caller, player, titleId, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
+    local usage = "!hastitle <title ID> {player}"
 
     -- validate titleId
     if (titleId == nil) then
-        error(player, "You must supply a title ID.")
+        tpz.commands.error(caller, player, "You must supply a title ID.", usage)
         return
     end
     titleId = tonumber(titleId) or tpz.title[string.upper(titleId)]
     if (titleId == nil or titleId < 1) then
-        error(player, "Invalid title ID.")
+        tpz.commands.error(caller, player, "Invalid title ID.", usage)
         return
     end
 
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
-    end
-
     if (targ:hasTitle(titleId)) then
-        player:PrintToPlayer(string.format("%s has title %s.", targ:getName(), titleId))
+        tpz.commands.print(caller, player, string.format("%s has title %s.", targ:getName(), titleId))
     else
-        player:PrintToPlayer(string.format("%s does not have title %s.", targ:getName(), titleId))
+        tpz.commands.print(caller, player, string.format("%s does not have title %s.", targ:getName(), titleId))
     end
 end

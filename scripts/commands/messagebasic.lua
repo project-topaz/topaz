@@ -3,21 +3,20 @@
 -- desc: Injects a message basic packet.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 4,
     parameters = "iii"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!messagebasic <message ID> {param1} {param2}")
-end
-
 function onTrigger(caller, player, msgId, param1, param2)
+    local usage = "!messagebasic <message ID> {param1} {param2}"
+
     -- validate msgId
     if (msgId == nil) then
-        error(player, "You must provide a message ID.")
+        tpz.commands.error(caller, player, "You must provide a message ID.", usage)
         return
     end
 

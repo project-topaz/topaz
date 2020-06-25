@@ -5,50 +5,34 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/keyitems")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 2,
-    parameters = "ss"
+    parameters = "st"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!haskeyitem <key item ID> {player}")
-end
-
 function onTrigger(caller, player, keyId, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
+    local usage = "!haskeyitem <key item ID> {player}"
+
     -- validate itemId
     if (keyId == nil) then
-        error(player, "You must provide a key item ID.")
+        tpz.commands.error(caller, player, "You must provide a key item ID.", usage)
         return
     else
         keyId = tonumber(keyId) or tpz.ki[string.upper(keyId)]
         if (keyId == nil or keyId < 1) then
-            error(player, "Invalid key item ID.")
-            return
-        end
-    end
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player:getCursorTarget()
-        if (targ == nil or not targ:isPC()) then
-            targ = player
-        end
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
+            tpz.commands.error(caller, player, "Invalid key item ID.", usage)
             return
         end
     end
 
     -- report hasKeyItem
     if (targ:hasKeyItem(keyId)) then
-        player:PrintToPlayer(string.format("%s has key item %i.", targ:getName(), keyId))
+        tpz.commands.print(caller, player, string.format("%s has key item %i.", targ:getName(), keyId))
     else
-        player:PrintToPlayer(string.format("%s does not have key item %i.", targ:getName(), keyId))
+        tpz.commands.print(caller, player, string.format("%s does not have key item %i.", targ:getName(), keyId))
     end
 end
