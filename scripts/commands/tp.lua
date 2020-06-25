@@ -30,7 +30,7 @@ function onTrigger(caller, player, tp, target)
     if (pet ~= nil) then
         pet:setTP(tp)
     end
-    if(targ:getID() ~= player:getID()) then
+    if(targ:getID() ~= caller) then
         tpz.commands.print(caller, player, string.format("Set %s's TP to %i.", targ:getName(), targ:getTP()))
     end
 end

@@ -25,7 +25,7 @@ function onTrigger(caller, player, target)
 
     -- zone target
     targ:setPos(0, 0, 0, 0, zoneId)
-    if (targ:getID() ~= player:getID()) then
+    if (targ:getID() ~= caller) then
         tpz.commands.print(caller, player, string.format("%s was returned to zone %i.", targ:getName(), zoneId))
     end
 end

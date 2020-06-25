@@ -4,6 +4,7 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")
+require("scripts/globals/commands")
 
 cmdprops =
 {
@@ -11,12 +12,9 @@ cmdprops =
     parameters = "ss"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!mobsub {mob ID} <animation ID>")
-end
-
 function onTrigger(caller, player, arg1, arg2)
+    local usage = "!mobsub {mob ID} <animation ID>"
+    
     local target
     local animationId
 
@@ -26,33 +24,19 @@ function onTrigger(caller, player, arg1, arg2)
     elseif (arg1 ~= nil) then
         animationId = arg1
     else
-        error(player, "You must provide an animation ID.")
+        tpz.commands.error(caller, player, "You must provide an animation ID.", usage)
         return
     end
 
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player:getCursorTarget()
-        if (targ == nil or not targ:isMob()) then
-            error(player, "You must either provide a mob ID or target a mob.")
-            return
-        end
-    else
-        targ = GetMobByID(target)
-        if (targ == nil) then
-            error(player, "Invalid mob ID.")
-            return
-        end
-    end
+    local targ = tpz.commands.getTargetMob(caller, player, target)
 
     -- validate animationId
     animationId = tonumber(animationId) or tpz.anim[string.upper(animationId)]
     if (animationId == nil or animationId < 0) then
-        error(player, "Invalid animation ID.")
+        tpz.commands.error(caller, player, "Invalid animation ID.", usage)
         return
     end
 
     -- set animation sub
-    targ:AnimationSub( animationId )
+    targ:AnimationSub(animationId)
 end

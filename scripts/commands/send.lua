@@ -365,7 +365,7 @@ function onTrigger(caller, player, target, destination)
 
     -- send target to destination
     targ:setPos(x, y, z, rot, zone)
-    if (targ:getID() ~= player:getID()) then
+    if (targ:getID() ~= caller) then
         tpz.commands.print(caller, player, string.format("Sent %s to zone %i.", targ:getName(), zone))
     end
 end

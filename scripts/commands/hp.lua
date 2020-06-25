@@ -27,7 +27,7 @@ function onTrigger(caller, player, hp, target)
     -- set hp
     if (targ:getHP() > 0) then
         targ:setHP(hp)
-        if(targ:getID() ~= player:getID()) then
+        if(targ:getID() ~= caller) then
             tpz.commands.print(caller, player, string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
         end
     else
