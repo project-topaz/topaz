@@ -14,7 +14,7 @@ end
 
 function onTrigger(player,npc)
     if player:getCharVar("SeeingBloodRed") == 3 then
-        player:startEvent(14)
+        --player:startEvent(14)
     end
 end
 
