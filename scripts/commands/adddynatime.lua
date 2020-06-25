@@ -13,7 +13,7 @@ require("scripts/globals/commands")
 
 function onTrigger(caller, player, minutes, target)
     local usage = "!adddynatime <minutes> {player}"
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- target must be in dynamis
     local effect = targ:getStatusEffect(tpz.effect.DYNAMIS)

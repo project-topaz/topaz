@@ -30,7 +30,7 @@ local function AddAllAttachments(target)
 end
 
 function onTrigger(caller, player, target)
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     AddAllAttachments(targ)
     tpz.commands.print(caller, player, string.format("%s now has all attachments.",targ:getName()))

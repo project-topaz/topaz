@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, player, amount, target)
     local usage = "!takegil <amount> {player}"
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate amount
     local oldAmount = targ:getGil()

@@ -50,7 +50,7 @@ function onTrigger(caller, player, target)
         -- Trust spells are in their own command.
     }
 
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- add all spells
     local save = true

@@ -14,7 +14,7 @@ cmdprops =
 }
 
 function onTrigger(caller, player, target)
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- add all mount key items
     for i = tpz.ki.CHOCOBO_COMPANION, tpz.ki.CHOCOBO_COMPANION + 26 do

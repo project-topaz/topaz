@@ -24,7 +24,7 @@ function onTrigger(caller, player, target)
         1914, 1915, 1916, 1917, 1918, 2302, 2303, 2304, 2305, 2307, 2308, 2309
     }
 
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- add maps
     for _, v in ipairs(keyIds) do

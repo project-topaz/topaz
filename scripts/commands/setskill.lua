@@ -14,7 +14,7 @@ cmdprops =
 
 function onTrigger(caller, player, skillName, skillLV, target)
     local usage = "!setskill <skill name or ID> <skill level> {player}"
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     if (skillName == nil) then
         tpz.commands.error(caller, player, "You must specify a skill to set!", usage)

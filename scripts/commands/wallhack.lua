@@ -12,7 +12,7 @@ cmdprops =
 }
 
 function onTrigger(caller, player, target)
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- toggle wallhack for target
     if (targ:checkNameFlags(0x00000200)) then
