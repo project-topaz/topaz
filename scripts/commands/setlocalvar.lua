@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, player, arg1, arg2, arg3, arg4)
     local usage = "!setlocalvar <variable name> <value> {'player', 'mob', or 'npc'} {name or ID}"
-    local targ = tpz.commands.getTarget(caller, player)
+    local targ = tpz.commands.getTarget(caller, player, target)
 
     local zone = player:getZone()
     local varName = arg1

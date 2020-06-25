@@ -14,7 +14,7 @@ cmdprops =
 
 function onTrigger(caller, player, flags, target)
     local usage = "!setmobflags <flags> {mob ID}"
-    local targ = tpz.commands.getTargetMob(player, target)
+    local targ = tpz.commands.getTargetMob(caller, player, target)
 
     -- validate flags
     if (flags == nil) then

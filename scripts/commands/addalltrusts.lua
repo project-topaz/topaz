@@ -21,7 +21,7 @@ function onTrigger(caller, player, target)
         1010,1011,1012,1013,1014,1015,1016
     }
 
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- add all spells
     local save = true

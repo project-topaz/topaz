@@ -13,7 +13,7 @@ cmdprops =
 }
 
 function onTrigger(caller, player, target)
-    local targ = tpz.commands.getTargetPC(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!return {player}"
 
     -- get previous zone

@@ -14,7 +14,7 @@ cmdprops =
 function onTrigger(caller, player, mentorMode, target)
     local usage = "!setmerits <amount> {player}"
     local usage_extended = "mode: 0 = Not a mentor, 1 = Unlocked but inactive."
-    local targ = tpz.commands.getTargetPC(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate mode
     if (mentorMode == nil or mentorMode < 0 or mentorMode > 1) then

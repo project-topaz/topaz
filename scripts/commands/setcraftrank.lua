@@ -14,7 +14,7 @@ cmdprops =
 
 function onTrigger(caller, player, craftName, tier, target)
     local usage = "!setcraftRank <craft skill or ID> <craft rank> {player}"
-    local targ = tpz.commands.getTargetPC(caller, player)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     if craftName == nil then
         tpz.commands.error(caller, player, "You must specify a craft skill to set!", usage)

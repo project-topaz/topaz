@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, player, tp, target)
     local usage = "!tp <amount> {player}"
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTarget(caller, player, target)
 
     -- validate amount
     if (tp == nil or tonumber(tp) == nil) then

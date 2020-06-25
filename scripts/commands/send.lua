@@ -296,7 +296,7 @@ end
 -- desc: Called when this command is invoked.
 ---------------------------------------------------------------------------------------------------
 function onTrigger(caller, player, target, destination)
-    local targ = tpz.commands.getTargetPC(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!send <player to send> <destination player or zone>"
     local x = 0
     local y = 0

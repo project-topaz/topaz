@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, player, flags, target)
     local usage = "!setflag <flags> {player}"
-    local targ = tpz.commands.getTargetPC(caller, player)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate flags
     if (flags == nil) then

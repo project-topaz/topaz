@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, player, target, rank)
     local usage = "!setrank <player> <new rank>"
-    local targ = tpz.commands.getTargetPC(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     if rank == nil or (rank < 1 or rank > 10) then
         tpz.commands.error(caller, player, "Improper rank passed. Valid Values: 1 to 10", usage)

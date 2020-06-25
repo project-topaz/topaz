@@ -14,7 +14,7 @@ cmdprops =
 function onTrigger(caller, player, model, slot, target)
     local usage = "!setplayermodel <model> <slot> {player}"
     local usage_extended = "Slots: 0=main 1=sub 2=ranged 3=ammo 4=head 5=body 6=hands 7=legs 8=feet"
-    local targ = tpz.commands.getTargetPC(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate model
     if (model == nil) then

@@ -3,28 +3,16 @@
 -- desc: Releases the player from current events.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "s"
+    parameters = "t"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!release {name}")
-end
+function onTrigger(caller, player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
-function onTrigger(caller, player, name)
-    local target
-    if name == nil then
-        target = player
-    else
-        target = GetPlayerByName(name)
-        if target == nil then
-            error(player, string.format("Player named '%s' not found!", name))
-            return
-        end
-    end
-
-    target:release()
+    targ:release()
 end

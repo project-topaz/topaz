@@ -19,7 +19,7 @@ tpz.commands.print = function(caller, target, msg)
     end
 end
 
-tpz.commands.getTarget = function(player, target)
+tpz.commands.getTarget = function(caller, player, target)
     -- validate target
     local targ
     local cursor_target = player:getCursorTarget()
@@ -48,8 +48,8 @@ tpz.commands.getTarget = function(player, target)
     return targ
 end
 
-tpz.commands.getTargetPC = function(player, target)
-    local targ = tpz.commands.getTarget(player, target)
+tpz.commands.getTargetPC = function(caller, player, target)
+    local targ = tpz.commands.getTarget(caller, player, target)
     if targ and targ:isPC() then
         return targ
     end
@@ -57,8 +57,8 @@ tpz.commands.getTargetPC = function(player, target)
     return nil
 end
 
-tpz.commands.getTargetMob = function(player, target)
-    local targ = tpz.commands.getTarget(player, target)
+tpz.commands.getTargetMob = function(caller, player, target)
+    local targ = tpz.commands.getTarget(caller, player, target)
     if targ and targ:isMob() then
         return targ
     end
@@ -66,8 +66,8 @@ tpz.commands.getTargetMob = function(player, target)
     return nil
 end
 
-tpz.commands.getTargetNPC = function(player, target)
-    local targ = tpz.commands.getTarget(player, target)
+tpz.commands.getTargetNPC = function(caller, player, target)
+    local targ = tpz.commands.getTarget(caller, player, target)
     if targ and targ:isNPC() then
         return targ
     end

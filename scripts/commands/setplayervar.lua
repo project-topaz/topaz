@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, player, target, variable, value)
     local usage = "!setplayervar <player> <variable> <value>"
-    local targ = tpz.commands.getTargetPC(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate var
     if (variable == nil) then

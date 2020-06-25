@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, player, arg1, arg2)
     local usage = "!setplayerlevel {player} <level>"
-    local targ = tpz.commands.getTargetPC(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     local level
 

@@ -13,7 +13,7 @@ require("scripts/globals/commands")
 
 function onTrigger(caller, player, currency, amount, target)
     local usage = "!addcurrency <currency type> <amount> {player}"
-    local targ = tpz.commands.getTarget(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate currency
     -- note: getCurrency does not ever return nil at the moment.  will work on this in future update.

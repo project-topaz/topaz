@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, player, amount, target)
     local usage = "!setmerits <amount> {player}"
-    local targ = tpz.commands.getTargetPC(player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate amount
     if (amount == nil or amount < 0) then
