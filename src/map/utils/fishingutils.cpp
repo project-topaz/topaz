@@ -86,7 +86,7 @@ namespace fishingutils
     {
         return MessageOffset[ZoneID];
     }
-
+    /*
     const char *GetCharIP(CCharEntity* PChar)
     {
         uint32 client_addr = 0;
@@ -98,7 +98,7 @@ namespace fishingutils
         }
         return "0.0.0.0";
     }
-
+    */
     void AddFishingLog(CCharEntity* PChar)
     {
         char* catchName = "Unknown";
@@ -122,8 +122,8 @@ namespace fishingutils
             break;
         }
         
-        const char* fmtQuery = "INSERT into fishing_log (zone,area,charid,charname,charlevel,charskill,pos_x,pos_y,pos_z,catchtype,catchid,catchname,catchskill,regen,ip) "
-                               "VALUES(%u,%u,%u,'%s',%u,%u,%.3f,%.3f,%.3f,%u,%u,'%s',%u,%u,'%s')";
+        const char* fmtQuery = "INSERT into fishing_log (zone,area,charid,charname,charlevel,charskill,pos_x,pos_y,pos_z,catchtype,catchid,catchname,catchskill,regen) "
+                               "VALUES(%u,%u,%u,'%s',%u,%u,%.3f,%.3f,%.3f,%u,%u,'%s',%u,%u)";
         if (Sql_Query(SqlHandle, fmtQuery,
             PChar->getZone(),
             PChar->hookedFish->areaid,
@@ -138,8 +138,7 @@ namespace fishingutils
             PChar->hookedFish->catchid,
             catchName,
             PChar->hookedFish->catchlevel,
-            PChar->hookedFish->regen,
-            GetCharIP(PChar)) == SQL_ERROR)
+            PChar->hookedFish->regen) == SQL_ERROR)
         {
             ShowError("cmdhandler::call: Failed to log fishing catch record.\n");
         }
