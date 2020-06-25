@@ -3,29 +3,29 @@
 -- desc: set player npc or mob local variable and value.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 3,
     parameters = "siss"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setlocalvar <variable name> <value> {'player', 'mob', or 'npc'} {name or ID}")
-end
-
 function onTrigger(caller, player, arg1, arg2, arg3, arg4)
+    local usage = "!setlocalvar <variable name> <value> {'player', 'mob', or 'npc'} {name or ID}"
+    local targ = tpz.commands.getTarget(caller, player)
+
     local zone = player:getZone()
     local varName = arg1
     local varValue = arg2
 
     if varName == nil then
-        error(player, "You must provide a variable name.")
+        tpz.commands.error(caller, player, "You must provide a variable name.", usage)
         return
     end
 
     if varValue == nil then
-        error(player, "No varaiable value given for target.")
+        tpz.commands.error(caller, player, "No varaiable value given for target.", usage)
         return
     end
 
@@ -46,19 +46,19 @@ function onTrigger(caller, player, arg1, arg2, arg3, arg4)
         elseif entity_type == 'PLAYER' then
             targ = GetPlayerByName(arg4)
         else
-            error(player, "Invalid entity type.")
+            tpz.commands.error(caller, player, "Invalid entity type.", usage)
             return
         end
     else
-        error(player, "Need to specify a target.")
+        tpz.commands.error(caller, player, "Need to specify a target.", usage)
         return
     end
 
     if targ == nil then
-        error(player, "Invalid target.")
+        tpz.commands.error(caller, player, "Invalid target.", usage)
         return
     end
 
     targ:setLocalVar(varName, varValue)
-    player:PrintToPlayer(string.format("%s's variable '%s' : %i", targ:getName(), varName, varValue))
+    tpz.commands.print(caller, player, string.format("%s's variable '%s' : %i", targ:getName(), varName, varValue))
 end

@@ -2,66 +2,45 @@
 -- func: setcraftRank <craft skill or ID> <craft rank> <target>
 -- desc: sets target's RANK of specified craft skill
 ---------------------------------------------------------------------------------------------------
+
 require("scripts/globals/status")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 1,
-    parameters = "sss"
+    parameters = "sst"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setcraftRank <craft skill or ID> <craft rank> {player}")
-end
-
 function onTrigger(caller, player, craftName, tier, target)
+    local usage = "!setcraftRank <craft skill or ID> <craft rank> {player}"
+    local targ = tpz.commands.getTargetPC(caller, player)
+
     if craftName == nil then
-        error(player, "You must specify a craft skill to set!")
+        tpz.commands.error(caller, player, "You must specify a craft skill to set!", usage)
         return
     end
 
     local skillID = tonumber(craftName) or tpz.skill[string.upper(craftName)]
-    local targ = nil
-
     if skillID == nil or skillID < 48 or skillID > 57 then
-        error(player, "You must specify a valid craft skill.")
+        tpz.commands.error(caller, player, "You must specify a valid craft skill.", usage)
         return
     end
 
     if tier == nil then
-        error(player, "You must specify a rank to set the craft skill to.")
+        tpz.commands.error(caller, player, "You must specify a rank to set the craft skill to.", usage)
         return
     end
 
     local craftRank = tonumber(tier) or tpz.craftRank[string.upper(tier)]
     if craftRank == nil then
-        error(player, "Invalid craft rank!")
+        tpz.commands.error(caller, player, "Invalid craft rank!", usage)
         return
-    end
-
-    if target == nil then
-        if player:getCursorTarget() == nil then
-            targ = player
-        else
-            if player:getCursorTarget():isPC() then
-                targ = player:getCursorTarget()
-            else
-                error(player, "You must target a player or specify a name.")
-                return
-            end
-        end
-    else
-        targ = GetPlayerByName(target)
-        if targ == nil then
-            player:PrintToPlayer(string.format("Player named '%s' not found!", target))
-            return
-        end
     end
 
     targ:setSkillRank(skillID, craftRank)
     targ:PrintToPlayer(string.format("Your %s craft skill rank has been adjusted to: %s", craftName, craftRank))
     if targ ~= player then
-        player:PrintToPlayer(string.format("%s's new skillID '%s' rank: %u", targ:getName(), craftName, targ:getSkillRank(skillID)))
+        tpz.commands.print(caller, player, string.format("%s's new skillID '%s' rank: %u", targ:getName(), craftName, targ:getSkillRank(skillID)))
     end
 end

@@ -3,38 +3,25 @@
 -- desc: Sets the target players merit count.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setmerits <amount> {player}")
-end
-
 function onTrigger(caller, player, amount, target)
+    local usage = "!setmerits <amount> {player}"
+    local targ = tpz.commands.getTargetPC(player, target)
 
     -- validate amount
     if (amount == nil or amount < 0) then
-        error(player, "Invalid amount.")
+        tpz.commands.error(caller, player, "Invalid amount.", usage)
         return
-    end
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
     end
 
     -- set merits
     targ:setMerits(amount)
-    player:PrintToPlayer( string.format("%s now has %i merits.", targ:getName(), targ:getMeritCount() ) )
+    tpz.commands.print(caller, player, string.format("%s now has %i merits.", targ:getName(), targ:getMeritCount()))
 end

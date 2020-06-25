@@ -222,6 +222,7 @@ int32 CCommandHandler::call(uint32 caller, CCharEntity* PChar, const int8* comma
                 lua_pushnil(m_LState);
                 return 0;
             }
+            break;
         case 'b':
             lua_pushstring(m_LState, (const char*)commandline);
             ++cntparam;
