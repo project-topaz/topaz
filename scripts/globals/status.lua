@@ -1553,6 +1553,10 @@ tpz.mod =
     CURATIVE_RECANTATION            = 970,
     PRIMEVAL_ZEAL                   = 971,
 
+    PENGUIN_RING_EFFECT            = 1000, -- +2 on fishing arrow delay / fish movement for mini - game
+    ALBATROSS_RING_EFFECT          = 1001, -- adds 30 seconds to mini - game time
+    PELICAN_RING_EFFECT            = 1002, -- adds extra skillup roll for fishing
+
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 - 825 used by WS DMG mods these are not spares.
     -- SPARE = 958, -- stuff

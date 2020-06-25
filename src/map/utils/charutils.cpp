@@ -5055,4 +5055,48 @@ namespace charutils
         return 0;
     }
 
+    // GetVar was changed to GetCharVar. We have to find all "GetVar" and substitute them with GetCharVar
+
+    int32 GetVar(CCharEntity* PChar, const char* var)
+    {
+        const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
+
+        int32 ret = Sql_Query(SqlHandle, fmtQuery, PChar->id, var);
+
+        if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 &&
+            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            return Sql_GetIntData(SqlHandle, 0);
+        }
+        return 0;
+    }
+
+    void AddVar(CCharEntity* PChar, const char* var, int32 value)
+    {
+        if (PChar == nullptr)
+            return;
+        const char* Query = "INSERT INTO char_vars SET charid = %u, varname = '%s', value = %i ON DUPLICATE KEY UPDATE value = value + %i;";
+
+        Sql_Query(SqlHandle, Query,
+            PChar->id,
+            var,
+            value,
+            value);
+    }
+
+    void SetVar(CCharEntity* PChar, const char* var, int32 value)
+    {
+        if (PChar == nullptr)
+            return;
+
+        if (value == 0)
+        {
+            Sql_Query(SqlHandle, "DELETE FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;", PChar->id, var);
+        }
+        else
+        {
+            Sql_Query(SqlHandle, "INSERT INTO char_vars SET charid = %u, varname = '%s', value = %i ON DUPLICATE KEY UPDATE value = %i;", PChar->id, var, value, value);
+        }
+    }
 }; // namespace charutils

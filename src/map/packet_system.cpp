@@ -730,7 +730,7 @@ void SmallPacket0x01A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     break;
     case 0x0E: // Fishing
     {
-        if(PChar->StatusEffectContainer->HasPreventActionEffect())
+        if (PChar->StatusEffectContainer->HasPreventActionEffect())
             return;
 
         fishingutils::StartFishing(PChar);
@@ -6033,7 +6033,7 @@ void SmallPacket0x10F(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 void SmallPacket0x110(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
     //PrintPacket(data);
-    if (PChar->animation != ANIMATION_FISHING_START)
+    if (PChar->animation < ANIMATION_NEW_FISHING_START || PChar->animation > ANIMATION_NEW_FISHING_STOP)
         return;
 
     //uint32 charid = data.ref<uint32>(0x04);

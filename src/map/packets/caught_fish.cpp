@@ -21,23 +21,30 @@
 ===========================================================================
 */
 
-#ifndef _CFISHINGPACKET_H
-#define _CFISHINGPACKET_H
+#include "../../common/socket.h"
 
-#include "../../common/cbasetypes.h"
+#include <string.h>
 
-#include "basic.h"
+#include "caught_fish.h"
 
-/************************************************************************
-*																		*
-*  																		*
-*																		*
-************************************************************************/
+#include "../entities/charentity.h"
 
-class CFishingPacket : public CBasicPacket
+
+CCaughtFishPacket::CCaughtFishPacket(CCharEntity * PChar, uint16 param0, uint16 messageID, uint8 count) 
 {
-public:
-    CFishingPacket(uint16 stamina, uint16 regen, uint16 response, uint16 hitDmg, uint16 arrowDelay, uint16 missRegen, uint16 gameTime, uint8 sense, uint32 special);
-};
+    this->type = 0x27;
+    this->size = 0x38;
 
-#endif
+    //TPZ_DEBUG_BREAK_IF(PChar->name.size() > 15);
+
+    ref<uint32>(0x04) = PChar->id;
+    ref<uint32>(0x08) = PChar->targid;
+
+    ref<uint16>(0x0A) = messageID + 0x8000;
+    ref<uint16>(0x10) = param0;
+
+    ref<uint8>(0x14)  = count;
+    ref<uint32>(0x1C) = 0x00;
+
+	memcpy(data+(0x20), PChar->GetName(), PChar->name.size());
+}
