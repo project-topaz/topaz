@@ -3,39 +3,25 @@
 -- desc: Removes a spell from the players spell list.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!delspell <spellID> {player}")
-end
-
 function onTrigger(caller, player, spellId, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
+    local usage = "!delspell <spellID> {player}"
 
     -- validate spellId
     if (spellId == nil) then
-        error(player, "Invalid spellID.")
+        tpz.commands.error(caller, player, "Invalid spellID.", usage)
         return
-    end
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
     end
 
     -- add spell
     targ:delSpell(spellId)
-    player:PrintToPlayer(string.format("Deleted spell %i from %s.",spellId,targ:getName()))
-
+    tpz.commands.print(caller, player, string.format("Deleted spell %i from %s.",spellId,targ:getName()))
 end

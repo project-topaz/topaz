@@ -50,7 +50,7 @@ end
 
 tpz.commands.getTargetPC = function(caller, player, target)
     local targ = tpz.commands.getTarget(caller, player, target)
-    if targ and targ:isPC() then
+    if (targ and targ:isPC()) then
         return targ
     end
 
@@ -59,7 +59,7 @@ end
 
 tpz.commands.getTargetMob = function(caller, player, target)
     local targ = tpz.commands.getTarget(caller, player, target)
-    if targ and targ:isMob() then
+    if (targ and targ:isMob()) then
         return targ
     end
 
@@ -68,7 +68,16 @@ end
 
 tpz.commands.getTargetNPC = function(caller, player, target)
     local targ = tpz.commands.getTarget(caller, player, target)
-    if targ and targ:isNPC() then
+    if (targ and targ:isNPC()) then
+        return targ
+    end
+
+    return nil
+end
+
+tpz.commands.getTargetNonNPC = function(caller, player, target)
+    local targ = tpz.commands.getTarget(caller, player, target)
+    if (targ and targ:isNPC() == false) then
         return targ
     end
 
