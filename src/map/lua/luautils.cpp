@@ -81,6 +81,7 @@
 #include <optional>
 #include "../battlefield.h"
 #include "../daily_system.h"
+#include "../packets/char_emotion.h"
 
 namespace luautils
 {
@@ -4547,6 +4548,26 @@ namespace luautils
         CCharEntity* player = (CCharEntity*)PLuaBaseEntity->GetBaseEntity();
         lua_pushinteger(L, daily::SelectItem(player, (uint8)lua_tointeger(L, 2)));
         return 1;
+    }
+
+    void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID)
+    {
+        lua_prepscript("scripts/globals/player.lua");
+
+        if (prepFile(File, "onPlayerEmote"))
+            return;
+
+        CLuaBaseEntity LuaBaseEntity(PChar);
+        Lunar<CLuaBaseEntity>::push(LuaHandle, &LuaBaseEntity);
+
+        lua_pushinteger(LuaHandle, (uint8)EmoteID);
+
+        if (lua_pcall(LuaHandle, 2, 0, 0))
+        {
+            ShowError("luautils::onEmote: %s\n", lua_tostring(LuaHandle, -1));
+            lua_pop(LuaHandle, 1);
+            return;
+        }
     }
 
 }; // namespace luautils
