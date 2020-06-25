@@ -8,5 +8,5 @@ function onMobDeath(mob, player, isKiller)
 end;
 
 function onMobDespawn(mob)
-    tpz.mob.phOnDespawn(mob, ID.mob.GYRE_CARLIN_PH, 12, math.random(3600*4, 3600*5)) -- 4-5 hours.
+    tpz.mob.phOnDespawn(mob, ID.mob.GYRE_CARLIN_PH, 12, 3600*4) -- 4-5 hours.
 end;
