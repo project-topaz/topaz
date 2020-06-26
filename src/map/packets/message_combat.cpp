@@ -21,12 +21,12 @@
 
 #include "../../common/socket.h"
 
-#include "message_finish.h"
+#include "message_combat.h"
 
 #include "../entities/baseentity.h"
 
 
-CMessageFinishPacket::CMessageFinishPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param0, int32 param1, uint16 messageID)
+CMessageCombatPacket::CMessageCombatPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param0, int32 param1, uint16 messageID)
 {
 	this->type = 0x2d;
 	this->size = 0x0e;

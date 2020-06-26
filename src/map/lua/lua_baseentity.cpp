@@ -122,7 +122,7 @@
 #include "../packets/menu_merit.h"
 #include "../packets/menu_raisetractor.h"
 #include "../packets/message_basic.h"
-#include "../packets/message_finish.h"
+#include "../packets/message_combat.h"
 #include "../packets/message_name.h"
 #include "../packets/message_special.h"
 #include "../packets/message_standard.h"
@@ -9628,7 +9628,7 @@ int32 CLuaBaseEntity::messageFinish(lua_State* L)
     auto p1 = (int32)lua_tointeger(L, 3);
     auto message = (int16)lua_tointeger(L, 4);
 
-    PChar->pushPacket(new CMessageFinishPacket(PTarget, PChar, p0, p1, message));
+    PChar->pushPacket(new CMessageCombatPacket(PTarget, PChar, p0, p1, message));
 
     return 0;
 }
