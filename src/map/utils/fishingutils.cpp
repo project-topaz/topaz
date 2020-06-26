@@ -23,6 +23,7 @@
 
 #include <string.h> 
 #include <math.h>
+#include <cmath>
 
 #include "../ai/ai_container.h"
 #include "../entities/battleentity.h"
@@ -91,7 +92,7 @@ namespace fishingutils
     */
     void AddFishingLog(CCharEntity* PChar)
     {
-        char* catchName = "Unknown";
+        const char* catchName = "Unknown";
         switch (PChar->hookedFish->catchtype) {
         case FISHINGCATCHTYPE_SMALLFISH:
         case FISHINGCATCHTYPE_BIGFISH:
