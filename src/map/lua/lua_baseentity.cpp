@@ -135,6 +135,8 @@
 #include "../packets/shop_menu.h"
 #include "../packets/weather.h"
 
+#include "../packets/message_debug.h"
+
 #include "../utils/battleutils.h"
 #include "../utils/blueutils.h"
 #include "../utils/charutils.h"
@@ -9600,6 +9602,39 @@ inline int32 CLuaBaseEntity::sendTractor(lua_State *L)
 }
 
 /************************************************************************
+*  Function: debugMessage(...)
+*  Purpose :
+*  Example :
+*  Notes   :
+************************************************************************/
+int32 CLuaBaseEntity::debugMessage(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
+
+    CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
+
+    CBaseEntity* PTarget;
+    if (!lua_isnil(L, 1) && lua_isuserdata(L, 1))
+    {
+        CLuaBaseEntity* PLuaBaseEntity = Lunar<CLuaBaseEntity>::check(L, 1);
+        PTarget = PLuaBaseEntity->m_PBaseEntity;
+    }
+    else
+    {
+        PTarget = m_PBaseEntity;
+    }
+
+    auto p0 = (int32)lua_tointeger(L, 2);
+    auto p1 = (int32)lua_tointeger(L, 3);
+    auto message = (int16)lua_tointeger(L, 4);
+
+    PChar->pushPacket(new CMessageDebugPacket(PTarget, PChar, p0, p1, message));
+
+    return 0;
+}
+
+/************************************************************************
 *  Function: engage()
 *  Purpose : Instructs a Battle Entity to engage in combat
 *  Example : pet:engage(target)
@@ -14805,6 +14840,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendRaise),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendReraise),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendTractor),
+
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,debugMessage), 
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isEngaged),

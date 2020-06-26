@@ -86,3 +86,8 @@ tpz.trust.spawn = function(caster, spell)
 
     return 0
 end
+
+tpz.trust.message = function(mob, id)
+    local master = mob:getMaster()
+    master:debugMessage(mob, id, 0, 711)
+end

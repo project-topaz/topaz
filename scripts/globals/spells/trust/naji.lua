@@ -30,10 +30,14 @@ function onMobSpawn(mob)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000,
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.BURNING_BLADE)
+
+    tpz.trust.message(mob, 101)
 end
 
 function onMobDespawn(mob)
+    tpz.trust.message(mob, 111)
 end
 
 function onMobDeath(mob)
+    tpz.trust.message(mob, 111)
 end
