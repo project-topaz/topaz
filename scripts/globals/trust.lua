@@ -127,3 +127,15 @@ tpz.trust.synergyMessage = function(mob, synergies)
         tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
     end
 end
+
+-- For debugging and lining up synergies
+tpz.trust.dumpMessages = function(mob)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_1)
+    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_2)
+    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_3)
+    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_4)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPECIAL_MOVE_1)
+end

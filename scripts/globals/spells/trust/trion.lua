@@ -33,7 +33,11 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000,
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.RED_LOTUS_BLADE)
 
-    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    tpz.trust.synergyMessage(mob, {
+        [902] = tpz.trust.message_offset.SYNERGY_1, -- Curilla
+        [951] = tpz.trust.message_offset.SYNERGY_2, -- Rahal
+        [972] = tpz.trust.message_offset.SYNERGY_3, -- Halver
+    })
 end
 
 function onMobDespawn(mob)

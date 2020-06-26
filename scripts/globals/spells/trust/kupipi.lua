@@ -67,7 +67,10 @@ function onMobSpawn(mob)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000, ai.r.WS, ai.s.SPECIFIC, tpz.ws.STARLIGHT)
     
-    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    tpz.trust.synergyMessage(mob, {
+        [896] = tpz.trust.message_offset.SYNERGY_1, -- Shantotto
+        [935] = tpz.trust.message_offset.SYNERGY_2, -- Star Sibyl
+    })
 end
 
 function onMobDespawn(mob)
