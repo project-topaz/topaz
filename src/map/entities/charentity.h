@@ -25,6 +25,8 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../../common/cbasetypes.h"
 #include "../../common/mmo.h"
 
+#include "../utils/fishingutils.h"
+
 #include <map>
 #include <deque>
 #include <mutex>
@@ -367,6 +369,11 @@ public:
     void SetMoghancement(uint16 moghancementID);
     bool hasMoghancement(uint16 moghancementID);
     void UpdateMoghancement();
+
+    fishresponse_t* hookedFish;         // Currently hooked fish/item/monster
+    uint32          nextFishTime;       // When char is allowed to fish again     
+    uint32          lastCastTime;       // When char last cast their rod
+    uint32          fishingToken;       // To track fishing process
 
     /* State callbacks */
     virtual bool CanAttack(CBattleEntity* PTarget, std::unique_ptr<CBasicPacket>& errMsg) override;

@@ -19,16 +19,19 @@
 ===========================================================================
 */
 
-#ifndef _CFISHINGPACKET_H
-#define _CFISHINGPACKET_H
+#ifndef _CCAUGHTFISHPACKET_H_
+#define _CCAUGHTFISHPACKET_H_
 
 #include "../../common/cbasetypes.h"
 #include "basic.h"
 
-class CFishingPacket : public CBasicPacket
+class CCharEntity;
+
+class CCaughtFishPacket : public CBasicPacket
 {
 public:
-    CFishingPacket(uint16 stamina, uint16 regen, uint16 response, uint16 hitDmg, uint16 arrowDelay, uint16 missRegen, uint16 gameTime, uint8 sense, uint32 special);
+
+	CCaughtFishPacket(CCharEntity* PChar, uint16 param0, uint16 messageID, uint8 count);
 };
 
 #endif

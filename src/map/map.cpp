@@ -252,6 +252,11 @@ int32 do_init(int32 argc, char** argv)
 
     ShowStatus("The map-server is " CL_GREEN"ready" CL_RESET" to work...\n");
     ShowMessage("=======================================================================\n");
+    ShowMessage(CL_RED "THIS BRANCH IS FOR DEVELOPERS ONLY!\n");
+    ShowMessage(CL_RED "IT IS NOT READY FOR USE BY DOWNSTREAM SERVERS!\n");
+    ShowMessage(CL_RED "DO NOT PULL THIS BRANCH INTO YOU SERVER!\n");
+    ShowMessage(CL_RED "SUPPORT WILL NOT BE PROVIDED!\n" CL_RESET);
+
     return 0;
 }
 

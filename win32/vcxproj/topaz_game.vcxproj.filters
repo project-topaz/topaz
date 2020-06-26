@@ -872,6 +872,12 @@
     <ClInclude Include="..\..\src\map\char_recast_container.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\map\packets\caught_fish.h">
+      <Filter>Header Files\packets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\map\packets\caught_monster.h">
+      <Filter>Header Files\packets</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\map\packets\event_update_string.h">
       <Filter>Header Files\packets</Filter>
     </ClInclude>
@@ -1650,6 +1656,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\map\ai\controllers\trust_controller.cpp">
       <Filter>Source Files\ai\controllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\map\packets\caught_fish.cpp">
+      <Filter>Source Files\packets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\map\packets\caught_monster.cpp">
+      <Filter>Source Files\packets</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\map\packets\trust_sync.cpp">
       <Filter>Source Files\packets</Filter>
