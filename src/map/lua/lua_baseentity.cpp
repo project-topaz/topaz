@@ -9601,12 +9601,12 @@ inline int32 CLuaBaseEntity::sendTractor(lua_State *L)
 }
 
 /************************************************************************
-*  Function: messageFinish(...)
-*  Purpose :
-*  Example :
-*  Notes   :
+*  Function: messageCombat(...)
+*  Purpose : Various combat related messages are ended with this packet
+*  Example : master:messageCombat(mob, offset + id, 0, 711)
+*  Notes   : 
 ************************************************************************/
-int32 CLuaBaseEntity::messageFinish(lua_State* L)
+int32 CLuaBaseEntity::messageCombat(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
@@ -14840,7 +14840,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendReraise),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendTractor),
 
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageFinish),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageCombat),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isEngaged),

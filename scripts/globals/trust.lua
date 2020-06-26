@@ -103,7 +103,7 @@ end
 tpz.trust.message = function(mob, id)
     local master = mob:getMaster()
     local offset = (mob:getTrustID() - 896) * 100
-    master:messageFinish(mob, offset + id, 0, 711)
+    master:messageCombat(mob, offset + id, 0, 711)
 end
 
 tpz.trust.synergyMessage = function(mob, synergies)
