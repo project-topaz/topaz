@@ -31,7 +31,9 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000,
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.BURNING_BLADE)
 
-    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    tpz.trust.synergyMessage(mob, {
+        [900] = tpz.trust.message_offset.SYNERGY_1 -- Ayame
+    })
 end
 
 function onMobDespawn(mob)

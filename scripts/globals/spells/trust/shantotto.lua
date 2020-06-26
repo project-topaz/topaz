@@ -27,7 +27,6 @@ end
 function onMobDespawn(mob)
     tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
-
 function onMobDeath(mob)
     tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end

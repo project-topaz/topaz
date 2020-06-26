@@ -104,3 +104,26 @@ tpz.trust.message = function(mob, id)
     local offset = (mob:getTrustID() - 896) * 100
     master:messageFinish(mob, offset + id, 0, 711)
 end
+
+tpz.trust.synergyMessage = function(mob, synergies)
+    local messages = {}
+
+    local master = mob:getMaster()
+    local party = master:getPartyWithTrusts()
+    for _, member in ipairs(party) do
+        if member:getObjType() == tpz.objType.TRUST then
+            for id, message in pairs(synergies) do
+                if member:getTrustID() == id then
+                    table.insert(messages, message)
+                end
+            end
+        end
+    end
+
+    if table.getn(messages) > 0 then
+        tpz.trust.message(mob, messages[math.random(#messages)])
+    else
+        -- Defaults to regular spawn message
+        tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    end
+end
