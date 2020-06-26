@@ -3,6 +3,7 @@
 -----------------------------------------
 require("scripts/globals/ability")
 require("scripts/globals/gambits")
+require("scripts/globals/spell_data")
 require("scripts/globals/status")
 require("scripts/globals/trust")
 require("scripts/globals/weaponskillids")
@@ -32,7 +33,7 @@ function onMobSpawn(mob)
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.BURNING_BLADE)
 
     tpz.trust.synergyMessage(mob, {
-        [900] = tpz.trust.message_offset.SYNERGY_1 -- Ayame
+        [tpz.magic.spell.AYAME] = tpz.trust.message_offset.SYNERGY_1,
     })
 end
 

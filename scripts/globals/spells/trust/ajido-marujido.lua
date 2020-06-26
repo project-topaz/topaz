@@ -3,6 +3,7 @@
 -----------------------------------------
 require("scripts/globals/magic")
 require("scripts/globals/gambits")
+require("scripts/globals/spell_data")
 require("scripts/globals/status")
 require("scripts/globals/trust")
 -----------------------------------------
@@ -29,10 +30,11 @@ function onMobSpawn(mob)
                         ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.NONE, 30)
 
     tpz.trust.synergyMessage(mob, {
-        [896] = tpz.trust.message_offset.SYNERGY_1, -- Shantotto
-        [935] = tpz.trust.message_offset.SYNERGY_2, -- Star Sibyl
-        [952] = tpz.trust.message_offset.SYNERGY_3, -- Koru-Moru
-        -- TODO: There might be 5 synergy slots?
+        [tpz.magic.spell.SHANTOTTO] = tpz.trust.message_offset.SYNERGY_1,
+        [tpz.magic.spell.STAR_SIBYL] = tpz.trust.message_offset.SYNERGY_2,
+        [tpz.magic.spell.KORU_MORU] = tpz.trust.message_offset.SYNERGY_3,
+        [tpz.magic.spell.KARAHA_BARUHA] = tpz.trust.message_offset.SYNERGY_4,
+        [tpz.magic.spell.SEMIH_LAFIHNA] = tpz.trust.message_offset.SYNERGY_5,
     })
 end
 

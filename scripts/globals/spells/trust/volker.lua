@@ -3,6 +3,7 @@
 -----------------------------------------
 require("scripts/globals/ability")
 require("scripts/globals/gambits")
+require("scripts/globals/spell_data")
 require("scripts/globals/status")
 require("scripts/globals/trust")
 require("scripts/globals/weaponskillids")
@@ -24,9 +25,9 @@ function onMobSpawn(mob)
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.RED_LOTUS_BLADE)
 
     tpz.trust.synergyMessage(mob, {
-        [897] = tpz.trust.message_offset.SYNERGY_1, -- Naji
-        [937] = tpz.trust.message_offset.SYNERGY_2, -- Cid
-        [948] = tpz.trust.message_offset.SYNERGY_3, -- Klara
+        [tpz.magic.spell.NAJI] = tpz.trust.message_offset.SYNERGY_1,
+        [tpz.magic.spell.CID] = tpz.trust.message_offset.SYNERGY_2,
+        [tpz.magic.spell.KLARA] = tpz.trust.message_offset.SYNERGY_3,
     })
 end
 
