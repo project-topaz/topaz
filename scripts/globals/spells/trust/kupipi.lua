@@ -66,16 +66,14 @@ function onMobSpawn(mob)
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH, ai.r.MA, ai.s.SPECIFIC, FLASH, 60)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000, ai.r.WS, ai.s.SPECIFIC, tpz.ws.STARLIGHT)
+    
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
 end
 
 function onMobDespawn(mob)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
 
 function onMobDeath(mob)
-end
-
-function onMobDespawn(mob)
-end
-
-function onMobDeath(mob)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end

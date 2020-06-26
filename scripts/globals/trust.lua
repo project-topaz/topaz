@@ -10,6 +10,17 @@ require("scripts/globals/status")
 tpz = tpz or {}
 tpz.trust = tpz.trust or {}
 
+tpz.trust.message_offset =
+{
+    SPAWN          = 1,
+    SYNERGY_1      = 4,
+    SYNERGY_2      = 5,
+    SYNERGY_3      = 6,
+    SYNERGY_4      = 7,
+    DEATH          = 9,
+    DESPAWN        = 11,
+}
+
 tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
 
     -- TODO: Each of these scenarios has its own message
@@ -89,5 +100,6 @@ end
 
 tpz.trust.message = function(mob, id)
     local master = mob:getMaster()
-    master:debugMessage(mob, id, 0, 711)
+    local offset = (mob:getTrustID() - 896) * 100
+    master:debugMessage(mob, offset + id, 0, 711)
 end
