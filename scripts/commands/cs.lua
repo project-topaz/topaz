@@ -3,21 +3,20 @@
 -- desc: Starts the given event for the player.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 5,
     parameters = "ssssssssss"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!cs <csID> {op1} {op2} {op3} {op4} {op5} {op6} {op7} {op8} {texttable}")
-end
-
 function onTrigger(caller, player, csid, op1, op2, op3, op4, op5, op6, op7, op8, texttable)
+    local usage = "!cs <csID> {op1} {op2} {op3} {op4} {op5} {op6} {op7} {op8} {texttable}"
+
     -- validate csid
     if (csid == nil) then
-        error(player, "You must enter a cutscene id.")
+        tpz.commands.error(caller, player, "You must enter a cutscene id.", usage)
         return
     end
 

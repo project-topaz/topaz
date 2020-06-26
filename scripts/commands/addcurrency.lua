@@ -3,13 +3,13 @@
 -- desc: Adds the specified currency to the player
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 4,
     parameters = "sit"
 }
-
-require("scripts/globals/commands")
 
 function onTrigger(caller, player, currency, amount, target)
     local usage = "!addcurrency <currency type> <amount> {player}"

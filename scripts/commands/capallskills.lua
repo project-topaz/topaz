@@ -3,6 +3,8 @@
 -- desc: Caps all the players skills.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 2,
@@ -11,5 +13,5 @@ cmdprops =
 
 function onTrigger(caller, player)
     player:capAllSkills()
-    player:PrintToPlayer( 'All skills capped!' )
+    tpz.commands.print(caller, player, 'All skills capped!')
 end
