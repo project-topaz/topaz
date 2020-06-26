@@ -115,6 +115,7 @@ public:
 	int32 stepTo(lua_State* L);
     int32 pathThrough(lua_State* L);         // walk at normal speed through the given points
     int32 isFollowingPath(lua_State* L);
+	int32 rotateToAngle(lua_State* L);
     int32 pathStop(lua_State* L);
     int32 pathResume(lua_State* L);
     // checks if the entity is following a path

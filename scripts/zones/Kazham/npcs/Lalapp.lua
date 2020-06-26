@@ -8,9 +8,9 @@ require("scripts/globals/pathfind");
 
 local path =
 {
-    {-63.243, -11.000, -97.916, 0, 0},
-    {-63.970, -11.000, -97.229, 0, 0},
-    {-64.771, -11.000, -96.499, 0, 0},
+    {-63.243, -11.000, -97.916},
+    {-63.970, -11.000, -97.229},
+    {-64.771, -11.000, -96.499},
 }
 
 function onSpawn(npc)
@@ -19,7 +19,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.randomPoint(npc, path, 0)
+    tpz.path.randomPoint(npc, path, false)
 end
 
 function onTrade(player,npc,trade)

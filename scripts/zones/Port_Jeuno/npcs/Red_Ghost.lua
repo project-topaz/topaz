@@ -19,16 +19,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    local pos = npc:getPos()
-    local point = npc:getPathPoint()
-    local dx = path[point][1] - pos.x
-    local dz = path[point][3] - pos.z
-    local distance = math.sqrt( dx * dx + dz * dz )
-    local speed = utils.clamp(250/distance, 10, 15)
-
-    npc:speed(speed)
-
-    tpz.path.pingPong(npc, path, 0)
+    tpz.path.pingPong(npc, path, tpz.path.flag.NONE)
 end
 
 function onTrade(player,npc,trade)

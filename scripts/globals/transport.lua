@@ -79,14 +79,12 @@ end
 tpz.transport.dockMessage = function(npc, triggerID, messages, dock)
     npc:showText(npc, messages[triggerID])
     if (triggerID % 2) == 0 then
-        npc:setLocalVar("[PATHING]DEPARTING", 2)
+        npc:setLocalVar("[PATHING]ARRIVING", 1)
         npc:setPathPoint(1)
         npc:pathResume()
-        --tpz.path.toPoint(npc, tpz.transport.pos[dock].ARRIVING, false)
     else
         npc:setLocalVar("[PATHING]DEPARTING", 1)
         npc:setPathPoint(1)
         npc:pathResume()
-        --tpz.path.toPoint(npc, tpz.transport.pos[dock].DEPARTING, false)
     end
 end

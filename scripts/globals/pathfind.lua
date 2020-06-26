@@ -128,81 +128,90 @@ tpz.path =
     end,
 
     -- run a basic path from start to end and repeat, the path will need to be linked back to start to loop correctly.
-    basicPath = function(entity, points, run)
+    -- takes a point that is {x,y,z} extra option can be added: {x,y,z {delay = 4}} or {x,y,z{rot = 230}} or both {x,y,z{rot = 90, delay = 7}}
+    -- if a rotation is added "{x,y,z {rot = 35}}" then a delay will be added to allow for the rotation to execute.
+    general = function(entity, points, flags)
         local path = points or {}
         local point = entity:getPathPoint()
         local pos = entity:getPos()
+        local pathFlags = tpz.path.flag.NONE
+        local canPath = false
+        local delay = 0
+        local rotation = 0
 
-        if entity:atPoint(path[point]) then
-            if path[point][4] ~= 0 then
-                entity:setLocalVar("[PATHDELAY]", os.time() + path[point][4])
-            else
-                if entity:getLocalVar("[PATHDELAY]") ~= 0 then
-                    entity:setLocalVar("[PATHDELAY]", 0)
-                end
-            end
-
-            if point == #path then
-                entity:setPathPoint(1)
-            else
-                entity:setPathPoint(point +1)
-            end
+        if flags ~= tpz.path.flag.NONE and flags ~= nil then
+            pathFlags = flags
         end
 
-        local np = 
-        {
-            path[point][1],
-            path[point][2], 
-            path[point][3]
-        }
+        local dx = path[point][1] - pos.x
+        local dz = path[point][3] - pos.z
 
-        if os.time() >= entity:getLocalVar("[PATHDELAY]") then
-            entity:stepTo(np[1], np[2], np[3], run)
-        end
-    end,
+        local distToPoint = math.sqrt( dx * dx + dz * dz )
 
-    -- run an advanced path from start to end and repeat, the path will need to be linked back to start to loop correctly.
-    -- can be delayed with a wait at a point and have the entity use a showText at a point also.
-    -- entity will look at a target if one is added to the 6th column in the table, but must be an npc.
-    -- example path point {x, y, z, text id, delay in seconds, npc id}
-    advancedPath = function(entity, points, run)
-        local path = points or {}
-        local point = entity:getPathPoint()
-        local pos = entity:getPos()
-        local debugPath = false -- change to true to show debug info
-
-        if entity:atPoint(path[point]) then
-            if path[point][4] ~= 0 then -- speak at this point if available (only use showText as the speaker needs to not be a player)
-                entity:showText(entity, path[point][4])
-            end
-
-            if path[point][5] ~= 0 then
-                entity:setLocalVar("[PATHDELAY]", os.time() + path[point][5])
-            else
-                if entity:getLocalVar("[PATHDELAY]") ~= 0 then
-                    entity:setLocalVar("[PATHDELAY]", 0)
-                end
-            end
-
-            if point == #path then
-                entity:setPathPoint(1)
-            else
-                entity:setPathPoint(point +1)
-            end
-        end
-
-        if os.time() >= entity:getLocalVar("[PATHDELAY]") then
-            entity:stepTo(path[point][1], path[point][2], path[point][3], run)
-        else
-            local lastPoint = point -1
-            if lastPoint > 1 and lastPoint < #path and path[lastPoint][6] ~= 0 then
-                if GetNPCByID(path[lastPoint][6]) ~= nil then
-                    entity:lookAt(GetNPCByID(path[lastPoint][6]):getPos())
-                    if debugPath then
-                        printf("looking at an npc: %u", tonumber(path[lastPoint][6])) -- un comment to debug
-                        printf("lastPoint was %u, and this point is %u", lastPoint, point)
+        if distToPoint < 0.1 then
+            if path[point][4] then
+                local options = path[point][4] or {}
+                ----------------------------------
+                -- Set delay if found
+                ----------------------------------
+                if options.delay then
+                    if options.delay > 0 then
+                        delay = options.delay
                     end
                 end
+                --------------------------------------------
+                -- Auto delay if rotation and no delay found
+                --------------------------------------------
+                if options.rot then
+                    if options.rot > 0 and delay == 0 then
+                        delay = 3
+                    end
+                end
+            end
+                
+            if delay > 0 then
+                entity:setLocalVar("[PATHDELAY]", os.time() + delay)
+            else
+                if entity:getLocalVar("[PATHDELAY]") ~= 0 then
+                    entity:setLocalVar("[PATHDELAY]", 0)
+                end
+            end
+            ----------------------------------
+            -- Set next point
+            ----------------------------------
+            if point == #path then
+                entity:setPathPoint(1)
+            else
+                entity:setPathPoint(point +1)
+            end
+        end
+
+        local lastPoint = point
+
+        if point > 1 and point < #path then
+            lastPoint = point -1
+        end
+
+        ----------------------------------
+         -- Set rotation if one found
+        ----------------------------------
+        if path[lastPoint][4] then
+            local rotateOptions = path[lastPoint][4] or {}
+            if rotateOptions.rot then
+                if rotateOptions.rot > 0 then
+                    rotation = rotateOptions.rot
+                end
+            end
+        end
+
+        ----------------------------------
+        -- Move if time is > delay
+        ----------------------------------
+        if os.time() >= entity:getLocalVar("[PATHDELAY]") then
+            entity:pathTo(path[point][1], path[point][2], path[point][3], pos.rot, pathFlags)
+        else
+            if rotation > 0 then
+                entity:rotateToAngle(rotation)
             end
         end
     end,
@@ -248,177 +257,22 @@ tpz.path =
     end,
 
     -- pick a random point in the path and set random delay.
-    randomPoint = function(entity, points, flags)
+    randomPoint = function(entity, points, run)
         local path = points or {}
         local point = entity:getPathPoint()
         local pos = entity:getPos()
+        local dx = path[point][1] - pos.x
+        local dz = path[point][3] - pos.z
 
-        if entity:atPoint(path[point]) then
-            if path[point][5] ~= 0 then
-                entity:setLocalVar("[PATHDELAY]", os.time() + path[point][5])
-            else
-                entity:setLocalVar("[PATHDELAY]", os.time() + math.random(4, 8))
-            end
+        local distToPoint = math.sqrt( dx * dx + dz * dz )
+
+        if distToPoint < 0.1 then
+            entity:setLocalVar("[PATHDELAY]", os.time() + math.random(4, 8))
             entity:setPathPoint(math.random(1, #path))
         end
 
-        local np = 
-        {
-            path[point][1],
-            path[point][2], 
-            path[point][3], 
-            path[point][4]
-        }
-
-        local rotation = 0
-
-        if np[4] == 0 then
-            rotation = pos.rot
-        end
-
         if os.time() >= entity:getLocalVar("[PATHDELAY]") then
-            entity:pathTo(np[1], np[2], np[3], rotation, flags)
-            if path[point][4] == 0 then
-                entity:lookAt(np[1], np[2], np[3])
-            end
+            entity:stepTo(path[point][1], path[point][2], path[point][3], run)
         end
-    end,
-
-    -- basic move to a position, uses a run bool, default is false
-    moveToPosition = function(entity, newPos, run)
-        local point = newPos or {0,0,0}
-
-        entity:stepTo(point[1], point[2], point[3], run)
-    end,
-
-    -- move or keep entity behind a target.
-    behindTarget = function(entity, target)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local offset = target:getModelSize() +5
-
-        local rotation = (tPos.rot/256) * 2 * math.pi
-
-        rotation = rotation + math.pi
-
-        local newX = tPos.x + math.cos((2 * math.pi - rotation)) * offset
-        local newZ = tPos.z + math.sin((2 * math.pi - rotation)) * offset
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
-    end,
-
-    -- move or keep entity infront of a target.
-    infrontTarget = function(entity, target)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local offset = target:getModelSize() +5
-
-        local rotation = (tPos.rot/256) * 2 * math.pi 
-
-        local newX = tPos.x + math.cos((2 * math.pi - rotation)) * offset
-        local newZ = tPos.z + math.sin((2 * math.pi - rotation)) * offset
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
-    end,
-
-    --- move or keep entity out of incomming casting range from target.
-    safeDistance = function(entity, target)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local offset = target:getModelSize() + 22
-
-        local newX = tPos.x + math.cos((2 * math.pi)) * offset
-        local newZ = tPos.z + math.sin((2 * math.pi)) * offset
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
-    end,
-
-    -- move or keep entity in meele range of target.
-    meeleRange = function(entity, target)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local offset = target:getModelSize() + 3
-
-        local newX = tPos.x + math.cos((2 * math.pi)) * offset
-        local newZ = tPos.z + math.sin((2 * math.pi)) * offset
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
-    end,
-
-    -- move or keep entity in casting range of target.
-    castingRange = function(enity, target)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local offset = target:getModelSize() + 18
-
-        local newX = tPos.x + math.cos((2 * math.pi)) * offset
-        local newZ = tPos.z + math.sin((2 * math.pi)) * offset
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
-    end,
-
-    -- move or keep entity in range of target to use a song or cor roll.
-    songRollRange = function(entity, target)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local offset = target:getModelSize() + 2
-
-        local newX = tPos.x + math.cos((2 * math.pi)) * offset
-        local newZ = tPos.z + math.sin((2 * math.pi)) * offset
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
-    end,
-
-    -- move or keep entity in ranged attack range.
-    rangedRange = function(entity, target)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local offset = target:getModelSize() + 15
-
-        local newX = tPos.x + math.cos((2 * math.pi)) * offset
-        local newZ = tPos.z + math.sin((2 * math.pi)) * offset
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
-    end,
-
-    -- move or keep entity at a certain distance using a range passed to function.
-    wantedRange = function(entity, target, range)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local offset = target:getModelSize() + range
-
-        local newX = tPos.x + math.cos((2 * math.pi)) * offset
-        local newZ = tPos.z + math.sin((2 * math.pi)) * offset
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
-    end,
-
-
-    -- move or keep entity between cover target and cover target, needs both passed to function. 
-    coverTarget = function(entity, coverTarget, target)
-        local pos = entity:getPos()
-        local tPos = target:getPos()
-        local cTPos = coverTarget:getPos()
-
-        local rotation = (tPos.rot/256) * 2 * math.pi
-
-        local dx = tPos.x - cTPos.x
-        local dz = tPos.z - cTPos.z
-
-        local midpoint = math.sqrt( dx * dx + dz * dz )/2
-
-        local newX = tPos.x + math.cos((2 * math.pi - rotation)) * midpoint
-        local newZ = tPos.z + math.sin((2 * math.pi - rotation)) * midpoint
-
-        entity:pathTo(newX, tPos.y, newZ, 0, 8, true)
-        entity:lookAt(tPos)
     end
 }

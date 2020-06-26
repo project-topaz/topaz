@@ -11,12 +11,6 @@ require("scripts/globals/status")
 -----------------------------------
 
 function onSpawn(npc)
-    if VanadielHour() ~= 1 then
-        if npc:getStatus() == tpz.status.NORMAL then
-            npc:setStatus(tpz.status.DISAPPEAR)
-        end
-    end
-    npc:pathStop()
 end
 
 function onTrade(player,npc,trade)
@@ -31,8 +25,9 @@ function onPath(npc)
     local point = npc:getPathPoint()
 
     if npc:getStatus() == tpz.status.NORMAL then
-        -- if vasha reaches the end node, halt and disappear her.
-        if point == #LOWER_JEUNO.lampPath then
+        -- make vasha disappear if for some reason she is is spawned before 1am and after 5am
+        -- also make her disappear when she finishes the path.
+        if VanadielHour() < 1 or VanadielHour() >= 5 or point == #LOWER_JEUNO.lampPath then
             npc:clearPath()
             npc:setStatus(tpz.status.DISAPPEAR)
             npc:pathStop()
@@ -47,7 +42,7 @@ function onPath(npc)
                 end
             end
         end
-        tpz.path.advancedPath(npc, LOWER_JEUNO.lampPath, false)
+        tpz.path.general(npc, LOWER_JEUNO.lampPath, tpz.path.flag.NONE, false)
     end
 end
 

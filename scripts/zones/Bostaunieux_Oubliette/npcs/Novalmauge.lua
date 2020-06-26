@@ -15,8 +15,10 @@ require("scripts/globals/quests")
 
 local path =
 {
-    {20.000, -24.032, 20.000, 2},
-    {75.000, -24.032, 20.000, 2},
+    {20.000, -24.032, 20.023},
+    {21.000, -24.000, 20.054},
+    {74.835, -24.039, 20.250},
+    {74.373, -24.014, 19.999},
 }
 
 local wsQuest = tpz.wsquest.spiral_hell
@@ -27,7 +29,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.basicPath(npc, path, false)
+     tpz.path.general(npc, path, tpz.path.flag.WALLHACK, false)
 end
 
 function onTrade(player, npc, trade)

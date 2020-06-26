@@ -8,8 +8,8 @@ require("scripts/globals/pathfind")
 
 local path =
 {
-    {-20.369, 1.097, -14.000, 2},
-    {-20.384, 1.097, -29.968, 2},
+    {-20.369, 1.097, -14.000, {delay = 2}},
+    {-20.384, 1.097, -29.968, {delay = 2}},
 }
 
 function onSpawn(npc)
@@ -18,7 +18,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.basicPath(npc, path, false)
+    tpz.path.general(npc, path, tpz.path.flag.WALLHACK, false)
 end
 
 function onTrade(player,npc,trade)

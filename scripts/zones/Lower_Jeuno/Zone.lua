@@ -97,10 +97,10 @@ function onGameHour(zone)
             local npc = GetNPCByID(ID.npc.VHANA_EHGAKLYWHA)
             npc:setStatus(tpz.status.NORMAL)
             npc:initNpcPathing()
-            npc:setPos(LOWER_JEUNO.lampPath[1][1], LOWER_JEUNO.lampPath[1][2], LOWER_JEUNO.lampPath[1][3])
+            npc:setPos(LOWER_JEUNO.lampPath[1][1], LOWER_JEUNO.lampPath[1][2], LOWER_JEUNO.lampPath[1][3], 238)
             npc:setPathPoint(1)
             npc:pathResume()
-            tpz.path.advancedPath(npc, LOWER_JEUNO.lampPath, false)
+            tpz.path.general(npc, LOWER_JEUNO.lampPath, tpz.path.flag.WALLHACK, false)
         end
     end
 end

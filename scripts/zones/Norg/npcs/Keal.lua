@@ -11,10 +11,10 @@ require("scripts/globals/quests")
 
 local path =
 {
-    {-9.856,  0.036,  -9.068, 0},
-    {-4.500, -0.037, -18.389, 0},
-    {-5.913,  0.107, -27.368, 0},
-    {-4.500, -0.037, -18.389, 0},
+    {-9.856,  0.036,  -9.068},
+    {-4.500, -0.037, -18.389},
+    {-5.913,  0.107, -27.368},
+    {-4.500, -0.037, -18.389},
 }
 
 function onSpawn(npc)
@@ -23,7 +23,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.basicPath(npc, path, false)
+    tpz.path.general(npc, path, tpz.path.flag.WALLHACK, false)
 end
 
 function onTrade(player,npc,trade)

@@ -1929,7 +1929,6 @@ inline int32 CLuaBaseEntity::stepTo(lua_State* L)
     return 0;
 }
 
-
 /************************************************************************
 *  Function: pathThrough()
 *  Purpose : Makes an Entity follow a given set of points
@@ -1995,6 +1994,24 @@ inline int32 CLuaBaseEntity::isFollowingPath(lua_State* L)
         PBattle->PAI->PathFind->IsFollowingPath());
 
     return 1;
+}
+
+/************************************************************************
+* Function: rotateToAngle()
+* Purpose : rotates an entity to a given rotation
+* Example : npc:rotateToAngle(180)
+* Notes   : 
+************************************************************************/
+inline int32 CLuaBaseEntity::rotateToAngle(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+    TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+    uint8 wantedRotation = (uint8)lua_tointeger(L, 1);
+
+    m_PBaseEntity->PAI->PathFind->RotateTo(wantedRotation);
+
+    return 0;
 }
 
 /************************************************************************
@@ -14392,6 +14409,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getCurrentAction),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,lookAt),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,rotateToAngle),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,clearTargID),
     
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getPathPoint),

@@ -11,9 +11,9 @@ require("scripts/globals/titles")
 
 local path =
 {
-    {29.014, -11.000, -183.884, 0, 0},
-    {31.023, -11.000, -183.538, 0, 0},
-    {33.091, -11.000, -183.738, 0, 0},
+    {29.014, -11.000, -183.884},
+    {31.023, -11.000, -183.538},
+    {33.091, -11.000, -183.738},
 }
 
 function onSpawn(npc)
@@ -22,7 +22,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.randomPoint(npc, path, 0)
+    tpz.path.randomPoint(npc, path, false)
 end
 
 

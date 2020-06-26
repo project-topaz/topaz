@@ -12,16 +12,16 @@ require("scripts/globals/pathfind")
 
 local path =
 {
-    {20.600,  0.000, -23.000, 0, 5, 0},
-    {50.000, -1.500, -19.000, 0, 0, 0},
-    {53.500, -1.800, -19.000, 0, 0, 0},
-    {58.000, -1.000, -19.000, 0, 0, 0},
-    {65.500, -1.800, -19.000, 0, 0, 0},
-    {91.000, -0.500, -16.500, 0, 5, 0},
-    {65.500, -1.800, -19.000, 0, 0, 0},
-    {58.000, -1.000, -19.000, 0, 0, 0},
-    {53.500, -1.800, -19.000, 0, 0, 0},
-    {50.000, -1.500, -19.000, 0, 0, 0},
+    {20.600, -0.343, -23.000, {delay = 5}},
+    {35.431, -0.045, -20.227},
+    {51.795, -1.790, -18.843},
+    {58.037, -0.957, -18.724},
+    {65.919, -1.722, -18.767},
+    {92.143, -0.451, -16.231, {delay = 5}},
+    {65.919, -1.722, -18.767},
+    {58.037, -0.957, -18.724},
+    {51.795, -1.790, -18.843},
+    {35.431, -0.045, -20.227},
 }
 
 function onSpawn(npc)
@@ -30,7 +30,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.advancedPath(npc, path, false)
+    tpz.path.general(npc, path, tpz.path.flag.WALLHACK, false)
 end
 
 function onTrade(player, npc, trade)
@@ -42,6 +42,7 @@ function onTrigger(player, npc)
         npc:pathStop()
     else
         player:showText(npc, ID.text.QUEMARICOND_DIALOG)
+        npc:clearTargID()
     end
 end
 

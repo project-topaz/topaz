@@ -99,6 +99,8 @@ class CPathFind
     // look at the given point
     void LookAt(const position_t& point);
 
+	void RotateTo(uint8 rotation);
+
     // clear current path
     void Clear();
     bool isNavMeshEnabled();

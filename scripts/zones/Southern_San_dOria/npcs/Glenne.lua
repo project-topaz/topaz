@@ -23,7 +23,7 @@ function onSpawn(npc)
 end
 
 function onPath(npc)
-    tpz.path.pingPong(npc, path, 0)
+    tpz.path.pingPong(npc, path, tpz.path.flag.NONE)
 end
 
 function onTrade(player,npc,trade)

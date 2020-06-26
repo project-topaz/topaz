@@ -401,6 +401,18 @@ void CPathFind::LookAt(const position_t& point)
     }
 }
 
+void CPathFind::RotateTo(uint8 rotation)
+{
+    uint8 currentRot = m_PTarget->loc.p.rotation;
+    uint8 wantedRot = rotation;
+
+    if (currentRot != wantedRot)
+    {
+        m_PTarget->loc.p.rotation = wantedRot;
+        m_PTarget->updatemask |= UPDATE_POS;
+    }
+}
+
 bool CPathFind::OnPoint()
 {
     return m_onPoint;

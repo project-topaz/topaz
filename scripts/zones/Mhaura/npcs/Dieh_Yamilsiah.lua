@@ -18,6 +18,7 @@ local messages =
 
 function onSpawn(npc)
     npc:initNpcPathing()
+    npc:setPos(8.260, -1360, 2.299, 191)
     onPath(npc)
 
     npc:addPeriodicTrigger(tpz.transport.trigger.mhaura.FERRY_ARRIVING_FROM_ALZAHBI,
@@ -42,15 +43,15 @@ function onPath(npc)
         local departPath = tpz.transport.pos['mhaura'].DEPARTING
         tpz.path.toPoint(npc, departPath, false)
         if point == #departPath then
-            npc:setPos(pos.x, pos.y, pos.z, 191)
+            npc:rotateToAngle(191)
             npc:setLocalVar("[PATHING]DEPARTING", 0)
         end
-    elseif npc:getLocalVar("[PATHING]DEPARTING") == 2 then
+    elseif npc:getLocalVar("[PATHING]ARRIVING") == 1 then
         local arrivePath = tpz.transport.pos['mhaura'].ARRIVING
         tpz.path.toPoint(npc, arrivePath, false)
         if point == #arrivePath then
-            npc:setPos(pos.x, pos.y, pos.z, 211)
-            npc:setLocalVar("[PATHING]DEPARTING", 0)
+            npc:rotateToAngle(211)
+            npc:setLocalVar("[PATHING]ARRIVING", 0)
         end
     end
 end
