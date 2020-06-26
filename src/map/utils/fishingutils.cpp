@@ -16,8 +16,6 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
@@ -26,48 +24,40 @@
 #include <string.h> 
 #include <math.h>
 
-#include "../universal_container.h"
-#include "../item_container.h"
-
+#include "../ai/ai_container.h"
+#include "../entities/battleentity.h"
+#include "../entities/mobentity.h"
+#include "../entities/npcentity.h"
 #include "../lua/luautils.h"
-
 #include "../packets/caught_fish.h"
 #include "../packets/caught_monster.h"
 #include "../packets/char_update.h"
 #include "../packets/char_skills.h"
 #include "../packets/char_sync.h"
-#include "../packets/event.h"
+#include "../packets/entity_animation.h"
 #include "../packets/entity_update.h"
+#include "../packets/event.h"
 #include "../packets/fishing.h"
 #include "../packets/inventory_item.h"
 #include "../packets/inventory_finish.h"
 #include "../packets/message_name.h"
 #include "../packets/message_text.h"
-#include "../packets/release.h"
-#include "../packets/message_system.h"
 #include "../packets/message_special.h"
-#include "../packets/entity_animation.h"
-
-#include "../entities/battleentity.h"
-#include "../entities/mobentity.h"
-#include "../entities/npcentity.h"
-
+#include "../packets/message_system.h"
+#include "../packets/release.h"
 #include "../enmity_container.h"
-
-#include "../status_effect_container.h"
-#include "../status_effect.h"
-
-#include "../ai/ai_container.h"
-
+#include "../item_container.h"
+#include "../map.h"
 #include "../modifier.h"
-
 #include "../navmesh.h"
+#include "../status_effect.h"
+#include "../status_effect_container.h"
+#include "../universal_container.h"
+#include "../vana_time.h"
 #include "battleutils.h"
 #include "charutils.h"
 #include "fishingutils.h"
 #include "itemutils.h"
-#include "../map.h"
-#include "../vana_time.h"
 #include "zoneutils.h"
 
 namespace fishingutils
@@ -964,7 +954,7 @@ namespace fishingutils
         CItemWeapon* Bait = nullptr;
         uint8 FishingAreaID = 0;
 
-        if (charutils::GetVar(PChar, "FishingDenied") == 1) {
+        if (charutils::GetCharVar(PChar, "FishingDenied") == 1) {
             charutils::AddVar(PChar, "FishingDeniedAttempts", 1);
             PChar->pushPacket(new CMessageTextPacket(PChar, MessageOffset + FISHMESSAGEOFFSET_CANNOTFISH_TIME));
             PChar->pushPacket(new CReleasePacket(PChar, RELEASE_FISHING));
@@ -1119,7 +1109,7 @@ namespace fishingutils
         uint16 MessageOffset = GetMessageOffset(PChar->getZone());
         uint32 vanaTime = CVanaTime::getInstance()->getVanaTime();
 
-        if (charutils::GetVar(PChar, "FishingDenied") == 1) {
+        if (charutils::GetCharVar(PChar, "FishingDenied") == 1) {
             CatchNothing(PChar, FISHINGFAILTYPE_NONE);
             PChar->fishingToken = 0;
             PChar->animation = ANIMATION_NONE;

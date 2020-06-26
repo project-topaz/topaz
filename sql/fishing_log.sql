@@ -39,7 +39,6 @@ CREATE TABLE `fishing_log` (
   `catchskill` smallint(5) unsigned NOT NULL DEFAULT '0',
   `regen` smallint(4) unsigned NOT NULL DEFAULT '0',
   `catchtime` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `ip` varchar(20) NOT NULL,
   PRIMARY KEY (`logid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;

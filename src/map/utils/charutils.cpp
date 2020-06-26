@@ -5055,23 +5055,6 @@ namespace charutils
         return 0;
     }
 
-    // GetVar was changed to GetCharVar. We have to find all "GetVar" and substitute them with GetCharVar
-
-    int32 GetVar(CCharEntity* PChar, const char* var)
-    {
-        const char* fmtQuery = "SELECT value FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;";
-
-        int32 ret = Sql_Query(SqlHandle, fmtQuery, PChar->id, var);
-
-        if (ret != SQL_ERROR &&
-            Sql_NumRows(SqlHandle) != 0 &&
-            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-        {
-            return Sql_GetIntData(SqlHandle, 0);
-        }
-        return 0;
-    }
-
     void AddVar(CCharEntity* PChar, const char* var, int32 value)
     {
         if (PChar == nullptr)

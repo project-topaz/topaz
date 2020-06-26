@@ -16,15 +16,11 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
+#include <string.h>
 #include "../../common/socket.h"
-
-#include <string.h> 
-
 #include "fishing.h"
 
 /* OLD FISHING PACKET - Used for old fishing minigame. Requires setting animation to 50 at fishing start and 38 when you receive a bite. Seems to still work but breaks client's target info after fishing

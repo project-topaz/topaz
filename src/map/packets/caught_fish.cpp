@@ -16,19 +16,13 @@
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see http://www.gnu.org/licenses/
 
-  This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
-#include "../../common/socket.h"
-
 #include <string.h>
-
-#include "caught_fish.h"
-
+#include "../../common/socket.h"
 #include "../entities/charentity.h"
-
+#include "caught_fish.h"
 
 CCaughtFishPacket::CCaughtFishPacket(CCharEntity * PChar, uint16 param0, uint16 messageID, uint8 count) 
 {

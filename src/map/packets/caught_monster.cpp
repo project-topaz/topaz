@@ -16,19 +16,13 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see http://www.gnu.org/licenses/
 
-This file is part of DarkStar-server source code.
-
 ===========================================================================
 */
 
-#include "../../common/socket.h"
-
 #include <string.h>
-
-#include "caught_monster.h"
-
+#include "../../common/socket.h"
 #include "../entities/charentity.h"
-
+#include "caught_monster.h"
 
 CCaughtMonsterPacket::CCaughtMonsterPacket(CCharEntity * PChar,  uint16 messageID)
 {
@@ -37,7 +31,6 @@ CCaughtMonsterPacket::CCaughtMonsterPacket(CCharEntity * PChar,  uint16 messageI
 
     ref<uint32>(0x04) = PChar->id;
     ref<uint32>(0x08) = PChar->targid;
-
     ref<uint16>(0x0A) = messageID + 0x8000;
 
     memcpy(data + (0x10), PChar->GetName(), PChar->name.size());
