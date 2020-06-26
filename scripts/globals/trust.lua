@@ -10,6 +10,18 @@ require("scripts/globals/status")
 tpz = tpz or {}
 tpz.trust = tpz.trust or {}
 
+tpz.trust.message_offset =
+{
+    SPAWN          = 1,
+    SYNERGY_1      = 4,
+    SYNERGY_2      = 5,
+    SYNERGY_3      = 6,
+    SYNERGY_4      = 7,
+    DEATH          = 9,
+    DESPAWN        = 11,
+    SPECIAL_MOVE_1 = 18,
+}
+
 tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
 
     -- TODO: Each of these scenarios has its own message
@@ -87,4 +99,45 @@ tpz.trust.spawn = function(caster, spell)
     caster:spawnTrust(spell:getID())
 
     return 0
+end
+
+tpz.trust.message = function(mob, id)
+    local master = mob:getMaster()
+    local offset = (mob:getTrustID() - 896) * 100
+    master:messageFinish(mob, offset + id, 0, 711)
+end
+
+tpz.trust.synergyMessage = function(mob, synergies)
+    local messages = {}
+
+    local master = mob:getMaster()
+    local party = master:getPartyWithTrusts()
+    for _, member in ipairs(party) do
+        if member:getObjType() == tpz.objType.TRUST then
+            for id, message in pairs(synergies) do
+                if member:getTrustID() == id then
+                    table.insert(messages, message)
+                end
+            end
+        end
+    end
+
+    if table.getn(messages) > 0 then
+        tpz.trust.message(mob, messages[math.random(#messages)])
+    else
+        -- Defaults to regular spawn message
+        tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    end
+end
+
+-- For debugging and lining up synergies
+tpz.trust.dumpMessages = function(mob)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_1)
+    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_2)
+    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_3)
+    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_4)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
+    tpz.trust.message(mob, tpz.trust.message_offset.SPECIAL_MOVE_1)
 end

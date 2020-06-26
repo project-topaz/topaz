@@ -21,12 +21,12 @@
 
 #include "../../common/socket.h"
 
-#include "message_debug.h"
+#include "message_finish.h"
 
 #include "../entities/baseentity.h"
 
 
-CMessageDebugPacket::CMessageDebugPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param0, int32 param1, uint16 messageID)
+CMessageFinishPacket::CMessageFinishPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param0, int32 param1, uint16 messageID)
 {
 	this->type = 0x2d;
 	this->size = 0x0e;

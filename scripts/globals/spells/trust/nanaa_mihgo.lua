@@ -21,10 +21,16 @@ function onMobSpawn(mob)
 
     mob:addSimpleGambit(ai.t.SELF, ai.c.TP_GTE, 1000,
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.WASP_STING)
+
+    tpz.trust.synergyMessage(mob, {
+        [949] = tpz.trust.message_offset.SYNERGY_1, -- Romaa Mihgo
+    })
 end
 
 function onMobDespawn(mob)
+    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
 end
 
 function onMobDeath(mob)
+    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
 end
