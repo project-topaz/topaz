@@ -19,6 +19,7 @@ tpz.trust.message_offset =
     SYNERGY_4      = 7,
     DEATH          = 9,
     DESPAWN        = 11,
+    SPECIAL_MOVE_1 = 18,
 }
 
 tpz.trust.canCast = function(caster, spell, not_allowed_trust_ids)
