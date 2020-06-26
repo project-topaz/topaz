@@ -9,6 +9,8 @@ require("scripts/globals/msg")
 -----------------------------------
 require("scripts/quests/full_speed_ahead")
 -----------------------------------
+require("scripts/quests/full_speed_ahead")
+-----------------------------------
 
 local startingRaceInfo =
 {
