@@ -102,5 +102,5 @@ end
 tpz.trust.message = function(mob, id)
     local master = mob:getMaster()
     local offset = (mob:getTrustID() - 896) * 100
-    master:debugMessage(mob, offset + id, 0, 711)
+    master:messageFinish(mob, offset + id, 0, 711)
 end

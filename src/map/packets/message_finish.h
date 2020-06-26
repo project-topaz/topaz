@@ -19,8 +19,8 @@
 ===========================================================================
 */
 
-#ifndef _CMESSAGEDEBUGPACKET_H
-#define _CMESSAGEDEBUGPACKET_H
+#ifndef _CMESSAGEFINISHPACKET_H
+#define _CMESSAGEFINISHPACKET_H
 
 #include "../../common/cbasetypes.h"
 
@@ -34,11 +34,11 @@
 
 class CBaseEntity;
 
-class CMessageDebugPacket : public CBasicPacket
+class CMessageFinishPacket : public CBasicPacket
 {
 public:
 
-	CMessageDebugPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param0, int32 param1, uint16 messageID);
+    CMessageFinishPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param0, int32 param1, uint16 messageID);
 };
 
 #endif

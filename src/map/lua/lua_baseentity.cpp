@@ -122,6 +122,7 @@
 #include "../packets/menu_merit.h"
 #include "../packets/menu_raisetractor.h"
 #include "../packets/message_basic.h"
+#include "../packets/message_finish.h"
 #include "../packets/message_name.h"
 #include "../packets/message_special.h"
 #include "../packets/message_standard.h"
@@ -134,8 +135,6 @@
 #include "../packets/shop_items.h"
 #include "../packets/shop_menu.h"
 #include "../packets/weather.h"
-
-#include "../packets/message_debug.h"
 
 #include "../utils/battleutils.h"
 #include "../utils/blueutils.h"
@@ -9602,12 +9601,12 @@ inline int32 CLuaBaseEntity::sendTractor(lua_State *L)
 }
 
 /************************************************************************
-*  Function: debugMessage(...)
+*  Function: messageFinish(...)
 *  Purpose :
 *  Example :
 *  Notes   :
 ************************************************************************/
-int32 CLuaBaseEntity::debugMessage(lua_State* L)
+int32 CLuaBaseEntity::messageFinish(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
@@ -9629,7 +9628,7 @@ int32 CLuaBaseEntity::debugMessage(lua_State* L)
     auto p1 = (int32)lua_tointeger(L, 3);
     auto message = (int16)lua_tointeger(L, 4);
 
-    PChar->pushPacket(new CMessageDebugPacket(PTarget, PChar, p0, p1, message));
+    PChar->pushPacket(new CMessageFinishPacket(PTarget, PChar, p0, p1, message));
 
     return 0;
 }
@@ -14841,7 +14840,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendReraise),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,sendTractor),
 
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,debugMessage), 
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageFinish),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isEngaged),
