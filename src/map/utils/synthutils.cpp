@@ -413,7 +413,7 @@ uint8 calcSynthResult(CCharEntity* PChar)
 
 int32 doSynthSkillUp(CCharEntity* PChar)
 {
-    for(uint8 skillID = 49; skillID < 57; ++skillID)
+    for(uint8 skillID = 49; skillID < 57; ++skillID) // Check for all skills involved in a recipe, to check for skill up
     {
         if (PChar->CraftContainer->getQuantity(skillID-40) == 0) // Get the required skill level for the recipe
         {
@@ -446,7 +446,7 @@ int32 doSynthSkillUp(CCharEntity* PChar)
             ShowDebug(CL_CYAN"Skill up chance: %g  Random: %g\n" CL_RESET, skillUpChance, random);
             #endif
 
-            if (random < skillUpChance)
+            if (random < skillUpChance) // You succeed and Skill UP
             {
                 int32  skillAmount = 1;
 
@@ -489,6 +489,7 @@ int32 doSynthSkillUp(CCharEntity* PChar)
                         satier--;      // lower by one the satier rank and repeat cicle
                     }
                 }
+
                 // Do craft amount multiplier
                 if (map_config.craft_amount_multiplier > 1)
                 {
@@ -505,11 +506,11 @@ int32 doSynthSkillUp(CCharEntity* PChar)
                     skillAmount = maxSkill - charSkill;
                 }
 
-                if (charSkill > map_config.craft_common_cap) // The cap from which you are limited to 400 points
-                {
-                    uint16 skillCumulation = 0;
-                    uint8 skillHighest    = 0;
+                uint16 skillCumulation = skillAmount;
+                uint8 skillHighest = 0;
 
+                if (charSkill > map_config.craft_common_cap) // Default 700
+                {
                     // we are gonna set which is the OTHER highest skill over lvl 70 and the amount of points we have of the 400 to allocate
                     for (int i = SKILL_WOODWORKING; i <= SKILL_COOKING; i++)
                     {
@@ -517,67 +518,41 @@ int32 doSynthSkillUp(CCharEntity* PChar)
                         {
                             skillCumulation += (PChar->RealSkills.skill[i] - map_config.craft_common_cap);
                             if (skillID != i && PChar->RealSkills.skill[i] > skillHighest)
+                            {
                                 skillHighest = i;
+                            }
                         }
-                    }
-
-                    // now we check if we have to downgrade the other highest skill or not
-                    if (skillCumulation >= map_config.craft_specialization_points)
-                    {
-                        PChar->RealSkills.skill[skillID] += skillAmount;
-                        PChar->RealSkills.skill[skillHighest] -= skillAmount;
-
-                        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));
-
-                        if ((charSkill / 10) < (charSkill + skillAmount) / 10)
-                        {
-                            PChar->WorkingSkills.skill[skillID] += 0x20;
-
-                            PChar->pushPacket(new CCharSkillsPacket(PChar));
-                            PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53));
-                        }
-
-                        if ((PChar->RealSkills.skill[skillHighest] / 10) > (PChar->RealSkills.skill[skillHighest] - skillAmount) / 10)
-                        {
-                            PChar->WorkingSkills.skill[skillHighest] -= 0x20;
-
-                            PChar->pushPacket(new CCharSkillsPacket(PChar));
-                            // PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53)); // do leveled down skills get a message?
-                        }
-
-                        charutils::SaveCharSkills(PChar, skillID);
-                        charutils::SaveCharSkills(PChar, skillHighest);
-                    }
-                    else // Character is under the OTHER cap and there's nothing to worry about
-                    {
-                        PChar->RealSkills.skill[skillID] += skillAmount;
-                        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));
-
-                        if ((charSkill / 10) < (charSkill + skillAmount) / 10)
-                        {
-                            PChar->WorkingSkills.skill[skillID] += 0x20;
-
-                            PChar->pushPacket(new CCharSkillsPacket(PChar));
-                            PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53));
-                        }
-
-                        charutils::SaveCharSkills(PChar, skillID);
                     }
                 }
-                else // Character is under the cap and there's nothing to worry about
+
+                PChar->RealSkills.skill[skillID] += skillAmount;
+                if (skillHighest != 0 && skillCumulation > map_config.craft_specialization_points)
                 {
-                    PChar->RealSkills.skill[skillID] += skillAmount;
-                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));
+                    PChar->RealSkills.skill[skillHighest] -= skillAmount;
+                }
 
-                    if ((charSkill / 10) < (charSkill + skillAmount) / 10)
-                    {
-                        PChar->WorkingSkills.skill[skillID] += 0x20;
+                PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, skillAmount, 38));
 
-                        PChar->pushPacket(new CCharSkillsPacket(PChar));
-                        PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53));
-                    }
+                if ((charSkill / 10) < (charSkill + skillAmount) / 10)
+                {
+                    PChar->WorkingSkills.skill[skillID] += 0x20;
 
-                    charutils::SaveCharSkills(PChar, skillID);
+                    PChar->pushPacket(new CCharSkillsPacket(PChar));
+                    PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53));
+                }
+
+                if (skillHighest != 0 && skillCumulation > map_config.craft_specialization_points && (PChar->RealSkills.skill[skillHighest] + skillAmount) / 10 > (PChar->RealSkills.skill[skillHighest]) / 10)
+                {
+                    PChar->WorkingSkills.skill[skillHighest] -= 0x20;
+                    PChar->pushPacket(new CCharSkillsPacket(PChar));
+                    // PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, skillID, (charSkill + skillAmount) / 10, 53)); // do leveled down skills get a message?
+                }
+
+                charutils::SaveCharSkills(PChar, skillID);
+
+                if (skillHighest != 0 && skillCumulation > map_config.craft_specialization_points)
+                {
+                    charutils::SaveCharSkills(PChar, skillHighest);
                 }
             }
         }
