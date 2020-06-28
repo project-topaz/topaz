@@ -505,70 +505,24 @@ int32 doSynthSkillUp(CCharEntity* PChar)
                     skillAmount = maxSkill - charSkill;
                 }
 
-                if (charSkill > 700) // The cap from which you are limited to 400 points
+                if (charSkill > map_config.craft_common_cap) // The cap from which you are limited to 400 points
                 {
                     uint16 skillCumulation = 0;
                     uint8 skillHighest    = 0;
 
                     // we are gonna set which is the OTHER highest skill over lvl 70 and the amount of points we have of the 400 to allocate
-                    if (PChar->RealSkills.skill[49] > 700) // Craft 1
+                    for (int i = SKILL_WOODWORKING; i <= SKILL_COOKING; i++)
                     {
-                        skillCumulation += (PChar->RealSkills.skill[49] - 700);
-                        if (skillID != 49 && PChar->RealSkills.skill[49] > skillHighest)
-                            skillHighest = 49;
-                    }
-
-                    if (PChar->RealSkills.skill[50] > 700) // Craft 2
-                    {
-                        skillCumulation += (PChar->RealSkills.skill[50] - 700);
-                        if (skillID != 50 && PChar->RealSkills.skill[50] > skillHighest)
-                            skillHighest = 50;
-                    }
-
-                    if (PChar->RealSkills.skill[51] > 700) // Craft 3
-                    {
-                        skillCumulation += (PChar->RealSkills.skill[51] - 700);
-                        if (skillID != 51 && PChar->RealSkills.skill[51] > skillHighest)
-                            skillHighest = 51;
-                    }
-
-                    if (PChar->RealSkills.skill[52] > 700) // Craft 4
-                    {
-                        skillCumulation += (PChar->RealSkills.skill[52] - 700);
-                        if (skillID != 52 && PChar->RealSkills.skill[52] > skillHighest)
-                            skillHighest = 52;
-                    }
-
-                    if (PChar->RealSkills.skill[53] > 700) // Craft 5
-                    {
-                        skillCumulation += (PChar->RealSkills.skill[53] - 700);
-                        if (skillID != 53 && PChar->RealSkills.skill[53] > skillHighest)
-                            skillHighest = 53;
-                    }
-
-                    if (PChar->RealSkills.skill[54] > 700) // Craft 6
-                    {
-                        skillCumulation += (PChar->RealSkills.skill[54] - 700);
-                        if (skillID != 54 && PChar->RealSkills.skill[54] > skillHighest)
-                            skillHighest = 54;
-                    }
-
-                    if (PChar->RealSkills.skill[55] > 700) // Craft 7
-                    {
-                        skillCumulation += (PChar->RealSkills.skill[55] - 700);
-                        if (skillID != 55 && PChar->RealSkills.skill[55] > skillHighest)
-                            skillHighest = 55;
-                    }
-
-                    if (PChar->RealSkills.skill[56] > 700) // Craft 8
-                    {
-                        skillCumulation += (PChar->RealSkills.skill[56] - 700);
-                        if (skillID != 56 && PChar->RealSkills.skill[56] > skillHighest)
-                            skillHighest = 56;
+                        if (PChar->RealSkills.skill[i] > map_config.craft_common_cap)
+                        {
+                            skillCumulation += (PChar->RealSkills.skill[i] - map_config.craft_common_cap);
+                            if (skillID != i && PChar->RealSkills.skill[i] > skillHighest)
+                                skillHighest = i;
+                        }
                     }
 
                     // now we check if we have to downgrade the other highest skill or not
-                    if (skillCumulation >= 400)
+                    if (skillCumulation >= map_config.craft_specialization_points)
                     {
                         PChar->RealSkills.skill[skillID] += skillAmount;
                         PChar->RealSkills.skill[skillHighest] -= skillAmount;
