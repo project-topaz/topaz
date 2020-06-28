@@ -11,20 +11,25 @@ cmdprops =
     parameters = "it"
 }
 
-function onTrigger(caller, player, minutes, target)
+function onTrigger(caller, entity, minutes, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
     local usage = "!adddynatime <minutes> {player}"
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+    
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- target must be in dynamis
     local effect = targ:getStatusEffect(tpz.effect.DYNAMIS)
     if not effect then
-        tpz.commands.error(caller, player, string.format("%s is not in Dynamis.", targ:getName()), usage)
+        tpz.commands.error(caller, entity, string.format("%s is not in Dynamis.", targ:getName()), usage)
         return
     end
 
     -- validate amount
     if minutes == nil or minutes < 1 then
-        tpz.commands.error(caller, player, "Invalid number of minutes.", usage)
+        tpz.commands.error(caller, entity, "Invalid number of minutes.", usage)
         return
     end
 

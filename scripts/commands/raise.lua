@@ -11,9 +11,14 @@ cmdprops =
     parameters = "st"
 }
 
-function onTrigger(caller, player, power, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(caller, entity, power, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
     local usage = "!raise {power} {player}"
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- validate power
     if (power == nil or power > 3) then
@@ -26,9 +31,9 @@ function onTrigger(caller, player, power, target)
     if (targ:isDead()) then
         targ:sendRaise(power)
         if (targ:getID() ~= caller) then
-            tpz.commands.print(caller, player, string.format("Raise %i sent to %s.", power, targ:getName()))
+            tpz.commands.print(caller, entity, string.format("Raise %i sent to %s.", power, targ:getName()))
         end
     else
-        tpz.commands.print(caller, player, string.format("%s is not dead.", targ:getName()))
+        tpz.commands.print(caller, entity, string.format("%s is not dead.", targ:getName()))
     end
 end

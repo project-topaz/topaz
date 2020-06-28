@@ -11,13 +11,18 @@ cmdprops =
     parameters = "it"
 }
 
-function onTrigger(caller, player, spellId, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(caller, entity, spellId, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
     local usage = "!addspell <spellID> {player}"
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- validate spellId
     if (spellId == nil) then
-        tpz.commands.error(caller, player, "Invalid spellID.", usage)
+        tpz.commands.error(caller, entity, "Invalid spellID.", usage)
         return
     end
 
@@ -25,5 +30,5 @@ function onTrigger(caller, player, spellId, target)
     local save = true
     local silent = false
     targ:addSpell(spellId, silent, save)
-    tpz.commands.print(caller, player, string.format("Added spell %i to %s.",spellId,targ:getName()))
+    tpz.commands.print(caller, entity, string.format("Added spell %i to %s.",spellId,targ:getName()))
 end

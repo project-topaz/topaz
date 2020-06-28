@@ -11,12 +11,12 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, player, str)
+function onTrigger(caller, entity, str)
     local usage = "!exec <Lua string>"
 
     -- Ensure a command was given..
     if (str == nil or string.len(str) == 0) then
-        tpz.commands.error(caller, player, "You must enter a string to execute.", usage)
+        tpz.commands.error(caller, entity, "You must enter a string to execute.", usage)
         return
     end
 
@@ -27,8 +27,8 @@ function onTrigger(caller, player, str)
     -- Ensure the command compiles / is valid..
     local scriptObj, err = loadstring(str)
     if (scriptObj == nil) then
-        tpz.commands.print(caller, player, "Failed to load the given string.")
-        tpz.commands.print(caller, player, err)
+        tpz.commands.print(caller, entity, "Failed to load the given string.")
+        tpz.commands.print(caller, entity, err)
         os = old_os
         return
     end
@@ -36,7 +36,7 @@ function onTrigger(caller, player, str)
     -- Execute the string..
     local status, err = pcall(scriptObj)
     if (status == false) then
-        tpz.commands.print(caller, player, err)
+        tpz.commands.print(caller, entity, err)
     end
 
     -- Restore the os table..

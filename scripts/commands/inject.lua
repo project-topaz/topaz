@@ -11,14 +11,14 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, player, packet)
+function onTrigger(caller, entity, packet)
     local usage = "!inject <packet>"
     -- validate packet
     if (packet == nil) then
-        tpz.commands.error(caller, player, "You must enter a packet file name.", usage)
+        tpz.commands.error(caller, entity, "You must enter a packet file name.", usage)
         return
     end
 
     -- inject packet
-    player:injectPacket(packet)
+    entity:injectPacket(packet)
 end

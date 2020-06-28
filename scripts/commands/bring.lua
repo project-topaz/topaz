@@ -3,35 +3,27 @@
 -- desc: Brings the target to the player.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "si"
+    parameters = "ti"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!bring <player> {forceZone}")
-end
+function onTrigger(caller, entity, target, forceZone)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!bring <player> {forceZone}"
 
-function onTrigger(caller, player, target, forceZone)
-    -- validate target
-    if (target == nil) then
-        error(player, "You must enter a target player name.")
-        return
-    end
-    local targ = GetPlayerByName( target )
     if (targ == nil) then
-        if not player:bringPlayer( target ) then
-            error(player, string.format( "Player named '%s' not found!", target ) )
-        end
+        tpz.commands.error(caller, entity, "You must enter a player name.", usage)
         return
     end
 
     -- validate forceZone
     if (forceZone ~= nil) then
         if (forceZone ~= 0 and forceZone ~= 1) then
-            error(player, "If provided, forceZone must be 1 (true) or 0 (false).")
+            tpz.commands.error(caller, entity, "If provided, forceZone must be 1 (true) or 0 (false).", usage)
             return
         end
     else
@@ -39,9 +31,9 @@ function onTrigger(caller, player, target, forceZone)
     end
 
     -- bring target
-    if (targ:getZoneID() ~= player:getZoneID() or forceZone == 1) then
-        targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID() )
+    if (targ:getZoneID() ~= entity:getZoneID() or forceZone == 1) then
+        targ:gotoPlayer(caller)
     else
-        targ:setPos( player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos() )
+        targ:setPos(entity:getXPos(), entity:getYPos(), entity:getZPos(), entity:getRotPos())
     end
 end

@@ -11,23 +11,25 @@
 -- specify "I_am_sure" without quotes to attempt to reload things that are not in \scripts\globals\
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 4,
     parameters = "ss"
 }
 
-function onTrigger(caller, player, globalLua, other)
+function onTrigger(caller, entity, globalLua, other)
     if (globalLua ~= nil and other == nil) then
         local String = table.concat({"scripts/globals/",globalLua})
         package.loaded[String] = nil
         require(String)
-        player:PrintToPlayer(string.format("Lua file '%s' has been reloaded.",String))
+        tpz.commands.print(caller, entity, string.format("Lua file '%s' has been reloaded.",String))
     elseif (other == "I_am_sure") then
         package.loaded[globalLua] = nil
         require(globalLua)
-        player:PrintToPlayer(string.format("Lua file '%s' has been reloaded.",globalLua))
+        tpz.commands.print(caller, entity, string.format("Lua file '%s' has been reloaded.",globalLua))
     else
-        player:PrintToPlayer("Must Specify a global lua file.")
+        tpz.commands.print(caller, entity, "Must Specify a global lua file.")
     end
 end

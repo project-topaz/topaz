@@ -533,7 +533,7 @@ namespace message
             auto caller = ref<uint32>((uint8*)extra->data(), 0);
             auto PChar = zoneutils::GetCharByName((int8*)extra->data() + 4);
 
-            if (PChar)
+            if (PChar != nullptr)
             {
                 auto result = CmdHandler.call(caller, PChar, (const int8*)extra->data() + 19);
                 if (result != 0)
@@ -548,6 +548,36 @@ namespace message
                 memset(&buf[0], 0, sizeof(buf));
                 std::string message = "Player named ";
                 message.append((const char*)extra->data() + 4);
+                message.append(" not found");
+
+                ref<uint32>(&buf, 0) = caller;
+                memcpy(buf + 4, message.c_str(), message.length());
+                message::send(MSG_REMOTE_PRINT_TO_PLAYER, &buf, sizeof(buf), nullptr);
+            }
+            break;
+        }
+        case MSG_SEND_LUA_ID_COMMAND:
+        {
+            auto caller = ref<uint32>((uint8*)extra->data(), 0);
+            auto type = ref<uint8>((uint8*)extra->data(), 4);
+            auto id = ref<uint32>((uint8*)extra->data(), 5);
+            auto entity = zoneutils::GetEntity(id, type);
+
+            if (entity != nullptr)
+            {
+                auto result = CmdHandler.call(caller, entity, (const int8*)extra->data() + 9);
+                if (result != 0)
+                {
+                    ShowWarning("Message: bad commandhandler::call result %d", result);
+                }
+            }
+            else
+            {
+                // send unable find entity to caller
+                char buf[279];
+                memset(&buf[0], 0, sizeof(buf));
+                std::string message = "Entity with id ";
+                message.append(std::to_string(id));
                 message.append(" not found");
 
                 ref<uint32>(&buf, 0) = caller;

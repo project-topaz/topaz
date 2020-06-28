@@ -12,13 +12,18 @@ cmdprops =
     parameters = "t"
 }
 
-function onTrigger(caller, player, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
     local usage = "!reset {player}"
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- reset target recasts
     targ:resetRecasts()
     if (targ:getID() ~= caller) then
-        tpz.commands.print(caller, player, string.format("Reset %s's recast timers.", targ:getName()))
+        tpz.commands.print(caller, entity, string.format("Reset %s's recast timers.", targ:getName()))
     end
 end

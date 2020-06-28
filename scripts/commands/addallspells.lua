@@ -11,7 +11,7 @@ cmdprops =
     parameters = "t"
 }
 
-function onTrigger(caller, player, target)
+function onTrigger(caller, entity, target)
     local ValidSpells =
     {
         1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,
@@ -50,7 +50,13 @@ function onTrigger(caller, player, target)
         -- Trust spells are in their own command.
     }
 
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "addallspells {player}"
+    
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- add all spells
     local save = true
@@ -62,5 +68,5 @@ function onTrigger(caller, player, target)
         targ:addSpell(ValidSpells[i], silent, save)
     end
 
-    tpz.commands.print(caller, player, string.format("%s now has all spells.", targ:getName()))
+    tpz.commands.print(caller, entity, string.format("%s now has all spells.", targ:getName()))
 end

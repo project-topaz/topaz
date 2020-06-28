@@ -11,9 +11,14 @@ cmdprops =
     parameters = "ts"
 }
 
-function onTrigger(caller, player, target, nation)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(caller, entity, target, nation)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
     local usage = "!cnation <player> <campaign allegiance>"
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- nation xref tables
     local nationNameToNum = {
@@ -29,15 +34,15 @@ function onTrigger(caller, player, target, nation)
 
     -- show or set allegiance
     if (nation == nil) then
-        tpz.commands.print(caller, player, string.format("%s's current campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
+        tpz.commands.print(caller, entity, string.format("%s's current campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
     else
         nation = tonumber(nation) or nationNameToNum[string.upper(nation)]
         if (nation == nil or nation < 0 or nation > 3) then
-            tpz.commands.error(caller, player, "Invalid campaign allegiange. Valid choices are SANDORIA (1), BASTOK (2), or WINDURST (3).", usage)
+            tpz.commands.error(caller, entity, "Invalid campaign allegiange. Valid choices are SANDORIA (1), BASTOK (2), or WINDURST (3).", usage)
             return
         end
-        tpz.commands.print(caller, player, string.format("%s's old campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
+        tpz.commands.print(caller, entity, string.format("%s's old campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
         targ:setCampaignAllegiance(nation)
-        tpz.commands.print(caller, player, string.format("%s's new campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
+        tpz.commands.print(caller, entity, string.format("%s's new campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
     end
 end

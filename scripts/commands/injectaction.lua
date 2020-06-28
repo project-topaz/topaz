@@ -11,18 +11,18 @@ cmdprops =
     parameters = "iiiii"
 }
 
-function onTrigger(caller, player, actionId, animationId, speceffect, reaction, message)
+function onTrigger(caller, entity, actionId, animationId, speceffect, reaction, message)
     local usage = "!injectaction <action ID> <animation ID> {speceffect} {reaction} {message}"
 
     -- validate actionId
     if (actionId == nil) then
-        tpz.commands.error(caller, player, "You must provide an action ID.", usage)
+        tpz.commands.error(caller, entity, "You must provide an action ID.", usage)
         return
     end
 
     -- validate animationId
     if (animationId == nil) then
-        tpz.commands.error(caller, player, "You must provide an animation ID.", usage)
+        tpz.commands.error(caller, entity, "You must provide an animation ID.", usage)
         return
     end
 
@@ -31,5 +31,5 @@ function onTrigger(caller, player, actionId, animationId, speceffect, reaction, 
     end
 
     -- inject action packet
-    player:injectActionPacket(actionId, animationId, speceffect, reaction, message)
+    entity:injectActionPacket(actionId, animationId, speceffect, reaction, message)
 end

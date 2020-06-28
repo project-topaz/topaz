@@ -9,8 +9,8 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(caller, player)
-    local pet = player:getPet()
+function onTrigger(caller, entity)
+    local pet = entity:getPet()
     if (pet and pet:getLocalVar("GodMode") == 0) then
         -- Toggle GodMode on..
         pet:setLocalVar("GodMode", 1)
@@ -41,8 +41,8 @@ function onTrigger(caller, player)
         pet:addMod(tpz.mod.MDEF,2500)
 
         -- Heal the pet from the new buffs..
-        pet:addHP( 50000 )
-        pet:setMP( 50000 )
+        pet:addHP(50000)
+        pet:setMP(50000)
     else
         -- Toggle GodMode off..
         pet:setLocalVar("GodMode", 0)

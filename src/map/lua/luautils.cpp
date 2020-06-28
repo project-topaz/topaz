@@ -135,6 +135,7 @@ namespace luautils
         lua_register(LuaHandle, "IsMoonNew", luautils::IsMoonNew);
         lua_register(LuaHandle, "IsMoonFull", luautils::IsMoonFull);
         lua_register(LuaHandle, "RunElevator", luautils::StartElevator);
+        lua_register(LuaHandle, "GetCharVariable", luautils::GetCharVariable);
         lua_register(LuaHandle, "GetServerVariable", luautils::GetServerVariable);
         lua_register(LuaHandle, "SetServerVariable", luautils::SetServerVariable);
         lua_register(LuaHandle, "clearVarFromAll", luautils::clearVarFromAll);
@@ -152,6 +153,7 @@ namespace luautils
         lua_register(LuaHandle, "getAbility", luautils::getAbility);
         lua_register(LuaHandle, "getSpell", luautils::getSpell);
         lua_register(LuaHandle, "RemotePrintToPlayer", luautils::RemotePrintToPlayer);
+        lua_register(LuaHandle, "GetNameAndGMLevel", luautils::GetNameAndGMLevel);
 
         Lunar<CLuaAbility>::Register(LuaHandle);
         Lunar<CLuaAction>::Register(LuaHandle);
@@ -3855,6 +3857,47 @@ namespace luautils
         return 0;
     }
 
+    int32 GetCharVariable(lua_State* L)
+    {
+        int n = lua_gettop(L);
+        if (n != 2)
+        {
+            ShowError("luautils::GetCharVariable called with more/less than two argument: %d\n", n);
+            return -1;
+        }
+
+        if (lua_isnil(L, 1) || !lua_isstring(L, 1))
+        {
+            ShowError("luautils::GetCharVariable first argument is nil or not a string\n");
+            return -1;
+        }
+
+        if (lua_isnil(L, 2) || !lua_isstring(L, 2))
+        {
+            ShowError("luautils::GetCharVariable second argument is nil or not a string\n");
+            return -1;
+        };
+
+        auto variable = std::string(lua_tostring(L, 1));
+        auto name = std::string(lua_tostring(L, 2));
+        std::string query = "SELECT value FROM char_vars LEFT JOIN chars on char_vars.charid = chars.charid WHERE charname = '%s' and varname = '%s' LIMIT 1;";
+        auto ret = Sql_Query(SqlHandle, query.c_str(), name, variable);
+        int32 value = 0;
+        bool found = false;
+
+        if (ret != SQL_ERROR &&
+            Sql_NumRows(SqlHandle) != 0 &&
+            Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            value = Sql_GetIntData(SqlHandle, 0);
+            found = true;
+        }
+
+        lua_pushboolean(L, found);
+        lua_pushinteger(L, value);
+        return 2;
+    }
+
     /************************************************************************
     *                                                                       *
     *  Получаем значение глобальной переменной сервера.                     *
@@ -4535,6 +4578,30 @@ namespace luautils
         message::send(MSG_REMOTE_PRINT_TO_PLAYER, &buf, sizeof(buf), nullptr);
 
         return 0;
+    }
+
+    int32 GetNameAndGMLevel(lua_State* L)
+    {
+        int n = lua_gettop(L);
+        if (n != 1)
+        {
+            ShowError("luautils::GetNameAndGMLevel called with more/less than one argument: %d\n", n);
+            return -1;
+        }
+
+        if (lua_isnil(L, 1) || !lua_isnumber(L, 1))
+        {
+            ShowError("luautils::GetNameAndGMLevel first argument is nil or not a number\n");
+            return -1;
+        }
+
+        auto id = lua_tointeger(L, 1);
+        auto [name, gmLevel] = charutils::GetNameAndGMLevel(id);
+
+        lua_pushstring(L, name.c_str());
+        lua_pushnumber(L, gmLevel);
+
+        return 2;
     }
 
 }; // namespace luautils

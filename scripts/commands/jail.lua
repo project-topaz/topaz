@@ -11,8 +11,14 @@ cmdprops =
     parameters = "tis"
 }
 
-function onTrigger(caller, player, target, cellId, reason)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(caller, entity, target, cellId, reason)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!jail {player}"
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     local jailCells =
     {
