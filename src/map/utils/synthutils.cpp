@@ -450,8 +450,8 @@ int32 doSynthSkillUp(CCharEntity* PChar)
             {
                 int32  skillAmount = 1;
 
-                if (charSkill < 600) // no skill ups over 0.1 happen over level 60 https://www.bluegartr.com/threads/57123-Before-you-ask-a-stupid-crafting-question-read-this!
-                {                    // we need more recent confirmation since the "free" level cap was raised to 70
+                if (charSkill < map_config.craft_common_cap) // no skill ups over 0.1 happen over level 60 https://www.bluegartr.com/threads/57123-Before-you-ask-a-stupid-crafting-question-read-this!
+                {                                            // we need more recent confirmation since the "free" level cap was raised to 70
                     int32  satier = 0;
                     double chance = 0;
 
