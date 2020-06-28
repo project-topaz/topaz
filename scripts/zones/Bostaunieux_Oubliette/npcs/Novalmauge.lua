@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Bostaunieux Obliette
---  NPC: Novalmauge
+-- NPC: Novalmauge
 -- Starts and Finishes Quest: The Rumor, Souls in Shadow
 -- Involved in Quest: The Holy Crest, Trouble at the Sluice
 -- !pos 70 -24 21 167
@@ -15,39 +15,35 @@ require("scripts/globals/quests")
 
 local path =
 {
-    41.169430, -24.000000, 19.860674,
-    42.256676, -24.000000, 19.885197,
-    41.168694, -24.000000, 19.904638,
-    21.859211, -24.010996, 19.792259,
-    51.917370, -23.924366, 19.970068,
-    74.570229, -24.024828, 20.103880,
-    44.533886, -23.947662, 19.926519
+    {20.000, -24.032, 20.023},
+    {21.000, -24.000, 20.054},
+    {74.835, -24.039, 20.250},
+    {74.373, -24.014, 19.999},
 }
 
 local wsQuest = tpz.wsquest.spiral_hell
 
 function onSpawn(npc)
-    npc:initNpcAi()
-    npc:setPos(tpz.path.first(path))
+    npc:initNpcPathing(path[1][1], path[1][2], path[1][3])
     onPath(npc)
 end
 
 function onPath(npc)
-    tpz.path.patrol(npc, path)
+     tpz.path.general(npc, path, tpz.path.flag.WALLHACK, false)
 end
 
 function onTrade(player, npc, trade)
     local wsQuestEvent = tpz.wsquest.getTradeEvent(wsQuest, player, trade)
-
+    
     if player:getCharVar("troubleAtTheSluiceVar") == 2 and npcUtil.tradeHas(trade, 959) then -- Dahlia
         player:startEvent(17)
-        npc:wait()
+        npc:pathStop()
     elseif player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.THE_RUMOR) == QUEST_ACCEPTED and npcUtil.tradeHas(trade, 930) then -- Beastman Blood
         player:startEvent(12)
-        npc:wait()
+        npc:pathStop()
     elseif wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
-        npc:wait()
+        npc:pathStop()
     end
 end
 
@@ -58,32 +54,39 @@ function onTrigger(player, npc)
     local theHolyCrestStat = player:getCharVar("TheHolyCrest_Event")
     local theRumor = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.THE_RUMOR)
 
-    npc:wait()
-
     if wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
+        npc:pathStop()
 
     -- THE HOLY CREST
     elseif theHolyCrestStat == 1 then
         player:startEvent(6)
+        npc:pathStop()
     elseif theHolyCrestStat == 2 and player:getCharVar("theHolyCrestCheck") == 0 then
         player:startEvent(7)
+        npc:pathStop()
 
     -- TROUBLE AT THE SLUICE
     elseif troubleAtTheSluiceStat == 1 then
         player:startEvent(15)
+        npc:pathStop()
     elseif troubleAtTheSluiceStat == 2 then
         player:startEvent(16)
+        npc:pathStop()
 
     -- THE RUMOR
     elseif theRumor == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) >= 3 and player:getMainLvl() >= 10 then
         player:startEvent(13)
+        npc:pathStop()
     elseif theRumor == QUEST_ACCEPTED then
         player:startEvent(11)
+        npc:pathStop()
     elseif theRumor == QUEST_COMPLETED then
         player:startEvent(14) -- Standard dialog after "The Rumor"
+        npc:pathStop()
     else
         player:startEvent(10) -- Standard dialog
+        npc:pathStop()
     end
 end
 
@@ -109,5 +112,5 @@ function onEventFinish(player, csid, option, npc)
         tpz.wsquest.handleEventFinish(wsQuest, player, csid, option, ID.text.SPIRAL_HELL_LEARNED)
     end
 
-    npc:wait(0)
+    npc:pathResume()
 end

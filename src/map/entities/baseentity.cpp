@@ -100,6 +100,16 @@ uint8 CBaseEntity::GetRotPos()
 	return loc.p.rotation;
 }
 
+uint16 CBaseEntity::GetPathPoint()
+{
+    return m_pathPoint;
+}
+
+void CBaseEntity::SetPathPoint(uint16 point)
+{
+    m_pathPoint = point;
+}
+
 void CBaseEntity::HideName(bool hide)
 {
 	if(hide)
