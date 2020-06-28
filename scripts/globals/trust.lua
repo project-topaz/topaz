@@ -17,6 +17,7 @@ tpz.trust.message_offset =
     SYNERGY_2      = 5,
     SYNERGY_3      = 6,
     SYNERGY_4      = 7,
+    SYNERGY_5      = 8,
     DEATH          = 9,
     DESPAWN        = 11,
     SPECIAL_MOVE_1 = 18,
@@ -104,7 +105,7 @@ end
 tpz.trust.message = function(mob, id)
     local master = mob:getMaster()
     local offset = (mob:getTrustID() - 896) * 100
-    master:messageFinish(mob, offset + id, 0, 711)
+    master:messageCombat(mob, offset + id, 0, 711)
 end
 
 tpz.trust.synergyMessage = function(mob, synergies)
@@ -132,12 +133,7 @@ end
 
 -- For debugging and lining up synergies
 tpz.trust.dumpMessages = function(mob)
-    tpz.trust.message(mob, tpz.trust.message_offset.SPAWN)
-    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_1)
-    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_2)
-    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_3)
-    tpz.trust.message(mob, tpz.trust.message_offset.SYNERGY_4)
-    tpz.trust.message(mob, tpz.trust.message_offset.DEATH)
-    tpz.trust.message(mob, tpz.trust.message_offset.DESPAWN)
-    tpz.trust.message(mob, tpz.trust.message_offset.SPECIAL_MOVE_1)
+    for i=0, 20 do
+        tpz.trust.message(mob, i)
+    end
 end

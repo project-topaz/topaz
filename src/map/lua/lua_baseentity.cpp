@@ -125,7 +125,7 @@
 #include "../packets/menu_merit.h"
 #include "../packets/menu_raisetractor.h"
 #include "../packets/message_basic.h"
-#include "../packets/message_finish.h"
+#include "../packets/message_combat.h"
 #include "../packets/message_name.h"
 #include "../packets/message_special.h"
 #include "../packets/message_standard.h"
@@ -9812,12 +9812,12 @@ int32 CLuaBaseEntity::independantAnimation(lua_State* L)
 }
 
 /************************************************************************
-*  Function: messageFinish(...)
-*  Purpose :
-*  Example :
-*  Notes   :
+*  Function: messageCombat(...)
+*  Purpose : Various combat related messages are ended with this packet
+*  Example : master:messageCombat(mob, offset + id, 0, 711)
+*  Notes   : 
 ************************************************************************/
-int32 CLuaBaseEntity::messageFinish(lua_State* L)
+int32 CLuaBaseEntity::messageCombat(lua_State* L)
 {
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
@@ -9839,7 +9839,7 @@ int32 CLuaBaseEntity::messageFinish(lua_State* L)
     auto p1 = (int32)lua_tointeger(L, 3);
     auto message = (int16)lua_tointeger(L, 4);
 
-    PChar->pushPacket(new CMessageFinishPacket(PTarget, PChar, p0, p1, message));
+    PChar->pushPacket(new CMessageCombatPacket(PTarget, PChar, p0, p1, message));
 
     return 0;
 }
@@ -15339,6 +15339,7 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,independantAnimation),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageFinish),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageCombat),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,isEngaged),

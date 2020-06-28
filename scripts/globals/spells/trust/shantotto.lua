@@ -3,6 +3,7 @@
 -----------------------------------------
 require("scripts/globals/gambits")
 require("scripts/globals/magic")
+require("scripts/globals/spell_data")
 require("scripts/globals/trust")
 -----------------------------------------
 
@@ -22,10 +23,10 @@ function onMobSpawn(mob)
                         ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.NONE, 30)
 
     tpz.trust.synergyMessage(mob, {
-        [904] = tpz.trust.message_offset.SYNERGY_1, -- Ajido-Marujido
-        [935] = tpz.trust.message_offset.SYNERGY_2, -- Star Sibyl
-        [952] = tpz.trust.message_offset.SYNERGY_3, -- Koru-Moru
-        [989] = tpz.trust.message_offset.SYNERGY_4, -- King of Hearts
+        [tpz.magic.spell.AJIDO_MARUJIDO] = tpz.trust.message_offset.SYNERGY_1,
+        [tpz.magic.spell.STAR_SIBYL] = tpz.trust.message_offset.SYNERGY_2,
+        [tpz.magic.spell.KORU_MORU] = tpz.trust.message_offset.SYNERGY_3,
+        [tpz.magic.spell.KING_OF_HEARTS] = tpz.trust.message_offset.SYNERGY_4,
     })
 end
 

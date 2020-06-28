@@ -473,7 +473,7 @@ public:
     int32 enableEntities(lua_State* L);
     int32 independantAnimation(lua_State* L);
 
-    int32 messageFinish(lua_State* L);
+    int32 messageCombat(lua_State* L);
 
     int32 engage(lua_State* L);
     int32 isEngaged(lua_State* L);

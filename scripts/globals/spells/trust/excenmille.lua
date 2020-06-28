@@ -4,6 +4,7 @@
 require("scripts/globals/ability")
 require("scripts/globals/gambits")
 require("scripts/globals/magic")
+require("scripts/globals/spell_data")
 require("scripts/globals/status")
 require("scripts/globals/trust")
 require("scripts/globals/weaponskillids")
@@ -26,14 +27,11 @@ function onSpellCast(caster, target, spell)
 end
 
 function onMobSpawn(mob)
-    -- TODO: Spells table /cry
-    local FLASH  = 112
-
     mob:addSimpleGambit(ai.t.SELF, ai.c.NOT_STATUS, tpz.effect.SENTINEL,
                         ai.r.JA, ai.s.SPECIFIC, tpz.ja.SENTINEL)
 
     mob:addSimpleGambit(ai.t.TARGET, ai.c.NOT_STATUS, tpz.effect.FLASH,
-                        ai.r.MA, ai.s.SPECIFIC, FLASH)
+                        ai.r.MA, ai.s.SPECIFIC, tpz.magic.spell.FLASH)
 
     mob:addSimpleGambit(ai.t.PARTY, ai.c.HPP_LT, 75,
                         ai.r.MA, ai.s.HIGHEST, tpz.magic.spellFamily.CURE)
@@ -42,7 +40,7 @@ function onMobSpawn(mob)
                         ai.r.WS, ai.s.SPECIFIC, tpz.ws.DOUBLE_THRUST)
 
     tpz.trust.synergyMessage(mob, {
-        [951] = tpz.trust.message_offset.SYNERGY_1, -- Rahal
+        [tpz.magic.spell.RAHAL] = tpz.trust.message_offset.SYNERGY_1,
     })
 end
 
