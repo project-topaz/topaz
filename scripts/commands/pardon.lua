@@ -13,7 +13,7 @@ cmdprops =
 
 function onTrigger(caller, entity, target)
     local targ = tpz.commands.getTargetPC(caller, entity, target)
-    local usage "!pardon {player}"
+    local usage = "!pardon {player}"
 
     if (targ == nil) then
         tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
