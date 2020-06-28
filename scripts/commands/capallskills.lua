@@ -11,7 +11,7 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(caller, player)
-    player:capAllSkills()
-    tpz.commands.print(caller, player, 'All skills capped!')
+function onTrigger(caller, entity)
+    entity:capAllSkills()
+    tpz.commands.print(caller, entity, 'All skills capped!')
 end

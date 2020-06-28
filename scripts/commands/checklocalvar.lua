@@ -1,58 +1,29 @@
 ---------------------------------------------------------------------------------------------------
--- func: checklocalvar <varName> {'player'/'mob'/'npc'} {name/ID}
+-- func: checklocalvar <varName> {name/ID}
 -- desc: checks player or npc local variable and returns result value.
 ---------------------------------------------------------------------------------------------------
+
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 5,
-    parameters = "sss"
+    parameters = "ssn"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!checklocalvar <variable name> {'player', 'mob', or 'npc'} {name or ID}")
-end
+function onTrigger(caller, entity, varName, target)
+    local targ = tpz.commands.getTarget(caller, entity, target)
+    local usage = "!checklocalvar <variable name> {ID}"
 
-function onTrigger(caller, player, arg1, arg2, arg3)
-    local zone = player:getZone()
-    local varName = arg1
-    local targ = arg3
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must enter a player id or mobID/npcID.", usage)
+        return
+    end
 
     if varName == nil then
-        error(player, "You must provide a variable name.")
+        tpz.commands.error(caller, entity, "You must provide a variable name.", usage)
         return
     end
 
-    if arg2 == nil then
-        targ = player:getCursorTarget()
-    elseif arg3 ~= nil then
-        local entity_type = string.upper(arg2)
-        if (entity_type == 'NPC') or (entity_type == 'MOB') then
-            arg3 = tonumber(arg3)
-            if zone:getType() == tpz.zoneType.INSTANCED then
-                local instance = player:getInstance()
-                targ = instance:getEntity(bit.band(arg3, 0xFFF), tpz.objType[entity_type])
-            elseif entity_type == 'NPC' then
-                targ = GetNPCByID(arg3)
-            else
-                targ = GetMobByID(arg3)
-            end
-        elseif entity_type == 'PLAYER' then
-            targ = GetPlayerByName(arg3)
-        else
-            error(player, "Invalid entity type.")
-            return
-        end
-    else
-        error(player, "Need to specify a target.")
-        return
-    end
-
-    if targ == nil then
-        error(player, "Invalid target.")
-        return
-    end
-
-    player:PrintToPlayer(string.format("%s's variable '%s' : %i", targ:getName(), varName, targ:getLocalVar(varName)))
+    tpz.commands.print(caller, entity, string.format("%s's variable '%s' : %i", targ:getName(), varName, targ:getLocalVar(varName)))
 end

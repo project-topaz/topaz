@@ -12,14 +12,19 @@ cmdprops =
     parameters = "sst"
 }
 
-function onTrigger(caller, player, logId, questId, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(caller, entity, logId, questId, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
     local usage = "!checkquest <logID> <questID> {player}"
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- validate logId
     local questLog = GetQuestLogInfo(logId)
     if (questLog == nil) then
-        tpz.commands.error(caller, player, "Invalid logID.", usage)
+        tpz.commands.error(caller, entity, "Invalid logID.", usage)
         return
     end
     local logName = questLog.full_name
@@ -31,7 +36,7 @@ function onTrigger(caller, player, logId, questId, target)
         questId = tonumber(questId) or areaQuestIds[string.upper(questId)]
     end
     if (questId == nil or questId < 0) then
-        tpz.commands.error(caller, player, "Invalid questID.", usage)
+        tpz.commands.error(caller, entity, "Invalid questID.", usage)
         return
     end
 
@@ -45,5 +50,5 @@ function onTrigger(caller, player, logId, questId, target)
     }
 
     -- show quest status
-    tpz.commands.print(caller, player, string.format("%s's status for %s quest ID %i is: %s", targ:getName(), logName, questId, status))
+    tpz.commands.print(caller, entity, string.format("%s's status for %s quest ID %i is: %s", targ:getName(), logName, questId, status))
 end

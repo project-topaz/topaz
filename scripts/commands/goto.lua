@@ -3,46 +3,43 @@
 -- desc: Goes to the target player.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
     parameters = "si"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!goto <player> {forceZone}")
-end
+function onTrigger(caller, entity, target, forceZone)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!goto <player> {forceZone}"
 
-function onTrigger(caller, player, target, forceZone)
-
-    -- validate target
-    if not target then
-        error(player, "You must enter a player name.")
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must enter a player name.", usage)
         return
     end
 
     -- validate forceZone
     if forceZone then
         if forceZone ~= 0 and forceZone ~= 1 then
-            error(player, "If provided, forceZone must be 1 (true) or 0 (false).")
+            tpz.commands.error(caller, entity, "If provided, forceZone must be 1 (true) or 0 (false).", usage)
             return
         end
     else
         forceZone = 1
     end
 
-    local targ = GetPlayerByName(target)
     -- if we found this player, they're on the same zone server
     -- if they're in mog house, goto them instead of setPos
     if targ and not targ:isInMogHouse() then
-		player:setCharVar("prev_x",player:getXPos());
-		player:setCharVar("prev_y", player:getYPos());
-		player:setCharVar("prev_z", player:getZPos());
-		player:setCharVar("prev_rot", player:getRotPos());
-		player:setCharVar("prev_bringzone", player:getZoneID())
-		player:setPos(targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos(), forceZone == 1 and targ:getZoneID() or nil)
-    elseif not player:gotoPlayer(target) then
-        error(player, string.format("Player named: %s not found!"), target)
+		entity:setCharVar("prev_x",entity:getXPos());
+		entity:setCharVar("prev_y", entity:getYPos());
+		entity:setCharVar("prev_z", entity:getZPos());
+		entity:setCharVar("prev_rot", entity:getRotPos());
+		entity:setCharVar("prev_bringzone", entity:getZoneID())
+		entity:setPos(targ:getXPos(), targ:getYPos(), targ:getZPos(), targ:getRotPos(), forceZone == 1 and targ:getZoneID() or nil)
+    elseif not entity:gotoPlayer(targ) then
+        tpz.commands.error(caller, entity, string.format("Player named: %s not found!"), target, usage)
     end
 end

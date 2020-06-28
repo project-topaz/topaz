@@ -5082,4 +5082,20 @@ namespace charutils
             Sql_Query(SqlHandle, "INSERT INTO char_vars SET charid = %u, varname = '%s', value = %i ON DUPLICATE KEY UPDATE value = %i;", PChar->id, var, value, value);
         }
     }
+    std::tuple<std::string, uint8> GetNameAndGMLevel(uint32 id)
+    {
+        std::string query = "SELECT charname, gmlevel FROM chars WHERE charid = %u;";
+        auto ret = Sql_Query(SqlHandle, query.c_str(), id);
+        std::string name = "!invalid!";
+        uint8 gmLevel = 0;
+
+        if (ret != SQL_ERROR && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+        {
+            name = (const char*)Sql_GetData(SqlHandle, 0);
+            gmLevel = Sql_GetIntData(SqlHandle, 1);
+        }
+
+        return std::make_tuple(name, gmLevel);
+    }
+
 }; // namespace charutils

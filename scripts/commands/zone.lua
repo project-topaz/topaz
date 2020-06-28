@@ -2,12 +2,14 @@
 -- func: zone
 -- desc: Teleports a player to the given zone.
 ---------------------------------------------------------------------------------------------------
+
 require("scripts/globals/zone")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 1,
-    parameters = "b"
+    parameters = "s"
 }
 
 ---------------------------------------------------------------------------------------------------
@@ -276,15 +278,10 @@ local zone_list =
     { 0x14, 0x09, 288 }, -- Escha - Zi'Tah
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!zone <zone ID or autotranslate phrase>")
-end
-
-function getBytePos(s,needle)
+function getBytePos(s, needle)
     local i
     local b
-    for i=1,string.len(s),1 do
+    for i = 1, string.len(s), 1 do
         if (string.byte(s, i) == needle) then
             return i
         end
@@ -296,25 +293,26 @@ end
 -- func: onTrigger
 -- desc: Called when this command is invoked.
 ---------------------------------------------------------------------------------------------------
-function onTrigger(caller, player, bytes)
+function onTrigger(caller, entity, destination)
+    local usage = "!zone <zone ID or autotranslate phrase>"
     local x = 0
     local y = 0
     local z = 0
     local rot = 0
     local zone
 
-    if (bytes == nil) then
-        error(player, "You must provide a zone ID or autotranslate phrase.")
+    if (destination == nil) then
+        tpz.commands.error(caller, entity, "You must provide a zone ID or autotranslate phrase.", usage)
         return
     end
-    bytes = string.sub(bytes,6)
-    local atpos = getBytePos(bytes, 253)
+
+    local atpos = getBytePos(destination, 253)
 
     -- validate destination
     if (atpos ~= nil) then
         -- destination is an auto-translate phrase
-        local groupId = string.byte(bytes, atpos + 3)
-        local messageId = string.byte(bytes, atpos + 4)
+        local groupId = string.byte(destination, atpos + 3)
+        local messageId = string.byte(destination, atpos + 4)
         for k, v in pairs(zone_list) do
             if (v[1] == groupId and v[2] == messageId) then
                 x = v[4] or 0
@@ -326,33 +324,38 @@ function onTrigger(caller, player, bytes)
             end
         end
         if (zone == nil) then
-            error(player,"Auto-translated phrase is not a zone.")
+            tpz.commands.error(caller, entity,"Auto-translated phrase is not a zone.", usage)
             return
         end
     else
-        -- destination is a zone ID.
-        zone = tonumber(bytes)
-        if (zone == nil or zone < 0 or zone >= tpz.zone.MAX_ZONE) then
-            error(player, "Invalid zone ID.")
-            return
-        end
-        for k, v in pairs(zone_list) do
-            if (v[3] == zone) then
-                x = v[4] or 0
-                y = v[5] or 0
-                z = v[6] or 0
-                rot = 0
-                zone = v[3]
-                break
+        -- try destination as a zone ID.
+        zone = tonumber(destination)
+        if (zone ~= nil) then
+            if (zone < 0 or zone >= tpz.zone.MAX_ZONE) then
+                tpz.commands.error(caller, entity, "Invalid zone ID.", usage)
+                return
             end
+            for k, v in pairs(zone_list) do
+                if (v[3] == zone) then
+                    x = v[4] or 0
+                    y = v[5] or 0
+                    z = v[6] or 0
+                    rot = 0
+                    zone = v[3]
+                    break
+                end
+            end
+        else
+            tpz.commands.error(caller, entity, "Invalid zone ID.", usage)
+            return
         end
     end
 
     -- send player to destination
-	player:setCharVar("prev_x",player:getXPos());
-	player:setCharVar("prev_y", player:getYPos());
-	player:setCharVar("prev_z", player:getZPos());
-	player:setCharVar("prev_rot", player:getRotPos());
-	player:setCharVar("prev_bringzone", player:getZoneID())
-    player:setPos(x, y, z, rot, zone);
+	entity:setCharVar("prev_x",entity:getXPos());
+	entity:setCharVar("prev_y", entity:getYPos());
+	entity:setCharVar("prev_z", entity:getZPos());
+	entity:setCharVar("prev_rot", entity:getRotPos());
+	entity:setCharVar("prev_bringzone", entity:getZoneID())
+    entity:setPos(x, y, z, rot, zone)
 end

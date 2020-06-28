@@ -12,21 +12,21 @@ cmdprops =
     parameters = "is"
 }
 
-function onTrigger(caller, player, mobId, noDepop)
+function onTrigger(caller, entity, mobId, noDepop)
     local usage = "!mobhere {mobID} {noDepop}"
 
     -- validate mobId
     local targ
     if (mobId == nil) then
-        targ = player:getCursorTarget()
+        targ = entity:getCursorTarget()
         if (targ == nil or not targ:isMob()) then
-            tpz.commands.error(caller, player, "You must either provide a mobID or target a mob.", usage)
+            tpz.commands.error(caller, entity, "You must either provide a mobID or target a mob.", usage)
             return
         end
     else
         targ = GetMobByID(mobId)
         if (targ == nil) then
-            tpz.commands.error(caller, player, "Invalid mobID.", usage)
+            tpz.commands.error(caller, entity, "Invalid mobID.", usage)
             return
         end
     end
@@ -34,13 +34,13 @@ function onTrigger(caller, player, mobId, noDepop)
 
     -- attempt to bring mob here
     SpawnMob(mobId)
-    if (player:getZoneID() == targ:getZoneID()) then
-        targ:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+    if (entity:getZoneID() == targ:getZoneID()) then
+        targ:setPos(entity:getXPos(), entity:getYPos(), entity:getZPos(), entity:getRotPos(), entity:getZoneID())
     else
         if (noDepop == nil or noDepop == 0) then
             DespawnMob(mobId)
-            tpz.commands.print(caller, player, "Despawned the mob because of an error.")
+            tpz.commands.print(caller, entity, "Despawned the mob because of an error.")
         end
-        tpz.commands.print(caller, player, "Mob could not be moved to current pos - you are probably in the wrong zone.")
+        tpz.commands.print(caller, entity, "Mob could not be moved to current pos - you are probably in the wrong zone.")
     end
 end

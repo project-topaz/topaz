@@ -11,8 +11,14 @@ cmdprops =
     parameters = "t"
 }
 
-function onTrigger(caller, player, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage "!pardon {player}"
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     if (targ:getCharVar('inJail') >= 1) then
         local message = string.format('%s is pardoning %s from jail.', player:getName(), targ:getName())

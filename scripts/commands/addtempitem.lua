@@ -11,7 +11,7 @@ cmdprops =
     parameters = "ii"
 }
 
-function onTrigger(caller, player, itemId, quantity)
+function onTrigger(caller, entity, itemId, quantity)
     local usage = "!addtempitem <itemID> <quantity>"
 
     -- validate itemId
@@ -19,17 +19,17 @@ function onTrigger(caller, player, itemId, quantity)
         itemId = tonumber(itemId)
     end
     if (itemId == nil or itemId == 0) then
-        tpz.commands.error(caller, player, "Invalid itemID.", usage)
+        tpz.commands.error(caller, entity, "Invalid itemID.", usage)
         return
     end
 
     -- validate quantity
     quantity = tonumber(quantity) or 1
     if (quantity == nil or quantity < 1) then
-        tpz.commands.error(caller, player, "Invalid quantity.", usage)
+        tpz.commands.error(caller, entity, "Invalid quantity.", usage)
         return
     end
 
     -- add temp item
-    player:addTempItem(itemId, quantity, 0, 0, 0, 0, 0, 0, 0, 0)
+    entity:addTempItem(itemId, quantity, 0, 0, 0, 0, 0, 0, 0, 0)
 end

@@ -9,6 +9,6 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(caller, player)
-    player:showPosition()
+function onTrigger(caller, entity)
+    entity:showPosition()
 end

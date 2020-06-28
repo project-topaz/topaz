@@ -11,16 +11,21 @@ cmdprops =
     parameters = "it"
 }
 
-function onTrigger(caller, player, hp, target)
+function onTrigger(caller, entity, hp, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
     local usage = "!hp <amount> {player}"
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- validate amount
     if (hp == nil or tonumber(hp) == nil) then
-        tpz.commands.error(caller, player, "You must provide an amount.", usage)
+        tpz.commands.error(caller, entity, "You must provide an amount.", usage)
         return
     elseif (hp < 0) then
-        tpz.commands.error(caller, player, "Invalid amount.", usage)
+        tpz.commands.error(caller, entity, "Invalid amount.", usage)
         return
     end
 
@@ -28,9 +33,9 @@ function onTrigger(caller, player, hp, target)
     if (targ:getHP() > 0) then
         targ:setHP(hp)
         if(targ:getID() ~= caller) then
-            tpz.commands.print(caller, player, string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
+            tpz.commands.print(caller, entity, string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
         end
     else
-        tpz.commands.print(caller, player, string.format("%s is currently dead.", targ:getName()))
+        tpz.commands.print(caller, entity, string.format("%s is currently dead.", targ:getName()))
     end
 end

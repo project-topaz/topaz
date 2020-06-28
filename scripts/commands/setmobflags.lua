@@ -9,25 +9,30 @@ require("scripts/globals/commands")
 cmdprops =
 {
     permission = 4,
-    parameters = "si"
+    parameters = "sn"
 }
 
-function onTrigger(caller, player, flags, target)
+function onTrigger(caller, entity, flags, target)
+    local targ = tpz.commands.getTargetMob(caller, entity, target)
     local usage = "!setmobflags <flags> {mob ID}"
-    local targ = tpz.commands.getTargetMob(caller, player, target)
+
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a valid mobID.", usage)
+        return
+    end
 
     -- validate flags
     if (flags == nil) then
-        tpz.commands.error(caller, player, "You must supply a flags value.", usage)
+        tpz.commands.error(caller, entity, "You must supply a flags value.", usage)
         return
     end
 
     if targ == nil then
-        tpz.commands.error(player, caller, "You must either supply a mob ID or target a mob.", usage)
+        tpz.commands.error(caller, entity, "You must either supply a mob ID or target a mob.", usage)
         return
     end
 
     -- set flags
-    player:setMobFlags(flags, targ:getID())
-    tpz.commands.print(caller, player, string.format("Set %s %i flags to %i.", targ:getName(), targ:getID(), flags))
+    entity:setMobFlags(flags, targ:getID())
+    tpz.commands.print(caller, entity, string.format("Set %s %i flags to %i.", targ:getName(), targ:getID(), flags))
 end

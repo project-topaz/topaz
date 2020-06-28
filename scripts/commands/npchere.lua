@@ -13,38 +13,33 @@ cmdprops =
     parameters = "is"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!npchere {npcID} {noDepop}")
-end
-
-function onTrigger(caller, player, npcId, noDepop)
+function onTrigger(caller, entity, npcId, noDepop)
     local usage = "!npchere {npcID} {noDepop}"
 
     -- validate npc
     local targ
     if (npcId == nil) then
-        targ = player:getCursorTarget()
+        targ = entity:getCursorTarget()
         if (targ == nil or not targ:isNPC()) then
-            tpz.commands.error(caller, player, "You must either provide an npcID or target an NPC.", usage)
+            tpz.commands.error(caller, entity, "You must either provide an npcID or target an NPC.", usage)
             return
         end
     else
         targ = GetNPCByID(npcId)
         if (targ == nil) then
-            tpz.commands.error(caller, player, "Invalid npcID.", usage)
+            tpz.commands.error(caller, entity, "Invalid npcID.", usage)
             return
         end
     end
 
-    if (player:getZoneID() == targ:getZoneID()) then
-        targ:setPos(player:getXPos(), player:getYPos(), player:getZPos(), player:getRotPos(), player:getZoneID())
+    if (entity:getZoneID() == targ:getZoneID()) then
+        targ:setPos(entity:getXPos(), entity:getYPos(), entity:getZPos(), entity:getRotPos(), entity:getZoneID())
         targ:setStatus(tpz.status.NORMAL)
     else
         if (noDepop == nil or noDepop == 0) then
             targ:setStatus(tpz.status.DISAPPEAR)
-            tpz.commands.print(caller, player, "Despawned the NPC because of an error.")
+            tpz.commands.print(caller, entity, "Despawned the NPC because of an error.")
         end
-        tpz.commands.print(caller, player, "NPC could not be moved to current pos - you are probably in the wrong zone.")
+        tpz.commands.print(caller, entity, "NPC could not be moved to current pos - you are probably in the wrong zone.")
     end
 end

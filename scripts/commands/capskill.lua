@@ -12,21 +12,21 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, player, skillId)
+function onTrigger(caller, entity, skillId)
     local usage = "!capskill <skillID>"
 
     -- validate skillId
     if (skillId == nil) then
-        tpz.commands.error(caller, player, "You must provide a skillID.", usage)
+        tpz.commands.error(caller, entity, "You must provide a skillID.", usage)
         return
     end
     skillId = tonumber(skillId) or tpz.skill[string.upper(skillId)]
     if (skillId == nil or skillId == 0) then
-        tpz.commands.error(caller, player, "Invalid skillID.", usage)
+        tpz.commands.error(caller, entity, "Invalid skillID.", usage)
         return
     end
 
     -- cap skill
-    player:capSkill(skillId)
-    tpz.commands.print(caller, player, string.format("Capped skillID %i.", skillId))
+    entity:capSkill(skillId)
+    tpz.commands.print(caller, entity, string.format("Capped skillID %i.", skillId))
 end

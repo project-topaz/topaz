@@ -167,6 +167,7 @@ namespace luautils
     int32 IsMoonNew(lua_State* L);                                              // Returns true if the moon is new
     int32 IsMoonFull(lua_State* L);                                             // Returns true if the moon is full
     int32 StartElevator(lua_State*);
+    int32 GetCharVariable(lua_State*);
     int32 GetServerVariable(lua_State*);
     int32 SetServerVariable(lua_State *);
     int32 clearVarFromAll(lua_State *);                                         // Deletes a specific player variable from all players
@@ -305,7 +306,7 @@ namespace luautils
     int32 OnFishingCatch(CCharEntity* PChar, uint8 CatchType, int32 CatchID);                                     // triggers when player catches fish
     int32 OnFishingEnd(CCharEntity* PChar);                                                                       // triggers when player stops fishing
 
-
+    int32 GetNameAndGMLevel(lua_State* L);
 };
 
 #endif //- _LUAUTILS_H -

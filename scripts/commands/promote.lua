@@ -11,27 +11,34 @@ cmdprops =
     parameters = "ti"
 }
 
-function onTrigger(caller, player, target, level)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(caller, entity, target, level)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
     local usage = "!promote <player> <level>"
 
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must enter a player name.", usage)
+        return
+    end
+
+    local name, gmLevel = GetNameAndGMLevel(caller)
+
     -- determine maximum level player can promote to
-    local maxLevel = player:getGMLevel() - 1
+    local maxLevel = gmLevel - 1
     if (maxLevel < 1) then
         maxLevel = 0
     end
 
     -- catch players trying to change level of equal or higher tiered GMs.
-    if (targ:getGMLevel() >= player:getGMLevel()) then
-        printf("%s attempting to adjust same or higher tier GM %s.", player:getName(), targ:getName())
-        targ:PrintToPlayer(string.format("%s attempted to adjust your GM rank.", player:getName()))
-        error(player, "You can not use this command on same or higher tiered GMs.")
+    if (targ:getGMLevel() >= gmLevel) then
+        printf("%s attempting to adjust same or higher tier GM %s.", name, targ:getName())
+        targ:PrintToPlayer(string.format("%s attempted to adjust your GM rank.", name))
+        tpz.commands.error(caller, entity, "You can not use this command on same or higher tiered GMs.", usage)
         return
     end
 
     -- validate level
     if (level == nil or level < 0 or level > maxLevel) then
-        tpz.commands.error(caller, player, string.format("Invalid level.  Must be 0 to %i.", maxLevel), usage)
+        tpz.commands.error(caller, entity, string.format("Invalid level.  Must be 0 to %i.", maxLevel), usage)
         return
     end
 
@@ -96,6 +103,6 @@ function onTrigger(caller, player, target, level)
         end
     end
 
-    tpz.commands.print(caller, player, string.format("%s set to tier %i.", targ:getName(), level))
-    targ:PrintToPlayer(string.format( "You have been set to tier %i.", level ))
+    tpz.commands.print(caller, entity, string.format("%s set to tier %i.", targ:getName(), level))
+    targ:PrintToPlayer(string.format("You have been set to tier %i.", level))
 end

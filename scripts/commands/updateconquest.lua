@@ -12,12 +12,12 @@ cmdprops =
     parameters = "i"
 }
 
-function onTrigger(caller, player, updatetype)
+function onTrigger(caller, entity, updatetype)
     local usage = "!updateconquest <type>"
 
     if (updatetype == nil or updatetype < 0 or updatetype > 2) then
-        tpz.commands.error(caller, player, "Invalid update type.", usage)
-        tpz.commands.print(caller, player, "Type: 0 = Conquest_Tally_Start, 1 = Conquest_Tally_End, 2 = Conquest_Update")
+        tpz.commands.error(caller, entity, "Invalid update type.", usage)
+        tpz.commands.print(caller, entity, "Type: 0 = Conquest_Tally_Start, 1 = Conquest_Tally_End, 2 = Conquest_Update")
         return
     end
 

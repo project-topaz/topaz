@@ -3571,23 +3571,38 @@ int32 CLuaBaseEntity::gotoPlayer(lua_State* L)
     TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
 
     bool found = false;
-    if (!lua_isnil(L, 1) && lua_isstring(L, 1))
+    
+    if (!lua_isnil(L, 1))
     {
-        const char* fmtQuery = "SELECT charid FROM chars WHERE charname = '%s';";
-        int32 ret = Sql_Query(SqlHandle, fmtQuery, std::string(lua_tostring(L, 1)).c_str());
+        uint16 id = 0;
+        if (lua_isnumber(L, 1))
+        {
+            id = (uint16)lua_tonumber(L, 1);
+            found = true;
+        } else if (lua_isstring(L, 1))
+        {
+            const char* fmtQuery = "SELECT charid FROM chars WHERE charname = '%s';";
+            int32 ret = Sql_Query(SqlHandle, fmtQuery, std::string(lua_tostring(L, 1)).c_str());
 
-        if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
+            {
+                id = Sql_GetUIntData(SqlHandle, 0);
+                found = true;
+            }
+        }
+
+        if (found)
         {
             char buf[30];
             memset(&buf[0], 0, sizeof(buf));
 
-            ref<uint16>(&buf, 0) = Sql_GetUIntData(SqlHandle, 0); // target char
+            ref<uint16>(&buf, 0) = id; // target char
             ref<uint16>(&buf, 4) = m_PBaseEntity->id; // warping to target char, their server will send us a zoning message with their pos
 
             message::send(MSG_SEND_TO_ZONE, &buf[0], sizeof(buf), nullptr);
-            found = true;
         }
     }
+
     lua_pushboolean(L, found);
     return 1;
 }
