@@ -29,7 +29,7 @@ end
 function utils.stoneskin(target, dmg)
     --handling stoneskin
     if (dmg > 0) then
-        skin = target:getMod(tpz.mod.STONESKIN)
+        local skin = target:getMod(tpz.mod.STONESKIN)
         if (skin > 0) then
             if (skin > dmg) then --absorb all damage
                 target:delMod(tpz.mod.STONESKIN, dmg)
