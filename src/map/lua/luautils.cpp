@@ -4566,7 +4566,7 @@ namespace luautils
             return -1;
         };
 
-        auto id = lua_tointeger(L, 1);
+        auto id = (uint32)lua_tointeger(L, 1);
         auto message = std::string(lua_tostring(L, 2));
 
         // send remote message to player
@@ -4595,7 +4595,7 @@ namespace luautils
             return -1;
         }
 
-        auto id = lua_tointeger(L, 1);
+        auto id = (uint32)lua_tointeger(L, 1);
         auto [name, gmLevel] = charutils::GetNameAndGMLevel(id);
 
         lua_pushstring(L, name.c_str());
