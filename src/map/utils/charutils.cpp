@@ -3307,11 +3307,11 @@ namespace charutils
                         switch (pcinzone)
                         {
                             case 1: exp *= 1.00f; break;
-                            case 2: exp *= 0.75f; break;
-                            case 3: exp *= 0.55f; break;
-                            case 4: exp *= 0.45f; break;
-                            case 5: exp *= 0.39f; break;
-                            case 6: exp *= 0.35f; break;
+                            case 2: exp *= 0.87f; break;
+                            case 3: exp *= 0.63f; break;
+                            case 4: exp *= 0.52f; break;
+                            case 5: exp *= 0.44f; break;
+                            case 6: exp *= 0.38f; break;
                             default: exp *= (1.8f / pcinzone); break;
                         }
                     }
@@ -3320,11 +3320,11 @@ namespace charutils
                         switch (pcinzone)
                         {
                             case 1: exp *= 1.00f; break;
-                            case 2: exp *= 0.75f; break;
-                            case 3: exp *= 0.55f; break;
-                            case 4: exp *= 0.45f; break;
-                            case 5: exp *= 0.39f; break;
-                            case 6: exp *= 0.35f; break;
+                            case 2: exp *= 0.87f; break;
+                            case 3: exp *= 0.63f; break;
+                            case 4: exp *= 0.52f; break;
+                            case 5: exp *= 0.44f; break;
+                            case 6: exp *= 0.38f; break;
                             default: exp *= (1.8f / pcinzone); break;
                         }
 
@@ -3485,6 +3485,11 @@ namespace charutils
                         }
                     }
                     // pet or companion exp penalty needs to be added here
+                    // trust penalty
+                    if (PMember->PTrusts.size() >= 1)
+                    {
+                        exp *= 0.7f;
+                    }
                     if (distance(PMember->loc.p, PMob->loc.p) > 100)
                     {
                         PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, 0, 0, 37));

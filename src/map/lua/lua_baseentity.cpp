@@ -15571,7 +15571,6 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,enableEntities),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,independantAnimation),
 
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageFinish),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,messageCombat),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,engage),
