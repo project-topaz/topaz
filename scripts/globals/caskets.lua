@@ -1,10 +1,10 @@
 -----------------------------------------------------------
 -- Global Casket utility script
 -----------------------------------------------------------
+require("scripts/globals/zone")
 require("scripts/globals/casket_loot")
 require("scripts/globals/settings")
 require("scripts/globals/status")
-require("scripts/globals/zone")
 require("scripts/globals/msg")
 
 -----------------------------------------------
@@ -116,7 +116,7 @@ local function timeElapsedCheck(npc)
     if npc:getLocalVar("[caskets]SPAWNTIME") then
         spawnTime = npc:getLocalVar("[caskets]SPAWNTIME")
     end
-    
+
     local lastSpawned = os.time() - spawnTime
 
     timeTable = convertTime(lastSpawned)
