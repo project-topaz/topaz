@@ -3,26 +3,27 @@
 -- desc: Injects an action packet with the specified action and animation id.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
-    permission = 5,
+    permission = 4,
     parameters = "iiiii"
 }
 
-function onTrigger(caller, player, actionId, animationId, speceffect, reaction, message)
-    local usage = "!injectaction <action ID> <animation ID> {speceffect} {reaction} {message}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!injectaction <action ID> <animation ID> {speceffect} {reaction} {message}")
+end
 
+function onTrigger(player, actionId, animationId, speceffect, reaction, message)
     -- validate actionId
     if (actionId == nil) then
-        tpz.commands.error(caller, player, "You must provide an action ID.", usage)
+        error(player, "You must provide an action ID.")
         return
     end
 
     -- validate animationId
     if (animationId == nil) then
-        tpz.commands.error(caller, player, "You must provide an animation ID.", usage)
+        error(player, "You must provide an animation ID.")
         return
     end
 

@@ -3,22 +3,28 @@
 -- desc: Sets the target players level.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 3,
-    parameters = "ts"
+    parameters = "ss"
 }
 
-function onTrigger(caller, player, arg1, arg2)
-    local usage = "!setplayerlevel {player} <level>"
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!setplayerlevel {player} <level>")
+end
 
+function onTrigger(player, arg1, arg2)
+    local targ
     local level
 
     -- validate target
     if (arg2 ~= nil) then
+        targ = GetPlayerByName(arg1)
+        if (targ == nil) then
+            error(player, string.format( "Player named '%s' not found!", arg1 ) )
+            return
+        end
         level = tonumber(arg2)
     elseif (arg1 ~= nil) then
         targ = player
@@ -27,13 +33,13 @@ function onTrigger(caller, player, arg1, arg2)
 
     -- validate level
     if (level == nil or level < 1 or level > 99) then
-        tpz.commands.error(caller, player, "Invalid level.  Must be between 1 and 99.", usage)
+        error(player, "Invalid level.  Must be between 1 and 99.")
         return
     end
 
     -- set level
     targ:setLevel( level )
-    if (targ:getID() ~= caller) then
-        tpz.commands.print(caller, player, string.format("Set %s's level to %i.", targ:getName(), level))
+    if (targ:getID() ~= player:getID()) then
+        player:PrintToPlayer( string.format("Set %s's level to %i.", targ:getName(), level) )
     end
 end

@@ -14,7 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!goto <player> {forceZone}")
 end
 
-function onTrigger(caller, player, target, forceZone)
+function onTrigger(player, target, forceZone)
 
     -- validate target
     if not target then

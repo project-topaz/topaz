@@ -3,19 +3,21 @@
 -- desc: Gives an item to the target player.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 3,
-    parameters = "tiiiiiiiiii"
+    parameters = "siiiiiiiiii"
 }
 
-function onTrigger(caller, player, target, itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function onTrigger(player, target, itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val)
+    if (target == nil or itemId == nil) then
+        player:PrintToPlayer("You must enter a valid player name and item ID.")
+        return
+    end
 
-    if (itemId == nil) then
-        tpz.commands.print(caller, player, "You must enter a item ID.")
+    local targ = GetPlayerByName( target )
+    if (targ == nil) then
+        player:PrintToPlayer( string.format( "Player named '%s' not found!", target ) )
         return
     end
 
@@ -30,11 +32,11 @@ function onTrigger(caller, player, target, itemId, amount, aug0, aug0val, aug1, 
 	
     -- Attempt to give the target the item..
     if (targ:getFreeSlotsCount() == 0) then
-        targ:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, itemId)
-        tpz.commands.print(caller, player, string.format("Player '%s' does not have free space for that item!", target))
+        targ:messageSpecial( ID.text.ITEM_CANNOT_BE_OBTAINED, itemId )
+        player:PrintToPlayer( string.format( "Player '%s' does not have free space for that item!", target ) )
     else
-        targ:addItem(itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val)
-        targ:messageSpecial(ID.text.ITEM_OBTAINED, itemId)
-        tpz.commands.print(caller, player, string.format("Gave player '%s' Item with ID of '%u' ", target, itemId))
+        targ:addItem( itemId, amount, aug0, aug0val, aug1, aug1val, aug2, aug2val, aug3, aug3val )
+        targ:messageSpecial( ID.text.ITEM_OBTAINED, itemId )
+        player:PrintToPlayer( string.format( "Gave player '%s' Item with ID of '%u' ", target, itemId ) )
     end
 end

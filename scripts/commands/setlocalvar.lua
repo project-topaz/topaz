@@ -3,29 +3,29 @@
 -- desc: set player npc or mob local variable and value.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 4,
     parameters = "siss"
 }
 
-function onTrigger(caller, player, arg1, arg2, arg3, arg4)
-    local usage = "!setlocalvar <variable name> <value> {'player', 'mob', or 'npc'} {name or ID}"
-    local targ = tpz.commands.getTarget(caller, player, target)
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!setlocalvar <variable name> <value> {'player', 'mob', or 'npc'} {name or ID}")
+end
 
+function onTrigger(player, arg1, arg2, arg3, arg4)
     local zone = player:getZone()
     local varName = arg1
     local varValue = arg2
 
     if varName == nil then
-        tpz.commands.error(caller, player, "You must provide a variable name.", usage)
+        error(player, "You must provide a variable name.")
         return
     end
 
     if varValue == nil then
-        tpz.commands.error(caller, player, "No varaiable value given for target.", usage)
+        error(player, "No varaiable value given for target.")
         return
     end
 
@@ -46,19 +46,19 @@ function onTrigger(caller, player, arg1, arg2, arg3, arg4)
         elseif entity_type == 'PLAYER' then
             targ = GetPlayerByName(arg4)
         else
-            tpz.commands.error(caller, player, "Invalid entity type.", usage)
+            error(player, "Invalid entity type.")
             return
         end
     else
-        tpz.commands.error(caller, player, "Need to specify a target.", usage)
+        error(player, "Need to specify a target.")
         return
     end
 
     if targ == nil then
-        tpz.commands.error(caller, player, "Invalid target.", usage)
+        error(player, "Invalid target.")
         return
     end
 
     targ:setLocalVar(varName, varValue)
-    tpz.commands.print(caller, player, string.format("%s's variable '%s' : %i", targ:getName(), varName, varValue))
+    player:PrintToPlayer(string.format("%s's variable '%s' : %i", targ:getName(), varName, varValue))
 end

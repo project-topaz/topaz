@@ -9,7 +9,7 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(caller, player)
+function onTrigger(player)
     -- GM Flag Definitions
     local FLAG_GM               = 0x04000000
     local FLAG_GM_SENIOR        = 0x05000000

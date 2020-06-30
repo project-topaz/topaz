@@ -4,22 +4,43 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")
-require("scripts/globals/commands")
 
 cmdprops =
 {
-    permission = 4,
-    parameters = "it"
+    permission = 3,
+    parameters = "si"
 }
 
-function onTrigger(caller, player, id, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!deleffect <effect> {player}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!deleffect {player} <effect>")
+end
+
+function onTrigger(player, arg1, arg2)
+    local targ
+    local id
+
+    if (arg1 == nil) then
+        error(player, "You must provide an effect ID.")
+        return
+    elseif (arg2 == nil) then
+        targ = player
+        id = arg1
+    else
+        targ = GetPlayerByName(arg1)
+        id = arg2
+    end
+
+    -- validate target
+    if (targ == nil) then
+        error(player, string.format("Player named '%s' not found!", arg1))
+        return
+    end
 
     -- validate effect
     id = tonumber(id) or tpz.effect[string.upper(id)]
     if (id == nil) then
-        tpz.commands.error(caller, player, "Invalid effect.", usage)
+        error(player, "Invalid effect.")
         return
     elseif (id == 0) then
         id = 1
@@ -27,7 +48,7 @@ function onTrigger(caller, player, id, target)
 
     -- delete status effect
     targ:delStatusEffect(id)
-    if (targ:getID() ~= caller) then
-        tpz.commands.print(caller, player, string.format("Removed effect %i from %s.", id, targ:getName()))
+    if (targ:getID() ~= player:getID()) then
+        player:PrintToPlayer(string.format("Removed effect %i from %s.",id,targ:getName()))
     end
 end

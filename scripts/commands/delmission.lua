@@ -20,23 +20,24 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/missions")
-require("scripts/globals/commands")
 
 cmdprops =
 {
-    permission = 4,
-    parameters = "sst"
+    permission = 3,
+    parameters = "sss"
 }
 
-function onTrigger(caller, player, logId, missionId, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!delmission <logID> <missionID> {player}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!delmission <logID> <missionID> {player}")
+end
 
+function onTrigger(player, logId, missionId, target)
     -- validate logId
     local logName
     local logInfo = GetMissionLogInfo(logId)
     if (logInfo == nil) then
-        tpz.commands.error(caller, player, "Invalid logID.", usage)
+        error(player, "Invalid logID.")
         return
     end
     logId = logInfo.mission_log;
@@ -48,11 +49,23 @@ function onTrigger(caller, player, logId, missionId, target)
         missionId = tonumber(missionId) or areaMissionIds[string.upper(missionId)] or _G[string.upper(missionId)]
     end
     if (missionId == nil or missionId < 0) then
-        tpz.commands.error(caller, player, "Invalid missionID.", usage)
+        error(player, "Invalid missionID.")
         return
+    end
+
+    -- validate target
+    local targ
+    if (target == nil) then
+        targ = player
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format("Player named '%s' not found!", target))
+            return
+        end
     end
 
     -- delete mission
     targ:delMission(logId, missionId)
-    tpz.commands.print(caller, player, string.format("Deleted %s mission %i from %s.", logName, missionId, targ:getName()))
+    player:PrintToPlayer(string.format("Deleted %s mission %i from %s.", logName, missionId, targ:getName()))
 end

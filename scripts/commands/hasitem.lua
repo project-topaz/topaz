@@ -3,31 +3,46 @@
 -- desc: Checks if a player has a specific item
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
-    permission = 2,
-    parameters = "it"
+    permission = 1,
+    parameters = "is"
 }
 
-function onTrigger(caller, player, itemId, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!hasitem <itemID> {player}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!hasitem <itemID> {player}")
+end
 
+function onTrigger(player, itemId, target)
     -- validate itemId
     if (itemId == nil) then
-        tpz.commands.error(caller, player, "You must provide an itemID.", usage)
+        error(player, "You must provide an itemID.")
         return
     elseif (itemId < 1) then
-        tpz.commands.error(caller, player, "Invalid itemID.", usage)
+        error(player, "Invalid itemID.")
         return
+    end
+
+    -- validate target
+    local targ
+    if (target == nil) then
+        targ = player:getCursorTarget()
+        if (targ == nil or not targ:isPC()) then
+            targ = player
+        end
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format("Player named '%s' not found!", target))
+            return
+        end
     end
 
     -- report hasItem
     if (targ:hasItem(itemId)) then
-        tpz.commands.print(caller, player, string.format("%s has item %i.", targ:getName(), itemId))
+        player:PrintToPlayer(string.format("%s has item %i.", targ:getName(), itemId))
     else
-        tpz.commands.print(caller, player, string.format("%s does not have item %i.", targ:getName(), itemId))
+        player:PrintToPlayer(string.format("%s does not have item %i.", targ:getName(), itemId))
     end
 end

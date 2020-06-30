@@ -3,12 +3,10 @@
 -- desc: Sets the players position. If none is given, prints out the position instead.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 1,
-    parameters = "sssst"
+    parameters = "sssss"
 }
 
 function error(player, msg)
@@ -16,10 +14,7 @@ function error(player, msg)
     player:PrintToPlayer("!pos {x} {y} {z} {zone ID} {player}")
 end
 
-function onTrigger(caller, player, arg1, arg2, arg3, arg4, arg5)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!pos {x} {y} {z} {zone ID} {player}"
-
+function onTrigger(player, arg1, arg2, arg3, arg4, arg5)
     local target
     local zoneId
     local x

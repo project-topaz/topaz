@@ -4,32 +4,34 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")
-require("scripts/globals/commands")
 
 cmdprops =
 {
-    permission = 5,
+    permission = 4,
     parameters = "s"
 }
 
-function onTrigger(caller, player, animationId)
-    local usage = "!animation {animationID}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!animation {animationID}")
+end
 
+function onTrigger(player, animationId)
     local oldAnimation = player:getAnimation()
 
     if (animationId == nil) then
-        tpz.commands.print(caller, player, string.format("Current player animation: %d", oldAnimation))
+        player:PrintToPlayer(string.format("Current player animation: %d", oldAnimation))
         return
     end
 
     -- validate animationId
     animationId = tonumber(animationId) or tpz.anim[string.upper(animationId)]
     if (animationId == nil or animationId < 0) then
-        tpz.commands.error(caller, player, "Invalid animationId.", usage)
+        error(player, "Invalid animationId.")
         return
     end
 
     -- set player animation
     player:setAnimation(animationId)
-    tpz.commands.print(caller, player, string.format("%s | Old animation: %i | New animation: %i\n", player:getName(), oldAnimation, animationId))
+    player:PrintToPlayer(string.format("%s | Old animation: %i | New animation: %i\n", player:getName(), oldAnimation, animationId))
 end

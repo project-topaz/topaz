@@ -9,6 +9,6 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(caller, player)
+function onTrigger(player)
     player:sendMenu(3)
 end

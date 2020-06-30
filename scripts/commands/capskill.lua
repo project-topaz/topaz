@@ -4,7 +4,6 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")
-require("scripts/globals/commands")
 
 cmdprops =
 {
@@ -12,21 +11,24 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, player, skillId)
-    local usage = "!capskill <skillID>"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!capskill <skillID>")
+end
 
+function onTrigger(player, skillId)
     -- validate skillId
     if (skillId == nil) then
-        tpz.commands.error(caller, player, "You must provide a skillID.", usage)
+        error(player, "You must provide a skillID.")
         return
     end
     skillId = tonumber(skillId) or tpz.skill[string.upper(skillId)]
     if (skillId == nil or skillId == 0) then
-        tpz.commands.error(caller, player, "Invalid skillID.", usage)
+        error(player, "Invalid skillID.")
         return
     end
 
     -- cap skill
-    player:capSkill(skillId)
-    tpz.commands.print(caller, player, string.format("Capped skillID %i.", skillId))
+    player:capSkill( skillId )
+    player:PrintToPlayer( string.format( "Capped skillID %i.", skillId ) )
 end

@@ -3,18 +3,18 @@
 -- desc: check or alter target characters campaign allegiance
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
-    permission = 4,
-    parameters = "ts"
+    permission = 3,
+    parameters = "ss"
 }
 
-function onTrigger(caller, player, target, nation)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!cnation <player> <campaign allegiance>"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!cnation <player> <campaign allegiance>")
+end
 
+function onTrigger(player, target, nation)
     -- nation xref tables
     local nationNameToNum = {
         ["NONE"]     =  0,
@@ -27,17 +27,28 @@ function onTrigger(caller, player, target, nation)
         nationNumToName[v]=k
     end
 
+    -- validate target
+    if (target == nil) then
+        error(player, "You must specify an online player by name.")
+        return
+    end
+    local targ = GetPlayerByName( target )
+    if (targ == nil) then
+        error(player, string.format( "Player named '%s' not found!", target ) )
+        return
+    end
+
     -- show or set allegiance
     if (nation == nil) then
-        tpz.commands.print(caller, player, string.format("%s's current campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
+        player:PrintToPlayer(string.format("%s's current campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
     else
         nation = tonumber(nation) or nationNameToNum[string.upper(nation)]
         if (nation == nil or nation < 0 or nation > 3) then
-            tpz.commands.error(caller, player, "Invalid campaign allegiange. Valid choices are SANDORIA (1), BASTOK (2), or WINDURST (3).", usage)
+            error(player, "Invalid campaign allegiange. Valid choices are SANDORIA (1), BASTOK (2), or WINDURST (3).")
             return
         end
-        tpz.commands.print(caller, player, string.format("%s's old campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
+        player:PrintToPlayer(string.format("%s's old campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
         targ:setCampaignAllegiance(nation)
-        tpz.commands.print(caller, player, string.format("%s's new campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
+        player:PrintToPlayer(string.format("%s's new campaign allegiance: %s", targ:getName(), nationNumToName[targ:getCampaignAllegiance()]))
     end
 end

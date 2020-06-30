@@ -3,29 +3,41 @@
 -- desc: Removes the specified currency from the player
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
-    permission = 4,
-    parameters = "sit"
+    permission = 3,
+    parameters = "sis"
 }
 
-function onTrigger(caller, player, currency, amount, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!delcurrency <currency type> <amount> {player}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!delcurrency <currency type> <amount> {player}")
+end
+
+function onTrigger(player,currency,amount,target)
+    -- validate target
+    local targ
+    if (target == nil) then
+        targ = player
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format("Player named '%s' not found!", target))
+            return
+        end
+    end
 
     -- validate currency
     -- note: getCurrency does not ever return nil at the moment.  will work on this in future update.
     if (currency == nil or targ:getCurrency(currency) == nil) then
-        tpz.commands.error(caller, player, "Invalid currency type.", usage)
+        error(player, "Invalid currency type.")
         return
     end
 
     -- validate amount
     local currentAmount = targ:getCurrency(currency)
     if (amount == nil or amount < 1) then
-        tpz.commands.error(caller, player, "Invalid amount.", usage)
+        error(player, "Invalid amount.")
         return
     end
     if (amount > currentAmount) then
@@ -33,7 +45,7 @@ function onTrigger(caller, player, currency, amount, target)
     end
 
     -- delete currency
-    targ:delCurrency(currency, amount)
+    targ:delCurrency(currency,amount)
     local newAmount = targ:getCurrency(currency)
-    tpz.commands.print(caller, player, string.format("%i %s was taken from %s, for a total of %i.", amount, currency, targ:getName(), newAmount))
+    player:PrintToPlayer(string.format("%i %s was taken from %s, for a total of %i.",amount,currency,targ:getName(),newAmount))
 end

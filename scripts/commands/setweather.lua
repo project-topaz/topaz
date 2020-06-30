@@ -4,7 +4,6 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/weather")
-require("scripts/globals/commands")
 
 cmdprops =
 {
@@ -17,8 +16,7 @@ function error(player, msg)
     player:PrintToPlayer("!setweather <weather ID>")
 end
 
-function onTrigger(caller, player, weather)
-    local usage = "!setweather <weather ID>"
+function onTrigger(player, weather)
 
     local weatherList =
     {
@@ -46,12 +44,12 @@ function onTrigger(caller, player, weather)
 
     -- validate weather
     if (weather == nil) then
-        tpz.commands.error(caller, player, "You must supply a weather ID.", usage)
+        error(player, "You must supply a weather ID.")
         return
     end
     weather = tonumber(weather) or tpz.weather[string.upper(weather)] or weatherList[string.lower(weather)]
     if (weather == nil or weather < 0 or weather > 19) then
-        tpz.commands.error(caller, player, "Invalid weather ID.", usage)
+        error(player, "Invalid weather ID.")
         return
     end
 
@@ -62,6 +60,6 @@ function onTrigger(caller, player, weather)
     end
 
     -- set weather
-    player:setWeather(weather)
-    tpz.commands.print(caller, player, string.format("Set weather to %s.", weatherByNum[weather]))
+    player:setWeather( weather )
+    player:PrintToPlayer( string.format("Set weather to %s.", weatherByNum[weather]) )
 end

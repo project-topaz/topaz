@@ -9,7 +9,7 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(caller, player)
+function onTrigger(player)
     local pet = player:getPet()
     if (pet and pet:getLocalVar("GodMode") == 0) then
         -- Toggle GodMode on..

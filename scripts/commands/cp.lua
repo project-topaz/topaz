@@ -3,23 +3,25 @@
 -- desc: Adds the given amount cp to the player.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
-    permission = 4,
+    permission = 3,
     parameters = "i"
 }
 
-function onTrigger(caller, player, cp)
-    local usage = "!cp <amount>"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!cp <amount>")
+end
+
+function onTrigger(player, cp)
     -- validate amount
     if (cp == nil or cp == 0) then
-        tpz.commands.error(caller, player, "Invalid amount.")
+        error(player, "Invalid amount.")
         return
     end
 
     -- add cp
-    player:addCP(cp)
-    tpz.commands.print(caller, player, string.format("Added %i cp to %s.", cp, player:getName()))
+    player:addCP( cp )
+    player:PrintToPlayer(string.format("Added %i cp to %s.", cp, player:getName()))
 end

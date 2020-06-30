@@ -3,30 +3,28 @@
 -- desc: Sets the look of the user or target player based on model id offset and slot (for testing).
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 4,
-    parameters = "iit"
+    parameters = "iis"
 }
 
-function onTrigger(caller, player, model, slot, target)
-    local usage = "!setplayermodel <model> <slot> {player}"
-    local usage_extended = "Slots: 0=main 1=sub 2=ranged 3=ammo 4=head 5=body 6=hands 7=legs 8=feet"
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!setplayermodel <model> <slot> {player}")
+    player:PrintToPlayer("Slots: 0=main 1=sub 2=ranged 3=ammo 4=head 5=body 6=hands 7=legs 8=feet")
+end
 
+function onTrigger(player, model, slot, target)
     -- validate model
     if (model == nil) then
-        tpz.commands.error(caller, player, "Invalid model ID.", usage)
-        tpz.commands.print(caller, player, usage_extended)
+        error(player, "Invalid model ID.")
         return
     end
 
     -- validate slot
     if (slot == nil or slot < 0 or slot > 8) then
-        tpz.commands.error(caller, player, "Invalid slot ID.", usage)
-        tpz.commands.print(caller, player, usage_extended)
+        error(player, "Invalid slot ID.")
         return
     end
 
@@ -37,8 +35,7 @@ function onTrigger(caller, player, model, slot, target)
     else
         targ = GetPlayerByName(target)
         if (targ == nil) then
-            tpz.commands.error(caller, player, string.format("Player named '%s' not found!", target), usage)
-            tpz.commands.print(caller, player, usage_extended)
+            error(player, string.format("Player named '%s' not found!", target))
             return
         end
     end
@@ -57,5 +54,5 @@ function onTrigger(caller, player, model, slot, target)
 
     -- set model
     targ:setModelId(model, slot)
-    tpz.commands.print(caller, player, string.format("Set %s's %s slot to model %i.", targ:getName(), slotNameByNum[slot], model))
+    player:PrintToPlayer(string.format("Set %s's %s slot to model %i.", targ:getName(), slotNameByNum[slot], model))
 end

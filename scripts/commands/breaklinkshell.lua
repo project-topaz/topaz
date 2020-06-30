@@ -3,26 +3,28 @@
 -- desc: Breaks a linkshell and all pearls/sacks
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
-    permission = 6,
+    permission = 4,
     parameters = "s"
-}
+};
 
-function onTrigger(caller, player, target)
-    local usage = "!breaklinkshell <linkshell name>"
+function error(player, msg)
+    player:PrintToPlayer(msg);
+    player:PrintToPlayer("!breaklinkshell <linkshell name>");
+end;
+
+function onTrigger(player, target)
 
     -- validate target
     if not target then
-        tpz.commands.error(caller, player, "You must enter a linkshell name.", usage)
+        error(player, "You must enter a linkshell name.");
         return
     end
 
     if player:breakLinkshell(target) then
-        tpz.commands.print(caller, player, "Linkshell named \""..target.."\" has been broken!")
+        player:PrintToPlayer("Linkshell named \""..target.."\" has been broken!");
     else
-        tpz.commands.error(caller, player, string.format("Linkshell named \"%s\" not found!", target), usage)
+        error(player, string.format("Linkshell named \"%s\" not found!", target))
     end
 end

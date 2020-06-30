@@ -3,40 +3,42 @@
 -- desc: Spawns a mob.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 3,
     parameters = "iii"
 }
 
-function onTrigger(caller, player, mobId, despawntime, respawntime)
-    local usage = "!spawnmob <mob ID> {despawntime} {respawntime}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!spawnmob <mob ID> {despawntime} {respawntime}")
+end
+
+function onTrigger(player, mobId, despawntime, respawntime)
 
     -- validate mobId
     if (mobId == nil) then
-        tpz.commands.error(caller, player, "You must provide a mob ID.", usage)
+        error(player, "You must provide a mob ID.")
         return
     end
     local targ = GetMobByID(mobId)
     if (targ == nil) then
-        tpz.commands.error(caller, player, "Invalid mob ID.", usage)
+        error(player, "Invalid mob ID.")
         return
     end
 
     -- validate despawntime
     if (despawntime ~= nil and despawntime < 0) then
-        tpz.commands.error(caller, player, "Invalid despawn time.", usage)
+        error(player, "Invalid despawn time.")
         return
     end
 
     -- validate respawntime
     if (respawntime ~= nil and respawntime < 0) then
-        tpz.commands.error(caller, player, "Invalid respawn time.", usage)
+        error(player, "Invalid respawn time.")
         return
     end
 
-    SpawnMob(targ:getID(), despawntime, respawntime)
-    tpz.commands.print(caller, player, string.format("Spawned %s %s.", targ:getName(), targ:getID()))
+    SpawnMob( targ:getID(), despawntime, respawntime )
+    player:PrintToPlayer( string.format("Spawned %s %s.", targ:getName(), targ:getID()) )
 end

@@ -17,7 +17,7 @@ cmdprops =
     parameters = "ss"
 }
 
-function onTrigger(caller, player, globalLua, other)
+function onTrigger(player,globalLua,other)
     if (globalLua ~= nil and other == nil) then
         local String = table.concat({"scripts/globals/",globalLua})
         package.loaded[String] = nil

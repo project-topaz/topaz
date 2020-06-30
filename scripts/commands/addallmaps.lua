@@ -3,15 +3,18 @@
 -- desc: Adds all maps to the given player.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 2,
-    parameters = "t"
+    parameters = "s"
 }
 
-function onTrigger(caller, player, target)
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!addallmaps {player}")
+end
+
+function onTrigger(player, target)
     local keyIds =
     {
         383, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402,
@@ -24,12 +27,21 @@ function onTrigger(caller, player, target)
         1914, 1915, 1916, 1917, 1918, 2302, 2303, 2304, 2305, 2307, 2308, 2309
     }
 
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-
-    -- add maps
-    for _, v in ipairs(keyIds) do
-        targ:addKeyItem(v)
+    -- validate target
+    local targ
+    if (target == nil) then
+        targ = player
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format("Player named '%s' not found!", target))
+            return
+        end
     end
 
-    tpz.commands.print(caller, player, string.format("%s now has all maps.",targ:getName()))
+    -- add maps
+    for _, v in ipairs( keyIds ) do
+        targ:addKeyItem( v )
+    end
+    player:PrintToPlayer(string.format("%s now has all maps.",targ:getName()))
 end

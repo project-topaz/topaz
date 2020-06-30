@@ -3,37 +3,49 @@
 -- desc: Adds an item directly to the treasure pool.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 3,
-    parameters = "iti"
+    parameters = "isi"
 }
 
-function onTrigger(caller, player, itemId, target, dropper)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!addtreasure <itemID> {player} {npcID}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!addtreasure <itemID> {player} {npcID}")
+end
 
+function onTrigger(player, itemId, target, dropper)
     -- validate itemId
     if (itemId ~= nil) then
         itemId = tonumber(itemId)
     end
     if (itemId == nil or itemId == 0) then
-        tpz.commands.error(caller, player, "Invalid itemID.", usage)
+        error(player, "Invalid itemID.")
         return
+    end
+
+    -- validate target
+    local targ
+    if (target == nil) then
+        targ = player
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format("Player named '%s' not found!", target))
+            return
+        end
     end
 
     -- validate dropper
     if (dropper ~= nil) then
         dropper = GetNPCByID(dropper)
         if (dropper == nil) then
-            tpz.commands.error(caller, player, "Invalid npcID.", usage)
+            error(player, "Invalid npcID.")
             return
         end
     end
 
     -- add treasure to pool
     targ:addTreasure(itemId, dropper)
-    tpz.commands.print(caller, player, string.format("Item of ID %d was added to the treasure pool of %s or their party/alliance.", itemId, targ:getName()))
+    player:PrintToPlayer(string.format("Item of ID %d was added to the treasure pool of %s or their party/alliance.", itemId, targ:getName()))
 end

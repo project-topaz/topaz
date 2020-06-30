@@ -35,7 +35,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/message_system.h"
 #include "packets/party_invite.h"
 #include "packets/server_ip.h"
-#include "packets/chat_message.h"
 
 #include "utils/charutils.h"
 #include "utils/zoneutils.h"
@@ -71,7 +70,7 @@ namespace message
 
     void parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_t* packet)
     {
-        //ShowDebug("Message: Received message %d from message server\n", static_cast<uint8>(type));
+        ShowDebug("Message: Received message %d from message server\n", static_cast<uint8>(type));
         switch (type)
         {
         case MSG_LOGIN:
@@ -155,35 +154,35 @@ namespace message
         case MSG_CHAT_YELL:
         {
             zoneutils::ForEachZone([&packet, &extra](CZone* PZone)
-            {
-                if (PZone->CanUseMisc(MISC_YELL))
                 {
-                    PZone->ForEachChar([&packet, &extra](CCharEntity* PChar)
+                    if (PZone->CanUseMisc(MISC_YELL))
                     {
-                        // don't push to sender
-                        if (PChar->id != ref<uint32>((uint8*)extra->data(), 0))
-                        {
-                            CBasicPacket* newPacket = new CBasicPacket();
-                            memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                        PZone->ForEachChar([&packet, &extra](CCharEntity* PChar)
+                            {
+                                // don't push to sender
+                                if (PChar->id != ref<uint32>((uint8*)extra->data(), 0))
+                                {
+                                    CBasicPacket* newPacket = new CBasicPacket();
+                                    memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
 
-                            PChar->pushPacket(newPacket);
-                        }
-                    });
-                }
-            });
+                                    PChar->pushPacket(newPacket);
+                                }
+                            });
+                    }
+                });
             break;
         }
         case MSG_CHAT_SERVMES:
         {
             zoneutils::ForEachZone([&packet](CZone* PZone)
-            {
-                PZone->ForEachChar([&packet](CCharEntity* PChar)
                 {
-                    CBasicPacket* newPacket = new CBasicPacket();
-                    memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
-                    PChar->pushPacket(newPacket);
+                    PZone->ForEachChar([&packet](CCharEntity* PChar)
+                        {
+                            CBasicPacket* newPacket = new CBasicPacket();
+                            memcpy(*newPacket, packet->data(), std::min<size_t>(packet->size(), PACKET_SIZE));
+                            PChar->pushPacket(newPacket);
+                        });
                 });
-            });
             break;
         }
         case MSG_PT_INVITE:
@@ -250,7 +249,7 @@ namespace message
                     //both party leaders?
                     int ret = Sql_Query(SqlHandle, "SELECT * FROM accounts_parties WHERE partyid <> 0 AND \
                                                     ((charid = %u OR charid = %u) AND partyflag & %u);", inviterId,
-                                                    inviteeId, PARTY_LEADER);
+                        inviteeId, PARTY_LEADER);
                     if (ret != SQL_ERROR && Sql_NumRows(SqlHandle) == 2)
                     {
                         if (PInviter->PParty->m_PAlliance)
@@ -311,9 +310,9 @@ namespace message
                 if (PChar)
                 {
                     PChar->ForAlliance([](CBattleEntity* PMember)
-                    {
-                        ((CCharEntity*)PMember)->ReloadPartyInc();
-                    });
+                        {
+                            ((CCharEntity*)PMember)->ReloadPartyInc();
+                        });
                 }
             }
 
@@ -439,7 +438,7 @@ namespace message
         {
             // Need to check which server we're on so we don't get null pointers
             bool toTargetServer = ref<bool>((uint8*)extra->data(), 0);
-            bool spawnedOnly    = ref<bool>((uint8*)extra->data(), 1);
+            bool spawnedOnly = ref<bool>((uint8*)extra->data(), 1);
 
             if (toTargetServer) // This is going to the target's game server
             {
@@ -450,26 +449,26 @@ namespace message
                     char buf[22];
                     memset(&buf[0], 0, sizeof(buf));
 
-                    uint16 targetZone = ref<uint16>((uint8*)extra->data(),  2);
-                    uint16 playerZone = ref<uint16>((uint8*)extra->data(),  4);
-                    uint16 playerID   = ref<uint16>((uint8*)extra->data(), 10);
+                    uint16 targetZone = ref<uint16>((uint8*)extra->data(), 2);
+                    uint16 playerZone = ref<uint16>((uint8*)extra->data(), 4);
+                    uint16 playerID = ref<uint16>((uint8*)extra->data(), 10);
 
                     float X = Entity->GetXPos();
                     float Y = Entity->GetYPos();
                     float Z = Entity->GetZPos();
                     uint8 R = Entity->GetRotPos();
 
-                    ref<bool> (&buf, 1) = true; // Found, so initiate warp back on the requesting server
+                    ref<bool>(&buf, 1) = true; // Found, so initiate warp back on the requesting server
 
                     if (Entity->status == STATUS_DISAPPEAR)
                     {
 
                         if (spawnedOnly)
                         {
-                            ref<bool> (&buf, 1) = false; // Spawned only, so do not initiate warp
+                            ref<bool>(&buf, 1) = false; // Spawned only, so do not initiate warp
                         }
                         else
-						{
+                        {
                             // If entity not spawned, go to default location as listed in database
                             const char* query = "SELECT pos_x, pos_y, pos_z FROM mob_spawn_points WHERE mobid = %u;";
                             auto fetch = Sql_Query(SqlHandle, query, Entity->id);
@@ -486,13 +485,13 @@ namespace message
                         }
                     }
 
-                    ref<bool>  (&buf,  0) = false;
-                    ref<uint16>(&buf,  2) = playerZone;
-                    ref<uint16>(&buf,  4) = playerID;
-                    ref<float> (&buf,  6) = X;
-                    ref<float> (&buf, 10) = Y;
-                    ref<float> (&buf, 14) = Z;
-                    ref<uint8> (&buf, 18) = R;
+                    ref<bool>(&buf, 0) = false;
+                    ref<uint16>(&buf, 2) = playerZone;
+                    ref<uint16>(&buf, 4) = playerID;
+                    ref<float>(&buf, 6) = X;
+                    ref<float>(&buf, 10) = Y;
+                    ref<float>(&buf, 14) = Z;
+                    ref<uint8>(&buf, 18) = R;
                     ref<uint16>(&buf, 20) = targetZone;
 
                     message::send(MSG_SEND_TO_ENTITY, &buf, sizeof(buf), nullptr);
@@ -505,19 +504,19 @@ namespace message
 
                 if (PChar && PChar->loc.zone)
                 {
-                    if (ref<bool> ((uint8*)extra->data(),  1) == true)
+                    if (ref<bool>((uint8*)extra->data(), 1) == true)
                     {
-                        PChar->loc.p.x         = ref<float> ((uint8*)extra->data(),  6);
-                        PChar->loc.p.y         = ref<float> ((uint8*)extra->data(), 10);
-                        PChar->loc.p.z         = ref<float> ((uint8*)extra->data(), 14);
-                        PChar->loc.p.rotation  = ref<uint8> ((uint8*)extra->data(), 18);
+                        PChar->loc.p.x = ref<float>((uint8*)extra->data(), 6);
+                        PChar->loc.p.y = ref<float>((uint8*)extra->data(), 10);
+                        PChar->loc.p.z = ref<float>((uint8*)extra->data(), 14);
+                        PChar->loc.p.rotation = ref<uint8>((uint8*)extra->data(), 18);
                         PChar->loc.destination = ref<uint16>((uint8*)extra->data(), 20);
 
                         PChar->m_moghouseID = 0;
                         PChar->loc.boundary = 0;
-                        PChar->updatemask   = 0;
+                        PChar->updatemask = 0;
 
-                        PChar->status    = STATUS_DISAPPEAR;
+                        PChar->status = STATUS_DISAPPEAR;
                         PChar->animation = ANIMATION_NONE;
 
                         PChar->clearPacketList();
@@ -526,43 +525,6 @@ namespace message
                     }
                 }
             }
-            break;
-        }
-        case MSG_SEND_LUA_COMMAND:
-        {
-            auto caller = ref<uint32>((uint8*)extra->data(), 0);
-            auto PChar = zoneutils::GetCharByName((int8*)extra->data() + 4);
-
-            if (PChar)
-            {
-                auto result = CmdHandler.call(caller, PChar, (const int8*)extra->data() + 19);
-                if (result != 0)
-                {
-                    ShowWarning("Message: bad commandhandler::call result %d", result);
-                }
-            }
-            else
-            {
-                // send unable find player to caller
-                char buf[279];
-                memset(&buf[0], 0, sizeof(buf));
-                std::string message = "Player named ";
-                message.append((const char*)extra->data() + 4);
-                message.append(" not found");
-
-                ref<uint32>(&buf, 0) = caller;
-                memcpy(buf + 4, message.c_str(), message.length());
-                message::send(MSG_REMOTE_PRINT_TO_PLAYER, &buf, sizeof(buf), nullptr);
-            }
-            break;
-        }
-        case MSG_REMOTE_PRINT_TO_PLAYER:
-        {
-            auto PChar = zoneutils::GetChar(ref<uint32>((uint8*)extra->data(), 0));
-            const char* message = (const char*)extra->data() + 4;
-
-            PChar->pushPacket(new CChatMessagePacket(PChar, MESSAGE_SYSTEM_1, message, PChar->name));
-
             break;
         }
         default:
@@ -698,7 +660,7 @@ namespace message
 
         if (packet)
         {
-            msg.packet = new zmq::message_t(*packet, packet->length(), [](void *data, void *hint) {delete[](uint8*) data; });
+            msg.packet = new zmq::message_t(*packet, packet->length(), [](void* data, void* hint) {delete[](uint8*) data; });
         }
         else
         {

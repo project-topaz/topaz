@@ -33,14 +33,14 @@ class CCharEntity;
 
 class CCommandHandler
 {
-    lua_State*      m_LState;
+    lua_State* m_LState;
 
 public:
-    CCommandHandler()   {}
-    ~CCommandHandler()  {}
+    CCommandHandler() {}
+    ~CCommandHandler() {}
 
     void  init(lua_State* L);
-    int32 call(uint32 caller, CCharEntity* PChar, const int8* commandline);
+    int32 call(CCharEntity* PChar, const int8* commandline);
 };
 
 #endif

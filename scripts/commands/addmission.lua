@@ -22,23 +22,25 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/missions")
-require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 4,
-    parameters = "sst"
+    parameters = "sss"
 }
 
-function onTrigger(caller, player, logId, missionId, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!addmission <logID> <missionID> {player}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!addmission <logID> <missionID> {player}")
+end
+
+function onTrigger(player, logId, missionId, target)
 
     -- validate logId
     local logName
     local logInfo = GetMissionLogInfo(logId)
     if (logInfo == nil) then
-        tpz.commands.error(caller, player, "Invalid logID.", usage)
+        error(player, "Invalid logID.")
         return
     end
     logName = logInfo.full_name
@@ -50,11 +52,23 @@ function onTrigger(caller, player, logId, missionId, target)
         missionId = tonumber(missionId) or areaMissionIds[string.upper(missionId)] or _G[string.upper(missionId)]
     end
     if (missionId == nil or missionId < 0) then
-        tpz.commands.error(caller, player, "Invalid missionID.", usage)
+        error(player, "Invalid missionID.")
         return
+    end
+
+    -- validate target
+    local targ
+    if (target == nil) then
+        targ = player
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format("Player named '%s' not found!", target))
+            return
+        end
     end
 
     -- add mission
     targ:addMission(logId, missionId)
-    tpz.commands.print(caller, player, string.format("Added %s mission %i to %s.", logName, missionId, targ:getName()))
+    player:PrintToPlayer(string.format("Added %s mission %i to %s.", logName, missionId, targ:getName()))
 end

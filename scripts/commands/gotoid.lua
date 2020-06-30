@@ -6,7 +6,7 @@ require("scripts/globals/status")
 
 cmdprops =
 {
-    permission = 3,
+    permission = 1,
     parameters = "i"
 }
 
@@ -15,7 +15,7 @@ function error(player, msg)
     player:PrintToPlayer("!gotoid <mobId|npcId>")
 end
 
-function onTrigger(caller, player, target)
+function onTrigger(player, target)
 
     -- validate npc
     if not target or target == 0 then

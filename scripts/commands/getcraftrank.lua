@@ -2,22 +2,22 @@
 -- func: getcraftRank <craft skill or ID> {player}
 -- desc: returns target's RANK of specified craft skill
 ---------------------------------------------------------------------------------------------------
-
 require("scripts/globals/status")
-require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 2,
-    parameters = "st"
+    parameters = "ss"
 }
 
-function onTrigger(caller, player, craftName, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!getcraftRank <craft skill or ID> {player}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!getcraftRank <craft skill or ID> {player}")
+end
 
+function onTrigger(player, craftName, target)
     if craftName == nil then
-        tpz.commands.error(caller, player, "You must specify a craft skill to check!", usage)
+        error(player, "You must specify a craft skill to check!")
         return
     end
 
@@ -25,9 +25,28 @@ function onTrigger(caller, player, craftName, target)
     local targ = nil
 
     if skillID == nil or skillID < 48 or skillID > 57 then
-        tpz.commands.error(caller, player, "You must specify a valid craft skill.", usage)
+        error(player, "You must specify a valid craft skill.")
         return
     end
 
-    tpz.commands.print(caller, player, string.format("%s's current skillID '%s' rank: %u", targ:getName(), craftName, targ:getSkillRank(skillID)))
+    if target == nil then
+        if player:getCursorTarget() == nil then
+            targ = player
+        else
+            if player:getCursorTarget():isPC() then
+                targ = player:getCursorTarget()
+            else
+                error(player, "You must target a player or specify a name.")
+                return
+            end
+        end
+    else
+        targ = GetPlayerByName(target)
+        if targ == nil then
+            player:PrintToPlayer(string.format("Player named '%s' not found!", target))
+            return
+        end
+    end
+
+    player:PrintToPlayer(string.format("%s's current skillID '%s' rank: %u", targ:getName(), craftName, targ:getSkillRank(skillID)))
 end

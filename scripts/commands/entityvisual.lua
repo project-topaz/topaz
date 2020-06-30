@@ -3,20 +3,21 @@
 -- desc: push entityVisual packet to player
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
-    permission = 5,
+    permission = 4,
     parameters = "s"
 }
 
-function onTrigger(caller, player, visualstring)
-    local usage = "!entityvisual <animation string>"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!entityvisual <animation string>")
+end
 
+function onTrigger(player, visualstring)
     -- validate visualstring
     if (visualstring == nil) then
-        tpz.commands.error(caller, player, "You must enter a valid animation string.", usage)
+        error(player, "You must enter a valid animation string.")
         return
     end
 

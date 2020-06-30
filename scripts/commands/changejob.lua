@@ -4,7 +4,6 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")
-require("scripts/globals/commands")
 
 cmdprops =
 {
@@ -12,24 +11,27 @@ cmdprops =
     parameters = "si"
 }
 
-function onTrigger(caller, player, jobId, level)
-    local usage = "!changejob <jobID> {level}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!changejob <jobID> {level}")
+end
 
+function onTrigger(player, jobId, level)
     -- validate jobId
     if (jobId == nil) then
-        tpz.commands.error(caller, player, "You must enter a job short-name, e.g. WAR, or its equivalent numeric ID.", usage)
+        error(player, "You must enter a job short-name, e.g. WAR, or its equivalent numeric ID.")
         return
     end
     jobId = tonumber(jobId) or tpz.job[string.upper(jobId)]
     if (jobId == nil or jobId <= 0 or jobId >= tpz.MAX_JOB_TYPE) then
-        tpz.commands.error(caller, player, "Invalid jobID.  Use job short name, e.g. WAR, or its equivalent numeric ID.", usage)
+        error(player, "Invalid jobID.  Use job short name, e.g. WAR, or its equivalent numeric ID.")
         return
     end
 
     -- validate level
     if (level ~= nil) then
         if (level < 1 or level > 99) then
-            tpz.commands.error(caller, player, "Invalid level. Level must be between 1 and 99!", usage)
+            error(player, "Invalid level. Level must be between 1 and 99!")
             return
         end
     end
@@ -47,5 +49,5 @@ function onTrigger(caller, player, jobId, level)
     end
 
     -- output new job to player
-    tpz.commands.print(caller, player, string.format("You are now a %s%i/%s%i.", jobNameByNum[player:getMainJob()], player:getMainLvl(), jobNameByNum[player:getSubJob()], player:getSubLvl()))
+    player:PrintToPlayer(string.format("You are now a %s%i/%s%i.", jobNameByNum[player:getMainJob()], player:getMainLvl(), jobNameByNum[player:getSubJob()], player:getSubLvl()))
 end

@@ -4,14 +4,12 @@
 -- A) The given zone
 -- B) another player
 ---------------------------------------------------------------------------------------------------
-
 require("scripts/globals/zone")
-require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 3,
-    parameters = "ts"
+    parameters = "b"
 }
 
 ---------------------------------------------------------------------------------------------------
@@ -280,6 +278,11 @@ local zone_list =
     { 0x14, 0x09, 288 }, -- Escha - Zi'Tah
 }
 
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!send <player to send> <destination player or zone>")
+end
+
 function getBytePos(s,needle)
     local i
     local b
@@ -295,27 +298,41 @@ end
 -- func: onTrigger
 -- desc: Called when this command is invoked.
 ---------------------------------------------------------------------------------------------------
-function onTrigger(caller, player, target, destination)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!send <player to send> <destination player or zone>"
+function onTrigger(player, bytes)
     local x = 0
     local y = 0
     local z = 0
     local rot = 0
     local zone
 
-    if (targ == nil) then
-        tpz.commands.error(caller, player, "You must provide the name of a player to send and a destination.", usage)
+    if (bytes == nil) then
+        error(player, "You must provide the name of a player to send and a destination.")
         return
     end
+    bytes = string.sub(bytes,6)
+    local atpos = getBytePos(bytes, 253)
+    local sppos = getBytePos(bytes, 32)
 
-    local atpos = getBytePos(destination, 253)
+    -- validate player to send
+    local target
+    local targ
+    if (sppos == nil) then
+        error(player, "You must provide the name of a player to send and a destination.")
+        return
+    else
+        target = string.sub(bytes,1,sppos-1)
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format( "Player named '%s' not found!", target ))
+            return
+        end
+    end
 
     -- validate destination
     if (atpos ~= nil) then
         -- destination is an auto-translate phrase
-        local groupId = string.byte(destination, atpos + 3)
-        local messageId = string.byte(destination, atpos + 4)
+        local groupId = string.byte(bytes, atpos + 3)
+        local messageId = string.byte(bytes, atpos + 4)
         for k, v in pairs(zone_list) do
             if (v[1] == groupId and v[2] == messageId) then
                 x = v[4] or 0
@@ -331,11 +348,12 @@ function onTrigger(caller, player, target, destination)
             return
         end
     else
-        -- try destination as a zone ID.
-        zone = tonumber(destination)
-        if (zone ~= nil) then
+        local dest = string.sub(bytes, sppos+1)
+        if (tonumber(dest) ~= nil) then
+            -- destination is a zone ID.
+            zone = tonumber(dest)
             if (zone < 0 or zone >= tpz.zone.MAX_ZONE) then
-                tpz.commands.error(caller, player, "Invalid zone ID.", usage)
+                error(player, "Invalid zone ID.")
                 return
             end
             for k, v in pairs(zone_list) do
@@ -350,9 +368,10 @@ function onTrigger(caller, player, target, destination)
             end
         else
             -- destination is a player name.
-            local dest =  GetPlayerByName(destination)
+            local target = dest
+            dest = GetPlayerByName(dest)
             if (dest == nil) then
-                tpz.commands.error(caller, player, string.format( "Player named '%s' not found!", target), usage)
+                error(player, string.format( "Player named '%s' not found!", target ))
                 return
             end
             x = dest:getXPos()
@@ -370,8 +389,8 @@ function onTrigger(caller, player, target, destination)
 	targ:setCharVar("prev_rot", targ:getRotPos());
 	targ:setCharVar("prev_bringzone", targ:getZoneID())
 	targ:setPos(x, y, z, rot, zone);
-    if (targ:getID() ~= caller) then
-        tpz.commands.print(caller, player, string.format("Sent %s to zone %i.", targ:getName(), zone))
+    if (targ:getID() ~= player:getID()) then
+        player:PrintToPlayer( string.format("Sent %s to zone %i.", targ:getName(), zone) )
     end
 end
 

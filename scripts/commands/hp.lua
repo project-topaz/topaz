@@ -3,34 +3,49 @@
 -- desc: Sets the GM or target players health.
 ---------------------------------------------------------------------------------------------------
 
-require("scripts/globals/commands")
-
 cmdprops =
 {
     permission = 3,
-    parameters = "it"
+    parameters = "is"
 }
 
-function onTrigger(caller, player, hp, target)
-    local usage = "!hp <amount> {player}"
-    local targ = tpz.commands.getTargetPC(caller, player, target)
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!hp <amount> {player}")
+end
 
+function onTrigger(player, hp, target)
     -- validate amount
     if (hp == nil or tonumber(hp) == nil) then
-        tpz.commands.error(caller, player, "You must provide an amount.", usage)
+        error(player, "You must provide an amount.")
         return
     elseif (hp < 0) then
-        tpz.commands.error(caller, player, "Invalid amount.", usage)
+        error(player, "Invalid amount.")
         return
+    end
+
+    -- validate target
+    local targ
+    local cursor_target = player:getCursorTarget()
+    if (not target) and (not cursor_target) then
+        targ = player
+    elseif target then
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format( "Player named '%s' not found!", target ) )
+            return
+        end
+    elseif cursor_target then
+        targ = cursor_target
     end
 
     -- set hp
     if (targ:getHP() > 0) then
         targ:setHP(hp)
-        if(targ:getID() ~= caller) then
-            tpz.commands.print(caller, player, string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
+        if(targ:getID() ~= player:getID()) then
+            player:PrintToPlayer(string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
         end
     else
-        tpz.commands.print(caller, player, string.format("%s is currently dead.", targ:getName()))
+        player:PrintToPlayer(string.format("%s is currently dead.", targ:getName()))
     end
 end

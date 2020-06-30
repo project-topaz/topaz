@@ -2,24 +2,38 @@
 -- func: return <player>
 -- desc: Warps GM or target player to their previous zone
 ---------------------------------------------------------------------------------------------------
-
 require("scripts/globals/zone")
-require("scripts/globals/commands")
+-----------------------------------
 
 cmdprops =
 {
     permission = 2,
-    parameters = "t"
+    parameters = "s"
 }
 
-function onTrigger(caller, player, target)
-    local targ = tpz.commands.getTargetPC(caller, player, target)
-    local usage = "!return {player}"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!return {player}")
+end
+
+function onTrigger(player, target)
+
+    -- validate target
+    local targ
+    if (target == nil) then
+        targ = player
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format( "Player named '%s' not found!", target ) )
+            return
+        end
+    end
 
     -- get previous zone
     zoneId = targ:getCharVar("prev_bringzone");
     if (zoneId == nil or zoneId == tpz.zone.UNKNOWN or zoneId == tpz.zone.RESIDENTIAL_AREA) then
-        tpz.commands.error(caller, player, "Previous zone was a Mog House or there was a problem fetching the ID.", usage)
+        error(player, "Previous zone was a Mog House or there was a problem fetching the ID.")
         return
     end
 
@@ -29,7 +43,7 @@ function onTrigger(caller, player, target)
 	local z_pos = targ:getCharVar("prev_z");
 	local rot_pos = targ:getCharVar("prev_rot");
 	targ:setPos( x_pos, y_pos, z_pos, rot_pos, zoneId );
-    if (targ:getID() ~= caller) then
-        tpz.commands.print(caller, player, string.format("%s was returned to zone %i.", targ:getName(), zoneId))
+    if (targ:getID() ~= player:getID()) then
+        player:PrintToPlayer( string.format( "%s was returned to their previous position in zone %i.", targ:getName(), zoneId ) );
     end
 end
