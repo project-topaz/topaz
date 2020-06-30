@@ -28,7 +28,6 @@
 #include "../../common/taskmgr.h"
 #include "../items/item_equipment.h"
 #include "../spell.h"
-#include "../utils/fishingutils.h"
 #include "lua_ability.h"
 #include "lua_baseentity.h"
 #include "lua_mobskill.h"
@@ -167,7 +166,6 @@ namespace luautils
     int32 IsMoonNew(lua_State* L);                                              // Returns true if the moon is new
     int32 IsMoonFull(lua_State* L);                                             // Returns true if the moon is full
     int32 StartElevator(lua_State*);
-    int32 GetCharVariable(lua_State*);
     int32 GetServerVariable(lua_State*);
     int32 SetServerVariable(lua_State *);
     int32 clearVarFromAll(lua_State *);                                         // Deletes a specific player variable from all players
@@ -296,17 +294,6 @@ namespace luautils
     void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
 
     int32 RemotePrintToPlayer(lua_State* L);
-
-    int32 OnFishingStart(CCharEntity* PChar, int32 RodID, int32 BaitID, int32 AreaID);                            // triggers when player starts fishing in a zone
-    fishresponse_t* OnFishingCheck(CCharEntity* PChar, fishingrod_t* Rod, std::vector<fish_t>* FishList,
-        std::vector<fishmob_t>* MobList, uint8 AreaID, string_t AreaName, fishinglure_t* Lure, uint8 Difficulty); // fishing process hook check
-
-    catchresponse_t* OnFishingReelIn(CCharEntity* PChar, fishresponse_t* response, fishingrod_t* rod);            // triggers when player reels in the fish
-    int32 OnFishingAction(CCharEntity* PChar, int32 Action, int32 Stamina, int32 Special);                        // triggers when fishing action happens to player
-    int32 OnFishingCatch(CCharEntity* PChar, uint8 CatchType, int32 CatchID);                                     // triggers when player catches fish
-    int32 OnFishingEnd(CCharEntity* PChar);                                                                       // triggers when player stops fishing
-
-    int32 GetNameAndGMLevel(lua_State* L);
 };
 
 #endif //- _LUAUTILS_H -

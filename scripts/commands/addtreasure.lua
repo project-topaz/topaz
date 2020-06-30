@@ -11,21 +11,16 @@ cmdprops =
     parameters = "iti"
 }
 
-function onTrigger(caller, entity, itemId, target, dropper)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, itemId, target, dropper)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!addtreasure <itemID> {player} {npcID}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
 
     -- validate itemId
     if (itemId ~= nil) then
         itemId = tonumber(itemId)
     end
     if (itemId == nil or itemId == 0) then
-        tpz.commands.error(caller, entity, "Invalid itemID.", usage)
+        tpz.commands.error(caller, player, "Invalid itemID.", usage)
         return
     end
 
@@ -33,12 +28,12 @@ function onTrigger(caller, entity, itemId, target, dropper)
     if (dropper ~= nil) then
         dropper = GetNPCByID(dropper)
         if (dropper == nil) then
-            tpz.commands.error(caller, entity, "Invalid npcID.", usage)
+            tpz.commands.error(caller, player, "Invalid npcID.", usage)
             return
         end
     end
 
     -- add treasure to pool
     targ:addTreasure(itemId, dropper)
-    tpz.commands.print(caller, entity, string.format("Item of ID %d was added to the treasure pool of %s or their party/alliance.", itemId, targ:getName()))
+    tpz.commands.print(caller, player, string.format("Item of ID %d was added to the treasure pool of %s or their party/alliance.", itemId, targ:getName()))
 end

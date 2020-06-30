@@ -12,19 +12,14 @@ cmdprops =
     parameters = "it"
 }
 
-function onTrigger(caller, entity, id, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, id, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!deleffect <effect> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
 
     -- validate effect
     id = tonumber(id) or tpz.effect[string.upper(id)]
     if (id == nil) then
-        tpz.commands.error(caller, entity, "Invalid effect.", usage)
+        tpz.commands.error(caller, player, "Invalid effect.", usage)
         return
     elseif (id == 0) then
         id = 1
@@ -33,6 +28,6 @@ function onTrigger(caller, entity, id, target)
     -- delete status effect
     targ:delStatusEffect(id)
     if (targ:getID() ~= caller) then
-        tpz.commands.print(caller, entity, string.format("Removed effect %i from %s.", id, targ:getName()))
+        tpz.commands.print(caller, player, string.format("Removed effect %i from %s.", id, targ:getName()))
     end
 end

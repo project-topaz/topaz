@@ -11,15 +11,15 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, entity, visualstring)
+function onTrigger(caller, player, visualstring)
     local usage = "!entityvisual <animation string>"
 
     -- validate visualstring
     if (visualstring == nil) then
-        tpz.commands.error(caller, entity, "You must enter a valid animation string.", usage)
+        tpz.commands.error(caller, player, "You must enter a valid animation string.", usage)
         return
     end
 
     -- push visual packet to player
-    entity:entityVisualPacket(visualstring)
+    player:entityVisualPacket(visualstring)
 end

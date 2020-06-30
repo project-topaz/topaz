@@ -11,21 +11,15 @@ cmdprops =
     parameters = "t"
 }
 
-function onTrigger(caller, entity, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
-    local usage = "!wallhack {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+function onTrigger(caller, player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- toggle wallhack for target
     if (targ:checkNameFlags(0x00000200)) then
         targ:setFlag(0x00000200)
-        tpz.commands.print(caller, entity, string.format("Toggled %s's wallhack flag OFF.", targ:getName()))
+        tpz.commands.print(caller, player, string.format("Toggled %s's wallhack flag OFF.", targ:getName()))
     else
         targ:setFlag(0x00000200)
-        tpz.commands.print(caller, entity, string.format("Toggled %s's wallhack flag ON.", targ:getName()))
+        tpz.commands.print(caller, player, string.format("Toggled %s's wallhack flag ON.", targ:getName()))
     end
 end

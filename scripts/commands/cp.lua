@@ -11,15 +11,15 @@ cmdprops =
     parameters = "i"
 }
 
-function onTrigger(caller, entity, cp)
+function onTrigger(caller, player, cp)
     local usage = "!cp <amount>"
     -- validate amount
     if (cp == nil or cp == 0) then
-        tpz.commands.error(caller, entity, "Invalid amount.")
+        tpz.commands.error(caller, player, "Invalid amount.")
         return
     end
 
     -- add cp
-    entity:addCP(cp)
-    tpz.commands.print(caller, entity, string.format("Added %i cp to %s.", cp, entity:getName()))
+    player:addCP(cp)
+    tpz.commands.print(caller, player, string.format("Added %i cp to %s.", cp, player:getName()))
 end

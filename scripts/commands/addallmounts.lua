@@ -13,19 +13,13 @@ cmdprops =
     parameters = "t"
 }
 
-function onTrigger(caller, entity, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
-    local usage = "addallmounts {player}"
-    
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+function onTrigger(caller, player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- add all mount key items
     for i = tpz.ki.CHOCOBO_COMPANION, tpz.ki.CHOCOBO_COMPANION + 26 do
         targ:addKeyItem(i)
     end
 
-    tpz.commands.print(caller, entity, string.format("%s now has all mounts.", targ:getName()))
+    tpz.commands.print(caller, player, string.format("%s now has all mounts.", targ:getName()))
 end

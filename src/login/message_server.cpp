@@ -141,6 +141,7 @@ void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_
         case MSG_PT_INV_RES:
         case MSG_DIRECT:
         case MSG_SEND_TO_ZONE:
+        case MSG_SEND_LUA_COMMAND:
         case MSG_REMOTE_PRINT_TO_PLAYER:
         {
             const char* query = "SELECT server_addr, server_port FROM accounts_sessions WHERE charid = %d;";
@@ -157,34 +158,6 @@ void message_server_parse(MSGSERVTYPE type, zmq::message_t* extra, zmq::message_
         case MSG_LOGIN:
         {
             // no op
-            break;
-        }
-        case MSG_SEND_LUA_COMMAND:
-        {
-            std::string query = "SELECT server_addr, server_port FROM accounts_sessions LEFT JOIN chars ON "
-                "accounts_sessions.charid = chars.charid WHERE charname = '%s' LIMIT 1;";
-            ret = Sql_Query(ChatSqlHandle, query.c_str(), (int8*)extra->data() + 4);
-            break;
-        }
-        case MSG_SEND_LUA_ID_COMMAND:
-        {
-            auto type = ref<uint8>(extra->data(), 4);
-            auto id = ref<uint32>(extra->data(), 5);
-            auto zoneId = ((id >> 12) & 0xFFF);
-
-            std::string query;
-            switch (type)
-            {
-                case 1:
-                    query = "SELECT server_addr, server_port FROM accounts_sessions WHERE charid = %d;";
-                    break;
-                default:
-                    query = "SELECT zoneip, zoneport FROM zone_settings WHERE zoneid = %d;";
-                    break;
-            }
-
-            ret = Sql_Query(ChatSqlHandle, query.c_str(), zoneId);
-            ipstring = true;
             break;
         }
         default:

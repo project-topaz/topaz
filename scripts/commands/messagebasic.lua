@@ -11,20 +11,20 @@ cmdprops =
     parameters = "iii"
 }
 
-function onTrigger(caller, entity, msgId, param1, param2)
+function onTrigger(caller, player, msgId, param1, param2)
     local usage = "!messagebasic <message ID> {param1} {param2}"
 
     -- validate msgId
     if (msgId == nil) then
-        tpz.commands.error(caller, entity, "You must provide a message ID.", usage)
+        tpz.commands.error(caller, player, "You must provide a message ID.", usage)
         return
     end
 
-    local target = entity:getCursorTarget()
+    local target = player:getCursorTarget()
     if target == nil then
-        target = entity
+        target = player
     end
 
     -- inject message packet
-    entity:messageBasic(msgId, param1, param2, target)
+    player:messageBasic(msgId, param1, param2, target)
 end

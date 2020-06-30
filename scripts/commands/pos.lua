@@ -11,7 +11,13 @@ cmdprops =
     parameters = "sssst"
 }
 
-function onTrigger(caller, entity, arg1, arg2, arg3, arg4, arg5)
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!pos {x} {y} {z} {zone ID} {player}")
+end
+
+function onTrigger(caller, player, arg1, arg2, arg3, arg4, arg5)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!pos {x} {y} {z} {zone ID} {player}"
 
     local target
@@ -19,6 +25,7 @@ function onTrigger(caller, entity, arg1, arg2, arg3, arg4, arg5)
     local x
     local y
     local z
+    local targ
 
     -- shift arguments depending on number passed
     if (arg5 ~= nil) then
@@ -44,25 +51,29 @@ function onTrigger(caller, entity, arg1, arg2, arg3, arg4, arg5)
         target = arg1
     end
 
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter player name.", usage)
-        return
+    -- validate target
+    if (target == nil) then
+        targ = player
+    else
+        targ = GetPlayerByName(target)
+        if (targ == nil) then
+            error(player, string.format( "Player named '%s' not found!", target ) )
+            return
+        end
     end
 
     -- validate zone
     if (zoneId ~= nil) then
         zoneId = tonumber(zoneId)
         if (zoneId == nil or zoneId < 0 or zoneId > 298) then
-            tpz.commands.error(caller, entity, "Invalid zone ID.", usage)
+            error(player, "Invalid zone ID.")
             return
         end
     end
 
     -- report or move position
     if (x == nil or y == nil or z == nil) then
-        tpz.commands.print(caller, entity, string.format("%s's position: X %.4f  Y %.4f  Z %.4f", targ:getName(), targ:getXPos(), targ:getYPos(), targ:getZPos()))
+        player:PrintToPlayer(string.format("%s's position: X %.4f  Y %.4f  Z %.4f", targ:getName(), targ:getXPos(), targ:getYPos(), targ:getZPos() ))
     else
         if (zoneId == nil) then
             zoneId = targ:getZoneID()
@@ -70,9 +81,8 @@ function onTrigger(caller, entity, arg1, arg2, arg3, arg4, arg5)
         else
             targ:setPos(x, y, z, 0, zoneId)
         end
-
-        if (targ:getID() ~= caller) then
-            tpz.commands.print(caller, entity, string.format("Moved %s to (%.4f, %.4f, %.4f) in zone %i.", targ:getName(), x, y, z, zoneId))
+        if (player:getID() ~= targ:getID()) then
+            player:PrintToPlayer(string.format("Moved %s to (%.4f, %.4f, %.4f) in zone %i.", targ:getName(), x, y, z, zoneId))
         end
     end
 

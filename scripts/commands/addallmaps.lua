@@ -11,7 +11,7 @@ cmdprops =
     parameters = "t"
 }
 
-function onTrigger(caller, entity, target)
+function onTrigger(caller, player, target)
     local keyIds =
     {
         383, 385, 386, 387, 388, 389, 390, 391, 392, 393, 394, 395, 396, 397, 398, 399, 400, 401, 402,
@@ -24,18 +24,12 @@ function onTrigger(caller, entity, target)
         1914, 1915, 1916, 1917, 1918, 2302, 2303, 2304, 2305, 2307, 2308, 2309
     }
 
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
-    local usage = "addallmaps {player}"
-    
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- add maps
     for _, v in ipairs(keyIds) do
         targ:addKeyItem(v)
     end
 
-    tpz.commands.print(caller, entity, string.format("%s now has all maps.",targ:getName()))
+    tpz.commands.print(caller, player, string.format("%s now has all maps.",targ:getName()))
 end

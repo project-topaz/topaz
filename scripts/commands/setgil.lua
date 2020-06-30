@@ -11,15 +11,15 @@ cmdprops =
     parameters = "i"
 }
 
-function onTrigger(caller, entity, amount)
+function onTrigger(caller, player, amount)
     local usage = "!setgil <amount>"
 
     -- validate amount
     if (amount == nil or amount < 0) then
-        tpz.commands.error(caller, entity, "Invalid amount.", usage)
+        tpz.commands.error(caller, player, "Invalid amount.", usage)
         return
     end
 
-    entity:setGil(amount)
-    tpz.commands.print(caller, entity, string.format("%s's gil was set to %i.", entity:getName(), amount))
+    player:setGil(amount)
+    tpz.commands.print(caller, player, string.format("%s's gil was set to %i.", player:getName(), amount))
 end

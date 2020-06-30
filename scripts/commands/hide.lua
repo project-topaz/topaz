@@ -11,12 +11,12 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, entity, cmd)
+function onTrigger(caller, player, cmd)
     -- Obtain the players hide status..
-    local isHidden = entity:getCharVar("GMHidden")
+    local isHidden = player:getCharVar("GMHidden")
     if (cmd ~= nil) then
         if (cmd == "status") then
-            tpz.commands.print(caller, entity, string.format('Current hide status: %s', tostring(isHidden)))
+            tpz.commands.print(caller, player, string.format('Current hide status: %s', tostring(isHidden)))
             return
         end
     end
@@ -30,12 +30,12 @@ function onTrigger(caller, entity, cmd)
 
     -- If hidden animate us beginning our hide..
     if (isHidden == 1) then
-        entity:setCharVar("GMHidden", 1)
-        entity:setGMHidden(true)
-        tpz.commands.print(caller, entity, "You are now GM hidden from other players.")
+        player:setCharVar("GMHidden", 1)
+        player:setGMHidden(true)
+        tpz.commands.print(caller, player, "You are now GM hidden from other players.")
     else
-        entity:setCharVar("GMHidden", 0)
-        entity:setGMHidden(false)
-        tpz.commands.print(caller, entity, "You are no longer GM hidden from other players.")
+        player:setCharVar("GMHidden", 0)
+        player:setGMHidden(false)
+        tpz.commands.print(caller, player, "You are no longer GM hidden from other players.")
     end
 end

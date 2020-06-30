@@ -12,14 +12,9 @@ cmdprops =
     parameters = "sst"
 };
 
-function onTrigger(caller, entity, mount, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, mount, target)
     local usage = "!mount <mount ID> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- Default to Chocobo (0)
     if (mount == nil) then
@@ -29,7 +24,7 @@ function onTrigger(caller, entity, mount, target)
     -- validate mount
     mount = tonumber(mount) or tpz.mount[string.upper(mount)]
     if (mount == nil or mount < 0 or mount > 27) then
-        tpz.commands.error(caller, entity, "Invalid mount ID.", usage)
+        tpz.commands.error(caller, player, "Invalid mount ID.", usage)
         return
     end
 

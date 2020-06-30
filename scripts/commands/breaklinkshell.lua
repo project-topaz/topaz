@@ -11,18 +11,18 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, entity, target)
+function onTrigger(caller, player, target)
     local usage = "!breaklinkshell <linkshell name>"
 
     -- validate target
     if not target then
-        tpz.commands.error(caller, entity, "You must enter a linkshell name.", usage)
+        tpz.commands.error(caller, player, "You must enter a linkshell name.", usage)
         return
     end
 
-    if entity:breakLinkshell(target) then
-        tpz.commands.print(caller, entity, "Linkshell named \""..target.."\" has been broken!")
+    if player:breakLinkshell(target) then
+        tpz.commands.print(caller, player, "Linkshell named \""..target.."\" has been broken!")
     else
-        tpz.commands.error(caller, entity, string.format("Linkshell named \"%s\" not found!", target), usage)
+        tpz.commands.error(caller, player, string.format("Linkshell named \"%s\" not found!", target), usage)
     end
 end

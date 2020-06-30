@@ -81,15 +81,6 @@ enum ANIMATIONTYPE
     ANIMATION_RANGED             = 48,
     ANIMATION_FISHING_START_OLD  = 50,
     ANIMATION_FISHING_START      = 56,
-
-    ANIMATION_NEW_FISHING_START      = 56,
-    ANIMATION_NEW_FISHING_FISH       = 57,
-    ANIMATION_NEW_FISHING_CAUGHT     = 58,
-    ANIMATION_NEW_FISHING_ROD_BREAK  = 59,
-    ANIMATION_NEW_FISHING_LINE_BREAK = 60,
-    ANIMATION_NEW_FISHING_MONSTER    = 61,
-    ANIMATION_NEW_FISHING_STOP       = 62,
-
     // 63 through 72 are used with /sitchair
     ANIMATION_SITCHAIR_0 = 63,
     ANIMATION_SITCHAIR_1 = 64,
@@ -256,10 +247,6 @@ public:
     uint8           namevis;
     uint8           allegiance;         // what types of targets the entity can fight
     uint8           updatemask;         // what to update next server tick to players nearby
-    uint16          m_pathPoint;        // tracker for pathing
-
-    uint16      GetPathPoint();
-    void        SetPathPoint(uint16 pathPoint);
 
     std::unique_ptr<CAIContainer> PAI;       // AI container
     CBattlefield* PBattlefield;            // pointer to battlefield (if in one)

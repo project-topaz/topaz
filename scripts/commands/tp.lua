@@ -11,21 +11,16 @@ cmdprops =
     parameters = "it"
 }
 
-function onTrigger(caller, entity, tp, target)
-    local targ = tpz.commands.getTarget(caller, entity, target)
+function onTrigger(caller, player, tp, target)
     local usage = "!tp <amount> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+    local targ = tpz.commands.getTarget(caller, player, target)
 
     -- validate amount
     if (tp == nil or tonumber(tp) == nil) then
-        tpz.commands.error(caller, entity, "You must provide an amount.", usage)
+        tpz.commands.error(caller, player, "You must provide an amount.", usage)
         return
     elseif (tp < 0) then
-        tpz.commands.error(caller, entity, "Invalid amount.", usage)
+        tpz.commands.error(caller, player, "Invalid amount.", usage)
         return
     end
 
@@ -36,6 +31,6 @@ function onTrigger(caller, entity, tp, target)
         pet:setTP(tp)
     end
     if(targ:getID() ~= caller) then
-        tpz.commands.print(caller, entity, string.format("Set %s's TP to %i.", targ:getName(), targ:getTP()))
+        tpz.commands.print(caller, player, string.format("Set %s's TP to %i.", targ:getName(), targ:getTP()))
     end
 end

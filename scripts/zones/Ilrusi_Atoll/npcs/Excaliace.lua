@@ -77,7 +77,7 @@ local startToChoice1 = {
 };
 
 function onSpawn(npc)
-    npc:initNpcPathing();
+    npc:initNpcAi();
     npc:pathThrough(start, PATHFLAG_REPEAT);
 end;
 

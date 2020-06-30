@@ -12,7 +12,12 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, entity, weather)
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!setweather <weather ID>")
+end
+
+function onTrigger(caller, player, weather)
     local usage = "!setweather <weather ID>"
 
     local weatherList =
@@ -41,12 +46,12 @@ function onTrigger(caller, entity, weather)
 
     -- validate weather
     if (weather == nil) then
-        tpz.commands.error(caller, entity, "You must supply a weather ID.", usage)
+        tpz.commands.error(caller, player, "You must supply a weather ID.", usage)
         return
     end
     weather = tonumber(weather) or tpz.weather[string.upper(weather)] or weatherList[string.lower(weather)]
     if (weather == nil or weather < 0 or weather > 19) then
-        tpz.commands.error(caller, entity, "Invalid weather ID.", usage)
+        tpz.commands.error(caller, player, "Invalid weather ID.", usage)
         return
     end
 
@@ -57,6 +62,6 @@ function onTrigger(caller, entity, weather)
     end
 
     -- set weather
-    entity:setWeather(weather)
-    tpz.commands.print(caller, entity, string.format("Set weather to %s.", weatherByNum[weather]))
+    player:setWeather(weather)
+    tpz.commands.print(caller, player, string.format("Set weather to %s.", weatherByNum[weather]))
 end

@@ -12,19 +12,14 @@ cmdprops =
     parameters = "sst"
 }
 
-function onTrigger(caller, entity, logId, questId, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, logId, questId, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!delquest <logID> <questID> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
 
     -- validate logId
     local questLog = GetQuestLogInfo(logId)
     if (questLog == nil) then
-        tpz.commands.error(caller, entity, "Invalid logID.", usage)
+        tpz.commands.error(caller, player, "Invalid logID.", usage)
         return
     end
     local logName = questLog.full_name
@@ -36,12 +31,12 @@ function onTrigger(caller, entity, logId, questId, target)
         questId = tonumber(questId) or areaQuestIds[string.upper(questId)]
     end
     if (questId == nil or questId < 0) then
-        tpz.commands.error(caller, entity, "Invalid questID.", usage)
+        tpz.commands.error(caller, player, "Invalid questID.", usage)
         return
     end
 
     -- add quest
     targ:delQuest(logId, questId)
-    tpz.commands.print(caller, entity, string.format("Deleted %s quest %i from %s.", logName, questId, targ:getName()))
+    tpz.commands.print(caller, player, string.format("Deleted %s quest %i from %s.", logName, questId, targ:getName()))
 
 end

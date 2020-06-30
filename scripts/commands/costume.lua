@@ -11,14 +11,14 @@ cmdprops =
     parameters = "i"
 }
 
-function onTrigger(caller, entity, costumeId)
+function onTrigger(caller, player, costumeId)
     local usage = "!costume <costumeID>"
     -- validate costumeId
     if (costumeId == nil or costumeId < 0) then
-        tpz.commands.error(caller, entity, "Invalid costumeID.", usage)
+        tpz.commands.error(caller, player, "Invalid costumeID.", usage)
         return
     end
 
     -- put on costume
-    entity:costume(costumeId)
+    player:costume(costumeId)
 end

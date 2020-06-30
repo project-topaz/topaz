@@ -11,18 +11,13 @@ cmdprops =
     parameters = "st"
 }
 
-function onTrigger(caller, entity, flags, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, flags, target)
     local usage = "!setflag <flags> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate flags
     if (flags == nil) then
-        tpz.commands.error(caller, entity, "You must enter a number for the flags (hex values work).", usage)
+        tpz.commands.error(player, "You must enter a number for the flags (hex values work).", usage)
         return
     end
 

@@ -9,19 +9,13 @@ require("scripts/globals/commands")
 cmdprops =
 {
     permission = 5,
-    parameters = "n"
+    parameters = "i"
 }
 
-function onTrigger(caller, entity, target)
-    local targ = tpz.commands.getTargetMob(caller, entity, target)
-    local usage = "!getmobflags {mobID}"
+function onTrigger(caller, player, target)
+    local targ = tpz.commands.getTargetMob(caller, player, target)
 
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a valid mobID.", usage)
-        return
-    end
-
-    -- get flags
+    -- set flags
     local flags = targ:getMobFlags()
-    tpz.commands.print(caller, entity, string.format("%s's flags: %u", targ:getName(), flags))
+    tpz.commands.print(caller, player, string.format("%s's flags: %u", targ:getName(), flags))
 end

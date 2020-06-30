@@ -8,17 +8,12 @@ require("scripts/globals/commands")
 cmdprops =
 {
     permission = 3,
-    parameters = "it"
+    parameters = "ti"
 }
 
-function onTrigger(caller, entity, target, nation)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
-    local usage = "!setplayernation <nation> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+function onTrigger(caller, player, target, nation)
+    local usage = "!setplayernation {player} <nation>"
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     local nation
 
@@ -32,8 +27,8 @@ function onTrigger(caller, entity, target, nation)
 
     -- validate nation
     if (nation == nil or nation < 0 or nation > 2) then
-        tpz.commands.error(caller, entity, "Invalid nation ID.", usage)
-        tpz.commands.print(caller, entity, "Nations: 0=San d'Oria 1=Bastok 2=Windurst")
+        tpz.commands.error(caller, player, "Invalid nation ID.", usage)
+        tpz.commands.print(caller, player, "Nations: 0=San d'Oria 1=Bastok 2=Windurst")
         return
     end
 
@@ -45,5 +40,5 @@ function onTrigger(caller, entity, target, nation)
 
     -- set nation
     targ:setNation(nation)
-    tpz.commands.print(caller, entity, string.format("Set %s's home nation to %s.", targ:getName(), nationByNum[nation]))
+    tpz.commands.print(caller, player, string.format("Set %s's home nation to %s.", targ:getName(), nationByNum[nation]))
 end

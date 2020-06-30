@@ -11,14 +11,8 @@ cmdprops =
     parameters = "t"
 }
 
-function onTrigger(caller, entity, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
-    local usage = "!release {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+function onTrigger(caller, player, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     targ:release()
 end

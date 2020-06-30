@@ -57,7 +57,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "../packets/linkshell_equip.h"
 #include "../packets/menu_merit.h"
 #include "../packets/message_basic.h"
-#include "../packets/message_combat.h"
+#include "../packets/message_debug.h"
 #include "../packets/message_special.h"
 #include "../packets/message_standard.h"
 #include "../packets/quest_mission_log.h"
@@ -3307,11 +3307,11 @@ namespace charutils
                         switch (pcinzone)
                         {
                             case 1: exp *= 1.00f; break;
-                            case 2: exp *= 0.87f; break;
-                            case 3: exp *= 0.63f; break;
-                            case 4: exp *= 0.52f; break;
-                            case 5: exp *= 0.44f; break;
-                            case 6: exp *= 0.38f; break;
+                            case 2: exp *= 0.75f; break;
+                            case 3: exp *= 0.55f; break;
+                            case 4: exp *= 0.45f; break;
+                            case 5: exp *= 0.39f; break;
+                            case 6: exp *= 0.35f; break;
                             default: exp *= (1.8f / pcinzone); break;
                         }
                     }
@@ -3320,11 +3320,11 @@ namespace charutils
                         switch (pcinzone)
                         {
                             case 1: exp *= 1.00f; break;
-                            case 2: exp *= 0.87f; break;
-                            case 3: exp *= 0.63f; break;
-                            case 4: exp *= 0.52f; break;
-                            case 5: exp *= 0.44f; break;
-                            case 6: exp *= 0.38f; break;
+                            case 2: exp *= 0.75f; break;
+                            case 3: exp *= 0.55f; break;
+                            case 4: exp *= 0.45f; break;
+                            case 5: exp *= 0.39f; break;
+                            case 6: exp *= 0.35f; break;
                             default: exp *= (1.8f / pcinzone); break;
                         }
 
@@ -3485,11 +3485,6 @@ namespace charutils
                         }
                     }
                     // pet or companion exp penalty needs to be added here
-                    // trust penalty
-                    if (PMember->PTrusts.size() >= 1)
-                    {
-                        exp *= 0.7f;
-                    }
                     if (distance(PMember->loc.p, PMob->loc.p) > 100)
                     {
                         PMember->pushPacket(new CMessageBasicPacket(PMember, PMember, 0, 0, 37));
@@ -3583,7 +3578,7 @@ namespace charutils
                     PChar->PParty->ReloadParty();
                 }
 
-                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CMessageCombatPacket(PChar, PChar, PChar->jobs.job[PChar->GetMJob()], 0, 11));
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CMessageDebugPacket(PChar, PChar, PChar->jobs.job[PChar->GetMJob()], 0, 11));
                 luautils::OnPlayerLevelDown(PChar);
                 PChar->updatemask |= UPDATE_HP;
             }
@@ -3635,19 +3630,19 @@ namespace charutils
                 if (PChar->expChain.chainNumber != 0)
                 {
                     if (onLimitMode)
-                        PChar->pushPacket(new CMessageCombatPacket(PChar, PChar, exp, PChar->expChain.chainNumber, 372));
+                        PChar->pushPacket(new CMessageDebugPacket(PChar, PChar, exp, PChar->expChain.chainNumber, 372));
                     else
-                        PChar->pushPacket(new CMessageCombatPacket(PChar, PChar, exp, PChar->expChain.chainNumber, 253));
+                        PChar->pushPacket(new CMessageDebugPacket(PChar, PChar, exp, PChar->expChain.chainNumber, 253));
                 }
                 else
                 {
                     if (onLimitMode)
                     {
-                        PChar->pushPacket(new CMessageCombatPacket(PChar, PChar, exp, 0, 371));
+                        PChar->pushPacket(new CMessageDebugPacket(PChar, PChar, exp, 0, 371));
                     }
                     else
                     {
-                        PChar->pushPacket(new CMessageCombatPacket(PChar, PChar, exp, 0, 8));
+                        PChar->pushPacket(new CMessageDebugPacket(PChar, PChar, exp, 0, 8));
                     }
                 }
                 PChar->expChain.chainNumber++;
@@ -3655,9 +3650,9 @@ namespace charutils
             else if (exp > 0)
             {
                 if (onLimitMode)
-                    PChar->pushPacket(new CMessageCombatPacket(PChar, PChar, exp, 0, 371));
+                    PChar->pushPacket(new CMessageDebugPacket(PChar, PChar, exp, 0, 371));
                 else
-                    PChar->pushPacket(new CMessageCombatPacket(PChar, PChar, exp, 0, 8));
+                    PChar->pushPacket(new CMessageDebugPacket(PChar, PChar, exp, 0, 8));
             }
         }
 
@@ -3666,7 +3661,7 @@ namespace charutils
             //add limit points
             if (PChar->PMeritPoints->AddLimitPoints(exp))
             {
-                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CMessageCombatPacket(PChar, PMob, PChar->PMeritPoints->GetMeritPoints(), 0, 50));
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CMessageDebugPacket(PChar, PMob, PChar->PMeritPoints->GetMeritPoints(), 0, 50));
             }
         }
         else
@@ -3784,7 +3779,7 @@ namespace charutils
                 PChar->pushPacket(new CCharJobExtraPacket(PChar, true));
                 PChar->pushPacket(new CCharSyncPacket(PChar));
 
-                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CMessageCombatPacket(PChar, PMob, PChar->jobs.job[PChar->GetMJob()], 0, 9));
+                PChar->loc.zone->PushPacket(PChar, CHAR_INRANGE_SELF, new CMessageDebugPacket(PChar, PMob, PChar->jobs.job[PChar->GetMJob()], 0, 9));
                 PChar->pushPacket(new CCharStatsPacket(PChar));
 
                 luautils::OnPlayerLevelUp(PChar);
@@ -5058,49 +5053,6 @@ namespace charutils
             return Sql_GetIntData(SqlHandle, 0);
         }
         return 0;
-    }
-
-    void AddVar(CCharEntity* PChar, const char* var, int32 value)
-    {
-        if (PChar == nullptr)
-            return;
-        const char* Query = "INSERT INTO char_vars SET charid = %u, varname = '%s', value = %i ON DUPLICATE KEY UPDATE value = value + %i;";
-
-        Sql_Query(SqlHandle, Query,
-            PChar->id,
-            var,
-            value,
-            value);
-    }
-
-    void SetVar(CCharEntity* PChar, const char* var, int32 value)
-    {
-        if (PChar == nullptr)
-            return;
-
-        if (value == 0)
-        {
-            Sql_Query(SqlHandle, "DELETE FROM char_vars WHERE charid = %u AND varname = '%s' LIMIT 1;", PChar->id, var);
-        }
-        else
-        {
-            Sql_Query(SqlHandle, "INSERT INTO char_vars SET charid = %u, varname = '%s', value = %i ON DUPLICATE KEY UPDATE value = %i;", PChar->id, var, value, value);
-        }
-    }
-    std::tuple<std::string, uint8> GetNameAndGMLevel(uint32 id)
-    {
-        std::string query = "SELECT charname, gmlevel FROM chars WHERE charid = %u;";
-        auto ret = Sql_Query(SqlHandle, query.c_str(), id);
-        std::string name = "!invalid!";
-        uint8 gmLevel = 0;
-
-        if (ret != SQL_ERROR && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
-        {
-            name = (const char*)Sql_GetData(SqlHandle, 0);
-            gmLevel = Sql_GetIntData(SqlHandle, 1);
-        }
-
-        return std::make_tuple(name, gmLevel);
     }
 
 }; // namespace charutils

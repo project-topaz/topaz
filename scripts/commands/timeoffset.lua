@@ -11,19 +11,19 @@ cmdprops =
     parameters = "i"
 }
 
-function onTrigger(caller, entity, offset)
+function onTrigger(caller, player, offset)
     local usage = "!timeoffset <offset>"
 
     -- validate offset
     if (offset == nil) then
-        tpz.commands.error(caller, entity, "Invalid offset.", usage)
+        tpz.commands.error(caller, player, "Invalid offset.", usage)
         return
     end
 
     -- time offset
     local result = SetVanadielTimeOffset(offset)
     if (result == nil) then
-        tpz.commands.error(caller, entity, "Time offset was not successful.", usage)
+        tpz.commands.error(player, "Time offset was not successful.")
         return
     end
 end

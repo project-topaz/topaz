@@ -12,20 +12,15 @@ cmdprops =
     parameters = "st"
 }
 
-function onTrigger(caller, entity, logId, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, logId, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!checkmission <logID> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
 
     -- validate logId
     local logName
     local logInfo = GetMissionLogInfo(logId)
     if (logInfo == nil) then
-        tpz.commands.error(caller, entity, "Invalid logID.", usage)
+        tpz.commands.error(caller, player, "Invalid logID.", usage)
         return
     end
     logName = logInfo.full_name
@@ -35,8 +30,8 @@ function onTrigger(caller, entity, logId, target)
     local currentMission = targ:getCurrentMission(logId)
 
     if ((logId <= 3) and (currentMission == 65535)) then
-        tpz.commands.print(caller, entity, string.format("No current %s mission for %s.", logName, targ:getName()))
+        tpz.commands.print(caller, player, string.format("No current %s mission for %s.", logName, targ:getName()))
     else
-        tpz.commands.print(caller, entity, string.format("Current %s Mission ID is %s for %s.", logName, currentMission, targ:getName()))
+        tpz.commands.print(caller, player, string.format("Current %s Mission ID is %s for %s.", logName, currentMission, targ:getName()))
     end
 end

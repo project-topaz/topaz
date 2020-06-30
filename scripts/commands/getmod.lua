@@ -12,14 +12,14 @@ cmdprops =
     parameters = "s"
 }
 
-function onTrigger(caller, entity, id)
-    local targ = tpz.commands.getTargetNonNPC(caller, entity, nil)
-    local usage = "!getmod <modID>"
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!getmod <modID>")
+end
 
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name, mobID.", usage)
-        return
-    end
+function onTrigger(caller, player, id)
+    local targ = tpz.commands.getTargetNonNPC(caller, player, nil)
+    local usage = "!getmod <modID>"
 
     -- invert tpz.mod table
     local modNameByNum = {}
@@ -41,9 +41,9 @@ function onTrigger(caller, entity, id)
         modName = id
     end
     if modName == nil or modId == nil then
-        tpz.commands.error(caller, entity, "Invalid modID.", usage)
+        tpz.commands.error(caller, player, "Invalid modID.", usage)
         return
     end
 
-    tpz.commands.print(caller, entity, string.format("%s's Mod %i (%s) is %i", targ:getName(), modId, modName, targ:getMod(modId)))
+    tpz.commands.print(caller, player, string.format("%s's Mod %i (%s) is %i", targ:getName(), modId, modName, targ:getMod(modId)))
 end

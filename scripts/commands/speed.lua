@@ -11,16 +11,21 @@ cmdprops =
     parameters = "i"
 }
 
-function onTrigger(caller, entity, speed)
+function error(player, msg)
+    player:PrintToPlayer(msg)
+    player:PrintToPlayer("!speed <0-255>")
+end
+
+function onTrigger(caller, player, speed)
     local usage = "!speed <0-255>"
 
     -- validate speed amount
     if (speed == nil or speed < 0 or speed > 255) then
-        tpz.commands.error(caller, entity, "Invalid speed amount.", usage)
+        tpz.commands.error(caller, player, "Invalid speed amount.", usage)
         return
     end
 
     -- set speed
-    entity:speed(speed)
+    player:speed( speed );
 
 end

@@ -280,10 +280,10 @@ local zone_list =
     { 0x14, 0x09, 288 }, -- Escha - Zi'Tah
 }
 
-function getBytePos(s, needle)
+function getBytePos(s,needle)
     local i
     local b
-    for i = 1, string.len(s), 1 do
+    for i=1,string.len(s),1 do
         if (string.byte(s, i) == needle) then
             return i
         end
@@ -295,8 +295,8 @@ end
 -- func: onTrigger
 -- desc: Called when this command is invoked.
 ---------------------------------------------------------------------------------------------------
-function onTrigger(caller, entity, target, destination)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, target, destination)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!send <player to send> <destination player or zone>"
     local x = 0
     local y = 0
@@ -305,12 +305,7 @@ function onTrigger(caller, entity, target, destination)
     local zone
 
     if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must provide the name of a player to send.", usage)
-        return
-    end
-
-    if (destination == nil) then
-        tpz.commands.error(caller, entity, "You must provide a zone ID or autotranslate phrase.", usage)
+        tpz.commands.error(caller, player, "You must provide the name of a player to send and a destination.", usage)
         return
     end
 
@@ -332,7 +327,7 @@ function onTrigger(caller, entity, target, destination)
             end
         end
         if (zone == nil) then
-            tpz.commands.error(caller, entity,"Auto-translated phrase is not a zone.")
+            error(player,"Auto-translated phrase is not a zone.")
             return
         end
     else
@@ -340,7 +335,7 @@ function onTrigger(caller, entity, target, destination)
         zone = tonumber(destination)
         if (zone ~= nil) then
             if (zone < 0 or zone >= tpz.zone.MAX_ZONE) then
-                tpz.commands.error(caller, entity, "Invalid zone ID.", usage)
+                tpz.commands.error(caller, player, "Invalid zone ID.", usage)
                 return
             end
             for k, v in pairs(zone_list) do
@@ -357,7 +352,7 @@ function onTrigger(caller, entity, target, destination)
             -- destination is a player name.
             local dest =  GetPlayerByName(destination)
             if (dest == nil) then
-                tpz.commands.error(caller, entity, string.format( "Player named '%s' not found!", target), usage)
+                tpz.commands.error(caller, player, string.format( "Player named '%s' not found!", target), usage)
                 return
             end
             x = dest:getXPos()
@@ -376,7 +371,7 @@ function onTrigger(caller, entity, target, destination)
 	targ:setCharVar("prev_bringzone", targ:getZoneID())
 	targ:setPos(x, y, z, rot, zone);
     if (targ:getID() ~= caller) then
-        tpz.commands.print(caller, entity, string.format("Sent %s to zone %i.", targ:getName(), zone))
+        tpz.commands.print(caller, player, string.format("Sent %s to zone %i.", targ:getName(), zone))
     end
 end
 

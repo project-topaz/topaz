@@ -122,7 +122,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/menu_merit.h"
 #include "packets/merit_points_categories.h"
 #include "packets/message_basic.h"
-#include "packets/message_combat.h"
+#include "packets/message_debug.h"
 #include "packets/message_standard.h"
 #include "packets/message_system.h"
 #include "packets/party_define.h"
@@ -736,7 +736,7 @@ void SmallPacket0x01A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     break;
     case 0x0E: // Fishing
     {
-        if (PChar->StatusEffectContainer->HasPreventActionEffect())
+        if(PChar->StatusEffectContainer->HasPreventActionEffect())
             return;
 
         fishingutils::StartFishing(PChar);
@@ -6056,7 +6056,7 @@ void SmallPacket0x10F(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 void SmallPacket0x110(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
     //PrintPacket(data);
-    if (PChar->animation < ANIMATION_NEW_FISHING_START || PChar->animation > ANIMATION_NEW_FISHING_STOP)
+    if (PChar->animation != ANIMATION_FISHING_START)
         return;
 
     //uint32 charid = data.ref<uint32>(0x04);

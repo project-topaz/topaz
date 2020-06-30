@@ -8,19 +8,14 @@ require("scripts/globals/commands")
 cmdprops =
 {
     permission = 4,
-    parameters = "n"
+    parameters = "i"
 }
 
-function onTrigger(caller, entity, target)
-    local targ = tpz.commands.getTargetMob(caller, entity, target)
+function onTrigger(caller, player, mobId)
+    local targ = tpz.commands.getTargetMob(caller, player, mobId)
     local usage = "!despawnmob {mobID}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a valid mobID.", usage)
-        return
-    end
 
     -- despawn mob
     DespawnMob(targ:getID())
-    tpz.commands.print(caller, entity, string.format("Despawned %s %i.", targ:getName(), targ:getID()))
+    tpz.commands.print(caller, player, string.format("Despawned %s %i.",targ:getName(),targ:getID()))
 end

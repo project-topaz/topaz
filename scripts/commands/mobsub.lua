@@ -9,22 +9,31 @@ require("scripts/globals/commands")
 cmdprops =
 {
     permission = 4,
-    parameters = "sn"
+    parameters = "ss"
 }
 
-function onTrigger(caller, entity, animationId, target)
-    local targ = tpz.commands.getTargetMob(caller, entity, target)
-    local usage = "!mobsub <animation ID> {mob ID}"
+function onTrigger(caller, player, arg1, arg2)
+    local usage = "!mobsub {mob ID} <animation ID>"
+    
+    local target
+    local animationId
 
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a valid mobID.", usage)
+    if (arg2 ~= nil) then
+        target = arg1
+        animationId = arg2
+    elseif (arg1 ~= nil) then
+        animationId = arg1
+    else
+        tpz.commands.error(caller, player, "You must provide an animation ID.", usage)
         return
     end
+
+    local targ = tpz.commands.getTargetMob(caller, player, target)
 
     -- validate animationId
     animationId = tonumber(animationId) or tpz.anim[string.upper(animationId)]
     if (animationId == nil or animationId < 0) then
-        tpz.commands.error(caller, entity, "Invalid animation ID.", usage)
+        tpz.commands.error(caller, player, "Invalid animation ID.", usage)
         return
     end
 

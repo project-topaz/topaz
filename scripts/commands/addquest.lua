@@ -12,19 +12,14 @@ cmdprops =
     parameters = "sst"
 }
 
-function onTrigger(caller, entity, logId, questId, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
-    local usage = "!adddynatime <minutes> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+function onTrigger(caller, player, logId, questId, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
+    local usage = "!addquest <logID> <questID> {player}"
 
     -- validate logId
     local questLog = GetQuestLogInfo(logId)
     if (questLog == nil) then
-        tpz.commands.error(caller, entity, "Invalid logID.", usage)
+        tpz.commands.error(caller, player, "Invalid logID.", usage)
         return
     end
     local logName = questLog.full_name
@@ -36,11 +31,11 @@ function onTrigger(caller, entity, logId, questId, target)
         questId = tonumber(questId) or areaQuestIds[string.upper(questId)]
     end
     if (questId == nil or questId < 0) then
-        tpz.commands.error(caller, entity, "Invalid questID.", usage)
+        tpz.commands.error(caller, player, "Invalid questID.", usage)
         return
     end
 
     -- add quest
     targ:addQuest(logId, questId)
-    tpz.commands.print(caller, entity, string.format("Added %s quest %i to %s.", logName, questId, targ:getName()))
+    tpz.commands.print(caller, player, string.format("Added %s quest %i to %s.", logName, questId, targ:getName()))
 end

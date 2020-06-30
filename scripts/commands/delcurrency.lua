@@ -11,26 +11,21 @@ cmdprops =
     parameters = "sit"
 }
 
-function onTrigger(caller, entity, currency, amount, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, currency, amount, target)
+    local targ = tpz.commands.getTargetPC(caller, player, target)
     local usage = "!delcurrency <currency type> <amount> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
 
     -- validate currency
     -- note: getCurrency does not ever return nil at the moment.  will work on this in future update.
     if (currency == nil or targ:getCurrency(currency) == nil) then
-        tpz.commands.error(caller, entity, "Invalid currency type.", usage)
+        tpz.commands.error(caller, player, "Invalid currency type.", usage)
         return
     end
 
     -- validate amount
     local currentAmount = targ:getCurrency(currency)
     if (amount == nil or amount < 1) then
-        tpz.commands.error(caller, entity, "Invalid amount.", usage)
+        tpz.commands.error(caller, player, "Invalid amount.", usage)
         return
     end
     if (amount > currentAmount) then
@@ -40,5 +35,5 @@ function onTrigger(caller, entity, currency, amount, target)
     -- delete currency
     targ:delCurrency(currency, amount)
     local newAmount = targ:getCurrency(currency)
-    tpz.commands.print(caller, entity, string.format("%i %s was taken from %s, for a total of %i.", amount, currency, targ:getName(), newAmount))
+    tpz.commands.print(caller, player, string.format("%i %s was taken from %s, for a total of %i.", amount, currency, targ:getName(), newAmount))
 end

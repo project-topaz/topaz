@@ -1,5 +1,7 @@
-/*
+﻿/*
 ===========================================================================
+
+  Copyright (c) 2010-2015 Darkstar Dev Teams
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU General Public License as published by
@@ -17,19 +19,26 @@
 ===========================================================================
 */
 
-#ifndef _CCAUGHTFISHPACKET_H_
-#define _CCAUGHTFISHPACKET_H_
+#ifndef _CMESSAGEDEBUGPACKET_H
+#define _CMESSAGEDEBUGPACKET_H
 
 #include "../../common/cbasetypes.h"
+
 #include "basic.h"
 
-class CCharEntity;
+/************************************************************************
+*																		*
+*  																		*
+*																		*
+************************************************************************/
 
-class CCaughtFishPacket : public CBasicPacket
+class CBaseEntity;
+
+class CMessageDebugPacket : public CBasicPacket
 {
 public:
 
-	CCaughtFishPacket(CCharEntity* PChar, uint16 param0, uint16 messageID, uint8 count);
+	CMessageDebugPacket(CBaseEntity* PSender, CBaseEntity* PTarget, int32 param0, int32 param1, uint16 messageID);
 };
 
 #endif

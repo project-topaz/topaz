@@ -11,19 +11,14 @@ cmdprops =
     parameters = "it"
 }
 
-function onTrigger(caller, entity, amount, target)
-    local targ = tpz.commands.getTargetPC(caller, entity, target)
+function onTrigger(caller, player, amount, target)
     local usage = "!takegil <amount> {player}"
-
-    if (targ == nil) then
-        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
-        return
-    end
+    local targ = tpz.commands.getTargetPC(caller, player, target)
 
     -- validate amount
     local oldAmount = targ:getGil()
     if (amount == nil or amount < 1) then
-        tpz.commands.error(caller, entity, "Invalid amount of gil.", usage)
+        tpz.commands.error(caller, player, "Invalid amount of gil.", usage)
         return
     end
     if (amount > oldAmount) then
@@ -32,6 +27,6 @@ function onTrigger(caller, entity, amount, target)
 
     -- remove gil
     targ:delGil(amount)
-    tpz.commands.print(caller, entity, string.format("Removed %i gil from %s. They now have %i gil.", amount, targ:getName(), targ:getGil()))
+    tpz.commands.print(caller, player, string.format("Removed %i gil from %s. They now have %i gil.", amount, targ:getName(), targ:getGil()))
 
 end

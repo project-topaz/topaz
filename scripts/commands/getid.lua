@@ -11,12 +11,11 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(caller, entity)
-    local targ = entity:getCursorTarget()
-
+function onTrigger(caller, player)
+    local targ = player:getCursorTarget()
     if (targ ~= nil) then
-        tpz.commands.print(caller, entity, string.format("%s's ID is: %u ", targ:getName(),targ:getID()))
+        tpz.commands.print(caller, player, string.format("%s's ID is: %u ", targ:getName(),targ:getID()))
     else
-        tpz.commands.print(caller, entity, "Must select a target using in game cursor first.")
+        tpz.commands.print(caller, player, "Must select a target using in game cursor first.")
     end
 end
