@@ -200,7 +200,7 @@ void SmallPacket0x000(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0xFFF(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    ShowDebug(CL_CYAN"parse: SmallPacket is not implemented Type<%03hX>\n" CL_RESET, (data.ref<uint16>(0) & 0x1FF));
+    //ShowDebug(CL_CYAN"parse: SmallPacket is not implemented Type<%03hX>\n" CL_RESET, (data.ref<uint16>(0) & 0x1FF));
     return;
 }
 
@@ -6033,7 +6033,7 @@ void SmallPacket0x10F(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 void SmallPacket0x110(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
     //PrintPacket(data);
-    if (PChar->animation != ANIMATION_FISHING_START)
+    if (PChar->animation < ANIMATION_NEW_FISHING_START || PChar->animation > ANIMATION_NEW_FISHING_STOP)
         return;
 
     //uint32 charid = data.ref<uint32>(0x04);
