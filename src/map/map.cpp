@@ -264,7 +264,9 @@ int32 do_init(int32 argc, char** argv)
 void do_final(int code)
 {
     delete[] g_PBuff;
+    g_PBuff = nullptr;
     delete[] PTempBuff;
+    PTempBuff = nullptr;
 
     itemutils::FreeItemList();
     battleutils::FreeWeaponSkillsList();
@@ -280,10 +282,11 @@ void do_final(int code)
         messageThread.join();
     }
 
-    delete CTaskMgr::getInstance();
-    delete CVanaTime::getInstance();
+    CTaskMgr::delInstance();
+    CVanaTime::delInstance();
 
     Sql_Free(SqlHandle);
+    SqlHandle = nullptr;
 
     timer_final();
     socket_final();

@@ -272,6 +272,8 @@ namespace battleutils
         for (int32 SkillId = 0; SkillId < MAX_WEAPONSKILL_ID; ++SkillId)
         {
             delete g_PWeaponSkillList[SkillId];
+            g_PWeaponSkillList[SkillId] = nullptr;
+
         }
     }
 
@@ -280,9 +282,10 @@ namespace battleutils
     ************************************************************************/
     void FreeMobSkillList()
     {
-        for (auto mobskill : g_PMobSkillList)
+        for (auto& mobskill : g_PMobSkillList)
         {
             delete mobskill;
+            mobskill = nullptr;
         }
     }
 
