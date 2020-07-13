@@ -210,3 +210,10 @@ settings.ini
 *.rdp
 
 95.138.209*
+
+*.zip
+*.7z
+
+*.exe
+
+topaz.zip
