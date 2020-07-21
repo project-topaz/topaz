@@ -19,6 +19,8 @@ from migrations import broken_linkshells
 from migrations import spell_family_column
 from migrations import mission_blob_extra
 from migrations import cop_mission_ids
+from migrations import add_daily_tally_column
+from migrations import add_timecreated_column
 # Append new migrations to this list and import above
 migrations = [
     unnamed_flags,
@@ -30,6 +32,8 @@ migrations = [
     spell_family_column,
     mission_blob_extra,
     cop_mission_ids,
+    add_daily_tally_column,
+    add_timecreated_column,
 ]
 # These are the default 'protected' files
 player_data = [
