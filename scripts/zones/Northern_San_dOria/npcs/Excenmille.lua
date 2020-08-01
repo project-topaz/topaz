@@ -28,10 +28,10 @@ local TrustMemory = function(player)
     return memories
 end
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
 end
 
-function onTrigger(player,npc)
+function onTrigger(player, npc)
     local TrustSandoria = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.TRUST_SANDORIA)
     local TrustBastok   = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.TRUST_BASTOK)
     local TrustWindurst = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.TRUST_WINDURST)
@@ -56,10 +56,10 @@ function onTrigger(player,npc)
     end
 end
 
-function onEventUpdate(player,csid,option)
+function onEventUpdate(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+function onEventFinish(player, csid, option)
     --TRUST
     if csid == 893 then
         player:addSpell(899, true, true)

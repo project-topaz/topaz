@@ -9,10 +9,10 @@ require("scripts/globals/missions")
 require("scripts/globals/npc_util")
 -----------------------------------
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
 end
 
-function onTrigger(player,npc)
+function onTrigger(player, npc)
     -- RoV Missions
     if player:getCurrentMission(ROV) == tpz.mission.id.rov.THE_PATH_UNTRAVELED and player:getRank() >= 3 then
         player:startEvent(14)
@@ -21,7 +21,7 @@ function onTrigger(player,npc)
 
     -- CoP Missions
     elseif player:getCurrentMission(COP) == tpz.mission.id.cop.BELOW_THE_ARKS and player:getCharVar("PromathiaStatus") == 1 then
-        player:startEvent(202,0,0,1) -- first time in promy -> have you made your preparations cs
+        player:startEvent(202, 0, 0, 1) -- first time in promy -> have you made your preparations cs
     elseif player:getCurrentMission(COP) == tpz.mission.id.cop.THE_MOTHERCRYSTALS and (player:hasKeyItem(tpz.ki.LIGHT_OF_MEA) or player:hasKeyItem(tpz.ki.LIGHT_OF_DEM)) then
         if player:getCharVar("cspromy2") == 1 then
             player:startEvent(201)  -- cs you get nearing second promyvion
@@ -38,10 +38,10 @@ function onTrigger(player,npc)
 
 end
 
-function onEventUpdate(player,csid,option)
+function onEventUpdate(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+function onEventFinish(player, csid, option)
     -- RoV Missions
     if csid == 14 then
         player:completeMission(ROV, tpz.mission.id.rov.THE_PATH_UNTRAVELED)

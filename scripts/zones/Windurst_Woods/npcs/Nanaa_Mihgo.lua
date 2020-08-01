@@ -45,9 +45,9 @@ local TrustMemory = function(player)
     return memories
 end
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
     if npcUtil.tradeHas(trade, {{498,4}}) then -- Yagudo Necklace x4
-        local mihgosAmigo = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.MIHGO_S_AMIGO)
+        local mihgosAmigo = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.MIHGO_S_AMIGO)
 
         if mihgosAmigo == QUEST_ACCEPTED then
             player:startEvent(88, GIL_RATE*200)
@@ -57,16 +57,16 @@ function onTrade(player,npc,trade)
     end
 end
 
-function onTrigger(player,npc)
+function onTrigger(player, npc)
     local missionStatus = player:getCharVar("MissionStatus")
     local wildcatWindurst = player:getCharVar("WildcatWindurst")
-    local mihgosAmigo = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.MIHGO_S_AMIGO)
-    local tenshodoShowdown = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.THE_TENSHODO_SHOWDOWN)
+    local mihgosAmigo = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.MIHGO_S_AMIGO)
+    local tenshodoShowdown = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.THE_TENSHODO_SHOWDOWN)
     local tenshodoShowdownCS = player:getCharVar("theTenshodoShowdownCS")
-    local rockRacketeer = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.ROCK_RACKETEER)
+    local rockRacketeer = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.ROCK_RACKETEER)
     local rockRacketeerCS = player:getCharVar("rockracketeer_sold")
-    local thickAsThieves = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.AS_THICK_AS_THIEVES)
-    local hittingTheMarquisate = player:getQuestStatus(WINDURST,tpz.quest.id.windurst.HITTING_THE_MARQUISATE)
+    local thickAsThieves = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES)
+    local hittingTheMarquisate = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.HITTING_THE_MARQUISATE)
     local hittingTheMarquisateYatnielCS = player:getCharVar("hittingTheMarquisateYatnielCS")
     local hittingTheMarquisateHagainCS = player:getCharVar("hittingTheMarquisateHagainCS")
     local hittingTheMarquisateNanaaCS = player:getCharVar("hittingTheMarquisateNanaaCS")
@@ -91,7 +91,7 @@ function onTrigger(player,npc)
         end
 
     -- LURE OF THE WILDCAT (WINDURST)
-    elseif player:getQuestStatus(WINDURST, tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not player:getMaskBit(wildcatWindurst,4) then
+    elseif player:getQuestStatus(WINDURST, tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not player:getMaskBit(wildcatWindurst, 4) then
         player:startEvent(732)
 
     -- CRYING OVER ONIONS
@@ -160,10 +160,10 @@ function onTrigger(player,npc)
     end
 end
 
-function onEventUpdate(player,csid,option)
+function onEventUpdate(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+function onEventFinish(player, csid, option)
     -- WINDURST 2-1: LOST FOR WORDS
     if csid == 165 and option == 1 then
         npcUtil.giveKeyItem(player, tpz.ki.LAPIS_MONOCLE)
@@ -177,17 +177,17 @@ function onEventFinish(player,csid,option)
 
     -- LURE OF THE WILDCAT (WINDURST)
     elseif csid == 732 then
-        player:setMaskBit(player:getCharVar("WildcatWindurst"),"WildcatWindurst",4,true)
+        player:setMaskBit(player:getCharVar("WildcatWindurst"), "WildcatWindurst", 4, true)
 
     -- THE TENSHODO SHOWDOWN
     elseif (csid == 496) then
-        player:addQuest(WINDURST,tpz.quest.id.windurst.THE_TENSHODO_SHOWDOWN)
-        player:setCharVar("theTenshodoShowdownCS",1)
+        player:addQuest(WINDURST, tpz.quest.id.windurst.THE_TENSHODO_SHOWDOWN)
+        player:setCharVar("theTenshodoShowdownCS", 1)
         npcUtil.giveKeyItem(player, tpz.ki.LETTER_FROM_THE_TENSHODO)
 
     -- THICK AS THIEVES
     elseif (csid == 504 and option == 1) then  -- start quest "as thick as thieves"
-        player:addQuest(WINDURST,tpz.quest.id.windurst.AS_THICK_AS_THIEVES)
+        player:addQuest(WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES)
         player:setCharVar("thickAsThievesGamblingCS",1)
         npcUtil.giveKeyItem(player, {tpz.ki.GANG_WHEREABOUTS_NOTE, tpz.ki.FIRST_FORGED_ENVELOPE, tpz.ki.SECOND_FORGED_ENVELOPE})
     elseif (csid == 508 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES, {item=12514, var="thickAsThievesGamblingCS"})) then

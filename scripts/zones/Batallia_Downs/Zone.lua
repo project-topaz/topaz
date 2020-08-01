@@ -5,16 +5,16 @@
 -----------------------------------
 local ID = require("scripts/zones/Batallia_Downs/IDs")
 require("scripts/quests/i_can_hear_a_rainbow")
-require("scripts/globals/chocobo_digging");
-require("scripts/globals/missions");
-require("scripts/globals/zone");
+require("scripts/globals/chocobo_digging")
+require("scripts/globals/missions")
+require("scripts/globals/zone")
 -----------------------------------
 require("scripts/quests/full_speed_ahead")
 -----------------------------------
 
 function onChocoboDig(player, precheck)
     return tpz.chocoboDig.start(player, precheck)
-end;
+end
 
 local function registerRegionAroundNPC(zone, NPCID, zoneID)
     local npc = GetNPCByID(NPCID)
@@ -28,8 +28,8 @@ local function registerRegionAroundNPC(zone, NPCID, zoneID)
 end
 
 function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.AHTU);
-    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800));
+    UpdateNMSpawnPoint(ID.mob.AHTU)
+    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800))
 
     for i = 0, 7 do
         registerRegionAroundNPC(zone, ID.npc.RAPTOR_FOOD_BASE + i, i + 1)
@@ -38,7 +38,7 @@ function onInitialize(zone)
 end
 
 function onZoneIn(player, prevZone)
-    local cs = -1;
+    local cs = -1
 
     if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then -- Normal Mode
         player:addStatusEffect(tpz.effect.FULL_SPEED_AHEAD, 0, 3, tpz.fsa.duration)
@@ -49,17 +49,17 @@ function onZoneIn(player, prevZone)
     end
 
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
-        player:setPos(-693.609, -14.583, 173.59, 30);
+        player:setPos(-693.609, -14.583, 173.59, 30)
     end
 
     if quests.rainbow.onZoneIn(player) then
-        cs = 901;
+        cs = 901
     elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1) then
-        cs = 903;
+        cs = 903
     end
 
-    return cs;
-end;
+    return cs
+end
 
 function onConquestUpdate(zone, updatetype)
     tpz.conq.onConquestUpdate(zone, updatetype)
@@ -69,22 +69,22 @@ function onRegionEnter(player, region)
     if player:hasStatusEffect(tpz.effect.FULL_SPEED_AHEAD) then
         tpz.fsa.onRegionEnter(player, region:GetRegionID())
     end
-end;
+end
 
 function onEventUpdate(player, csid, option)
     if (csid == 901) then
         quests.rainbow.onEventUpdate(player)
     end
-end;
+end
 
 function onEventFinish(player, csid, option)
     if (csid == 901) then
-        lightCutsceneFinish(player); -- Quest: I Can Hear A Rainbow
+        lightCutsceneFinish(player) -- Quest: I Can Hear A Rainbow
     elseif (csid == 903) then
         if (player:getZPos() >  -331) then
-            player:updateEvent(0,0,0,0,0,3);
+            player:updateEvent(0, 0, 0, 0, 0, 3)
         else
-            player:updateEvent(0,0,0,0,0,2);
+            player:updateEvent(0, 0, 0, 0, 0, 2)
         end
     elseif csid == 24 then
         tpz.fsa.completeGame(player)

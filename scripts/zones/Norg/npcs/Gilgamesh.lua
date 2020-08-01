@@ -4,39 +4,39 @@
 -- !pos 122.452 -9.009 -12.052 252
 -----------------------------------
 local ID = require("scripts/zones/Norg/IDs")
-require("scripts/globals/missions");
+require("scripts/globals/missions")
 require("scripts/globals/npc_util")
 require("scripts/globals/quests")
 -----------------------------------
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
 
     if (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_PIRATE_S_COVE and player:getCharVar("MissionStatus") == 2) then
-        if (trade:hasItemQty(1160,1) and trade:getItemCount() == 1) then -- Frag Rock
-            player:startEvent(99); -- Bastok Mission 6-2
+        if (trade:hasItemQty(1160, 1) and trade:getItemCount() == 1) then -- Frag Rock
+            player:startEvent(99) -- Bastok Mission 6-2
         end
     end
 
-end;
+end
 
 function onTrigger(player,npc)
-    local ZilartMission = player:getCurrentMission(ZILART);
+    local ZilartMission = player:getCurrentMission(ZILART)
     if (ZilartMission == tpz.mission.id.zilart.KAZAMS_CHIEFTAINESS) then
-        player:startEvent(7);
+        player:startEvent(7)
     elseif (ZilartMission == tpz.mission.id.zilart.THE_TEMPLE_OF_UGGALEPIH) then
-        player:startEvent(8);
+        player:startEvent(8)
     elseif (ZilartMission == tpz.mission.id.zilart.HEADSTONE_PILGRIMAGE) then
-        player:startEvent(9);
+        player:startEvent(9)
     elseif (ZilartMission == tpz.mission.id.zilart.RETURN_TO_DELKFUTTS_TOWER) then
-        player:startEvent(13);
+        player:startEvent(13)
     elseif (ZilartMission == tpz.mission.id.zilart.ROMAEVE) then
-        player:startEvent(11);
+        player:startEvent(11)
     elseif (ZilartMission == tpz.mission.id.zilart.THE_MITHRA_AND_THE_CRYSTAL) then
-        player:startEvent(170);
+        player:startEvent(170)
     elseif (ZilartMission == tpz.mission.id.zilart.ARK_ANGELS) then
-        player:startEvent(171);
+        player:startEvent(171)
     elseif (ZilartMission == tpz.mission.id.zilart.THE_CELESTIAL_NEXUS) then
-        player:startEvent(173);
+        player:startEvent(173)
     elseif
         player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
         player:getCharVar('ApocalypseNigh') == 6 and
@@ -46,22 +46,22 @@ function onTrigger(player,npc)
     elseif player:getCharVar('Apoc_Nigh_RewardCS1') == 1 then
         player:startEvent(234, 252)
     elseif player:hasCompletedQuest(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) then
-        player:startEvent(233);
+        player:startEvent(233)
     elseif (ZilartMission == tpz.mission.id.zilart.AWAKENING) then
-        player:startEvent(177);
+        player:startEvent(177)
     end
 end
 
-function onEventUpdate(player,csid,option)
+function onEventUpdate(player, csid, option)
     if (csid == 232 or csid == 234) and option == 99 then
         player:updateEvent(252, 15962, 15963, 15964, 15965)
     end
 end
 
-function onEventFinish(player,csid,option)
+function onEventFinish(player, csid, option)
     if (csid == 99) then
         player:tradeComplete()
-        player:setCharVar("MissionStatus",3)
+        player:setCharVar("MissionStatus", 3)
     elseif csid == 232 or csid == 234 then
         if csid == 232 then
             player:setCharVar("Apoc_Nigh_RewardCS1", 1)

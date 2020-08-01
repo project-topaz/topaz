@@ -10,7 +10,7 @@ require("scripts/globals/status")
 require("scripts/globals/shop")
 -----------------------------------
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)

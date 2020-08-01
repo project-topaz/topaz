@@ -7,11 +7,11 @@ require("scripts/globals/status")
 require("scripts/globals/msg")
 -----------------------------------------
 
-function onMagicCastingCheck(caster,target,spell)
+function onMagicCastingCheck(caster, target, spell)
     return 0
 end
 
-function onSpellCast(caster,target,spell)
+function onSpellCast(caster, target, spell)
     if target:getObjType() == tpz.objType.PC then
         if target:hasKeyItem(tpz.ki.PASHHOW_GATE_CRYSTAL) then
             target:addStatusEffectEx(tpz.effect.TELEPORT,0,tpz.teleport.id.PASHH,0,4.7)

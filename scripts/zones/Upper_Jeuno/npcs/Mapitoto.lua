@@ -12,7 +12,7 @@ require("scripts/globals/quests")
 require("scripts/globals/status")
 -----------------------------------
 
-function onTrade(player,npc,trade)
+function onTrade(player, npc, trade)
     if
         player:hasKeyItem(tpz.ki.TRAINERS_WHISTLE) and
         trade:getSlotCount() == 1 and
@@ -52,10 +52,10 @@ function onTrigger(player,npc)
     end
 end
 
-function onEventUpdate(player,csid,option)
+function onEventUpdate(player, csid, option)
 end
 
-function onEventFinish(player,csid,option)
+function onEventFinish(player, csid, option)
     if (csid == 10223 or csid == 10224) and option == 1 then
         player:addQuest(JEUNO, tpz.quest.id.jeuno.FULL_SPEED_AHEAD)
         player:setCharVar("[QUEST]FullSpeedAhead", 1) -- Flag to start minigame
