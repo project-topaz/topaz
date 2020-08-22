@@ -11,9 +11,9 @@ tpz.magic.spells = {
     [tpz.magic.spellIDs.BLIZZAGA_III] = tpz.factories.basicEleNuke{
         V = {660, 855, 1035, 1310}, M = {3.9, 3.6, 2.8, 2}, hasMultipleTargetReduction = true
     },
-    --[tpz.spellIDs.FREEZE_II] = tpz.ancientMagicNuke:create{
-    --    V = {800, 900, 1000, 1200}, M = {2, 2, 2, 2}, hasMultipleTargetReduction = false,
-    --},
+    [tpz.magic.spellIDs.FREEZE_II] = tpz.factories.am2Nuke{
+        V = {800, 900, 1000, 1200}, M = {2, 2, 2, 2}, hasMultipleTargetReduction = false,
+    },
     --[tpz.spellIDs.BLIZZAJA] = tpz.jaNuke:create{
     --    V = {950, 1170, 1370, 1750}, M = {4.4, 4, 3.8, 3}, hasMultipleTargetReduction = true
     --},
