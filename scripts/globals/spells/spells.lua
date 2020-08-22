@@ -17,7 +17,7 @@ tpz.magic.spells = {
     [tpz.magic.spellIDs.BLIZZAJA] = tpz.factories.jaNuke{
         V = {950, 1170, 1370, 1750}, M = {4.4, 4, 3.8, 3}, hasMultipleTargetReduction = true
     },
-    --[tpz.spellIDs.CRYOHELIX] = tpz.helixNuke:create{
-    --    V = {25, 103, 181}, M = {1, 0.5, 0}, hasMultipleTargetReduction = false
-    --},
+    [tpz.magic.spellIDs.CRYOHELIX] = tpz.factories.helixNuke{
+        V = {25, 103, 181}, M = {1, 0.5, 0}, hasMultipleTargetReduction = false
+    },
 }
