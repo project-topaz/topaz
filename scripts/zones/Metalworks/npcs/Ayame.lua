@@ -17,7 +17,8 @@ local ID = require("scripts/zones/Metalworks/IDs")
 local TrustMemory = function(player)
     local memories = 0
     -- 2 - The Three Kingdoms
-    if player:hasCompletedMission(SANDORIA, tpz.mission.id.sandoria.JOURNEY_TO_BASTOK2) or player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_THREE_KINGDOMS_BASTOK2) then
+    if player:hasCompletedMission(SANDORIA, tpz.mission.id.sandoria.JOURNEY_TO_BASTOK2) or
+        player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_THREE_KINGDOMS_BASTOK2) then
         memories = memories + 2
     end
     -- 4 - Where Two Paths Converge
@@ -60,9 +61,11 @@ function onTrigger(player, npc)
     local FadedPromises = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.FADED_PROMISES)
     local Rank3 = player:getRank() >= 3 and 1 or 0
 
-    if (player:getQuestStatus(BASTOK, tpz.quest.id.bastok.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and player:getMaskBit(WildcatBastok, 9) == false) then
+    if (player:getQuestStatus(BASTOK, tpz.quest.id.bastok.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and
+        player:getMaskBit(WildcatBastok, 9) == false) then
         player:startEvent(935)
-    elseif (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_CRYSTAL_LINE and player:hasKeyItem(tpz.ki.C_L_REPORTS)) then
+    elseif (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_CRYSTAL_LINE and
+        player:hasKeyItem(tpz.ki.C_L_REPORTS)) then
         player:startEvent(712)
     elseif (trueStrength == QUEST_AVAILABLE and player:getMainJob() == tpz.job.MNK and player:getMainLvl() >= 50) then
         player:startEvent(748) -- Start Quest "True Strength"

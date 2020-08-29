@@ -52,7 +52,7 @@ function onSpellCast(caster, target, spell)
     if isValidHealTarget(caster, target) then
         basecure = getBaseCure(power, divisor, constant, basepower)
         final = getCureFinal(caster, spell, basecure, minCure, false)
-        if (caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) and target:hasStatusEffect(tpz.effect.STONESKIN) == false) then
+        if caster:hasStatusEffect(tpz.effect.AFFLATUS_SOLACE) and target:hasStatusEffect(tpz.effect.STONESKIN) == false then
             local solaceStoneskin = 0
             local equippedBody = caster:getEquipID(tpz.slot.BODY)
             if (equippedBody == 11186) then

@@ -30,9 +30,9 @@ local TrustMemory = function(player)
         memories = memories + 8
     end
     -- 16 - Heroine's Combat BCNM
-    --if (playervar for Heroine's Combat) then
+    -- if (playervar for Heroine's Combat) then
     --  memories = memories + 16
-    --end
+    -- end
     -- 32 - FIT_FOR_A_PRINCE
     if player:hasCompletedQuest(SANDORIA, tpz.quest.id.sandoria.FIT_FOR_A_PRINCE) then
         memories = memories + 32
@@ -40,8 +40,8 @@ local TrustMemory = function(player)
     return memories
 end
 
-function onTrade(player,npc,trade)
-    local wsQuestEvent = tpz.wsquest.getTradeEvent(wsQuest,player,trade)
+function onTrade(player, npc, trade)
+    local wsQuestEvent = tpz.wsquest.getTradeEvent(wsQuest, player, trade)
 
     if wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
@@ -63,11 +63,14 @@ function onTrigger(player, npc)
         player:startEvent(573, 0, 0, 0, TrustMemory(player), 0, 0, 0, Rank3)
     elseif wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
-    elseif (player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and player:getMaskBit(WildcatSandy, 15) == false) then
+    elseif (player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and
+        player:getMaskBit(WildcatSandy, 15) == false) then
         player:startEvent(562)
     elseif (theGeneralSecret == QUEST_AVAILABLE and player:getFameLevel(SANDORIA) >= 2) then
         player:startEvent(55) -- Start Quest "The General's Secret"
-    elseif (mJob == tpz.job.RDM and mLvL >= AF2_QUEST_LEVEL and player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.THE_CRIMSON_TRIAL) == QUEST_COMPLETED and envelopedInDarkness == QUEST_AVAILABLE) then
+    elseif (mJob == tpz.job.RDM and mLvL >= AF2_QUEST_LEVEL and
+        player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.THE_CRIMSON_TRIAL) == QUEST_COMPLETED and
+        envelopedInDarkness == QUEST_AVAILABLE) then
         player:startEvent(94) -- Start Quest "Enveloped in Darkness"
     elseif (player:hasKeyItem(tpz.ki.OLD_POCKET_WATCH) and player:hasKeyItem(tpz.ki.OLD_BOOTS) == false) then
         player:startEvent(93)
@@ -75,11 +78,13 @@ function onTrigger(player, npc)
         player:startEvent(101)
     elseif (player:getCharVar("needs_crawler_blood") == 1) then
         player:startEvent(117)
-    elseif (mJob == tpz.job.RDM and mLvL >= AF2_QUEST_LEVEL and envelopedInDarkness == QUEST_COMPLETED and peaceForTheSpirit == QUEST_AVAILABLE) then
+    elseif (mJob == tpz.job.RDM and mLvL >= AF2_QUEST_LEVEL and envelopedInDarkness == QUEST_COMPLETED and
+        peaceForTheSpirit == QUEST_AVAILABLE) then
         player:startEvent(109) -- Start Quest "Peace for the Spirit"
     elseif (peaceForTheSpirit == QUEST_ACCEPTED) then
         player:startEvent(108) -- Standard dialog during Peace of the spirit
-    elseif (peaceForTheSpirit == QUEST_ACCEPTED and (player:getCharVar("peaceForTheSpiritCS") >= 2 and player:getCharVar("peaceForTheSpiritCS") <= 4)) then
+    elseif (peaceForTheSpirit == QUEST_ACCEPTED and
+        (player:getCharVar("peaceForTheSpiritCS") >= 2 and player:getCharVar("peaceForTheSpiritCS") <= 4)) then
         player:startEvent(113)
     elseif (peaceForTheSpirit == QUEST_ACCEPTED and player:getCharVar("peaceForTheSpiritCS") == 5) then
         player:startEvent(51)

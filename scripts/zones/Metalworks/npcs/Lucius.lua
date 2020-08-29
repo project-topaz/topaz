@@ -26,15 +26,16 @@ local function TrustMemory(player)
         memories = memories + 8
     end
     -- 16 - Hero's Combat (BCNM)
-    --if (playervar for Hero's Combat) then
+    -- if (playervar for Hero's Combat) then
     --  memories = memories + 16
-    --end
+    -- end
     return memories
 end
 
 function onTrade(player, npc, trade)
 
-    if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and player:getCharVar("ridingOnTheClouds_2") == 8) then
+    if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and
+        player:getCharVar("ridingOnTheClouds_2") == 8) then
         if (trade:hasItemQty(1127, 1) and trade:getItemCount() == 1) then -- Trade Kindred seal
             player:setCharVar("ridingOnTheClouds_2", 0)
             player:tradeComplete()

@@ -32,7 +32,8 @@ end
 
 function onTrade(player, npc, trade)
 
-    if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and player:getCharVar("ridingOnTheClouds_2") == 6) then
+    if (player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and
+        player:getCharVar("ridingOnTheClouds_2") == 6) then
         if (trade:hasItemQty(1127, 1) and trade:getItemCount() == 1) then -- Trade Kindred seal
             player:setCharVar("ridingOnTheClouds_2", 0)
             player:tradeComplete()
@@ -45,7 +46,7 @@ end
 
 function onTrigger(player, npc)
     local TrustSandoria = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.TRUST_SANDORIA)
-    local TrustBastok   = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.TRUST_BASTOK)
+    local TrustBastok = player:getQuestStatus(BASTOK, tpz.quest.id.bastok.TRUST_BASTOK)
     local TrustWindurst = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.TRUST_WINDURST)
     local BastokFirstTrust = player:getCharVar("BastokFirstTrust")
     local NajiTrustChatFlag = player:getLocalVar("NajiTrustChatFlag")
@@ -80,7 +81,8 @@ function onTrigger(player, npc)
         elseif (currentMission == tpz.mission.id.bastok.THE_EMISSARY and player:hasKeyItem(tpz.ki.KINDRED_REPORT)) then
             player:startEvent(714)
         elseif (currentMission == tpz.mission.id.bastok.THE_EMISSARY) then
-            if (player:hasKeyItem(tpz.ki.LETTER_TO_THE_CONSULS_BASTOK) == false and player:getCharVar("MissionStatus") == 0) then
+            if (player:hasKeyItem(tpz.ki.LETTER_TO_THE_CONSULS_BASTOK) == false and player:getCharVar("MissionStatus") ==
+                0) then
                 player:startEvent(713)
             else
                 player:showText(npc, ID.text.GOOD_LUCK)
@@ -142,9 +144,9 @@ function onEventFinish(player, csid, option)
     elseif (csid == 761) then
         player:setCharVar("MissionStatus", 1)
     elseif (csid == 714 or csid == 722 or csid == 762) then
-        finishMissionTimeline(player,1,csid,option)
+        finishMissionTimeline(player, 1, csid, option)
 
-    --TRUST
+        -- TRUST
     elseif csid == 980 then
         player:addSpell(897, true, true)
         player:messageSpecial(ID.text.YOU_LEARNED_TRUST, 0, 897)
@@ -155,7 +157,8 @@ function onEventFinish(player, csid, option)
         npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.TRUST_BASTOK, {
             keyItem = tpz.ki.BASTOK_TRUST_PERMIT,
             title = tpz.title.THE_TRUSTWORTHY,
-            var = "BastokFirstTrust" })
+            var = "BastokFirstTrust"
+        })
         player:messageSpecial(ID.text.CALL_MULTIPLE_ALTER_EGO)
     elseif csid == 984 then
         player:addSpell(897, true, true)
@@ -163,6 +166,7 @@ function onEventFinish(player, csid, option)
         player:delKeyItem(tpz.ki.BLUE_INSTITUTE_CARD)
         player:messageSpecial(ID.text.KEYITEM_LOST, tpz.ki.BLUE_INSTITUTE_CARD)
         npcUtil.completeQuest(player, BASTOK, tpz.quest.id.bastok.TRUST_BASTOK, {
-            keyItem = tpz.ki.BASTOK_TRUST_PERMIT })
+            keyItem = tpz.ki.BASTOK_TRUST_PERMIT
+        })
     end
 end

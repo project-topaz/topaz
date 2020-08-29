@@ -69,7 +69,7 @@ function onTrade(player, npc, trade)
             player:startEvent(wsQuestEvent)
         end
 
-    -- Curses Foiled Again!
+        -- Curses Foiled Again!
     elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CURSES_FOILED_AGAIN_1) == QUEST_ACCEPTED) then
         if (trade:hasItemQty(928, 1) and trade:hasItemQty(880, 2) and count == 3) then
             player:startEvent(173, 0, 0, 0, 0, 0, 0, 928, 880) -- Correct items given, complete quest.
@@ -77,7 +77,7 @@ function onTrade(player, npc, trade)
             player:startEvent(172, 0, 0, 0, 0, 0, 0, 928, 880) -- Incorrect or not enough items
         end
 
-    -- Curses, Foiled ... Again!?
+        -- Curses, Foiled ... Again!?
     elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CURSES_FOILED_AGAIN_2) == QUEST_ACCEPTED) then
         if (trade:hasItemQty(17316, 2) and trade:hasItemQty(940, 1) and trade:hasItemQty(552, 1) and count == 4) then
             player:startEvent(183) -- Correct items given, complete quest.
@@ -98,19 +98,22 @@ function onTrigger(player, npc)
 
     if wsQuestEvent ~= nil then
         player:startEvent(wsQuestEvent)
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING and player:getCharVar("MissionStatus") == 7) then
+    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING and
+        player:getCharVar("MissionStatus") == 7) then
         player:startEvent(397, 0, 0, 0, 282)
-    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and player:getMaskBit(WildcatWindurst, 6) == false) then
+    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and
+        player:getMaskBit(WildcatWindurst, 6) == false) then
         player:startEvent(498)
-    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CLASS_REUNION) == QUEST_ACCEPTED and player:getCharVar("ClassReunionProgress") == 3) then
+    elseif (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CLASS_REUNION) == QUEST_ACCEPTED and
+        player:getCharVar("ClassReunionProgress") == 3) then
         player:startEvent(409) -- she mentions that Sunny-Pabonny left for San d'Oria
 
-    -- AMK
+        -- AMK
     elseif player:getCurrentMission(AMK) == tpz.mission.id.amk.CURSES_A_HORRIFICALLY_HARROWING_HEX then
         player:startEvent(506)
 
-    -------------------------------------------------------
-    -- Curses Foiled Again!
+        -------------------------------------------------------
+        -- Curses Foiled Again!
     elseif (foiledAgain == QUEST_AVAILABLE) then
         player:startEvent(171, 0, 0, 0, 0, 0, 0, 928, 880)
     elseif (foiledAgain == QUEST_ACCEPTED) then
@@ -132,41 +135,41 @@ function onTrigger(player, npc)
             player:startEvent(179)
         end
 
-
-    -- Curses, Foiled...Again!?
-    elseif (foiledAgain == QUEST_COMPLETED and CFA2 == QUEST_AVAILABLE and player:getFameLevel(WINDURST) >= 2 and player:getMainLvl() >= 5 and CFAtimer == 1) then
-        player:startEvent(180, 0, 0, 0, 0, 928, 880, 17316, 940)        -- Quest Start
+        -- Curses, Foiled...Again!?
+    elseif (foiledAgain == QUEST_COMPLETED and CFA2 == QUEST_AVAILABLE and player:getFameLevel(WINDURST) >= 2 and
+        player:getMainLvl() >= 5 and CFAtimer == 1) then
+        player:startEvent(180, 0, 0, 0, 0, 928, 880, 17316, 940) -- Quest Start
     elseif (CFA2 == QUEST_ACCEPTED) then
-        player:startEvent(181, 0, 0, 0, 0, 0, 0, 17316, 940)  -- Reminder dialog
+        player:startEvent(181, 0, 0, 0, 0, 0, 0, 17316, 940) -- Reminder dialog
 
-
-    -- Curses, Foiled A-Golem!?
-    elseif (CFA2 == QUEST_COMPLETED and FoiledAGolem == QUEST_AVAILABLE and player:getFameLevel(WINDURST) >= 4 and player:getMainLvl() >= 10) then
-        player:startEvent(340)  --quest start
+        -- Curses, Foiled A-Golem!?
+    elseif (CFA2 == QUEST_COMPLETED and FoiledAGolem == QUEST_AVAILABLE and player:getFameLevel(WINDURST) >= 4 and
+        player:getMainLvl() >= 10) then
+        player:startEvent(340) -- quest start
     elseif (golemdelivery == 1) then
-        player:startEvent(342)  -- finish
+        player:startEvent(342) -- finish
     elseif (FoiledAGolem == QUEST_ACCEPTED) then
-        player:startEvent(341)  -- reminder dialog
+        player:startEvent(341) -- reminder dialog
 
-    -- Trust
-    -- TODO: Wiki's aren't clear on the exact conditions for this event, assuming it's the final nation "extreme" trust
-    elseif
-        player:hasSpell(898) and -- Kupipi
-        player:hasSpell(901) and -- Nanaa Mihgo
-        player:hasSpell(903) and -- Volker
-        player:hasSpell(904) and -- Ajido-Marujido
-        player:hasSpell(905) and -- Trion
-        not player:hasSpell(896) -- NOT Shantotto
+        -- Trust
+        -- TODO: Wiki's aren't clear on the exact conditions for this event, assuming it's the final nation "extreme" trust
+    elseif player:hasSpell(898) and -- Kupipi
+    player:hasSpell(901) and -- Nanaa Mihgo
+    player:hasSpell(903) and -- Volker
+    player:hasSpell(904) and -- Ajido-Marujido
+    player:hasSpell(905) and -- Trion
+    not player:hasSpell(896) -- NOT Shantotto
     then
         player:startEvent(529, 0, 0, 0, TrustMemory(player), 0, 0, 0, FoiledAGolem == QUEST_COMPLETED and 1 or 0)
 
-    -- Standard dialog
+        -- Standard dialog
     elseif (FoiledAGolem == QUEST_COMPLETED) then
-        player:startEvent(343)  -- new standard dialog after Curses, Foiled A-Golem!?
+        player:startEvent(343) -- new standard dialog after Curses, Foiled A-Golem!?
 
     elseif (CFA2 == QUEST_COMPLETED) then
-        player:startEvent(184)     -- New standard dialog after CFA2
-    elseif (player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING) and player:getCharVar("ShantottoCS") == 1) then
+        player:startEvent(184) -- New standard dialog after CFA2
+    elseif (player:hasCompletedMission(WINDURST, tpz.mission.id.windurst.THE_JESTER_WHO_D_BE_KING) and
+        player:getCharVar("ShantottoCS") == 1) then
         player:startEvent(399, 0, 0, 282)
     else
         player:startEvent(164)
@@ -248,7 +251,7 @@ function onEventFinish(player, csid, option)
         player:completeMission(AMK, tpz.mission.id.amk.CURSES_A_HORRIFICALLY_HARROWING_HEX)
         player:addMission(AMK, tpz.mission.id.amk.AN_ERRAND_THE_PROFESSORS_PRICE)
 
-    -- TRUST
+        -- TRUST
     elseif csid == 529 and option == 2 then
         player:addSpell(896, true, true)
         player:messageSpecial(ID.text.YOU_LEARNED_TRUST, 0, 896)

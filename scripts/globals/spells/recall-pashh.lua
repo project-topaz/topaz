@@ -14,7 +14,7 @@ end
 function onSpellCast(caster, target, spell)
     if target:getObjType() == tpz.objType.PC then
         if target:hasKeyItem(tpz.ki.PASHHOW_GATE_CRYSTAL) then
-            target:addStatusEffectEx(tpz.effect.TELEPORT,0,tpz.teleport.id.PASHH,0,4.7)
+            target:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.PASHH, 0, 4.7)
             spell:setMsg(tpz.msg.basic.MAGIC_TELEPORT)
         else
             spell:setMsg(tpz.msg.basic.NONE)

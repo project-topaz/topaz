@@ -50,9 +50,9 @@ function onTrade(player, npc, trade)
         local mihgosAmigo = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.MIHGO_S_AMIGO)
 
         if mihgosAmigo == QUEST_ACCEPTED then
-            player:startEvent(88, GIL_RATE*200)
+            player:startEvent(88, GIL_RATE * 200)
         elseif mihgosAmigo == QUEST_COMPLETED then
-            player:startEvent(494, GIL_RATE*200)
+            player:startEvent(494, GIL_RATE * 200)
         end
     end
 end
@@ -78,8 +78,9 @@ function onTrigger(player, npc)
     if mihgosAmigo == QUEST_COMPLETED and player:hasKeyItem(tpz.ki.WINDURST_TRUST_PERMIT) and not player:hasSpell(901) then
         player:startEvent(865, 0, 0, 0, TrustMemory(player), 0, 0, 0, Rank3)
 
-    -- WINDURST 2-1: LOST FOR WORDS
-    elseif player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.LOST_FOR_WORDS and missionStatus > 0 and missionStatus < 5 then
+        -- WINDURST 2-1: LOST FOR WORDS
+    elseif player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.LOST_FOR_WORDS and missionStatus > 0 and
+        missionStatus < 5 then
         if missionStatus == 1 then
             player:startEvent(165, 0, tpz.ki.LAPIS_CORAL, tpz.ki.LAPIS_MONOCLE)
         elseif missionStatus == 2 then
@@ -90,15 +91,16 @@ function onTrigger(player, npc)
             player:startEvent(170)
         end
 
-    -- LURE OF THE WILDCAT (WINDURST)
-    elseif player:getQuestStatus(WINDURST, tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and not player:getMaskBit(wildcatWindurst, 4) then
+        -- LURE OF THE WILDCAT (WINDURST)
+    elseif player:getQuestStatus(WINDURST, tpz.quest.id.windurst.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and
+        not player:getMaskBit(wildcatWindurst, 4) then
         player:startEvent(732)
 
-    -- CRYING OVER ONIONS
+        -- CRYING OVER ONIONS
     elseif player:getCharVar("CryingOverOnions") == 1 then
         player:startEvent(598)
 
-    -- THE TENSHODO SHOWDOWN
+        -- THE TENSHODO SHOWDOWN
     elseif job == tpz.job.THF and lvl >= AF1_QUEST_LEVEL and tenshodoShowdown == QUEST_AVAILABLE then
         player:startEvent(496) -- start quest
     elseif tenshodoShowdownCS == 1 then
@@ -108,8 +110,9 @@ function onTrigger(player, npc)
     elseif job == tpz.job.THF and lvl < AF2_QUEST_LEVEL and tenshodoShowdown == QUEST_COMPLETED then
         player:startEvent(503) -- standard dialog after
 
-    -- THICK AS THIEVES
-    elseif job == tpz.job.THF and lvl >= AF2_QUEST_LEVEL and thickAsThieves == QUEST_AVAILABLE and tenshodoShowdown == QUEST_COMPLETED then
+        -- THICK AS THIEVES
+    elseif job == tpz.job.THF and lvl >= AF2_QUEST_LEVEL and thickAsThieves == QUEST_AVAILABLE and tenshodoShowdown ==
+        QUEST_COMPLETED then
         player:startEvent(504) -- start quest
     elseif thickAsThieves == QUEST_ACCEPTED then
         if player:hasKeyItem(tpz.ki.FIRST_SIGNED_FORGED_ENVELOPE) and player:hasKeyItem(tpz.ki.SECOND_SIGNED_FORGED_ENVELOPE) then
@@ -126,7 +129,7 @@ function onTrigger(player, npc)
     elseif hittingTheMarquisateNanaaCS == 1 then
         player:startEvent(517) -- second part
 
-    -- ROCK RACKETEER
+        -- ROCK RACKETEER
     elseif mihgosAmigo == QUEST_COMPLETED and rockRacketeer == QUEST_AVAILABLE and player:getFameLevel(WINDURST) >= 3 then
         if player:needToZone() then
             player:startEvent(89) -- complete
@@ -140,7 +143,7 @@ function onTrigger(player, npc)
     elseif rockRacketeer == QUEST_ACCEPTED then
         player:startEvent(94) -- quest reminder
 
-    -- MIHGO'S AMIGO
+        -- MIHGO'S AMIGO
     elseif mihgosAmigo == QUEST_AVAILABLE then
         if player:getQuestStatus(WINDURST, tpz.quest.id.windurst.CRYING_OVER_ONIONS) == QUEST_AVAILABLE then
             player:startEvent(81) -- Start Quest "Mihgo's Amigo" with quest "Crying Over Onions" Activated
@@ -150,7 +153,7 @@ function onTrigger(player, npc)
     elseif mihgosAmigo == QUEST_ACCEPTED then
         player:startEvent(82)
 
-    -- STANDARD DIALOG
+        -- STANDARD DIALOG
     elseif rockRacketeer == QUEST_COMPLETED then
         player:startEvent(99) -- new dialog after Rock Racketeer
     elseif mihgosAmigo == QUEST_COMPLETED then
@@ -175,18 +178,18 @@ function onEventFinish(player, csid, option)
         player:delKeyItem(tpz.ki.LAPIS_CORAL)
         npcUtil.giveKeyItem(player, tpz.ki.HIDEOUT_KEY)
 
-    -- LURE OF THE WILDCAT (WINDURST)
+        -- LURE OF THE WILDCAT (WINDURST)
     elseif csid == 732 then
         player:setMaskBit(player:getCharVar("WildcatWindurst"), "WildcatWindurst", 4, true)
 
-    -- THE TENSHODO SHOWDOWN
+        -- THE TENSHODO SHOWDOWN
     elseif (csid == 496) then
         player:addQuest(WINDURST, tpz.quest.id.windurst.THE_TENSHODO_SHOWDOWN)
         player:setCharVar("theTenshodoShowdownCS", 1)
         npcUtil.giveKeyItem(player, tpz.ki.LETTER_FROM_THE_TENSHODO)
 
-    -- THICK AS THIEVES
-    elseif (csid == 504 and option == 1) then  -- start quest "as thick as thieves"
+        -- THICK AS THIEVES
+    elseif (csid == 504 and option == 1) then -- start quest "as thick as thieves"
         player:addQuest(WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES)
         player:setCharVar("thickAsThievesGamblingCS",1)
         npcUtil.giveKeyItem(player, {tpz.ki.GANG_WHEREABOUTS_NOTE, tpz.ki.FIRST_FORGED_ENVELOPE, tpz.ki.SECOND_FORGED_ENVELOPE})
@@ -195,7 +198,7 @@ function onEventFinish(player, csid, option)
         player:delKeyItem(tpz.ki.FIRST_SIGNED_FORGED_ENVELOPE)
         player:delKeyItem(tpz.ki.SECOND_SIGNED_FORGED_ENVELOPE)
 
-    -- HITTING THE MARQUISATE
+        -- HITTING THE MARQUISATE
     elseif csid == 512 then
         player:addQuest(WINDURST, tpz.quest.id.windurst.HITTING_THE_MARQUISATE)
         player:setCharVar("hittingTheMarquisateYatnielCS", 1)
@@ -206,24 +209,29 @@ function onEventFinish(player, csid, option)
         player:setCharVar("hittingTheMarquisateYatnielCS", 0)
         player:setCharVar("hittingTheMarquisateHagainCS", 0)
 
-    -- ROCK RACKETEER
+        -- ROCK RACKETEER
     elseif csid == 93 then
         player:addQuest(WINDURST, tpz.quest.id.windurst.ROCK_RACKETEER)
         npcUtil.giveKeyItem(player, tpz.ki.SHARP_GRAY_STONE)
     elseif csid == 98 then
-        player:delGil(10*GIL_RATE)
+        player:delGil(10 * GIL_RATE)
         player:setCharVar("rockracketeer_sold", 3)
 
-    -- MIHGO'S AMIGO
+        -- MIHGO'S AMIGO
     elseif csid == 80 or csid == 81 then
         player:addQuest(WINDURST, tpz.quest.id.windurst.MIHGO_S_AMIGO)
-    elseif csid == 88 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.MIHGO_S_AMIGO, {gil=200, title=tpz.title.CAT_BURGLAR_GROUPIE, fameArea=NORG, fame=60}) then
+    elseif csid == 88 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.MIHGO_S_AMIGO, {
+        gil = 200,
+        title = tpz.title.CAT_BURGLAR_GROUPIE,
+        fameArea = NORG,
+        fame = 60
+    }) then
         player:confirmTrade()
         player:needToZone(true)
     elseif csid == 494 then
         player:confirmTrade()
         player:addTitle(tpz.title.CAT_BURGLAR_GROUPIE)
-        player:addGil(GIL_RATE*200)
+        player:addGil(GIL_RATE * 200)
         player:addFame(NORG, 30)
 
     elseif csid == 865 then
