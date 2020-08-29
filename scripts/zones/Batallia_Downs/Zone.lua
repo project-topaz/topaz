@@ -95,4 +95,4 @@ function onEventFinish(player, csid, option)
         player:setCharVar("[QUEST]FullSpeedAhead", 2)
         player:setPos(475, 8.8, -159, 128, 105)
     end
-end;
+end

@@ -9396,24 +9396,6 @@ inline int32 CLuaBaseEntity::checkSoloPartyAlliance(lua_State *L)
 }
 
 /************************************************************************
-*  Function: checkFovAllianceAllowed()
-*  Purpose : Returns true if server owner has enabled FoV alliances
-*  Example : if (player:checkFovAllianceAllowed() == 1) then
-*  Notes   :
-************************************************************************/
-
-inline int32 CLuaBaseEntity::checkFovAllianceAllowed(lua_State *L)
-{
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
-    TPZ_DEBUG_BREAK_IF(m_PBaseEntity->objtype != TYPE_PC);
-
-    uint8 FovAlliance = map_config.fov_allow_alliance;
-
-    lua_pushinteger(L, FovAlliance);
-    return 1;
-}
-
-/************************************************************************
 *  Function: checkKillCredit()
 *  Purpose : Used to determine if kill counts towards regimes/etc.
 *  Example : if (player:checkKillCredit(mob)) then
@@ -15206,7 +15188,6 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkSoloPartyAlliance),
 
-    LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkFovAllianceAllowed),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkKillCredit),
 
     // Instances
