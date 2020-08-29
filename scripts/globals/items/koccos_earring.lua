@@ -1,11 +1,10 @@
 -----------------------------------------
 -- ID: 15998
--- Kocco's Earring
--- This earring functions in the same way as the spell Reraise II.
+-- Koccos Earring
+--  This earring functions in the same way as the spell Reraise.
 -----------------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
------------------------------------------
 
 function onItemCheck(target)
     return 0
