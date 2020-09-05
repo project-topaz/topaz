@@ -22,7 +22,8 @@ function onTrade(player, npc, trade)
         end
     end
 
-    if player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and player:getCharVar("ridingOnTheClouds_3") == 5 then
+    if player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.RIDING_ON_THE_CLOUDS) == QUEST_ACCEPTED and
+        player:getCharVar("ridingOnTheClouds_3") == 5 then
         if npcUtil.tradeHasExactly(trade, 1127) then -- Trade Kindred seal
             player:setCharVar("ridingOnTheClouds_3", 0)
             player:confirmTrade()
