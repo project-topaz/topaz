@@ -46,7 +46,7 @@ function onUseAbility(caster, target, ability, action)
             caster:resetRecast(tpz.recast.ABILITY, 193)
         end
         caster:setLocalVar("corsairRollTotal", roll)
-        action:speceffect(caster:getID(), roll-prev_roll:getSubPower())
+        action:speceffect(caster:getID(), roll - prev_roll:getSubPower())
         checkForJobBonus(caster, job)
     end
     local total = caster:getLocalVar("corsairRollTotal")
