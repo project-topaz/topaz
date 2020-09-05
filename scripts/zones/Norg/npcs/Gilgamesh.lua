@@ -11,7 +11,8 @@ require("scripts/globals/quests")
 
 function onTrade(player, npc, trade)
 
-    if (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_PIRATE_S_COVE and player:getCharVar("MissionStatus") == 2) then
+    if (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.THE_PIRATE_S_COVE and
+        player:getCharVar("MissionStatus") == 2) then
         if (trade:hasItemQty(1160, 1) and trade:getItemCount() == 1) then -- Frag Rock
             player:startEvent(99) -- Bastok Mission 6-2
         end
@@ -19,7 +20,7 @@ function onTrade(player, npc, trade)
 
 end
 
-function onTrigger(player,npc)
+function onTrigger(player, npc)
     local ZilartMission = player:getCurrentMission(ZILART)
     if (ZilartMission == tpz.mission.id.zilart.KAZAMS_CHIEFTAINESS) then
         player:startEvent(7)
@@ -36,17 +37,14 @@ function onTrigger(player,npc)
     elseif (ZilartMission == tpz.mission.id.zilart.ARK_ANGELS) then
         player:startEvent(171)
     elseif (ZilartMission == tpz.mission.id.zilart.THE_CELESTIAL_NEXUS) then
-        player:startEvent(173)
-    elseif
-        player:getQuestStatus(JEUNO,tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
-        player:getCharVar('ApocalypseNigh') == 6 and
-        player:getCharVar('Apoc_Nigh_RewardCS1') == 0
-    then
+        player:startEvent(173);
+    elseif player:getQuestStatus(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) == QUEST_ACCEPTED and
+        player:getCharVar('ApocalypseNigh') == 6 and player:getCharVar('Apoc_Nigh_RewardCS1') == 0 then
         player:startEvent(232, 252)
     elseif player:getCharVar('Apoc_Nigh_RewardCS1') == 1 then
         player:startEvent(234, 252)
     elseif player:hasCompletedQuest(JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH) then
-        player:startEvent(233)
+        player:startEvent(233);
     elseif (ZilartMission == tpz.mission.id.zilart.AWAKENING) then
         player:startEvent(177)
     end
@@ -79,15 +77,10 @@ function onEventFinish(player, csid, option)
         end
 
         if reward ~= 0 then
-            if npcUtil.completeQuest(
-                player,
-                JEUNO,
-                tpz.quest.id.jeuno.APOCALYPSE_NIGH,
-                {
-                    item = reward,
-                    var = {"ApocalypseNigh", "Apoc_Nigh_Reward", "Apoc_Nigh_RewardCS1"}
-                }
-            ) then
+            if npcUtil.completeQuest(player, JEUNO, tpz.quest.id.jeuno.APOCALYPSE_NIGH, {
+                item = reward,
+                var = {"ApocalypseNigh", "Apoc_Nigh_Reward", "Apoc_Nigh_RewardCS1"}
+            }) then
                 player:completeMission(COP, tpz.mission.id.cop.DAWN)
                 player:addMission(COP, tpz.mission.id.cop.THE_LAST_VERSE)
                 player:setCharVar("PromathiaStatus", 0)
