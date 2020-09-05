@@ -16,7 +16,7 @@ end
 
 function onTrigger(player, npc)
     local ecoStatus = player:getCharVar("EcoStatus")
-    
+
     if ecoStatus == 0 and player:getFameLevel(SANDORIA) >= 1 and player:getCharVar("EcoReset") ~= getConquestTally() then
         player:startEvent(677) -- Offer Eco-Warrior quest
     elseif ecoStatus == 1 then
@@ -39,7 +39,13 @@ function onEventFinish(player, csid, option)
             player:addQuest(SANDORIA, tpz.quest.id.sandoria.ECO_WARRIOR)
         end
         player:setCharVar("EcoStatus", 1) -- EcoStatus var:  1 to 3 for sandy // 101 to 103 for bastok // 201 to 203 for windurst
-    elseif csid == 681 and npcUtil.completeQuest(player, SANDORIA, tpz.quest.id.sandoria.ECO_WARRIOR, {gil = 5000, item = 4198, title = tpz.title.VERMILLION_VENTURER, fame = 80, var = "EcoStatus"}) then
+    elseif csid == 681 and npcUtil.completeQuest(player, SANDORIA, tpz.quest.id.sandoria.ECO_WARRIOR, {
+        gil = 5000,
+        item = 4198,
+        title = tpz.title.VERMILLION_VENTURER,
+        fame = 80,
+        var = "EcoStatus"
+    }) then
         player:delKeyItem(tpz.ki.INDIGESTED_ORE)
         player:setCharVar("EcoReset", getConquestTally())
     end
