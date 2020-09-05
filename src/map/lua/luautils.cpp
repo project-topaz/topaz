@@ -1082,7 +1082,7 @@ namespace luautils
 
             if (lua_isnumber(L, 1))
             {
-                int32 trial = (lua_tointeger(L, 1));
+                int32 trial = static_cast<int32>(lua_tointeger(L, 1));
                 int32 field {0};
                 lua_newtable(L);
                 if (Sql_Query(SqlHandle, Query, trial) != SQL_ERROR && Sql_NumRows(SqlHandle) != 0 && Sql_NextRow(SqlHandle) == SQL_SUCCESS)
@@ -1099,7 +1099,7 @@ namespace luautils
             {
                 // parse provided trial's from table
                 std::vector<int32> trials;
-                for(int i = 1, j = lua_objlen(L,1); i <= j; i++)
+                for(size_t i = 1, j = lua_objlen(L, 1); i <= j; i++)
                 {
                     lua_pushinteger(L, i);
                     lua_gettable(L, 1);
@@ -1108,7 +1108,7 @@ namespace luautils
                         lua_pop(L, 1);
                         continue;
                     }
-                    trials.push_back(lua_tointeger(L, -1));
+                    trials.push_back(static_cast<int32>(lua_tointeger(L, -1)));
                     lua_pop(L, 1);
                 }
 
@@ -1154,7 +1154,7 @@ namespace luautils
 
         if (lua_isnumber(L, 1))
         {
-            int32 parentTrial = lua_tointeger(L, 1);
+            int32 parentTrial = static_cast<int32>(lua_tointeger(L, 1));
             const char* Query = "SELECT `trialId` from `magian` WHERE `previousTrial` = %u;";
 
             int32 ret = Sql_Query(SqlHandle, Query, parentTrial);
@@ -4455,7 +4455,7 @@ namespace luautils
     {
         TPZ_DEBUG_BREAK_IF(lua_isnil(L, -1) || !lua_isnumber(L, -1));
 
-        uint32 id = lua_tointeger(L, 1);
+        uint32 id = static_cast<uint32>(lua_tointeger(L, 1));
         CItem* PItem = itemutils::GetItemPointer(id);
         if (PItem)
         {

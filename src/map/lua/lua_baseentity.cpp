@@ -6854,7 +6854,7 @@ inline int32 CLuaBaseEntity::setEminenceProgress(lua_State *L)
     bool result = charutils::SetEminenceRecordProgress(PChar, recordID, progress);
     lua_pushboolean(L, result);
 
-    uint32 total = lua_tointeger(L, 3);
+    uint32 total = static_cast<int32>(lua_tointeger(L, 3));
     if (total)
     {
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, recordID, 0, MSGBASIC_ROE_RECORD));
