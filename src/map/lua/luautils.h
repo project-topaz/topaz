@@ -291,9 +291,9 @@ namespace luautils
     void OnFurniturePlaced(CCharEntity* PChar, CItemFurnishing* itemId);
     void OnFurnitureRemoved(CCharEntity* PChar, CItemFurnishing* itemId);
 
-    void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
-
     int32 SelectDailyItem(lua_State* L);
+
+    void OnPlayerEmote(CCharEntity* PChar, Emote EmoteID);
 };
 
 #endif //- _LUAUTILS_H -
