@@ -28,7 +28,7 @@ function onZoneIn(player, prevZone)
 
     if quests.rainbow.onZoneIn(player) then
         cs = 21
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==1) then
+    elseif player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1 then
         cs = 23
     end
 
@@ -43,7 +43,7 @@ function onRegionEnter(player, region)
 end
 
 function onEventUpdate(player, csid, option)
-    if (csid == 21) then
+    if csid == 21 then
         quests.rainbow.onEventUpdate(player)
     elseif (csid == 23) then
         if (player:getYPos() >= -22) then

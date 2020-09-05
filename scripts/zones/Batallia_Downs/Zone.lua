@@ -4,12 +4,11 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Batallia_Downs/IDs")
+require("scripts/quests/full_speed_ahead")
 require("scripts/quests/i_can_hear_a_rainbow")
 require("scripts/globals/chocobo_digging")
 require("scripts/globals/missions")
 require("scripts/globals/zone")
------------------------------------
-require("scripts/quests/full_speed_ahead")
 -----------------------------------
 
 function onChocoboDig(player, precheck)
@@ -22,9 +21,7 @@ local function registerRegionAroundNPC(zone, NPCID, zoneID)
     local y = npc:getYPos()
     local z = npc:getZPos()
     local distance = 7
-    zone:registerRegion(zoneID, 
-        x - distance, y - distance, z - distance,
-        x + distance, y + distance, z + distance)
+    zone:registerRegion(zoneID, x - distance, y - distance, z - distance, x + distance, y + distance, z + distance)
 end
 
 function onInitialize(zone)
@@ -54,7 +51,8 @@ function onZoneIn(player, prevZone)
 
     if quests.rainbow.onZoneIn(player) then
         cs = 901
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1) then
+    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==
+        1) then
         cs = 903
     end
 
@@ -78,10 +76,8 @@ function onEventUpdate(player, csid, option)
 end
 
 function onEventFinish(player, csid, option)
-    if (csid == 901) then
-        lightCutsceneFinish(player) -- Quest: I Can Hear A Rainbow
-    elseif (csid == 903) then
-        if (player:getZPos() >  -331) then
+    if csid == 903 then
+        if player:getZPos() > -331 then
             player:updateEvent(0, 0, 0, 0, 0, 3)
         else
             player:updateEvent(0, 0, 0, 0, 0, 2)

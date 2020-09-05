@@ -20,16 +20,16 @@ function onInitialize(zone)
     tpz.conq.setRegionalConquestOverseers(zone:getRegionID())
 end
 
-function onZoneIn( player, prevZone)
+function onZoneIn(player, prevZone)
     local cs = -1
 
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
-        player:setPos( 60.989, -4.898, -151.001, 198)
+        player:setPos(60.989, -4.898, -151.001, 198)
     end
 
     if quests.rainbow.onZoneIn(player) then
         cs = 3
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==1) then
+    elseif player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1 then
         cs = 5
     end
 
@@ -40,10 +40,10 @@ function onConquestUpdate(zone, updatetype)
     tpz.conq.onConquestUpdate(zone, updatetype)
 end
 
-function onRegionEnter( player, region)
+function onRegionEnter(player, region)
 end
 
-function onEventUpdate( player, csid, option)
+function onEventUpdate(player, csid, option)
     if (csid == 3) then
         quests.rainbow.onEventUpdate(player)
     elseif (csid == 5) then
@@ -57,7 +57,7 @@ function onEventUpdate( player, csid, option)
     end
 end
 
-function onEventFinish( player, csid, option)
+function onEventFinish(player, csid, option)
 end
 
 function onZoneWeatherChange(weather)

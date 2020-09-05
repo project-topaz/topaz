@@ -12,7 +12,8 @@ require("scripts/globals/titles")
 
 function onTrade(player, npc, trade)
     if (player:getQuestStatus(WINDURST, tpz.quest.id.windurst.I_CAN_HEAR_A_RAINBOW) == QUEST_ACCEPTED) then
-        if (trade:hasItemQty(1125, 1) and trade:getItemCount() == 1 and trade:getGil() == 0 and player:getCharVar("I_CAN_HEAR_A_RAINBOW") == 127) then
+        if (trade:hasItemQty(1125, 1) and trade:getItemCount() == 1 and trade:getGil() == 0 and
+            player:getCharVar("I_CAN_HEAR_A_RAINBOW") == 127) then
             player:startEvent(124)
         end
     end
