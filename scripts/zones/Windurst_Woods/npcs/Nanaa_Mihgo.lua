@@ -46,7 +46,7 @@ local TrustMemory = function(player)
 end
 
 function onTrade(player, npc, trade)
-    if npcUtil.tradeHas(trade, {{498,4}}) then -- Yagudo Necklace x4
+    if npcUtil.tradeHas(trade, {{498, 4}}) then -- Yagudo Necklace x4
         local mihgosAmigo = player:getQuestStatus(WINDURST, tpz.quest.id.windurst.MIHGO_S_AMIGO)
 
         if mihgosAmigo == QUEST_ACCEPTED then
@@ -115,14 +115,16 @@ function onTrigger(player, npc)
         QUEST_COMPLETED then
         player:startEvent(504) -- start quest
     elseif thickAsThieves == QUEST_ACCEPTED then
-        if player:hasKeyItem(tpz.ki.FIRST_SIGNED_FORGED_ENVELOPE) and player:hasKeyItem(tpz.ki.SECOND_SIGNED_FORGED_ENVELOPE) then
+        if player:hasKeyItem(tpz.ki.FIRST_SIGNED_FORGED_ENVELOPE) and
+            player:hasKeyItem(tpz.ki.SECOND_SIGNED_FORGED_ENVELOPE) then
             player:startEvent(508) -- complete quest
         else
             player:startEvent(505, 0, tpz.ki.GANG_WHEREABOUTS_NOTE) -- before completing grappling and gambling sidequests
         end
-        
-    -- HITTING THE MARQUISATE
-    elseif job == tpz.job.THF and lvl >= AF3_QUEST_LEVEL and thickAsThieves == QUEST_COMPLETED and hittingTheMarquisate == QUEST_AVAILABLE then
+
+        -- HITTING THE MARQUISATE
+    elseif job == tpz.job.THF and lvl >= AF3_QUEST_LEVEL and thickAsThieves == QUEST_COMPLETED and hittingTheMarquisate ==
+        QUEST_AVAILABLE then
         player:startEvent(512) -- start quest
     elseif hittingTheMarquisateYatnielCS == 3 and hittingTheMarquisateHagainCS == 9 then
         player:startEvent(516) -- finish first part
@@ -191,9 +193,13 @@ function onEventFinish(player, csid, option)
         -- THICK AS THIEVES
     elseif (csid == 504 and option == 1) then -- start quest "as thick as thieves"
         player:addQuest(WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES)
-        player:setCharVar("thickAsThievesGamblingCS",1)
-        npcUtil.giveKeyItem(player, {tpz.ki.GANG_WHEREABOUTS_NOTE, tpz.ki.FIRST_FORGED_ENVELOPE, tpz.ki.SECOND_FORGED_ENVELOPE})
-    elseif (csid == 508 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES, {item=12514, var="thickAsThievesGamblingCS"})) then
+        player:setCharVar("thickAsThievesGamblingCS", 1)
+        npcUtil.giveKeyItem(player,
+            {tpz.ki.GANG_WHEREABOUTS_NOTE, tpz.ki.FIRST_FORGED_ENVELOPE, tpz.ki.SECOND_FORGED_ENVELOPE})
+    elseif (csid == 508 and npcUtil.completeQuest(player, WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES, {
+        item = 12514,
+        var = "thickAsThievesGamblingCS"
+    })) then
         player:delKeyItem(tpz.ki.GANG_WHEREABOUTS_NOTE)
         player:delKeyItem(tpz.ki.FIRST_SIGNED_FORGED_ENVELOPE)
         player:delKeyItem(tpz.ki.SECOND_SIGNED_FORGED_ENVELOPE)

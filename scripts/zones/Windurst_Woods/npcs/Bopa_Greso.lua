@@ -11,10 +11,10 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    if player:getQuestStatus(WINDURST,tpz.quest.id.windurst.AS_THICK_AS_THIEVES) == QUEST_ACCEPTED then
+    if player:getQuestStatus(WINDURST, tpz.quest.id.windurst.AS_THICK_AS_THIEVES) == QUEST_ACCEPTED then
         player:startEvent(506) -- Gambling hint
     else
-        player:startEvent(77)  -- Standard dialogue
+        player:startEvent(77) -- Standard dialogue
     end
 end
 
