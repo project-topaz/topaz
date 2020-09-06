@@ -17,11 +17,9 @@ from migrations import HP_masks_to_blobs
 from migrations import crystal_storage
 from migrations import broken_linkshells
 from migrations import spell_family_column
+from migrations import extend_mission_log
 from migrations import mission_blob_extra
 from migrations import cop_mission_ids
-from migrations import add_daily_tally_column
-from migrations import add_timecreated_column
-from migrations import extend_mission_log
 from migrations import add_daily_tally_column
 from migrations import add_timecreated_column
 from migrations import eminence_blob
