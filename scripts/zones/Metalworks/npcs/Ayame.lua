@@ -107,7 +107,7 @@ function onEventFinish(player, csid, option)
         player:setCharVar("FadedPromises", 4)
     elseif (csid == 935) then
         player:setMaskBit(player:getCharVar("WildcatBastok"), "WildcatBastok", 9, true)
-    elseif csid == 985 then
+    elseif csid == 985 and option == 2 then
         player:addSpell(900, true, true)
         player:messageSpecial(ID.text.YOU_LEARNED_TRUST, 0, 900)
     end
