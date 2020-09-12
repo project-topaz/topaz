@@ -10,6 +10,7 @@ require("scripts/globals/zone")
 require("scripts/globals/msg")
 require("scripts/globals/magiantrials")
 require("scripts/globals/npc_util")
+require("scripts/globals/roe")
 -----------------------------------
 
 tpz = tpz or {}
@@ -41,21 +42,6 @@ function onMobDeathEx(mob, player, isKiller, isWeaponSkillKill)
     end
 
     tpz.magian.checkMagianTrial(player, {['mob'] = mob})
-
-    if player:getEminenceProgress(2) then
-        npcUtil.completeRecord(player, 2, { sparks = 100, xp = 500 })
-    end
-
-    -- Vanquish Multiple Enemies I - Eminence Record Example
-    -- (Will be replaced by proper record check systems when implemented.)
-    if player:getEminenceProgress(12) and player:checkKillCredit(mob) then
-        local progress = player:getEminenceProgress(12) + 1
-        if progress >= 200 then
-            npcUtil.completeRecord(player, 12, { sparks = 1000, xp = 5000, repeatable = true })
-        else
-            player:setEminenceProgress(12, progress, 200)
-        end
-    end
 end
 
 -------------------------------------------------

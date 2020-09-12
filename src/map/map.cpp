@@ -48,6 +48,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "party.h"
 #include "utils/petutils.h"
 #include "utils/trustutils.h"
+#include "roe.h"
 #include "spell.h"
 #include "time_server.h"
 #include "transport.h"
@@ -226,6 +227,7 @@ int32 do_init(int32 argc, char** argv)
     trustutils::LoadTrustList();
     mobutils::LoadCustomMods();
     daily::LoadDailyItems();
+    roeutils::init();
 
     ShowStatus("do_init: loading zones");
     zoneutils::LoadZoneList();
