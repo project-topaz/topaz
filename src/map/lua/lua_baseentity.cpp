@@ -15447,6 +15447,10 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, checkKillCredit),
 
     // Instances
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, getInstance),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, setInstance),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, createInstance),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, instanceEntry),
 
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, getConfrontationEffect),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity, copyConfrontationEffect),
