@@ -223,6 +223,16 @@ void CTradeContainer::setSize(uint8 size)
     m_guildRank.resize(size, 0);
 }
 
+uint8 CTradeContainer::getExSize()
+{
+    return m_exSize;
+}
+
+void CTradeContainer::setExSize(uint8 size)
+{
+    m_exSize = size;
+}
+
 uint8 CTradeContainer::getItemsCount()
 {
     return m_ItemsCount;
@@ -260,11 +270,13 @@ void CTradeContainer::Clean()
         if (PItem)
         {
             PItem->setReserve(0);
+            PItem->setSubType(ITEM_UNLOCKED);
         }
     }
     m_type = 0;
     m_craftType = 0;
     m_ItemsCount = 0;
+    m_exSize = 0;
 
     m_PItem.clear();
     m_PItem.resize(CONTAINER_SIZE, nullptr);
