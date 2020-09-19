@@ -3919,7 +3919,6 @@ INSERT INTO `mob_spell_lists` VALUES ('Nepionic_Bladmall',434,51,68,255); -- She
 INSERT INTO `mob_spell_lists` VALUES ('Nepionic_Bladmall',434,46,63,255); -- Protect IV
 INSERT INTO `mob_spell_lists` VALUES ('Nepionic_Bladmall',434,4,41,255);  -- Cure IV
 
-
 /*!40000 ALTER TABLE `mob_spell_lists` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
