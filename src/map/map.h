@@ -97,17 +97,21 @@ struct map_config_t
     float  craft_amount_multiplier;   // Used to increase the amount of skill gained during skill up
     uint16 craft_common_cap;            // Used in crafting, in synthutils.cpp. Defines skill limit before specialization system
     uint16 craft_specialization_points; // Used in crafting, in synthutils.cpp. Defines the maximum points of the specialization system.
+    bool   garden_day_matters;        // Enable/disable Element day factor in gardening results
+    bool   garden_moonphase_matters;  // Enable/disable Moon phase factor in gardening results
+    bool   garden_pot_matters;        // Enable/disable Pot element factor in gardening results
+    bool   garden_mh_aura_matters;    // Enable/disable Mog house aura factor in gardening results
     float  mob_tp_multiplier;         // Multiplies the amount of TP mobs gain on any effect that would grant TP
     float  player_tp_multiplier;      // Multiplies the amount of TP players gain on any effect that would grant TP
     bool   mob_no_despawn;            // Toggle whether mobs roam home or despawn
     float  nm_hp_multiplier;          // Multiplier for max HP of NM.
     float  mob_hp_multiplier;         // Multiplier for max HP pool of mob
     float  player_hp_multiplier;      // Multiplier for max HP pool of player
-    float  alter_ego_hp_multiplier;   // 
+    float  alter_ego_hp_multiplier;   //
     float  nm_mp_multiplier;          // Multiplier for max MP of NM.
     float  mob_mp_multiplier;         // Multiplier for max MP pool of mob
     float  player_mp_multiplier;      // Multiplier for max MP pool of player
-    float  alter_ego_mp_multiplier;   // 
+    float  alter_ego_mp_multiplier;   //
     float  sj_mp_divisor;             // Divisor to use on subjob max MP
     int8   subjob_ratio;              // Modify ratio of subjob-to-mainjob
     bool   include_mob_sj;            // Include mobs in effects of SJ ratio setting
