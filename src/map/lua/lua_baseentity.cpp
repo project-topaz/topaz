@@ -2394,7 +2394,7 @@ inline int32 CLuaBaseEntity::sendGuild(lua_State* L)
 
     GUILDSTATUS status = GUILD_OPEN;
 
-    /* 
+    /*
      * No more guild holidays since 2014
     if (VanadielDay == holiday)
     {
@@ -6926,12 +6926,21 @@ inline int32 CLuaBaseEntity::setEminenceProgress(lua_State *L)
     CCharEntity* PChar = (CCharEntity*)m_PBaseEntity;
     uint16 recordID = static_cast<uint16>(lua_tointeger(L, 1));
     uint32 progress = static_cast<uint32>(lua_tointeger(L, 2));
+    uint32 total = static_cast<uint32>(lua_tointeger(L, 3));
+
+    // Determine threshold for sending progress messages
+    bool progressNotify {true};
+    if (uint32 threshold = roeutils::RoeCache.NotifyThresholds[recordID]; threshold > 1)
+    {
+        uint32 prevStep = static_cast<uint32>(roeutils::GetEminenceRecordProgress(PChar, recordID) / threshold);
+        uint32 nextStep = static_cast<uint32>(progress / threshold);
+        progressNotify = nextStep > prevStep;
+    }
 
     bool result = roeutils::SetEminenceRecordProgress(PChar, recordID, progress);
     lua_pushboolean(L, result);
 
-    uint32 total = static_cast<int32>(lua_tointeger(L, 3));
-    if (total)
+    if (total && progressNotify)
     {
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, recordID, 0, MSGBASIC_ROE_RECORD));
         PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, progress, total, MSGBASIC_ROE_PROGRESS));
