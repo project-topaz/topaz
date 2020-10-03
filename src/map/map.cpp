@@ -983,12 +983,12 @@ int32 map_config_default()
     map_config.craft_chance_multiplier = 1.0f;
     map_config.skillup_amount_multiplier = 1;
     map_config.craft_amount_multiplier = 1;
-    map_config.craft_common_cap = 700;
-    map_config.craft_specialization_points = 400;
     map_config.garden_day_matters = false;
     map_config.garden_moonphase_matters = false;
     map_config.garden_pot_matters = false;
     map_config.garden_mh_aura_matters = false;
+    map_config.craft_common_cap = 700;
+    map_config.craft_specialization_points = 400;
     map_config.mob_tp_multiplier = 1.0f;
     map_config.player_tp_multiplier = 1.0f;
     map_config.nm_hp_multiplier = 1.0f;
