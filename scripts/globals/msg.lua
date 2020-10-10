@@ -330,8 +330,8 @@ tpz.msg.basic =
     ROE_BONUS_ITEM_PLURAL   = 709,  -- As a special bonus for your valiant efforts, you have been awarded the following: <itemid> x<amount>!
 
     -- TRUST & ALTER EGO
-    TRUST_NO_CAST_TRUST    = 700,  -- You are unable to use Trust magic at this time.
-    TRUST_NO_CALL_AE       = 717,  -- You cannot call forth alter egos here.
+    TRUST_NO_CAST_TRUST     = 700,  -- You are unable to use Trust magic at this time.
+    TRUST_NO_CALL_AE        = 717,  -- You cannot call forth alter egos here.
 }
 
 ------------------------------------

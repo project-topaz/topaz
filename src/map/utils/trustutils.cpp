@@ -51,6 +51,8 @@ struct Trust_t
     uint8 size; // размер модели
     uint16 m_Family;
 
+    uint16 behaviour;
+
     uint8 mJob;
     uint8 sJob;
     float HPscale; // HP boost percentage
@@ -191,7 +193,7 @@ void BuildTrust(uint32 TrustID)
             trust->cmbDmgMult     = (uint16)Sql_GetIntData(SqlHandle, 8);
             trust->cmbDelay       = (uint16)Sql_GetIntData(SqlHandle, 9);
             trust->name_prefix    = (uint8)Sql_GetUIntData(SqlHandle, 10);
-            // Behaviour
+            trust->behaviour      = (uint16)Sql_GetUIntData(SqlHandle, 11);
             trust->m_MobSkillList = (uint16)Sql_GetUIntData(SqlHandle, 12);
             // SpellID
             trust->size      = Sql_GetUIntData(SqlHandle, 14);
@@ -300,6 +302,7 @@ CTrustEntity* LoadTrust(CCharEntity* PMaster, uint32 TrustID)
     PTrust->status           = STATUS_NORMAL;
     PTrust->m_ModelSize      = trustData->size;
     PTrust->m_EcoSystem      = trustData->EcoSystem;
+    PTrust->m_MovementType   = static_cast<TRUST_MOVEMENT_TYPE>(trustData->behaviour);
 
     PTrust->SetMJob(trustData->mJob);
     PTrust->SetSJob(trustData->sJob);
@@ -352,18 +355,19 @@ void LoadTrustStatsAndSkills(CTrustEntity* PTrust)
     //float subHPGrowth = 1.0f + ((7.0f - (float)jobHPGrade) / 100.0f);
     float subMPGrowth = 1.0f + ((7.0f - (float)jobMPGrade) / 100.0f);
 
-    float base = 15.0f;
+    float hpBase = 14.0f;
+    float mpBase = 8.0f;
 
-    PTrust->health.maxhp = static_cast<uint16>(base * pow(mLvl, hpGrowth) * PTrust->HPscale * map_config.alter_ego_hp_multiplier);
+    PTrust->health.maxhp = static_cast<uint16>(hpBase * pow(mLvl, hpGrowth) * PTrust->HPscale * map_config.alter_ego_hp_multiplier);
 
     if (sjobMPGrade)
     {
-        PTrust->health.maxmp = static_cast<uint16>(base * pow(sLvl, subMPGrowth) * PTrust->MPscale * map_config.alter_ego_mp_multiplier);
+        PTrust->health.maxmp = static_cast<uint16>(mpBase * pow(sLvl, subMPGrowth) * PTrust->MPscale * map_config.alter_ego_mp_multiplier);
     }
 
     if (jobMPGrade)
     {
-        PTrust->health.maxmp = static_cast<uint16>(base * pow(mLvl, mpGrowth) * PTrust->MPscale * map_config.alter_ego_mp_multiplier);
+        PTrust->health.maxmp = static_cast<uint16>(mpBase * pow(mLvl, mpGrowth) * PTrust->MPscale * map_config.alter_ego_mp_multiplier);
     }
 
     PTrust->health.tp = 0;
