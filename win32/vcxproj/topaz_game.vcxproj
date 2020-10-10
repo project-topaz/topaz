@@ -437,10 +437,12 @@
     <ClInclude Include="..\..\src\map\packets\wide_scan_track.h" />
     <ClInclude Include="..\..\src\map\packets\zone_in.h" />
     <ClInclude Include="..\..\src\map\packets\zone_visited.h" />
+    <ClInclude Include="..\..\src\map\packet_guard.h" />
     <ClInclude Include="..\..\src\map\packet_system.h" />
     <ClInclude Include="..\..\src\map\party.h" />
     <ClInclude Include="..\..\src\map\recast_container.h" />
     <ClInclude Include="..\..\src\map\region.h" />
+    <ClInclude Include="..\..\src\map\notoriety_container.h" />
     <ClInclude Include="..\..\src\map\roe.h" />
     <ClInclude Include="..\..\src\map\spell.h" />
     <ClInclude Include="..\..\src\map\status_effect.h" />
@@ -700,10 +702,12 @@
     <ClCompile Include="..\..\src\map\packets\wide_scan_track.cpp" />
     <ClCompile Include="..\..\src\map\packets\zone_in.cpp" />
     <ClCompile Include="..\..\src\map\packets\zone_visited.cpp" />
+    <ClCompile Include="..\..\src\map\packet_guard.cpp" />
     <ClCompile Include="..\..\src\map\packet_system.cpp" />
     <ClCompile Include="..\..\src\map\party.cpp" />
     <ClCompile Include="..\..\src\map\recast_container.cpp" />
     <ClCompile Include="..\..\src\map\region.cpp" />
+    <ClCompile Include="..\..\src\map\notoriety_container.cpp" />
     <ClCompile Include="..\..\src\map\roe.cpp" />
     <ClCompile Include="..\..\src\map\spell.cpp" />
     <ClCompile Include="..\..\src\map\status_effect.cpp" />

@@ -116,6 +116,9 @@
     <ClInclude Include="..\..\src\map\mob_modifier.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\map\packet_guard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\map\packet_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -923,6 +926,9 @@
     <ClInclude Include="..\..\src\map\daily_system.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\map\notoriety_container.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\map\ability.cpp">
@@ -947,6 +953,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\map\modifier.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\map\packet_guard.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\map\packet_system.cpp">
@@ -1698,6 +1707,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\map\ai\helpers\gambits_container.cpp">
       <Filter>Source Files\ai\helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\map\notoriety_container.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

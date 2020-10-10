@@ -2798,6 +2798,7 @@ void SmallPacket0x05B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             //reset if this event did not initiate another event
             if (PChar->m_event.EventID == EventID)
             {
+                PChar->m_Substate = CHAR_SUBSTATE::SUBSTATE_NONE;
                 PChar->m_event.reset();
             }
         }
@@ -2835,6 +2836,7 @@ void SmallPacket0x05C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             updatePosition = luautils::OnEventFinish(PChar, EventID, Result) == 1;
             if (PChar->m_event.EventID == EventID)
             {
+                PChar->m_Substate = CHAR_SUBSTATE::SUBSTATE_NONE;
                 PChar->m_event.reset();
             }
         }
@@ -6305,8 +6307,11 @@ void SmallPacket0x10B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0x10C(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    roeutils::AddEminenceRecord(PChar, data.ref<uint32>(0x04));
-    PChar->pushPacket(new CRoeSparkUpdatePacket(PChar));
+    if (roeutils::RoeSystem.RoeEnabled)
+    {
+        roeutils::AddEminenceRecord(PChar, data.ref<uint32>(0x04));
+        PChar->pushPacket(new CRoeSparkUpdatePacket(PChar));
+    }
     return;
 }
 
@@ -6318,8 +6323,11 @@ void SmallPacket0x10C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0x10D(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    roeutils::DelEminenceRecord(PChar, data.ref<uint32>(0x04));
-    PChar->pushPacket(new CRoeSparkUpdatePacket(PChar));
+    if (roeutils::RoeSystem.RoeEnabled)
+    {
+        roeutils::DelEminenceRecord(PChar, data.ref<uint32>(0x04));
+        PChar->pushPacket(new CRoeSparkUpdatePacket(PChar));
+    }
     return;
 }
 
@@ -6380,12 +6388,20 @@ void SmallPacket0x111(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 void SmallPacket0x112(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
 {
-    // Send spark updates + current RoE quests
+    // Send spark updates
     PChar->pushPacket(new CRoeSparkUpdatePacket(PChar));
-    PChar->pushPacket(new CRoeUpdatePacket(PChar));
-    // 4-part Eminence Completion bitmap
-    for(int i = 0; i < 4; i++)
-        PChar->pushPacket(new CRoeQuestLogPacket(PChar, i));
+
+    if (roeutils::RoeSystem.RoeEnabled)
+    {
+        // Current RoE quests
+        PChar->pushPacket(new CRoeUpdatePacket(PChar));
+
+        // 4-part Eminence Completion bitmap
+        for (int i = 0; i < 4; i++)
+        {
+            PChar->pushPacket(new CRoeQuestLogPacket(PChar, i));
+        }
+    }
 
     return;
 }
