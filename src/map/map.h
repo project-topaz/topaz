@@ -93,7 +93,7 @@ struct map_config_t
     int8   mount_speed_mod;           // Modifier to add to mount speed
     int8   mob_speed_mod;             // Modifier to add to monster speed
     float  skillup_chance_multiplier; // Constant used in the skillup formula that has a strong effect on skill-up rates
-    float  craft_chance_multiplier;   // Constant used in the crafting skill-up formula that has a strong effect on skill-up rates
+    uint8  craft_chance_multiplier;   // Constant used in the crafting skill-up formula that has a strong effect on skill-up rates
     float  skillup_amount_multiplier; // Used to increase the amount of skill gained during skill up
     float  craft_amount_multiplier;   // Used to increase the amount of skill gained during skill up
     bool   garden_day_matters;        // Enable/disable Element day factor in gardening results
