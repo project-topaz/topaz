@@ -60,8 +60,10 @@ function onTrigger(player, npc)
     local peaceForTheSpirit = player:getQuestStatus(SANDORIA, sandyQuests.PEACE_FOR_THE_SPIRIT)
     local Rank3 = player:getRank() >= 3 and 1 or 0
 
+    -- Trust: San d'Oria (Curilla)
     if player:hasKeyItem(tpz.ki.SAN_DORIA_TRUST_PERMIT) and not player:hasSpell(902) then
         player:startEvent(573, 0, 0, 0, TrustMemory(player), 0, 0, 0, Rank3)
+
     -- "Lure of the Wildcat"
     elseif
         player:getQuestStatus(SANDORIA, sandyQuests.LURE_OF_THE_WILDCAT) == QUEST_ACCEPTED and
@@ -126,7 +128,7 @@ function onTrigger(player, npc)
         local currentMission = player:getCurrentMission(SANDORIA)
         local missionStatus = player:getCharVar("MissionStatus")
 
-        -- San d'Oria Epilogue 
+        -- San d'Oria Epilogue
         if player:getRank() == 10 then
             player:startEvent(20)
 
