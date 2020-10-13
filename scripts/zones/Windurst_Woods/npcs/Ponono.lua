@@ -111,7 +111,7 @@ function onEventFinish(player, csid, option)
     else
         if player:getLocalVar("ClothcraftTraded") == 1 then
             player:tradeComplete()
-            player:setLocalVar("ClothcraftTraded",0)
+            player:setLocalVar("ClothcraftTraded", 0)
         end
     end
 end
