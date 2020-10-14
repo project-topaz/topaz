@@ -25,12 +25,12 @@ function onTrade(player, npc, trade)
         if signed ~=0 then
             player:setSkillRank(tpz.skill.CLOTHCRAFT, newRank)
             player:startEvent(10012, 0, 0, 0, 0, newRank, 1)
-            player:setCharVar("ClothcraftExpertQuest",0)
-            player:setLocalVar("ClothcraftTraded",1)
+            player:setCharVar("ClothcraftExpertQuest", 0)
+            player:setLocalVar("ClothcraftTraded", 1)
         else
             player:startEvent(10012, 0, 0, 0, 0, newRank, 0)
         end
-    elseif newRank ~= 0 and newRank <=9 then
+    elseif newRank ~= 0 and newRank <= 9 then
         player:setSkillRank(tpz.skill.CLOTHCRAFT, newRank)
         player:startEvent(10012, 0, 0, 0, 0, newRank)
         player:setLocalVar("ClothcraftTraded", 1)
@@ -68,8 +68,7 @@ function onTrigger(player, npc)
         player:startEvent(700)
     elseif moralManifest == QUEST_COMPLETE or moralManifest == QUEST_ACCEPTED and player:getCharVar("moral") >= 4 then
         player:startEvent(704)
-    elseif player:getCharVar("moral") == 3 and player:getLocalVar("moralZone") == 0 and player:getCharVar("moralWait") <=
-        os.time() then
+    elseif player:getCharVar("moral") == 3 and player:getLocalVar("moralZone") == 0 and player:getCharVar("moralWait") <= os.time() then
         player:startEvent(705)
     elseif expertQuestStatus == 600 then
         --[[  Feeding the proper parameter currently hangs the client in cutscene. This may
@@ -97,11 +96,11 @@ function onEventFinish(player, csid, option)
         if npcUtil.giveItem(player, 1867) then
             player:setCharVar("moral", 4)
         end
-    elseif (csid == 10011 and option == 2) then
+    elseif csid == 10011 and option == 2 then
         if guildMember == 1 then
             player:setCharVar("ClothcraftExpertQuest",1)
         end
-    elseif (csid == 10011 and option == 1) then
+    elseif csid == 10011 and option == 1 then
         if player:getFreeSlotsCount() == 0 then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED, 4099)
         else
@@ -112,7 +111,7 @@ function onEventFinish(player, csid, option)
     else
         if player:getLocalVar("ClothcraftTraded") == 1 then
             player:tradeComplete()
-            player:setLocalVar("ClothcraftTraded",0)
+            player:setLocalVar("ClothcraftTraded", 0)
         end
     end
 end

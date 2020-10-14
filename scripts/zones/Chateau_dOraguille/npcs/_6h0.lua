@@ -58,6 +58,10 @@ function onTrigger(player, npc)
     then
         player:startEvent(90) -- Start
 
+    -- Trust: San d'Oria (Trion)
+    elseif player:getRank() == 6 and player:hasKeyItem(tpz.ki.SAN_DORIA_TRUST_PERMIT) and not player:hasSpell(905) then
+        player:startEvent(574, 0, 0, 0, TrustMemory(player))
+
     -- "A Boy's Dream" (PLD AF Feet)
     elseif player:getCharVar("aBoysDreamCS") == 8 then
         player:startEvent(88)
@@ -116,7 +120,7 @@ function onTrigger(player, npc)
             elseif missionStatus == 0 then
                 player:startEvent(553, 0, tpz.ki.ROYAL_KNIGHTS_DAVOI_REPORT)
             end
-        
+
         -- Default dialogue
         else
             player:startEvent(522)
