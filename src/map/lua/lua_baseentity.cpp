@@ -4622,7 +4622,32 @@ inline int32 CLuaBaseEntity::checkNameFlags(lua_State* L)
         lua_pushboolean(L, false);
     return 1;
 }
+inline int32 CLuaBaseEntity::getLookSize(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
 
+    lua_pushinteger(L, m_PBaseEntity->GetLookSize());
+
+    return 1;
+}
+
+inline int32 CLuaBaseEntity::setLookSize(lua_State* L)
+{
+    TPZ_DEBUG_BREAK_IF(m_PBaseEntity == nullptr);
+
+    if (m_PBaseEntity->objtype == TYPE_PC)
+    {
+    }
+    else
+    {
+        TPZ_DEBUG_BREAK_IF(lua_isnil(L, 1) || !lua_isnumber(L, 1));
+
+        m_PBaseEntity->SetLookSize((uint16)lua_tointeger(L, 1));
+    }
+    m_PBaseEntity->updatemask |= UPDATE_LOOK;
+
+    return 0;
+}
 /************************************************************************
 *  Function: getModelId()
 *  Purpose : Returns the integer value of the entity's Model ID
