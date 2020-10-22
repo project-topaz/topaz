@@ -52,6 +52,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "entities/mobentity.h"
 #include "entities/npcentity.h"
 #include "entities/trustentity.h"
+#include "entities/charentity.h"
 #include "spell.h"
 #include "utils/synthutils.h"
 #include "trade_container.h"
@@ -6485,6 +6486,13 @@ void SmallPacket0x112(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     {
         // Current RoE quests
         PChar->pushPacket(new CRoeUpdatePacket(PChar));
+
+        // Players logging in to a new timed record get one-time message
+        if (PChar->m_eminenceCache.notifyTimedRecord)
+        {
+            PChar->m_eminenceCache.notifyTimedRecord = false;
+            PChar->pushPacket(new CMessageBasicPacket(PChar, PChar, roeutils::GetActiveTimedRecord(), 0, MSGBASIC_ROE_TIMED));
+        }
 
         // 4-part Eminence Completion bitmap
         for (int i = 0; i < 4; i++)
