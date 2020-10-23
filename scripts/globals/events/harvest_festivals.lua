@@ -22,49 +22,49 @@ events.harvest =
     },
     decorations =
     {
-        [230] = { 17719828, 17719829, 17719830},
+        [230] = { 17719828, 17719829, 17719830 },
         [231] = { 17723774, 17723775, 17723776, 17723777, 17723812, 17723811 },
         [234] = { 17735939, 17735940, 17735941, 17735962, 17735961 },
         [235] = { 17740139, 17740140, 17740141, 17740142, 17740143 },
         [238] = { 17752504, 17752505, 17752506, 17752507, 17752548, 17752545 },
-        [241] = { 17764742, 17764743, 17764744},
+        [241] = { 17764742, 17764743, 17764744 },
     },
     paths =
     {
         bastok =
         {
-        -341.947, -10.004, -161.233,
-        -342.947, -10.000, -161.233,
-        -293.236, -10.004, -113.025,
-        -269.164, -10.000, -112.511,
-        -252.357, -9.035, -120.792,
-        -235.528, -7.307, -121.165,
-        -220.101, -6.000, -112.457,
-        -204.516, -6.000, -96.995,
-        -183.274, -6.000, -92.812,
-        -176.764, -4.496, -92.719,
-        -128.829, -4.000, -116.708,
-        -88.801, -4.000, -117.891,
-        -87.382, -4.000, -95.879,
-        -128.365, -4.000, -96.421,
-        -174.522, -4.000, -76.303,
-        -197.885, -6.000, -74.354,
-        -202.041, -6.000, -71.868,
-        -211.158, -6.000, -71.600,
-        -242.170, -6.000, -73.933,
-        -242.259, -12.000, -58.803,
-        -247.025, -12.000, -58.045,
-        -247.423, -12.000, -48.479,
-        -233.237, -12.000, -33.047,
-        -176.753, -8.000, -32.376,
-        -177.835, -8.000, -28.725,
-        -233.225, -12.000, -29.166,
-        -268.216, -12.000, -39.695,
-        -302.634, -12.000, -40.728,
-        -305.552, -12.000, -77.681,
-        -282.239, -12.000, -97.816,
-        -283.032, -10.000, -103.797,
-        -293.000, -10.000, -111.000
+			-341.947, -10.004, -161.233,
+			-342.947, -10.000, -161.233,
+			-293.236, -10.004, -113.025,
+			-269.164, -10.000, -112.511,
+			-252.357, -9.035, -120.792,
+			-235.528, -7.307, -121.165,
+			-220.101, -6.000, -112.457,
+			-204.516, -6.000, -96.995,
+			-183.274, -6.000, -92.812,
+			-176.764, -4.496, -92.719,
+			-128.829, -4.000, -116.708,
+			-88.801, -4.000, -117.891,
+			-87.382, -4.000, -95.879,
+			-128.365, -4.000, -96.421,
+			-174.522, -4.000, -76.303,
+			-197.885, -6.000, -74.354,
+			-202.041, -6.000, -71.868,
+			-211.158, -6.000, -71.600,
+			-242.170, -6.000, -73.933,
+			-242.259, -12.000, -58.803,
+			-247.025, -12.000, -58.045,
+			-247.423, -12.000, -48.479,
+			-233.237, -12.000, -33.047,
+			-176.753, -8.000, -32.376,
+			-177.835, -8.000, -28.725,
+			-233.225, -12.000, -29.166,
+			-268.216, -12.000, -39.695,
+			-302.634, -12.000, -40.728,
+			-305.552, -12.000, -77.681,
+			-282.239, -12.000, -97.816,
+			-283.032, -10.000, -103.797,
+			-293.000, -10.000, -111.000
         },
         sandoria =
         {
@@ -213,21 +213,21 @@ end
 function events.harvest.registerRegions(zone)
     switch (zone:getID()): caseof
     {
-        [230] = zone:registerRegion( 7,  122.602,  0.0,   72.500,  125.000,  0.0,   75.625 ), --Southern_San_dOria Pitchfork
+        [230] = zone:registerRegion( 7,  122.602,  0.0,   72.500,  125.000,  0.0,   75.625 ), -- Southern_San_dOria Pitchfork
         [231] = function ()
-                zone:registerRegion( 7, -172.253,  0.0,  129.389, -170.047,  0.0,  134.279 ) --Northern_San_dOria Pitchfork
-                zone:registerRegion( 8, -235.279,  8.0,   15.879, -233.569,  8.0,   19.925 ) --Northern_San_dOria Pitchfork +1
+                zone:registerRegion( 7, -172.253,  0.0,  129.389, -170.047,  0.0,  134.279 ) -- Northern_San_dOria Pitchfork
+                zone:registerRegion( 8, -235.279,  8.0,   15.879, -233.569,  8.0,   19.925 ) -- Northern_San_dOria Pitchfork +1
                 end,
-        [234] = zone:registerRegion( 1,  -32.442,  0.0,  -29.566,  -30.090,  0.0,  -26.070 ), --Bastok_Mines Pitchfork
+        [234] = zone:registerRegion( 1,  -32.442,  0.0,  -29.566,  -30.090,  0.0,  -26.070 ), -- Bastok_Mines Pitchfork
         [235] = function ()
-                zone:registerRegion( 1, -123.230, -4.0, -134.556, -119.557, -4.0, -130.665 ) --Bastok_Markets Pitchfork
-                zone:registerRegion( 2, -255.105,  0.0,   81.564, -253.085,  0.0,   85.509 ) --Bastok_Markets Pitchfork +1
+                zone:registerRegion( 1, -123.230, -4.0, -134.556, -119.557, -4.0, -130.665 ) -- Bastok_Markets Pitchfork
+                zone:registerRegion( 2, -255.105,  0.0,   81.564, -253.085,  0.0,   85.509 ) -- Bastok_Markets Pitchfork +1
                 end,
         [238] = function ()
-                zone:registerRegion( 2, -113.177, -2.0,   39.484, -110.866, -2.0,   41.984 ) --Windurst_Waters Pitchfork
-                zone:registerRegion( 3,  141.731,  0.0,  152.559,  143.153,  0.0,  154.663 ) --Windurst_Waters Pitchfork +1
+                zone:registerRegion( 2, -113.177, -2.0,   39.484, -110.866, -2.0,   41.984 ) -- Windurst_Waters Pitchfork
+                zone:registerRegion( 3,  141.731,  0.0,  152.559,  143.153,  0.0,  154.663 ) -- Windurst_Waters Pitchfork +1
                 end,
-        [241] = zone:registerRegion( 1,  -30.427, -3.5,    1.833,  -27.999,  3.5,    3.965 ), --Windurst_Woods Pitchfork
+        [241] = zone:registerRegion( 1,  -30.427, -3.5,    1.833,  -27.999,  3.5,    3.965 ), -- Windurst_Woods Pitchfork
     }
 end
 
@@ -382,7 +382,7 @@ function onHalloweenTrade(player, trade, npc)
                     local halloween_costume_list = { Orc, Quadav, Yagudo, Shade, Ghost, Hound, Skeleton,Goblin, Dark_Stalker}
                     local costumePicked = halloween_costume_list[math.random(1, #halloween_costume_list)] -- will randomly pick one of the costumes in the list
 
-                    if ID.npc.HALLOWEEN_SKINS[npc:getID()] then --Check what costume the npc should give
+                    if ID.npc.HALLOWEEN_SKINS[npc:getID()] then -- Check what costume the npc should give
                         costumePicked = halloween_costume_list[ID.npc.HALLOWEEN_SKINS[npc:getID()][3]]
                     end
                     local goblinhelper = { Orc, Quadav, Yagudo }
@@ -438,9 +438,9 @@ function checkHalloweenRegion(player,region)
     local correctCostumes = 0
     local noFreeJacks = 0
     local rewards = {18102,18103}
-    --Region 1 nq pitchfork, 2 HQ pitchfork
+    -- Region 1 nq pitchfork, 2 HQ pitchfork
     if player:getPartySize(0) == 2 then
-        if region == 1 then --Pitchfork Check
+        if region == 1 then -- Pitchfork Check
             local pitchForkCostumeList =
             {
                 234, 533, 564, -- Bastok mines
