@@ -2,6 +2,7 @@
 -- Area: Northern_San_dOria
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/harvest_festivals")
 -----------------------------------
 
 zones = zones or {}
@@ -103,6 +104,7 @@ zones[tpz.zone.NORTHERN_SAN_DORIA] =
         IF_YOU_WEAR_THIS         = 13050, -- If you put this on and walk around, something...unexpected might happen...
         THANK_YOU                = 13051, -- Thank you...
         FFR_LOOKS_CURIOUSLY_BASE = 13368, -- Coullene looks over curiously for a moment.
+        MOOGLE_SHOP_DIALOG       = 14188,
         RETRIEVE_DIALOG_ID       = 18112, -- You retrieve <item> from the porter moogle's care.
         COMMON_SENSE_SURVIVAL    = 18446, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
     },
@@ -113,9 +115,23 @@ zones[tpz.zone.NORTHERN_SAN_DORIA] =
     {
         HALLOWEEN_SKINS =
         {
-            [17723487] = 53, -- Vichuel
-            [17723492] = 52, -- Antonian
-            [17723497] = 51, -- Attarena
+            [17723486] = { 1146,  773, events.harvest.skins.skeleton }, --Pirvidiauce Missing Look
+            [17723447] = {  535, 1027, events.harvest.skins.quadav },   --Tavourine Missing Look
+            [17723491] = {  572,  776, events.harvest.skins.shade },    --Palguevion
+            [17723485] = {  542,  777, events.harvest.skins.yagudo },   --Justi
+            [17723487] = {  548,  783, events.harvest.skins.ghost },    --Vichuel Missing Look old 53
+            [17723492] = {  548,  774, events.harvest.skins.hound },    --Antonian
+            [17723497] = {  368, 1034, events.harvest.skins.orc },      --Attarena Missing Look old 51
+            [17723604] = {   -1,   -1, events.harvest.skins.orc },      --Trick_Shadow
+            [17723605] = {   -1,   -1, events.harvest.skins.quadav },   --Trick_Specter
+            [17723606] = {   -1,   -1, events.harvest.skins.yagudo },   --Trick_Shade
+            [17723607] = {   -1,   -1, events.harvest.skins.skeleton }, --Trick_Ghost
+            [17723608] = {   -1,   -1, events.harvest.skins.ghost },    --Trick_Spirit
+            [17723609] = {   -1,   -1, events.harvest.skins.shade },    --Trick_Phantom
+            [17723610] = {   -1,   -1, events.harvest.skins.hound },    --Trick_Skeleton
+            [17723611] = {   -1,   -1, events.harvest.skins.orc },      --Trick_Wight
+            [17723612] = {   -1,   -1, events.harvest.skins.quadav },   --Trick_Bones
+            [17723613] = {   -1,   -1, events.harvest.skins.yagudo },  --Trick_Ghast
         },
         EXPLORER_MOOGLE = 17723648,
     },

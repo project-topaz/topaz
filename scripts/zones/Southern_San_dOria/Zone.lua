@@ -15,7 +15,7 @@ require("scripts/globals/zone")
 function onInitialize(zone)
     zone:registerRegion(1, -292, -10, 90 , -258, 10, 105)
     quests.ffr.initZone(zone) -- register regions 2 through 6
-    applyHalloweenNpcCostumes(zone:getID())
+    events.harvest.initZone(zone) --registers region 7
     tpz.chocobo.initZone(zone)
 end
 
@@ -61,10 +61,17 @@ function onRegionEnter(player, region)
     if regionID==1 and player:getCurrentMission(COP) == tpz.mission.id.cop.DAWN and player:getCharVar("COP_louverance_story")== 2 then
         player:startEvent(758)
     end
+    if regionID == 7 then
+        checkHalloweenRegion(player,1)
+    end
     quests.ffr.onRegionEnter(player, region) -- player approaching Flyers for Regine NPCs
 end
 
 function onRegionLeave(player, region)
+    local regionID =region:GetRegionID()
+    if regionID == 2 then
+        clearHalloweenRegion(player)
+    end
 end
 
 function onEventUpdate(player, csid, option)

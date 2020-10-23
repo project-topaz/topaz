@@ -1,6 +1,6 @@
 -----------------------------------
 -- Area: Southern San d'Oria
---  NPC: Lotte
+--  NPC: Malecharistant
 -- General Info NPC
 -------------------------------------
 require("scripts/globals/events/harvest_festivals")
@@ -10,7 +10,6 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    player:startEvent(564)
 end
 
 function onEventUpdate(player, csid, option)

@@ -17,11 +17,9 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
-
     zone:registerRegion(1, -7, -3, 110, 7, -1, 155)
     quests.ffr.initZone(zone) -- register regions 2 through 6
-
-    applyHalloweenNpcCostumes(zone:getID())
+    events.harvest.initZone(zone)--registers region 7 and 8
 end
 
 function onZoneIn(player, prevZone)
@@ -86,11 +84,17 @@ function onRegionEnter(player, region)
                 player:startEvent(568)
             end
         end,
+        [7] = checkHalloweenRegion(player,1),
+        [8] = checkHalloweenRegion(player,2),
     }
     quests.ffr.onRegionEnter(player, region) -- player approaching Flyers for Regine NPCs
 end
 
 function onRegionLeave(player, region)
+    local regionID =region:GetRegionID()
+    if regionID == 7 or regionID == 8 then
+        clearHalloweenRegion(player)
+    end
 end
 
 function onEventUpdate(player, csid, option)

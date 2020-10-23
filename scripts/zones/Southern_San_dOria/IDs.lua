@@ -2,6 +2,7 @@
 -- Area: Southern_San_dOria
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/harvest_festivals")
 -----------------------------------
 
 zones = zones or {}
@@ -97,11 +98,19 @@ zones[tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         HALLOWEEN_SKINS =
         {
-            [17719303] = 47, -- Machielle
-            [17719304] = 50, -- Corua
-            [17719305] = 48, -- Phamelise
-            [17719306] = 46, -- Apairemant
-            [17719493] = 49, -- Pourette
+            [17719303] = {  368, 1028, events.harvest.skins.yagudo },   --Machielle Missing Look old 47
+            [17719304] = {  535,  142, events.harvest.skins.skeleton }, --Corua Missing Look old 50p
+            [17719305] = {  542, 1033, events.harvest.skins.ghost },    --Phamelise Missing Look old 48
+            [17719306] = {  572,  783, events.harvest.skins.shade },    --Apairemant Missing Look old 46
+            [17719317] = {  368, 1036, events.harvest.skins.orc },      --Benaige Missing Look
+            [17719318] = {  576, 1034, events.harvest.skins.orc },      --Aveline Missing Look
+            [17719319] = {  548,  522, events.harvest.skins.quadav },   --Lotte Missing Look
+            [17719350] = {  572, 1038, events.harvest.skins.yagudo },   --Lusiane Missing Look
+            [17719351] = { 1146, 1030, events.harvest.skins.skeleton }, --Ostalie Missing Look
+            [17719384] = {  535, 1796, events.harvest.skins.ghost },    --Kueh Igunahmori Missing Look
+            [17719395] = {  542,  780, events.harvest.skins.shade },    --Malecharisant Missing Look
+            [17719488] = {  576, 1031, events.harvest.skins.hound },    --Paunelie Missing Look
+            [17719493] = { 1146, 1037, events.harvest.skins.orc },      --Pourette Missing Look old 49
         },
         LUSIANE  = 17719350,
         ARPETION = 17719409,
