@@ -2,6 +2,7 @@
 -- Area: Windurst_Woods
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/harvest_festivals")
 -----------------------------------
 
 zones = zones or {}
@@ -78,11 +79,18 @@ zones[tpz.zone.WINDURST_WOODS] =
     {
         HALLOWEEN_SKINS =
         {
-            [17764400] = 55, -- Meriri
-            [17764401] = 54, -- Kuzah Hpirohpon
-            [17764462] = 58, -- Taraihi-Perunhi
-            [17764464] = 56, -- Nhobi Zalkia
-            [17764465] = 57, -- Millerovieunet
+            [17764400] = {  542, 1537, events.harvest.skins.quadav },   --Meriri Missing Look
+            [17764401] = {  548, 1792, events.harvest.skins.yagouo },   --Kuzah Hpirohpon Missing Look
+            [17764406] = {  542, 1792, events.harvest.skins.skeleton }, --Shih Tayuun Missing Look
+            [17764407] = {  548, 1282, events.harvest.skins.ghost },    --Retto-Marutto Missing Look
+            [17764454] = {  548, 1030, events.harvest.skins.shade },    --Quesse
+            [17764455] = {  535, 1792, events.harvest.skins.hound },    --Mono Nchaa Missing Look
+            [17764459] = {  548, 1793, events.harvest.skins.quadav },   --Wije Tiren
+            [17764460] = { 1146, 1792, events.harvest.skins.yagudo },   --Nya Labiccio
+            [17764461] = {  535,  233, events.harvest.skins.skeleton }, --Bin Stejihna
+            [17764462] = {  542, 1280, events.harvest.skins.hound },    --Taraihi-Perunhi
+            [17764464] = {  542, 7424, events.harvest.skins.shade },    --Nhobi Zalkia
+            [17764465] = {  576,  778, events.harvest.skins.orc },      --Millerovieunet
         },
     },
 }

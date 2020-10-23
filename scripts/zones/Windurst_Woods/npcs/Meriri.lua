@@ -5,12 +5,14 @@
 -- !pos -76.471 -3.55 -128.341 241
 -----------------------------------
 local ID = require("scripts/zones/Windurst_Woods/IDs")
+require("scripts/globals/events/harvest_festivals")
 require("scripts/globals/shop")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onHalloweenTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)
