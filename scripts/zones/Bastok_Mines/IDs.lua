@@ -2,6 +2,7 @@
 -- Area: Bastok_Mines
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/harvest_festivals")
 -----------------------------------
 
 zones = zones or {}
@@ -80,6 +81,7 @@ zones[tpz.zone.BASTOK_MINES] =
         EMALIVEULAUX_CLOSED_DIALOG     = 12243, -- I'd love to sell you goods imported from the island of Tavnazia, but with the area under foreign control, I can't secure my trade routes...
         COMMON_SENSE_SURVIVAL          = 15998, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
         TEAR_IN_FABRIC_OF_SPACE        = 16597, -- There appears to be a tear in the fabric of space...
+        MOOGLE_SHOP_DIALOG             = 11462, -- Come one, come all, kupo!
     },
     mob =
     {
@@ -88,11 +90,18 @@ zones[tpz.zone.BASTOK_MINES] =
     {
         HALLOWEEN_SKINS =
         {
-            [17735742] = 41, -- Faustin
-            [17735744] = 43, -- Mille
-            [17735747] = 42, -- Aulavia
-            [17735795] = 40, -- Proud Beard
-            [17735818] = 44, -- Emaliveulaux
+            [17735714] = {  368,  102, events.harvest.skins.quadav },   --Maymunah Missing Look
+            [17735715] = {  535, 2056, events.harvest.skins.yagudo },   --Odoba Missing Look
+            [17735722] = {  542, 2058, events.harvest.skins.orc },      --Deegis Missing Look
+            [17735726] = {  572,  104, events.harvest.skins.ghost },    --Griselda Missing Look
+            [17735733] = { 1146,  771, events.harvest.skins.shade },    --Neigepance Missing Look
+            [17735742] = {  576,  769, events.harvest.skins.hound },    --Faustin Missing Look Old 41
+            [17735744] = {  572, 1038, events.harvest.skins.quadav },   --Mille Missing Look Old 43
+            [17735745] = {  542,  526, events.harvest.skins.yagudo },   --Tibelda Missing Look
+            [17735746] = { 1146, 2054, events.harvest.skins.skeleton }, --Galdeo Missing Look
+            [17735747] = {  368, 1030, events.harvest.skins.ghost },    --Aulavia Missing Look Old 42
+            [17735795] = {  535, 2050, events.harvest.skins.shade },    --Proud Beard Missing Look Old 40
+            [17735818] = {  368,  774, events.harvest.skins.skeleton }, --Emaliveulaux Missing Look Old 44
         },
         LELEROON_BLUE_DOOR = 17735847,
         EXPLORER_MOOGLE    = 17735856,

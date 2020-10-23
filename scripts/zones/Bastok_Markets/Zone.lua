@@ -11,7 +11,7 @@ local ID = require("scripts/zones/Bastok_Markets/IDs")
 -----------------------------------
 
 function onInitialize(zone)
-    applyHalloweenNpcCostumes(zone:getID())
+    events.harvest.initZone(zone) --register regions 1 and 2
 end
 
 function onZoneIn(player, prevZone)
@@ -51,6 +51,19 @@ function onConquestUpdate(zone,  updatetype)
 end
 
 function onRegionEnter(player, region)
+    local regionID =region:GetRegionID()
+    if regionID == 1 then
+        checkHalloweenRegion(player,1)
+    elseif regionID == 2 then
+        checkHalloweenRegion(player,2)
+    end
+end
+
+function onRegionLeave(player, region)
+    local regionID =region:GetRegionID()
+    if regionID == 2 or regionID == 1 then
+        clearHalloweenRegion(player)
+    end
 end
 
 function onGameDay()
