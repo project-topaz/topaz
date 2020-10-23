@@ -1675,7 +1675,8 @@ inline int32 CLuaBaseEntity::atPoint(lua_State* L)
         lua_pop(L, 1);
     }
 
-    lua_pushboolean(L, m_PBaseEntity->loc.p.x == posX && m_PBaseEntity->loc.p.y == posY && m_PBaseEntity->loc.p.z == posZ);
+    lua_pushboolean(L, 1000. * m_PBaseEntity->loc.p.x == 1000. * posX && 1000. * m_PBaseEntity->loc.p.y == 1000. * posY &&
+                           1000. * m_PBaseEntity->loc.p.z == 1000. * posZ);
 
     return 1;
 }
@@ -14719,6 +14720,8 @@ Lunar<CLuaBaseEntity>::Register_t CLuaBaseEntity::methods[] =
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,checkNameFlags),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,getModelId),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,setModelId),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, getLookSize),
+    LUNAR_DECLARE_METHOD(CLuaBaseEntity, setLookSize),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume),
     LUNAR_DECLARE_METHOD(CLuaBaseEntity,costume2),
 
