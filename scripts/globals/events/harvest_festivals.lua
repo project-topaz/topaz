@@ -439,7 +439,7 @@ function checkHalloweenRegion(player,region)
     local noFreeJacks = 0
     local rewards = {18102,18103}
     --Region 1 nq pitchfork, 2 HQ pitchfork
-    if player:getPartySize() == 2 then
+    if player:getPartySize(0) == 2 then
         if region == 1 then --Pitchfork Check
             local pitchForkCostumeList =
             {
