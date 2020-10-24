@@ -34,10 +34,10 @@ The NavMesh class will load and find paths given a start point and end point.
 #include <vector>
 #include <memory>
 
-#define MAX_NAV_POLYS 256
-
-static const int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
-static const int NAVMESHSET_VERSION = 1;
+static constexpr int MAX_NAV_POLYS = 256;
+static constexpr int MAX_RAYCAST_POLYS  = 49152;
+static constexpr int NAVMESHSET_MAGIC = 'M' << 24 | 'S' << 16 | 'E' << 8 | 'T'; //'MSET';
+static constexpr int NAVMESHSET_VERSION = 1;
 
 struct NavMeshSetHeader
 {
@@ -64,7 +64,6 @@ public:
     static void ToDetourPos(float* out);
     static void ToDetourPos(position_t* out);
 
-public:
     CNavMesh(uint16 zoneID);
     ~CNavMesh();
 
@@ -82,14 +81,17 @@ public:
 
     bool validPosition(const position_t& position);
 
+    double DistanceToWall(const position_t& start);
+
 private:
     void outputError(uint32 status);
 
     uint16 m_zoneID;
     dtRaycastHit m_hit;
-    dtPolyRef m_hitPath[20];
+    dtPolyRef m_hitPath[100];
     std::unique_ptr<dtNavMesh> m_navMesh;
     dtNavMeshQuery m_navMeshQuery;
+    dtPolyRef m_raycastVisitedPolys[16384];
 };
 
 #endif
