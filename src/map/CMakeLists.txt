@@ -121,11 +121,6 @@ endif()
 
 add_executable(topaz_game
     ${SOURCES}
-    $<TARGET_OBJECTS:entities>
-    $<TARGET_OBJECTS:items>
-    $<TARGET_OBJECTS:lua>
-    $<TARGET_OBJECTS:packets>
-    $<TARGET_OBJECTS:utils>
     ${resource})
 
 if(WIN32)
@@ -143,6 +138,11 @@ target_link_libraries(topaz_game
     PUBLIC
     common
     ai
+    entities
+    items
+    lua
+    packets
+    utils
     project_options
     #project_warnings
 )
