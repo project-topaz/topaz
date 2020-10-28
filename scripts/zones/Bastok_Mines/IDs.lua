@@ -90,18 +90,18 @@ zones[tpz.zone.BASTOK_MINES] =
     {
         HALLOWEEN_SKINS =
         {
-            [17735714] = {  368,  102, events.harvest.skins.quadav },   --Maymunah Missing Look
-            [17735715] = {  535, 2056, events.harvest.skins.yagudo },   --Odoba Missing Look
-            [17735722] = {  542, 2058, events.harvest.skins.orc },      --Deegis Missing Look
-            [17735726] = {  572,  104, events.harvest.skins.ghost },    --Griselda Missing Look
-            [17735733] = { 1146,  771, events.harvest.skins.shade },    --Neigepance Missing Look
-            [17735742] = {  576,  769, events.harvest.skins.hound },    --Faustin Missing Look Old 41
-            [17735744] = {  572, 1038, events.harvest.skins.quadav },   --Mille Missing Look Old 43
-            [17735745] = {  542,  526, events.harvest.skins.yagudo },   --Tibelda Missing Look
-            [17735746] = { 1146, 2054, events.harvest.skins.skeleton }, --Galdeo Missing Look
-            [17735747] = {  368, 1030, events.harvest.skins.ghost },    --Aulavia Missing Look Old 42
-            [17735795] = {  535, 2050, events.harvest.skins.shade },    --Proud Beard Missing Look Old 40
-            [17735818] = {  368,  774, events.harvest.skins.skeleton }, --Emaliveulaux Missing Look Old 44
+            [17735714] = {  572,  102, events.harvest.skins.quadav },   --Maymunah
+            [17735715] = {  538, 2056, events.harvest.skins.yagudo },   --Odoba
+            [17735722] = {  548, 2058, events.harvest.skins.orc },      --Deegis
+            [17735726] = {  368,  104, events.harvest.skins.ghost },    --Griselda
+            [17735733] = { 1146,  771, events.harvest.skins.shade },    --Neigepance
+            [17735742] = {  572,  769, events.harvest.skins.hound },    --Faustin
+            [17735744] = {  576, 1038, events.harvest.skins.quadav },   --Mille
+            [17735745] = {  535,  526, events.harvest.skins.yagudo },   --Tibelda
+            [17735746] = {  576, 2054, events.harvest.skins.skeleton }, --Galdeo
+            [17735747] = {  576, 1030, events.harvest.skins.ghost },    --Aulavia
+            [17735795] = { 1146, 2050, events.harvest.skins.shade },    --Proud Beard
+            [17735818] = {  542,  774, events.harvest.skins.skeleton }, --Emaliveulaux
         },
         LELEROON_BLUE_DOOR = 17735847,
         EXPLORER_MOOGLE    = 17735856,

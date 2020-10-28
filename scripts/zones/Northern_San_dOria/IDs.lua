@@ -115,13 +115,13 @@ zones[tpz.zone.NORTHERN_SAN_DORIA] =
     {
         HALLOWEEN_SKINS =
         {
-            [17723486] = { 1146,  773, events.harvest.skins.skeleton }, --Pirvidiauce Missing Look
-            [17723447] = {  535, 1027, events.harvest.skins.quadav },   --Tavourine Missing Look
+            [17723486] = {  368,  773, events.harvest.skins.skeleton }, --Pirvidiauce
+            [17723447] = {  368, 1027, events.harvest.skins.quadav },   --Tavourine
             [17723491] = {  572,  776, events.harvest.skins.shade },    --Palguevion
             [17723485] = {  542,  777, events.harvest.skins.yagudo },   --Justi
-            [17723487] = {  548,  783, events.harvest.skins.ghost },    --Vichuel Missing Look old 53
+            [17723487] = { 1146,  783, events.harvest.skins.ghost },    --Vichuel
             [17723492] = {  548,  774, events.harvest.skins.hound },    --Antonian
-            [17723497] = {  368, 1034, events.harvest.skins.orc },      --Attarena Missing Look old 51
+            [17723497] = {  576, 1034, events.harvest.skins.orc },      --Attarena
             [17723604] = {   -1,   -1, events.harvest.skins.orc },      --Trick_Shadow
             [17723605] = {   -1,   -1, events.harvest.skins.quadav },   --Trick_Specter
             [17723606] = {   -1,   -1, events.harvest.skins.yagudo },   --Trick_Shade

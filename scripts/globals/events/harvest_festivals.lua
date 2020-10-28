@@ -4,6 +4,7 @@
 require("scripts/globals/settings")
 require("scripts/globals/status")
 require("scripts/globals/utils")
+require("scripts/globals/npc_util")
 ------------------------------------
 events = events or {}
 
@@ -22,12 +23,12 @@ events.harvest =
     },
     decorations =
     {
-        [230] = { 17719828, 17719829, 17719830 },
-        [231] = { 17723774, 17723775, 17723776, 17723777, 17723812, 17723811 },
-        [234] = { 17735939, 17735940, 17735941, 17735962, 17735961 },
-        [235] = { 17740139, 17740140, 17740141, 17740142, 17740143 },
-        [238] = { 17752504, 17752505, 17752506, 17752507, 17752548, 17752545 },
-        [241] = { 17764742, 17764743, 17764744 },
+        [tpz.zone.SOUTHERN_SAN_DORIA] = { 17719828, 17719829, 17719830 },
+        [tpz.zone.NORTHERN_SAN_DORIA] = { 17723774, 17723775, 17723776, 17723777, 17723812, 17723809 },
+        [tpz.zone.BASTOK_MINES] = { 17735939, 17735940, 17735941, 17735962, 17735959 },
+        [tpz.zone.BASTOK_MARKETS] = { 17740139, 17740140, 17740141, 17740142, 17740143 },
+        [tpz.zone.WINDURST_WATERS] = { 17752504, 17752505, 17752506, 17752507, 17752548, 17752545 },
+        [tpz.zone.WINDURST_WOODS] = { 17764742, 17764743, 17764744 },
     },
     paths =
     {
@@ -213,21 +214,21 @@ end
 function events.harvest.registerRegions(zone)
     switch (zone:getID()): caseof
     {
-        [230] = zone:registerRegion( 7,  122.602,  0.0,   72.500,  125.000,  0.0,   75.625 ), -- Southern_San_dOria Pitchfork
-        [231] = function ()
-                zone:registerRegion( 7, -172.253,  0.0,  129.389, -170.047,  0.0,  134.279 ) -- Northern_San_dOria Pitchfork
-                zone:registerRegion( 8, -235.279,  8.0,   15.879, -233.569,  8.0,   19.925 ) -- Northern_San_dOria Pitchfork +1
+        [tpz.zone.SOUTHERN_SAN_DORIA] = zone:registerRegion( 7,  122.602,  0.0,   72.500,  125.000,  0.0,   75.625 ), -- Pitchfork
+        [tpz.zone.NORTHERN_SAN_DORIA] = function ()
+                zone:registerRegion( 7, -172.253,  0.0,  129.389, -170.047,  0.0,  134.279 ) -- Pitchfork
+                zone:registerRegion( 8, -235.279,  8.0,   15.879, -233.569,  8.0,   19.925 ) -- Pitchfork +1
                 end,
-        [234] = zone:registerRegion( 1,  -32.442,  0.0,  -29.566,  -30.090,  0.0,  -26.070 ), -- Bastok_Mines Pitchfork
-        [235] = function ()
-                zone:registerRegion( 1, -123.230, -4.0, -134.556, -119.557, -4.0, -130.665 ) -- Bastok_Markets Pitchfork
-                zone:registerRegion( 2, -255.105,  0.0,   81.564, -253.085,  0.0,   85.509 ) -- Bastok_Markets Pitchfork +1
+        [tpz.zone.BASTOK_MINES] = zone:registerRegion( 1,  -32.442,  0.0,  -29.566,  -30.090,  0.0,  -26.070 ), -- Pitchfork
+        [tpz.zone.BASTOK_MARKETS] = function ()
+                zone:registerRegion( 1, -123.230, -4.0, -134.556, -119.557, -4.0, -130.665 ) -- Pitchfork
+                zone:registerRegion( 2, -255.105,  0.0,   81.564, -253.085,  0.0,   85.509 ) -- Pitchfork +1
                 end,
-        [238] = function ()
-                zone:registerRegion( 2, -113.177, -2.0,   39.484, -110.866, -2.0,   41.984 ) -- Windurst_Waters Pitchfork
-                zone:registerRegion( 3,  141.731,  0.0,  152.559,  143.153,  0.0,  154.663 ) -- Windurst_Waters Pitchfork +1
+        [tpz.zone.WINDURST_WATERS] = function ()
+                zone:registerRegion( 2, -113.177, -2.0,   39.484, -110.866, -2.0,   41.984 ) -- Pitchfork
+                zone:registerRegion( 3,  141.731,  0.0,  152.559,  143.153,  0.0,  154.663 ) -- Pitchfork +1
                 end,
-        [241] = zone:registerRegion( 1,  -30.427, -3.5,    1.833,  -27.999,  3.5,    3.965 ), -- Windurst_Woods Pitchfork
+        [tpz.zone.WINDURST_WOODS] = zone:registerRegion( 1,  -30.427, -3.5,    1.833,  -27.999,  3.5,    3.965 ), -- Pitchfork
     }
 end
 
@@ -263,24 +264,21 @@ function halloweenItemsCheck(player)
     reward_list = {pumpkinHead, pumpkinHead2, trickStaff, trickStaff2}
 
     -- Checks for HQ Upgrade
-    for ri = 1, #reward_list do
-        if (headSlot == reward_list[ri] or mainHand == reward_list[ri]) then
-            if (headSlot == pumpkinHead and player:hasItem(13917) == false) then
-                reward = 13917 -- Horror Head
-            elseif (headSlot == pumpkinHead2 and player:hasItem(15177) == false) then
-                reward = 15177 -- Horror Head II
-            elseif (mainHand == trickStaff and player:hasItem(17566) == false) then
-                reward =  17566 -- Treat Staff
-            elseif (mainHand == trickStaff2 and player:hasItem(17588) == false) then
-                reward = 17588 -- Treat Staff II
-            end
-            return reward
-        end
+    if (headSlot == pumpkinHead and player:hasItem(13917) == false) then
+        reward = 13917 -- Horror Head
+    elseif (headSlot == pumpkinHead2 and player:hasItem(15177) == false) then
+        reward = 15177 -- Horror Head II
+    elseif (mainHand == trickStaff and player:hasItem(17566) == false) then
+        reward =  17566 -- Treat Staff
+    elseif (mainHand == trickStaff2 and player:hasItem(17588) == false) then
+        reward = 17588 -- Treat Staff II
+    end
+    if reward ~= 0 then
+        return reward
     end
 
     -- Checks the possible item rewards to ensure player doesnt already have the item we are about to give them
     local cnt = #reward_list
-
     while cnt ~= 0 do
         local picked = reward_list[math.random(1, #reward_list)]
         if (player:hasItem(picked) == false) then
@@ -356,30 +354,27 @@ function onHalloweenTrade(player, trade, npc)
             if (item == treats_table[itemInList]) then
                 local itemReward = halloweenItemsCheck(player)
                 local varName = "harvestFestTreats"
-                local harvestFestTreats
-                if (itemInList < 32) then -- The size of the list is too big for int 32 used that stores the bit mask, as such there are two lists
-                    harvestFestTreats = player:getCharVar(varName)
-                else
+                if (itemInList >= 32) then -- The size of the list is too big for int 32 used that stores the bit mask, as such there are two lists
                     varName = "harvestFestTreats2"
-                    harvestFestTreats = player:getCharVar(varName) --  this is the second list
                     itemInList = itemInList - 32
                 end
+                local harvestFestTreats = player:getCharVar(varName)
                 local AlreadyTradedChk = utils.mask.getBit(harvestFestTreats, itemInList)
                 if (itemReward ~= 0 and player:getFreeSlotsCount() >= 1 and math.random(1, 3) < 2) then -- Math.random added so you have 33% chance on getting item
-                    player:messageSpecial(ID.text.HERE_TAKE_THIS)
-                    player:addItem(itemReward)
-                    player:messageSpecial(ID.text.ITEM_OBTAINED, itemReward)
+                    if npcUtil.giveItem(player,itemReward) then
+                        player:messageSpecial(ID.text.HERE_TAKE_THIS)
+                    end
                 elseif player:canUseMisc(tpz.zoneMisc.COSTUME) and not AlreadyTradedChk then
-                    local Yagudo = math.random(580, 607)
-                    local Quadav = math.random(644, 671)
-                    local Shade = 533  --Fomor
                     local Orc = math.random(612, 639)
+                    local Quadav = math.random(644, 671)
+                    local Yagudo = math.random(580, 607)
+                    local Shade = 533  -- Fomor
                     local Ghost = 368
                     local Hound = 365
                     local Skeleton = 564
                     local Goblin = 488
 
-                    local halloween_costume_list = { Orc, Quadav, Yagudo, Shade, Ghost, Hound, Skeleton,Goblin, Dark_Stalker}
+                    local halloween_costume_list = { Orc, Quadav, Yagudo, Shade, Ghost, Hound, Skeleton, Goblin }
                     local costumePicked = halloween_costume_list[math.random(1, #halloween_costume_list)] -- will randomly pick one of the costumes in the list
 
                     if ID.npc.HALLOWEEN_SKINS[npc:getID()] then -- Check what costume the npc should give
@@ -389,33 +384,23 @@ function onHalloweenTrade(player, trade, npc)
                     if player:getEquipID(tpz.slot.MAIN) == 18102 and goblinhelper[player:getNation()+1] == costumePicked then -- Check for goblin costume reward
                         costumePicked = player:getCharVar("harvestFestPitchForkZone") == zone and goblinhelper[player:getNation()+1] or Goblin
                     end
-
                     player:addStatusEffect(tpz.effect.COSTUME, costumePicked, 0, 3600)
-                    if not AlreadyTradedChk then
-                        player:setCharVar(varName, utils.mask.setBit(harvestFestTreats, itemInList, true))
-                    end
+                    player:setCharVar(varName, utils.mask.setBit(harvestFestTreats, itemInList, true))
                     -- pitchForkCostumeList defines the special costumes per zone that can trigger the pitch fork requirement
                     -- zone, costumeID
-                    local pitchForkCostumeList = {
-                                                    234, Shade, Skeleton, -- Bastok mines
-                                                    235, Hound, Ghost,    -- Bastok Markets
-                                                    230, Ghost, Skeleton, -- Southern Sandoria
-                                                    231, Hound, Skeleton, -- Northern Sandoria
-                                                    241, Ghost, Shade,    -- Windurst Woods
-                                                    238, Shade, Hound     -- Windurst Waters
-                                                   }
-
-                    for zi = 1, #pitchForkCostumeList, 3 do
-                        if
-                        (zone == pitchForkCostumeList[zi] and costumePicked == pitchForkCostumeList[zi + 1]) or
-                        (zone == pitchForkCostumeList[zi] and costumePicked == pitchForkCostumeList[zi + 2])
-                        then -- Gives special hint for pitch fork costume
-                            player:messageSpecial(ID.text.IF_YOU_WEAR_THIS)
-                        elseif (zi == 16) then
-                            player:messageSpecial(ID.text.THANK_YOU_TREAT)
-
-                        end
-
+                    local pitchForkCostumeList =
+                    {
+                        [tpz.zone.SOUTHERN_SAN_DORIA] = { Ghost, Skeleton },
+                        [tpz.zone.NORTHERN_SAN_DORIA] = { Hound, Skeleton },
+                        [tpz.zone.BASTOK_MINES] = {  Shade, Skeleton },
+                        [tpz.zone.BASTOK_MARKETS] = { Hound, Ghost },
+                        [tpz.zone.WINDURST_WATERS] = { Shade, Hound },
+                        [tpz.zone.WINDURST_WOODS] = { Ghost, Shade },
+                    }
+                    if costumePicked == pitchForkCostumeList[zone][1] or costumePicked == pitchForkCostumeList[zone][2] or costumePicked == Goblin then -- Gives special hint for pitch fork costume
+                        player:messageSpecial(ID.text.IF_YOU_WEAR_THIS)
+                    else
+                        player:messageSpecial(ID.text.THANK_YOU_TREAT)
                     end
                 else
                     player:messageSpecial(ID.text.THANK_YOU)
@@ -456,7 +441,7 @@ function checkHalloweenRegion(player,region)
                     if
                     (zone == pitchForkCostumeList[zi] and costume == pitchForkCostumeList[zi + 1]) or
                     (zone == pitchForkCostumeList[zi] and costume == pitchForkCostumeList[zi + 2]) and
-                    (member:getCharVar("harvestFestPitchRegion") - (region * 1000)) == pitchForkCostumeList[zi] --Compare zone and region match
+                    (member:getCharVar("harvestFestPitchRegion") - (region * 1000)) == pitchForkCostumeList[zi] -- Compare zone and region match
                     then
                         correctCostumes = correctCostumes + 1
                         pitchForkCostumeList[costume == pitchForkCostumeList[zi + 1] and zi + 1 or zi + 2] = 0
@@ -467,7 +452,7 @@ function checkHalloweenRegion(player,region)
                     end
                 end
             end
-        elseif region == 2 then --Pitchfork+1 Check
+        elseif region == 2 then -- Pitchfork+1 check
             for _, member in pairs(player:getParty()) do
                 local costume = member:hasStatusEffect(tpz.effect.COSTUME) and member:getStatusEffect(tpz.effect.COSTUME):getPower() or 0
                 if costume == 488 and (member:getCharVar("harvestFestPitchRegion") - (region * 1000)) == player:getZoneID() then
@@ -480,19 +465,19 @@ function checkHalloweenRegion(player,region)
            end
         end
 
-        if correctCostumes == 2 and noFreeJacks == 1 then --Two players with correct costume
+        if correctCostumes == 2 and noFreeJacks == 1 then -- Two players with correct costume
             for _, member in pairs(player:getParty()) do
                 if not member:hasItem(rewards[region]) then
-                    member:messageSpecial(ID.text.HERE_TAKE_THIS)
-                    member:addItem(rewards[region])
-                    member:messageSpecial(ID.text.ITEM_OBTAINED, rewards[region])
-                    if region == 1 then
-                        member:setCharVar("harvestFestPitchForkZone",zone)
+                    if npcUtil.giveItem(member,rewards[region]) then
+                        member:messageSpecial(ID.text.HERE_TAKE_THIS)
+                        if region == 1 then
+                            member:setCharVar("harvestFestPitchForkZone",zone)
+                        end
                     end
                 else
-                    member:messageSpecial(ID.text.HERE_TAKE_THIS)
-                    member:addItem(4488)
-                    member:messageSpecial(ID.text.ITEM_OBTAINED, 4488)
+                    if npcUtil.giveItem(member, 4488) then
+                        member:messageSpecial(ID.text.HERE_TAKE_THIS)
+                    end
                 end
             end
         end

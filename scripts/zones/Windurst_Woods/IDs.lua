@@ -79,12 +79,12 @@ zones[tpz.zone.WINDURST_WOODS] =
     {
         HALLOWEEN_SKINS =
         {
-            [17764400] = {  542, 1537, events.harvest.skins.quadav },   --Meriri Missing Look
-            [17764401] = {  548, 1792, events.harvest.skins.yagouo },   --Kuzah Hpirohpon Missing Look
-            [17764406] = {  542, 1792, events.harvest.skins.skeleton }, --Shih Tayuun Missing Look
-            [17764407] = {  548, 1282, events.harvest.skins.ghost },    --Retto-Marutto Missing Look
+            [17764400] = {  368, 1537, events.harvest.skins.quadav },   --Meriri
+            [17764401] = {  535, 1792, events.harvest.skins.yagouo },   --Kuzah Hpirohpon
+            [17764406] = { 1146, 1792, events.harvest.skins.skeleton }, --Shih Tayuun
+            [17764407] = {  368, 1282, events.harvest.skins.ghost },    --Retto-Marutto
             [17764454] = {  548, 1030, events.harvest.skins.shade },    --Quesse
-            [17764455] = {  535, 1792, events.harvest.skins.hound },    --Mono Nchaa Missing Look
+            [17764455] = {  572, 1792, events.harvest.skins.hound },    --Mono Nchaa
             [17764459] = {  548, 1793, events.harvest.skins.quadav },   --Wije Tiren
             [17764460] = { 1146, 1792, events.harvest.skins.yagudo },   --Nya Labiccio
             [17764461] = {  535,  233, events.harvest.skins.skeleton }, --Bin Stejihna
