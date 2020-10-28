@@ -23,8 +23,6 @@ set(SOURCES
     commandhandler.h
     conquest_system.cpp
     conquest_system.h
-    daily_system.cpp
-    daily_system.h
     enmity_container.cpp
     enmity_container.h
     grades.cpp
@@ -146,6 +144,10 @@ target_link_libraries(topaz_game
     project_options
     #project_warnings
 )
+
+if(TRACY_ENABLE)
+    target_link_libraries(topaz_game PUBLIC tracy_client)
+endif(TRACY_ENABLE)
 
 if(APPLE)
     link_options(topaz_game PUBLIC -pagezero_size 10000 -image_base 100000000)
