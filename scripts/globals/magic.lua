@@ -347,8 +347,14 @@ end
 
 function getMagicHitRate(caster, target, skillType, element, percentBonus, bonusAcc)
     -- resist everything if magic shield is active
-    if (target:hasStatusEffect(tpz.effect.MAGIC_SHIELD, 0)) then
-        return 0
+    if target:hasStatusEffect(tpz.effect.MAGIC_SHIELD) then
+        local effects = target:getStatusEffects()
+        for _, effect in ipairs(effects) do
+            if effect:getType() == tpz.effect.MAGIC_SHIELD
+            and (effect:getPower() < 1 or effect:getPower() > 1) then
+                return 0
+            end
+        end
     end
 
     local magiceva = 0
