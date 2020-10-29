@@ -350,8 +350,9 @@ function getMagicHitRate(caster, target, skillType, element, percentBonus, bonus
     if target:hasStatusEffect(tpz.effect.MAGIC_SHIELD) then
         local effects = target:getStatusEffects()
         for _, effect in ipairs(effects) do
-            if effect:getType() == tpz.effect.MAGIC_SHIELD
-            and (effect:getPower() < 1 or effect:getPower() > 1) then
+            if effect:getType() == tpz.effect.MAGIC_SHIELD and effect:getPower() > 2 then
+                -- This Accounts for Fools Tonic and Spiritual Incense not guarding
+                -- against enfeebling magic effects.
                 return 0
             end
         end

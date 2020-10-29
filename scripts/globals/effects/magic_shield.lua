@@ -3,16 +3,15 @@
 -- Blocks magic damage and effects depending on power
 --
 -- Power Notes:
---  0 UDMGMAGIC -101% (e.g. Spiritual Incense)
---  1 -50% MDT (e.g. Fool's Tonic)
---  2 UNUSED
---  4 UDMGMAGIC -101%, Immune to Enfeebles (e.g. Fool's Drink, Polar Bulwark)
+--  0 - 50%  DMGMAGIC (e.g. Fool's Tonic)
+--  1 UNUSED
+--  2 -101% UDMGMAGIC (e.g. Spiritual Incense)
+--  4 -101% UDMGMAGIC and Immune to Enfeebles (e.g. Fool's Drink, Polar Bulwark)
 --  8 UNUSED
 -- 16 All Element Specific Absorb 100% (Arcane Stomp)
 -- 32 UNUSED
--- 64 All Magic (incl. non-elemental) Absorb 100% (Mind Wall)
+-- 64 All Magic (incl. non-elemental) Absorb 100% (e.g. Mind Wall)
 -----------------------------------
-
 require("scripts/globals/status")
 
 function onEffectGain(target, effect)
@@ -29,11 +28,10 @@ function onEffectGain(target, effect)
         target:addMod(tpz.mod.DARK_ABSORB, 100)
     elseif effect:getPower() == 4 then
         target:addMod(tpz.mod.UDMGMAGIC, -101)
-        target:addMod(tpz.mod.STATUSRES, 101)
-    elseif effect:getPower() == 1 then
-        target:addMod(tpz.mod.DMGMAGIC, -50)
-    else
+    elseif effect:getPower() == 2 then
         target:addMod(tpz.mod.UDMGMAGIC, -101)
+    else
+        target:addMod(tpz.mod.DMGMAGIC, -50)
     end
 end
 
@@ -51,10 +49,9 @@ function onEffectLose(target, effect)
         target:delMod(tpz.mod.DARK_ABSORB, 100)
     elseif effect:getPower() == 4 then
         target:delMod(tpz.mod.UDMGMAGIC, -101)
-        target:delMod(tpz.mod.STATUSRES, 101)
-    elseif effect:getPower() == 1 then
-        target:delMod(tpz.mod.DMGMAGIC, -50)
-    else
+    elseif effect:getPower() == 2 then
         target:delMod(tpz.mod.UDMGMAGIC, -101)
+    else
+        target:delMod(tpz.mod.DMGMAGIC, -50)
     end
 end
