@@ -346,15 +346,12 @@ function applyResistanceAddEffect(player, target, element, bonus)
 end
 
 function getMagicHitRate(caster, target, skillType, element, percentBonus, bonusAcc)
-    -- resist everything if magic shield is active
+    -- resist everything if real magic shield is active see effects/magic_shield
     if target:hasStatusEffect(tpz.effect.MAGIC_SHIELD) then
-        local effects = target:getStatusEffects()
-        for _, effect in ipairs(effects) do
-            if effect:getType() == tpz.effect.MAGIC_SHIELD and effect:getPower() > 2 then
-                -- This Accounts for Fools Tonic and Spiritual Incense not guarding
-                -- against enfeebling magic effects.
-                return 0
-            end
+        local magicshieldsub = target:getStatusEffect(tpz.effect.MAGIC_SHIELD)
+
+        if magicshieldsub:getSubPower() == 0 then
+            return 0
         end
     end
 

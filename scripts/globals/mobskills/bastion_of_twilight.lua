@@ -20,7 +20,7 @@ end
 function onMobWeaponSkill(target, mob, skill)
     local typeEffect = tpz.effect.MAGIC_SHIELD
 
-    mob:addStatusEffect(tpz.effect.MAGIC_SHIELD, 4, 0, 0)
+    mob:addStatusEffect(tpz.effect.MAGIC_SHIELD, 2, 0, 0)
     mob:AnimationSub(2)
 
     skill:setMsg(tpz.msg.basic.SKILL_GAIN_EFFECT)

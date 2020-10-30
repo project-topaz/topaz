@@ -14,10 +14,11 @@ end
 function onItemUse(target)
     local duration = 60
     local power = 0
+    local wsmitigation = 0
 
     local function addShield(target, power, duration)
         target:delStatusEffect(tpz.effect.MAGIC_SHIELD)
-        target:addStatusEffect(tpz.effect.PHYSICAL_SHIELD, power, 0, duration)
+        target:addStatusEffect(tpz.effect.PHYSICAL_SHIELD, power, 0, duration, 0, wsmitigation)
         target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.PHYSICAL_SHIELD)
     end
 
