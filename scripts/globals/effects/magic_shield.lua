@@ -4,7 +4,8 @@
 --
 -- Power Notes:
 --  0 - 50%  DMGMAGIC (e.g. Fool's Tonic)
---  2 -100% UDMGMAGIC (e.g. Spiritual Incense, Fool's Drink, Polar Bulwark)
+--  2 -100% UDMGMAGIC (e.g. Spiritual Incense, Polar Bulwark)
+--  3 -100% UDMGMAGIC (e.g. Fool's Drink)
 --  6 All Element Specific Absorb 100% (Arcane Stomp)
 --  8 All Magic (incl. non-elemental) Absorb 100% (e.g. Mind Wall)
 --
@@ -27,7 +28,7 @@ function onEffectGain(target, effect)
         target:addMod(tpz.mod.LTNG_ABSORB, 100)
         target:addMod(tpz.mod.LIGHT_ABSORB, 100)
         target:addMod(tpz.mod.DARK_ABSORB, 100)
-    elseif power == 2 then
+    elseif power == 2 or power == 3 then
         target:addMod(tpz.mod.UDMGMAGIC, -100)
     else
         target:addMod(tpz.mod.DMGMAGIC, -50)
@@ -47,7 +48,7 @@ function onEffectLose(target, effect)
         target:delMod(tpz.mod.LTNG_ABSORB, 100)
         target:delMod(tpz.mod.LIGHT_ABSORB, 100)
         target:delMod(tpz.mod.DARK_ABSORB, 100)
-    elseif power == 2 then
+    elseif power == 2 or power == 3 then
         target:delMod(tpz.mod.UDMGMAGIC, -100)
     else
         target:delMod(tpz.mod.DMGMAGIC, -50)

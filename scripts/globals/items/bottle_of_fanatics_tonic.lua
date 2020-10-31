@@ -12,24 +12,25 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
+    local shieldtype = tpz.effect.PHYSICAL_SHIELD
     local duration = 60
     local power = 0
     local wsmitigation = 0
 
     local function addShield(target, power, duration)
         target:delStatusEffect(tpz.effect.MAGIC_SHIELD)
-        target:addStatusEffect(tpz.effect.PHYSICAL_SHIELD, power, 0, duration, 0, wsmitigation)
-        target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, tpz.effect.PHYSICAL_SHIELD)
+        target:addStatusEffect(shieldtype, power, 0, duration, 0, fakemagicshield)
+        target:messageBasic(tpz.msg.basic.GAINS_EFFECT_OF_STATUS, shieldtype)
     end
 
-    if target:hasStatusEffect(tpz.effect.PHYSICAL_SHIELD) then
-        local effects = target:getStatusEffects()
-        for _, effect in ipairs(effects) do
-            if effect:getType() == tpz.effect.PHYSICAL_SHIELD and effect:getPower() > power then
-                target:messageBasic(tpz.msg.basic.NO_EFFECT) break
-            elseif effect:getType() == tpz.effect.PHYSICAL_SHIELD and effect:getPower() <= power then
-                addShield(target, power, duration) break
-            end
+    if target:hasStatusEffect(shieldtype) then
+        local shield = target:getStatusEffect(shieldtype)
+        local activeshieldpower = shield:getPower()
+
+        if activeshieldpower > power then
+            target:messageBasic(tpz.msg.basic.NO_EFFECT)
+        else
+            addShield(target, power, duration)
         end
     else
        addShield(target, power, duration)

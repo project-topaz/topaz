@@ -4,7 +4,8 @@
 --
 -- Power Notes:
 --  0 - 50%  DMGPHYS (e.g. Fanatics Tonic)
---  2 -100% UDMGPHYS (e.g. Carnal Incense, Pyric Bulwark, Fanatics Drink)
+--  2 -100% UDMGPHYS (e.g. Carnal Incense, Pyric Bulwark)
+--  3 -100% UDMGPHYS (e.g. Fanatics Drink)
 --  8 100% PHYS_ABSORB (e.g. Transmogrification)
 --
 -- subPower Notes: --TODO plumb in logic for special use cases.
@@ -18,7 +19,7 @@ function onEffectGain(target, effect)
     local power = effect:getPower()
     if power == 8 then
         target:addMod(tpz.mod.PHYS_ABSORB, 100)
-    elseif power == 2 then
+    elseif power == 2 or power == 3 then
         target:addMod(tpz.mod.UDMGPHYS, -100)
     else
         target:addMod(tpz.mod.DMGPHYS, -50)
@@ -29,7 +30,7 @@ function onEffectLose(target, effect)
     local power = effect:getPower()
     if power == 8 then
         target:delMod(tpz.mod.PHYS_ABSORB, 100)
-    elseif power == 2 then
+    elseif power == 2 or power == 3 then
         target:delMod(tpz.mod.UDMGPHYS, -100)
     else
         target:delMod(tpz.mod.DMGPHYS, -50)
