@@ -20,9 +20,12 @@
 */
 
 #include "navmesh.h"
+
 #include <cstring>
+#include <cfloat>
 #include <iostream>
 #include <fstream>
+
 #include "../common/tpzrand.h"
 
 const int8 CNavMesh::ERROR_NEARESTPOLY;
