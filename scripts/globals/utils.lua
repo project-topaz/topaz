@@ -16,6 +16,11 @@ function utils.shuffle(tab)
     return res
 end
 
+function utils.roundup(num)
+    local mult = 10^(0)
+    return math.floor(num * mult + 0.5) / mult
+end
+
 function utils.clamp(input, min_val, max_val)
     if input < min_val then
         input = min_val

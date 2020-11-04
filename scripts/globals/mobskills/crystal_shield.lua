@@ -12,7 +12,7 @@ function onMobSkillCheck(target, mob, skill)
 end
 
 function onMobWeaponSkill(target, mob, skill)
-    local power = 40
+    local power = 50
     local duration = 300
 
     local typeEffect = tpz.effect.PROTECT
