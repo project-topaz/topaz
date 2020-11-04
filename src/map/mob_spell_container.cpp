@@ -59,12 +59,7 @@ void CMobSpellContainer::AddSpell(SpellID spellId)
     uint8 aoe = battleutils::GetSpellAoEType(m_PMob, spell);
     if(aoe > 0 && spell->canTargetEnemy())
     {
-
         m_gaList.push_back(spellId);
-    }
-    else if (spell->isDebuff())
-    {
-        m_debuffList.push_back(spellId);
     }
     else if (spell->isSevere())
     {
@@ -76,10 +71,14 @@ void CMobSpellContainer::AddSpell(SpellID spellId)
         // add to damage list
         m_damageList.push_back(spellId);
     }
-    else if(spell->isNa()){
+    else if (spell->isDebuff())
+    {
+        m_debuffList.push_back(spellId);
+    }
+    else if(spell->isNa())
+    {
         // na spell and erase
         m_naList.push_back(spellId);
-
     }
     else if(spell->isHeal()){ // includes blue mage healing spells, wild carrot etc
    // add to healing
@@ -373,7 +372,6 @@ bool CMobSpellContainer::HasSevereSpells() const
 
 bool CMobSpellContainer::HasNaSpell(SpellID spellId) const
 {
-
     for(auto spell : m_naList)
     {
         if(spell == spellId)
