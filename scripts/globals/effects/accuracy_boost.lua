@@ -1,13 +1,16 @@
 -----------------------------------
---
 -- tpz.effect.ACCURACY_BOOST
---
+-- getPower    = ACC
+-- getSubPower = RACC
 -----------------------------------
 require("scripts/globals/status")
 -----------------------------------
 
 function onEffectGain(target, effect)
     target:addMod(tpz.mod.ACC, effect:getPower())
+    if effect:getSubPower() > 0 then
+        target:addMod(tpz.mod.RACC, effect:getSubPower())
+    end
 end
 
 function onEffectTick(target, effect)
@@ -23,5 +26,8 @@ function onEffectLose(target, effect)
     local boostACC_effect_size = effect:getPower()
     if (boostACC_effect_size > 0) then
         target:delMod(tpz.mod.ACC, effect:getPower())
+    end
+    if effect:getSubPower() > 0 then
+        target:delMod(tpz.mod.RACC, effect:getSubPower())
     end
 end

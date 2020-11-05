@@ -1,7 +1,7 @@
 -----------------------------------------
--- ID: 5392
--- Item: bottle_of_champions_drink
--- Item Effect: Haste (Magic) 18% - CRITHITRATE 5%
+-- ID: 5849
+-- Item: bottle_of_berserkers_drink
+-- Item Effect: Double Attack +100
 -----------------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -12,9 +12,8 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    local ename = tpz.effect.POTENCY
-    local power = 1800 --haste
-    local subp = 5 --crit
+    local ename = tpz.effect.MULTI_STRIKES
+    local power = 100 --DA
     local duration = 60
 
     if target:hasStatusEffect(ename) then

@@ -13,7 +13,7 @@ end
 
 function onItemUse(target)
     local ename = tpz.effect.POTENCY
-    local power = 180 --haste
+    local power = 1800 --haste
     local subp = 5 --crit
     local duration = 60
 

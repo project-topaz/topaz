@@ -1,7 +1,7 @@
 -----------------------------------------
 -- ID: 5841
 -- Item: bottle_of_ascetics_tonic
--- Item Effect: MAGIC_ATK_BOOST 25
+-- Item Effect: MATT/MACC 25
 -----------------------------------------
 require("scripts/globals/status")
 require("scripts/globals/msg")
@@ -12,19 +12,33 @@ function onItemCheck(target)
 end
 
 function onItemUse(target)
-    local ename = tpz.effect.MAGIC_ATK_BOOST
-    local power = 25
+    local name1 = tpz.effect.MAGIC_ATK_BOOST
+    local name2 = tpz.effect.INTENSION
+    local power1 = 25 --MATT
+    local power2 = 25 --MACC
     local duration = 300
 
-    if target:hasStatusEffect(ename) then
-        local buff = target:getStatusEffect(ename)
+    if target:hasStatusEffect(name1) then
+        local buff = target:getStatusEffect(name1)
         local effectpower = buff:getPower()
-        if effectpower > power then
+        if effectpower > power1 then
             target:messageBasic(tpz.msg.basic.NO_EFFECT)
         else
-            target:addStatusEffect(ename, power, 0, duration)
+            target:addStatusEffect(name1, power1, 0, duration, 0, power1)
         end
     else
-        target:addStatusEffect(ename, power, 0, duration)
+        target:addStatusEffect(name1, power1, 0, duration, 0, power1)
+    end
+
+    if target:hasStatusEffect(name2) then
+        local buff = target:getStatusEffect(name2)
+        local effectpower = buff:getPower()
+        if effectpower > power2 then
+            target:messageBasic(tpz.msg.basic.NO_EFFECT)
+        else
+            target:addStatusEffect(name2, power2, 0, duration, 0, power2)
+        end
+    else
+        target:addStatusEffect(name2, power2, 0, duration, 0, power2)
     end
 end
