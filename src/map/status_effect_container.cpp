@@ -1525,45 +1525,68 @@ void CStatusEffectContainer::HandleAura(CStatusEffect* PStatusEffect)
         PEntity = PEntity->PMaster;
     }
 
-    float aura_range = 6.25; // TODO: Add mods
+    float auraRange = 6.25; // TODO: Add mods
+
+    std::vector<CBattleEntity*> validTargets;
+    auto addIfValidTarget = [this, &validTargets, &auraRange](CBattleEntity* PTarget)
+    {
+        if (PTarget != nullptr &&
+            m_POwner->loc.zone->GetID() == PTarget->loc.zone->GetID() &&
+            distance(m_POwner->loc.p, PTarget->loc.p) <= auraRange &&
+            !PTarget->isDead())
+        {
+            validTargets.emplace_back(PTarget);
+        }
+    };
 
     if (PEntity->objtype == TYPE_PC)
     {
+        auto PChar = dynamic_cast<CCharEntity*>(PEntity);
         if (auraTarget == AURATARGET_ALLIES)
         {
-            PEntity->ForParty([&](CBattleEntity* PMember) {
-                if (PMember != nullptr && PEntity->loc.zone->GetID() == PMember->loc.zone->GetID() && distance(m_POwner->loc.p, PMember->loc.p) <= aura_range && !PMember->isDead())
-                {
-                    CStatusEffect* PEffect = new CStatusEffect(
-                        (EFFECT)PStatusEffect->GetSubID(), // Effect ID
-                        (uint16)PStatusEffect->GetSubID(), // Effect Icon (Associated with ID)
-                        (uint16)PStatusEffect->GetSubPower(), // Power
-                        3, // Tick
-                        4); // Duration
-                    PEffect->SetFlag(EFFECTFLAG_NO_LOSS_MESSAGE);
-                    PMember->StatusEffectContainer->AddStatusEffect(PEffect, true);
-                }
+            PChar->ForParty([&](CBattleEntity* PMember)
+            {
+                addIfValidTarget(PMember); 
             });
         }
         else if (auraTarget == AURATARGET_ENEMIES)
         {
             for (CBattleEntity* PTarget : *PEntity->PNotorietyContainer)
             {
-                if (PTarget != nullptr && PEntity->loc.zone->GetID() == PTarget->loc.zone->GetID() && distance(m_POwner->loc.p, PTarget->loc.p) <= aura_range && !PTarget->isDead())
-                {
-                    CStatusEffect* PEffect = new CStatusEffect(
-                        (EFFECT)PStatusEffect->GetSubID(), // Effect ID
-                        (uint16)PStatusEffect->GetSubID(), // Effect Icon (Associated with ID)
-                        (uint16)PStatusEffect->GetSubPower(), // Power
-                        3, // Tick
-                        4); // Duration
-                    PEffect->SetFlag(EFFECTFLAG_NO_LOSS_MESSAGE);
-                    PTarget->StatusEffectContainer->AddStatusEffect(PEffect, true);
-                }
+                addIfValidTarget(PTarget); 
             }
         }
     }
-    // TODO: Mob Auras
+    else if (PEntity->objtype == TYPE_MOB)
+    {
+        auto PMob = dynamic_cast<CMobEntity*>(PEntity);
+        if (auraTarget == AURATARGET_ALLIES)
+        {
+            PMob->ForParty([&](CBattleEntity* PMember)
+            {
+                addIfValidTarget(PMember); 
+            });
+        }
+        else if (auraTarget == AURATARGET_ENEMIES)
+        {
+            for (auto [idx, entry] : *PMob->PEnmityContainer->GetEnmityList())
+            {
+                addIfValidTarget(entry.PEnmityOwner); 
+            }
+        }
+    }
+
+    for (auto* PTarget : validTargets)
+    {
+        CStatusEffect* PEffect = new CStatusEffect(
+            (EFFECT)PStatusEffect->GetSubID(),    // Effect ID
+            (uint16)PStatusEffect->GetSubID(),    // Effect Icon (Associated with ID)
+            (uint16)PStatusEffect->GetSubPower(), // Power
+            3,                                    // Tick
+            4);                                   // Duration
+        PEffect->SetFlag(EFFECTFLAG_NO_LOSS_MESSAGE);
+        PTarget->StatusEffectContainer->AddStatusEffect(PEffect, true);
+    }
 }
 
 /************************************************************************
