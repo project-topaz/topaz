@@ -77,7 +77,7 @@ end
 
 function onTrigger(player, npc)
     local introMask = player:getCharVar("currencyGoblinIntro")
-    
+
     if
         utils.mask.getBit(introMask, 0) and
         not utils.mask.getBit(introMask, 4) and
@@ -154,11 +154,10 @@ function onEventFinish(player, csid, option)
         player:setCharVar("currencyGoblinIntro", utils.mask.setBit(introMask, 4, true))
 
     elseif csid == 132 then
+        player:setCharVar("currencyGoblinIntro", utils.mask.setBit(introMask, 1, true))
         -- remove if this was the last of the three goblins that introduced currency
-        if utils.mask.getBit(introMask, 2) and utils.mask.getBit(introMask, 3) then
+        if utils.mask.isFull(player:getCharVar("currencyGoblinIntro"), 5) then
             player:setCharVar("currencyGoblinIntro", 0)
-        else
-            player:setCharVar("currencyGoblinIntro", utils.mask.setBit(introMask, 1, true))
         end
 
     -- bought prismatic hourglass
