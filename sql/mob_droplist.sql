@@ -14263,13 +14263,13 @@ INSERT INTO `mob_droplist` VALUES (2654,0,0,1000,4872,30);
 INSERT INTO `mob_droplist` VALUES (2654,0,0,1000,4876,10);
 INSERT INTO `mob_droplist` VALUES (2654,0,0,1000,4877,10);
 INSERT INTO `mob_droplist` VALUES (2654,0,0,1000,4878,30);
-INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,857,210);
-INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,857,100);
-INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,857,70);
-INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,893,140);
-INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,938,70);
-INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,4359,740);
-INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,4359,370);
+INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,857,100); -- (Wild Dhalmel, Dhalmel Hide)
+INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,857,50);
+INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,857,10);
+INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,893,100); -- (Wild Dhalmel, Giant Femur)
+INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,938,50); -- (Wild Dhalmel, Papaka Grass)
+INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,4359,240); -- (Wild Dhalmel, Dhalmel Meat)
+INSERT INTO `mob_droplist` VALUES (2655,0,0,1000,4359,150);
 INSERT INTO `mob_droplist` VALUES (2656,0,0,1000,878,250);
 INSERT INTO `mob_droplist` VALUES (2656,0,0,1000,5571,80);
 INSERT INTO `mob_droplist` VALUES (2657,0,0,1000,878,310);
