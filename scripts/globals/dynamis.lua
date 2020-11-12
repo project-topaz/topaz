@@ -335,7 +335,7 @@ dynamis.entryNpcOnEventFinish = function(player, csid, option)
         npcUtil.giveKeyItem(player, tpz.ki.VIAL_OF_SHROUDED_SAND)
         player:setCharVar("Dynamis_Status", utils.mask.setBit(mask, 0, false))
         -- flag to make any currency goblin introduce prismatic hourglass
-        player:setCharVar("currencyGoblinIntro", utils.mask.setBit(introMask, 0, true))
+        player:setCharVar("currencyGoblinIntro", utils.mask.setBit(player:getCharVar("currencyGoblinIntro"), 0, true))
 
     -- first visit cutscene
     elseif info.csFirst and csid == info.csFirst then
