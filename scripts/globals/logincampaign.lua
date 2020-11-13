@@ -181,6 +181,18 @@ tpz.logincampaign.table =
     },
 }
 
+tpz.logincampaign.points = function(player)
+    local zoneId      = player:getZoneID()
+    local ID          = zones[zoneId]
+    local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM
+
+    player:PrintToPlayer("Hello, the zone is "..zoneId)
+    player:messageSpecial(6586, 0, 1500)
+    player:messageSpecial(6587, CAMPAIGN_YEAR, CAMPAIGN_MONTH)
+    player:messageSpecial(6588)
+    player:PrintToPlayer("next midnight is"..getMidnight())
+end
+
 tpz.logincampaign.check = function(player, npc)
     local loginPoints = 4200                   -- To be Changed for player:getLoginPoints()
     local cYear = CAMPAIGN_YEAR

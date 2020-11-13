@@ -10,6 +10,7 @@ require("scripts/globals/keyitems")
 require("scripts/globals/missions")
 require("scripts/globals/quests")
 require("scripts/globals/zone")
+require("scripts/globals/logincampaign")
 -----------------------------------
 
 function onInitialize(zone)
@@ -39,6 +40,11 @@ function onZoneIn(player, prevZone)
     end
 
     return cs
+end
+
+function afterZoneIn(player)
+    -- LOGIN CAMPAIGN
+    tpz.logincampaign.points(player, zone)
 end
 
 function onConquestUpdate(zone, updatetype)
