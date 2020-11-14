@@ -184,24 +184,75 @@ tpz.logincampaign.table =
 tpz.logincampaign.points = function(player)
     local zoneId      = player:getZoneID()
     local ID          = zones[zoneId]
-    local baseMessage = ID.text.PLAYER_OBTAINS_TEMP_ITEM
+    local loginPoints = player:getCurrency("login_points")
+    local playercMonth = player:getCharVar("cMonth")
+    local playercYear = player:getCharVar("cYear")
+    local playercDay = player:getCharVar("cDay")
+    local nextMidnight = player:getCharVar("cMidnight")
+    local loginCount = player:getCharVar("cLoginCount")
+    local campaignStartDate = os.time({
+        year=CAMPAIGN_YEAR,
+        month=CAMPAIGN_MONTH,
+        day=CAMPAIGN_DAY,
+        hour=0,
+        min=0,
+        sec=0
+    }) + 32400  -- JST time
+    local campaignEndDate = campaignStartDate + CAMPAIGN_DURATION * 24 * 60 * 60
 
-    player:PrintToPlayer("Hello, the zone is "..zoneId)
-    player:messageSpecial(6586, 0, 1500)
-    player:messageSpecial(6587, CAMPAIGN_YEAR, CAMPAIGN_MONTH)
-    player:messageSpecial(6588)
-    player:PrintToPlayer("next midnight is"..getMidnight())
+    if os.time() > campaignEndDate then
+        return
+    end
+
+    player:PrintToPlayer("i didnt return sucker!")
+
+    -- Carry last months points if there's any and
+    if playercMonth ~= CAMPAIGN_MONTH and playercYear ~= CAMPAIGN_YEAR then
+        if loginPoints > 1500 then
+            player:setCurrency("login_points", 1500)
+            player:messageSpecial(6586, 0, 1500)
+        elseif loginPoints ~= 0 then
+            player:messageSpecial(6586, 0, loginPoints)
+        end
+        player:setCharVar("cMonth", CAMPAIGN_MONTH)
+        player:setCharVar("cYear", CAMPAIGN_YEAR)
+    end
+
+    -- Show Info about campaign (month, year, login time) and add points
+    if nextMidnight ~= getMidnight() then
+        player:messageSpecial(6587, CAMPAIGN_YEAR, CAMPAIGN_MONTH)
+
+        if loginCount == 0 then
+            loginCount = 1
+        else
+            loginCount = loginCount + 1
+        end
+
+        player:setCharVar("cMidnight", getMidnight())
+
+        -- show total points
+        if loginCount == 1 then
+            player:addCurrency("login_points", 500)
+            player:messageSpecial(6588, 0, loginCount, 500, player:getCurrency("login_points"))
+        else
+            player:addCurrency("login_points", 100)
+            player:messageSpecial(6588, 0, loginCount, 100, player:getCurrency("login_points"))
+        end
+        player:PrintToPlayer("next midnight is"..getMidnight())
+        player:setCharVar("cLoginCount", loginCount)
+    end
+
 end
 
-tpz.logincampaign.check = function(player, npc)
-    local loginPoints = 4200                   -- To be Changed for player:getLoginPoints()
+tpz.logincampaign.check = function(player)
+    local loginPoints = player:getCurrency("login_points")
     local cYear = CAMPAIGN_YEAR
-    local cMonth = bit.lshift(CAMPAIGN_MONTH, 28)
-    local cDate = bit.bor(cYear, cMonth)
+    local cMonth = CAMPAIGN_MONTH
+    local cDate = bit.bor(cYear, bit.lshift(CAMPAIGN_MONTH, 28))
 
     local price1 = tpz.logincampaign.table[cYear][cMonth][1]["price"]
     local price2 = bit.lshift(tpz.logincampaign.table[cYear][cMonth][5]["price"], 16)
-    local price3 =  tpz.logincampaign.table[cYear][cMonth][9]["price"]
+    local price3 = tpz.logincampaign.table[cYear][cMonth][9]["price"]
     local price4 = bit.lshift(tpz.logincampaign.table[cYear][cMonth][13]["price"], 16)
     local price5 = tpz.logincampaign.table[cYear][cMonth][17]["price"]
     local price6 = bit.lshift(tpz.logincampaign.table[cYear][cMonth][21]["price"], 16)
@@ -264,7 +315,7 @@ tpz.logincampaign.eventupdate = function(player, csid, option)
         showItems == 30
     then
         local price = tpz.logincampaign.table[cYear][cMonth][showItems - 1]["price"]
-        local loginPoints = 4200
+        local loginPoints = player:getCurrency(login_points)
         local totalItemsMask = (2 ^ 20 - 1) - (2 ^ #tpz.logincampaign.table[cYear][cMonth][showItems - 1]["items"] - 1)  -- Uses 20 bits and sets to 1 for items not used.
         local items = {}
 
@@ -285,7 +336,8 @@ tpz.logincampaign.eventupdate = function(player, csid, option)
         )
 
     else
-        npcUtil.giveItem(player, { {tpz.logincampaign.table[cYear][cMonth][showItems - 2]["items"][itemSelected + 1], itemQuantity} })
+        if npcUtil.giveItem(player, { {tpz.logincampaign.table[cYear][cMonth][showItems - 2]["items"][itemSelected + 1], itemQuantity} }) then
+            player:delCurrency("login_points", tpz.logincampaign.table[cYear][cMonth][showItems - 2]["price"]* itemQuantity)
+        end
     end
-
 end

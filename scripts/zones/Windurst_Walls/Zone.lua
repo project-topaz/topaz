@@ -44,7 +44,7 @@ end
 
 function afterZoneIn(player)
     -- LOGIN CAMPAIGN
-    tpz.logincampaign.points(player, zone)
+    tpz.logincampaign.points(player)
 end
 
 function onConquestUpdate(zone, updatetype)
