@@ -5,6 +5,7 @@ require("scripts/globals/status")
 require("scripts/globals/teleports")
 require("scripts/globals/titles")
 require("scripts/globals/zone")
+require("scripts/globals/events/login_campaign")
 -----------------------------------
 require("scripts/quests/full_speed_ahead")
 -----------------------------------
@@ -175,7 +176,6 @@ function onGameIn(player, firstLogin, zoning)
         player:addHP(50000)
         player:setMP(50000)
     end
-    
     -- !immortal
     if player:getCharVar("Immortal") == 1 then
         player:setUnkillable(true)
@@ -188,6 +188,14 @@ function onGameIn(player, firstLogin, zoning)
 
     -- remember time player zoned in (e.g., to support zone-in delays)
     player:setLocalVar("ZoneInTime", os.time())
+
+    -- Login Campaign rewards points once daily
+    tpz.events.loginCampaign.onGameIn(player)
+    print("WTF dood")
+end
+
+function afterZoneIn(player)
+    print("tell me what u want what u really really want")
 end
 
 function onPlayerLevelUp(player)
@@ -196,7 +204,7 @@ end
 function onPlayerLevelDown(player)
 end
 
-function onPlayerEmote(player, emoteId)   
+function onPlayerEmote(player, emoteId)
     if emoteId == tpz.emote.CHEER and player:hasStatusEffect(tpz.effect.FULL_SPEED_AHEAD) then
         tpz.fsa.onCheer(player)
     end
