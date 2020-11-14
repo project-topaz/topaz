@@ -40,10 +40,8 @@ ENABLE_ROE = 1
 ENABLE_ROE_TIMED = 1 -- Enable 4-hour timed records
 
 -- Login Campaign (Set to 0 if you don't want to run a Login Campaign)
-CAMPAIGN_YEAR = 2019
-CAMPAIGN_MONTH = 11
-CAMPAIGN_DAY = 2
-CAMPAIGN_DURATION = 28 -- Duration is set in Earth days
+-- Please visit scripts/globals/events/login_campaign.lua for assigning the correct campaign.
+ENABLE_LOGIN_CAMPAIGN = 1
 
 -- TREASURE CASKETS
 -- Retail droprate = 0.1 (10%) with no other effects active

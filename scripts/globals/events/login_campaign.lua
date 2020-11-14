@@ -1,13 +1,38 @@
 ------------------------------------
 -- Login Campaign
 ------------------------------------
-require("scripts/globals/status")
 require("scripts/globals/npc_util")
 ------------------------------------
 
 tpz = tpz or {}
 tpz.events = tpz.events or {}
 tpz.events.loginCampaign = tpz.events.loginCampaign or {}
+
+loginCampaignYear = 2019
+loginCampaignMonth = 11
+loginCampaignDay = 2
+loginCampaignDuration = 28 -- Duration is set in Earth days
+
+tpz.events.loginCampaign.isCampaignActive = function()
+    if ENABLE_LOGIN_CAMPAIGN == 1 then
+        local currentLocalTime = os.time(os.date('*t'))
+        local currentUTCTime = os.time(os.date('!*t'))
+        local jstOffset = currentUTCTime - currentLocalTime + 32400
+        local campaignStartDate = os.time({
+            year = loginCampaignYear,
+            month = loginCampaignMonth,
+            day = loginCampaignDay,
+            hour = 0,
+            min = 0,
+            sec = 0
+        }) + jstOffset  -- JST time
+        local campaignEndDate = campaignStartDate + loginCampaignDuration * 24 * 60 * 60
+
+        if os.time() < campaignEndDate then
+            return true
+        end
+    end
+end
 
 -- Gives Login Points once a day.
 tpz.events.loginCampaign.onGameIn = function(player)
@@ -18,35 +43,22 @@ tpz.events.loginCampaign.onGameIn = function(player)
     local playercYear = player:getCharVar("LoginCampaignYear")
     local nextMidnight = player:getCharVar("LoginCampaignNextMidnight")
     local loginCount = player:getCharVar("LoginCampaignLoginNumber")
-    local campaignStartDate = os.time({
-        year=CAMPAIGN_YEAR,
-        month=CAMPAIGN_MONTH,
-        day=CAMPAIGN_DAY,
-        hour=0,
-        min=0,
-        sec=0
-    }) + 32400  -- JST time
-    local campaignEndDate = campaignStartDate + CAMPAIGN_DURATION * 24 * 60 * 60
-
-    if os.time() > campaignEndDate then
-        return
-    end
 
     -- Carry last months points if there's any
-    if playercMonth ~= CAMPAIGN_MONTH and playercYear ~= CAMPAIGN_YEAR then
+    if playercMonth ~= loginCampaignMonth and playercYear ~= loginCampaignYear then
         if loginPoints > 1500 then
             player:setCurrency("login_points", 1500)
             player:messageSpecial(ID.text.CARRIED_OVER_POINTS, 0, 1500)
         elseif loginPoints ~= 0 then
             player:messageSpecial(ID.text.CARRIED_OVER_POINTS, 0, loginPoints)
         end
-        player:setCharVar("LoginCampaignMonth", CAMPAIGN_MONTH)
-        player:setCharVar("LoginCampaignYear", CAMPAIGN_YEAR)
+        player:setCharVar("LoginCampaignMonth", loginCampaignMonth)
+        player:setCharVar("LoginCampaignYear", loginCampaignYear)
     end
 
     -- Show Info about campaign (month, year, login time) and add points
     if nextMidnight ~= getMidnight() then
-        player:messageSpecial(ID.text.LOGIN_CAMPAIGN_UNDERWAY, CAMPAIGN_YEAR, CAMPAIGN_MONTH)
+        player:messageSpecial(ID.text.LOGIN_CAMPAIGN_UNDERWAY, loginCampaignYear, loginCampaignMonth)
 
         if loginCount == 0 then
             loginCount = 1
@@ -77,9 +89,9 @@ require("scripts/globals/events/login_campaign_data")
 --
 tpz.events.loginCampaign.onTrigger = function(player)
     local loginPoints = player:getCurrency("login_points")
-    local cYear = CAMPAIGN_YEAR
-    local cMonth = CAMPAIGN_MONTH
-    local cDate = bit.bor(cYear, bit.lshift(CAMPAIGN_MONTH, 28))
+    local cYear = loginCampaignYear
+    local cMonth = loginCampaignMonth
+    local cDate = bit.bor(cYear, bit.lshift(loginCampaignMonth, 28))
     local currentLoginCampaign = tpz.events.loginCampaign.prizes[cYear][cMonth]
 
     local price1 = currentLoginCampaign[1]["price"]
@@ -103,8 +115,8 @@ tpz.events.loginCampaign.onEventUpdate = function(player, csid, option)
     local showItems = bit.band(option, 31) -- first 32 bits are for showing correct item list
     local itemSelected = bit.band(bit.rshift(option, 5), 31)
     local itemQuantity = bit.band(bit.rshift(option, 11), 511)
-    local cYear = CAMPAIGN_YEAR
-    local cMonth = CAMPAIGN_MONTH
+    local cYear = loginCampaignYear
+    local cMonth = loginCampaignMonth
     local currentLoginCampaign = tpz.events.loginCampaign.prizes[cYear][cMonth]
 
     if
