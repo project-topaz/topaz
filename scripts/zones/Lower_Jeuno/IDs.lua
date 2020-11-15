@@ -35,6 +35,7 @@ zones[tpz.zone.LOWER_JEUNO] =
         RHIMONNE_SHOP_DIALOG    = 7135, -- Howdy! Thanks for visiting the Chocobo Shop!
         GUIDE_STONE             = 7137, -- Up: Upper Jeuno (facing San d'Oria) Down: Port Jeuno (facing Windurst)
         ALDO_DIALOG             = 7142, -- Hi. I'm Aldo, head of Tenshodo. We deal in things you can't buy anywhere else. Take your time and have a look around.
+        VHANA_TEXT              = 7240, -- Ahh, there's nothing like city streets lit up at night.
         LAMP_MSG_OFFSET         = 7246, -- All the lamps are lit.
         ZAUKO_IS_RECRUITING     = 7254, -- Zauko is recruiting an adventurer to light the lamps.
         CHOCOBO_DIALOG          = 7316, -- Hmph.

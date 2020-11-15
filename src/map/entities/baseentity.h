@@ -246,6 +246,10 @@ public:
     uint8           namevis;
     uint8           allegiance;         // what types of targets the entity can fight
     uint8           updatemask;         // what to update next server tick to players nearby
+    uint16          m_pathPoint;        // tracker for pathing
+
+    uint16      GetPathPoint();
+    void        SetPathPoint(uint16 pathPoint);
 
     std::unique_ptr<CAIContainer> PAI;       // AI container
     CBattlefield* PBattlefield;            // pointer to battlefield (if in one)
