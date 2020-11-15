@@ -15,6 +15,8 @@ require("scripts/globals/status");
 function onTrade(player,npc,trade)
     local ALittleKnowledge = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.A_LITTLE_KNOWLEDGE);
     local ALittleKnowledgeProgress = player:getCharVar("ALittleKnowledge");
+    local seeingBloodRed = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED);
+    local seeingBloodRedProgress = player:getCharVar("SeeingBloodRed");
 
     if (ALittleKnowledge == QUEST_ACCEPTED and ALittleKnowledgeProgress == 1) then
         if (trade:hasItemQty(2550, 12) and trade:getGil() == 0 and trade:getItemCount() == 12) then
@@ -27,6 +29,11 @@ function onTrade(player,npc,trade)
                 player:startEvent(12);
             end
         end
+    elseif (seeingBloodRed == QUEST_ACCEPTED and seeingBloodRedProgress == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
+        if (npcUtil.tradeHas(trade, 2550)) then
+            player:startEvent(38);
+            player:confirmTrade();
+        end
     end
 end;
 
@@ -38,6 +45,8 @@ function onTrigger(player,npc)
     local mJob = player:getMainJob();
     local onSabbatical = player:getQuestStatus(CRYSTAL_WAR,tpz.quest.id.crystalWar.ON_SABBATICAL);
     local onSabbaticalProgress = player:getCharVar("OnSabbatical");
+    local seeingBloodRed = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED);
+    local seeingBloodRedProgress = player:getCharVar("SeeingBloodRed");
     local downwardHelix = player:getQuestStatus(CRYSTAL_WAR, tpz.quest.id.crystalWar.DOWNWARD_HELIX);
 
     if (ALittleKnowledge == QUEST_AVAILABLE) then
@@ -79,6 +88,20 @@ function onTrigger(player,npc)
         else
             player:startEvent(27);
         end
+    elseif (seeingBloodRed == QUEST_AVAILABLE and mJob == tpz.job.SCH and mLvl >= AF3_QUEST_LEVEL) then
+        player:startEvent(29);
+    elseif (seeingBloodRed == QUEST_ACCEPTED and seeingBloodRedProgress == 1) then
+        player:startEvent(30);
+    elseif (seeingBloodRedProgress == 2 and not player:seenKeyItem(tpz.ki.UNADDRESSED_SEALED_LETTER)) then
+        player:startEvent(31);
+    elseif (seeingBloodRedProgress == 2 and player:seenKeyItem(tpz.ki.UNADDRESSED_SEALED_LETTER)) then
+        player:startEvent(32);
+    elseif (seeingBloodRedProgress == 3 and player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
+        player:startEvent(33);
+    elseif (seeingBloodRedProgress == 3 and not player:hasKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT)) then
+        player:startEvent(37);
+    elseif (seeingBloodRedProgress == 4) then
+        player:startEvent(34);
     else
         player:startEvent(15);
     end
@@ -119,12 +142,12 @@ function onEventFinish(player,csid,option)
         if (player:getFreeSlotsCount() == 0) then
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED);
         else
+            player:addItem(6058); --klimaform
             player:delKeyItem(tpz.ki.ULBRECHTS_SEALED_LETTER);
             player:delKeyItem(tpz.ki.SCHULTS_SEALED_LETTER);
             player:completeQuest(CRYSTAL_WAR,tpz.quest.id.crystalWar.ON_SABBATICAL);
-            player:addItem(6058); --klimaform
             player:messageSpecial(ID.text.ITEM_OBTAINED, 6058);
-            player:setCharVar("onSabbatical",0);
+            player:setCharVar("OnSabbatical",0);
             player:setCharVar("Erlene_Sabbatical_Timer",VanadielDayOfTheYear());
         end
     elseif (csid == 23) then
@@ -137,9 +160,29 @@ function onEventFinish(player,csid,option)
             player:messageSpecial(ID.text.ITEM_CANNOT_BE_OBTAINED);
         else
             player:completeQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.DOWNWARD_HELIX);
+            player:addKeyItem(tpz.ki.ULBRECHTS_MORTARBOARD);
             player:addItem(15004); -- Schlar's Bracers
             player:messageSpecial(ID.text.ITEM_OBTAINED, 15004);
             player:setCharVar("DownwardHelix",0);
         end
+    elseif (csid == 29) then
+        player:addQuest(CRYSTAL_WAR, tpz.quest.id.crystalWar.SEEING_BLOOD_RED);
+        player:setCharVar("SeeingBloodRed",1);
+    elseif (csid == 31) then
+        player:setCharVar("SeeingBloodRed",2);
+    elseif (csid == 32) then
+        player:delKeyItem(tpz.ki.UNADDRESSED_SEALED_LETTER);
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED + 1, tpz.ki.UNADDRESSED_SEALED_LETTER);
+        player:addKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT);
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PORTING_MAGIC_TRANSCRIPT);
+        player:setCharVar("SeeingBloodRed",3);
+    elseif (csid == 34) then
+        player:addItem(16140);
+        player:messageSpecial(ID.text.ITEM_OBTAINED, 16140);
+        player:completeQuest(CRYSTAL_WAR,tpz.quest.id.crystalWar.SEEING_BLOOD_RED);
+        player:setCharVar("SeeingBloodRed",0);
+    elseif (csid == 38) then
+        player:addKeyItem(tpz.ki.PORTING_MAGIC_TRANSCRIPT);
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.PORTING_MAGIC_TRANSCRIPT);
     end
 end;
