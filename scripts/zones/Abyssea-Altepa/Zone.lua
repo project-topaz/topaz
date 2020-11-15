@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Altepa/IDs")
 require("scripts/globals/quests")
+require("scripts/globals/abyssea")
 -----------------------------------
 
 function onInitialize(zone)

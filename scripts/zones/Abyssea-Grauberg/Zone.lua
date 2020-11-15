@@ -5,6 +5,7 @@
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Grauberg/IDs")
 require("scripts/globals/quests")
+require("scripts/globals/abyssea")
 require("scripts/globals/helm")
 -----------------------------------
 

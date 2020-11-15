@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Vunkerl/IDs")
+require("scripts/globals/abyssea")
 require("scripts/globals/quests")
 -----------------------------------
 

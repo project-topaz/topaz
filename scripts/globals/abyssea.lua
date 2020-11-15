@@ -4,7 +4,23 @@
 -- or change things to "elseif"!
 -----------------------------------
 
+require("scripts/globals/settings")
 require("scripts/globals/keyitems")
+require("scripts/globals/utils")
+
+tpz = tpz or {}
+tpz.abyssea = tpz.abyssea or {}
+
+tpz.abyssea.lightType =
+{
+    PEARL   = 1,
+    AZURE   = 2,
+    RUBY    = 3,
+    AMBER   = 4,
+    GOLDEN  = 5,
+    SILVERY = 6,
+    EBON    = 7,
+}
 
 -- weaponskills for red weakness
 local red_weakness =
@@ -397,5 +413,98 @@ function abysseaOnEventFinish(player,csid,option)
         GetMobByID(nm):setSpawn(dx,dy,dz)
         SpawnMob(nm):updateClaim(player)
         return true
+    end
+end
+
+function isInAbysseaZone(player)
+    return player:getCurrentRegion() == tpz.region.ABYSSEA
+end
+
+function GetAbysseaStats(player)
+    local zoneId = player:getZoneID()
+    local ID = zones[zoneId]
+
+    if isInAbysseaZone(player) then
+        local pearl  = player:getCharVar("pearlLight")
+        local azure  = player:getCharVar("azureLight")
+        local ruby   = player:getCharVar("rubyLight")
+        local amber  = player:getCharVar("amberLight")
+        local gold   = player:getCharVar("goldLight")
+        local silver = player:getCharVar("silverLight")
+        local ebon   = player:getCharVar("ebonLight")
+
+        player:messageSpecial(ID.text.LIGHTS_MESSAGE_1, pearl, ebon, gold, silver)
+        player:messageSpecial(ID.text.LIGHTS_MESSAGE_2, azure, ruby, amber)
+    end
+end
+
+tpz.abyssea.ResetPlayerLights = function(player)
+    player:setCharVar("pearlLight", 0)
+    player:setCharVar("azureLight", 0)
+    player:setCharVar("rubyLight", 0)
+    player:setCharVar("amberLight", 0)
+    player:setCharVar("goldLight", 0)
+    player:setCharVar("silverLight", 0)
+    player:setCharVar("ebonLight", 0)
+end
+
+tpz.abyssea.SetBonusLights = function(player)
+    player:addCharVar("pearlLight", ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:addCharVar("azureLight", ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:addCharVar("rubyLight",  ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:addCharVar("amberLight", ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:addCharVar("goldLight",  ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:addCharVar("silverLight", ABYSSEA_BONUSLIGHT_AMOUNT)
+    player:addCharVar("ebonLight",  ABYSSEA_BONUSLIGHT_AMOUNT)
+end
+
+tpz.abyssea.AddPlayerLights = function(player, light, amount)
+    local zoneId = player:getZoneID()
+    local ID = zones[zoneId]
+    local tiermsg     = 0
+    local lightamount = amount or 0
+    
+    if lightamount <= 8 then
+        tiermsg = 0
+    elseif lightamount > 8 and lightamount <= 16 then
+        tiermsg = 1
+    elseif lightamount > 16 and lightamount <= 32 then
+        tiermsg = 2
+    elseif lightamount > 32 and lightamount <= 64 then
+        tiermsg = 3
+    elseif lightamount > 64 then
+        tiermsg = 4
+    end
+
+    if light == tpz.abyssea.lightType.PEARL or 
+        light == tpz.abyssea.lightType.GOLDEN or 
+        light == tpz.abyssea.lightType.SILVERY or 
+        light == tpz.abyssea.lightType.EBON then
+        if tiermsg > 2 then
+            tiermsg = 2
+        end
+    end
+
+    if light == tpz.abyssea.lightType.PEARL then
+        player:setCharVar("pearlLight",utils.clamp(player:getCharVar("pearlLight") + lightamount, 0, 230))
+        player:messageSpecial(ID.text.BODY_EMITS_PEARL_LIGHT,tiermsg)
+    elseif light == tpz.abyssea.lightType.AZURE then
+        player:setCharVar("azureLight",utils.clamp(player:getCharVar("azureLight") + lightamount, 0, 255))
+        player:messageSpecial(ID.text.BODY_EMITS_AZURE_LIGHT,tiermsg)
+    elseif light == tpz.abyssea.lightType.RUBY then
+        player:setCharVar("rubyLight",utils.clamp(player:getCharVar("rubyLight") + lightamount, 0, 255))
+        player:messageSpecial(ID.text.BODY_EMITS_RUBY_LIGHT,tiermsg)
+    elseif light == tpz.abyssea.lightType.AMBER then
+        player:setCharVar("amberLight",utils.clamp(player:getCharVar("amberLight") + lightamount, 0, 255))
+        player:messageSpecial(ID.text.BODY_EMITS_AMBER_LIGHT,tiermsg)
+    elseif light == tpz.abyssea.lightType.GOLDEN then
+        player:setCharVar("goldLight",utils.clamp(player:getCharVar("goldLight") + lightamount, 0, 200))
+        player:messageSpecial(ID.text.BODY_EMITS_GOLDEN_LIGHT,tiermsg) 
+    elseif light == tpz.abyssea.lightType.SILVERY then
+        player:setCharVar("silverLight",utils.clamp(player:getCharVar("silverLight") + lightamount, 0, 200))
+        player:messageSpecial(ID.text.BODY_EMITS_SILVERY_LIGHT,tiermsg)
+    elseif light == tpz.abyssea.lightType.EBON then
+        player:setCharVar("ebonLight",utils.clamp(player:getCharVar("ebonLight") + lightamount, 0 ,200))
+        player:messageSpecial(ID.text.BODY_EMITS_EBON_LIGHT,tiermsg)
     end
 end

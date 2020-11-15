@@ -3,13 +3,8 @@
 -- Zone: Abyssea - Konschtat
 --
 -----------------------------------
--- Research
--- EventID 1024-1029 aura of boundless rage
--- EventID 2048-2179 The treasure chest will disappear is 180 seconds menu.
--- EventID 2180 Teleport?
--- EventID 2181 DEBUG Menu
------------------------------------
 local ID = require("scripts/zones/Abyssea-Konschtat/IDs")
+require("scripts/globals/abyssea")
 require("scripts/globals/quests")
 -----------------------------------
 

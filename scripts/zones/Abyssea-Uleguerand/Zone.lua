@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Uleguerand/IDs")
+require("scripts/globals/abyssea")
 require("scripts/globals/quests")
 -----------------------------------
 

@@ -4,6 +4,7 @@
 --
 -----------------------------------
 local ID = require("scripts/zones/Abyssea-Empyreal_Paradox/IDs")
+require("scripts/globals/abyssea")
 -----------------------------------
 
 function onInitialize(zone)
