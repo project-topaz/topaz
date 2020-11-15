@@ -5,30 +5,21 @@
 
 require("scripts/globals/status")
 require("scripts/globals/keyitems")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 1,
-    parameters = "s"
+    parameters = "t"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!addallmounts {player}")
-end
-
-function onTrigger(player, target)
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "addallmounts {player}"
+    
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
 
     -- add all mount key items
@@ -36,5 +27,5 @@ function onTrigger(player, target)
         targ:addKeyItem(i)
     end
 
-    player:PrintToPlayer(string.format("%s now has all mounts.", targ:getName()))
+    tpz.commands.print(caller, entity, string.format("%s now has all mounts.", targ:getName()))
 end

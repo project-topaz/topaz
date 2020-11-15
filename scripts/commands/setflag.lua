@@ -3,38 +3,29 @@
 -- desc: set arbitrary flags for testing
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "ss"
+    parameters = "st"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setflag <flags> {player}")
-end
+function onTrigger(caller, entity, flags, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!setflag <flags> {player}"
 
-function onTrigger(player, flags, target)
-
-    -- validate flags
-    if (flags == nil) then
-        error(player, "You must enter a number for the flags (hex values work).")
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
         return
     end
 
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found!", target ) )
-            return
-        end
+    -- validate flags
+    if (flags == nil) then
+        tpz.commands.error(caller, entity, "You must enter a number for the flags (hex values work).", usage)
+        return
     end
 
     -- set flags
-    targ:setFlag( flags )
-
+    targ:setFlag(flags)
 end

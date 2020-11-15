@@ -3,24 +3,23 @@
 -- desc: Sets the players gil.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
     parameters = "i"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setgil <amount>")
-end
+function onTrigger(caller, entity, amount)
+    local usage = "!setgil <amount>"
 
-function onTrigger(player, amount)
     -- validate amount
     if (amount == nil or amount < 0) then
-        error(player, "Invalid amount.")
+        tpz.commands.error(caller, entity, "Invalid amount.", usage)
         return
     end
 
-    player:setGil(amount)
-    player:PrintToPlayer(string.format("%s's gil was set to %i.", player:getName(), amount))
+    entity:setGil(amount)
+    tpz.commands.print(caller, entity, string.format("%s's gil was set to %i.", entity:getName(), amount))
 end

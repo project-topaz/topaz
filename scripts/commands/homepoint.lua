@@ -3,33 +3,26 @@
 -- desc: Sends the target to their homepoint.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "s"
+    parameters = "t"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!homepoint {player}")
-end
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!homepoint {player}"
 
-function onTrigger(player, target)
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName( target )
-        if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found!", target ) )
-            return
-        end
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
 
     -- homepoint target
     targ:warp()
-    if (targ:getID() ~= player:getID()) then
-        player:PrintToPlayer(string.format("Sent %s to their homepoint.",targ:getName()))
+    if (targ:getID() ~= caller) then
+        tpz.commands.print(caller, entity, string.format("Sent %s to their homepoint.", targ:getName()))
     end
 end

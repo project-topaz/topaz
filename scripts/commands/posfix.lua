@@ -3,23 +3,23 @@
 -- desc: Resets a targets account session and warps them to Jeuno.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
     parameters = "s"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!posfix <player>")
-end
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!posfix <player>"
 
-function onTrigger(player, target)
     -- validate target
-    if (target == nil) then
-        error(player, "You must supply the name of an offline player.")
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must supply the name of an offline player.", usage)
     else
-        player:resetPlayer( target )
-        player:PrintToPlayer(string.format("Fixed %s's position.", target))
+        entity:resetPlayer(target)
+        tpz.commands.print(caller, entity, string.format("Fixed %s's position.", target))
     end
 end

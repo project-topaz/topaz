@@ -4,24 +4,28 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/missions")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 1,
-    parameters = "sss"
+    parameters = "sst"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!delmission <logID> <missionID> {player}")
-end
+function onTrigger(caller, entity, logId, missionId, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!delmission <logID> <missionID> {player}"
 
-function onTrigger(player, logId, missionId, target)
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
+
     -- validate logId
     local logName
     local logInfo = GetMissionLogInfo(logId)
     if (logInfo == nil) then
-        error(player, "Invalid logID.")
+        tpz.commands.error(caller, entity, "Invalid logID.", usage)
         return
     end
     logName = logInfo.full_name
@@ -33,23 +37,11 @@ function onTrigger(player, logId, missionId, target)
         missionId = tonumber(missionId) or areaMissionIds[string.upper(missionId)] or _G[string.upper(missionId)]
     end
     if (missionId == nil or missionId < 0) then
-        error(player, "Invalid missionID.")
+        tpz.commands.error(caller, entity, "Invalid missionID.", usage)
         return
-    end
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
     end
 
     -- delete mission
     targ:delMission(logId, missionId)
-    player:PrintToPlayer(string.format("Deleted %s mission %i from %s.", logName, missionId, targ:getName()))
+    tpz.commands.print(caller, entity, string.format("Deleted %s mission %i from %s.", logName, missionId, targ:getName()))
 end

@@ -3,37 +3,24 @@
 -- desc: Despawns the given mob <t> or mobID)
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "i"
+    parameters = "n"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!despawnmob {mobID}")
-end
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetMob(caller, entity, target)
+    local usage = "!despawnmob {mobID}"
 
-function onTrigger(player, mobId)
-
-    -- validate mobId
-    local targ
-    if (mobId == nil) then
-        targ = player:getCursorTarget()
-        if (targ == nil or not targ:isMob()) then
-            error(player,"You must either provide a mobID or target a mob.")
-            return
-        end
-    else
-        targ = GetMobByID(mobId)
-        if (targ == nil) then
-            error(player,"Invalid mobID.")
-            return
-        end
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a valid mobID.", usage)
+        return
     end
 
     -- despawn mob
     DespawnMob(targ:getID())
-    player:PrintToPlayer(string.format("Despawned %s %i.",targ:getName(),targ:getID()))
-
+    tpz.commands.print(caller, entity, string.format("Despawned %s %i.", targ:getName(), targ:getID()))
 end

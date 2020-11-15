@@ -9,6 +9,6 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(player)
+function onTrigger(caller, entity)
     UpdateServerMessage()
 end

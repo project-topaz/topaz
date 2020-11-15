@@ -3,36 +3,23 @@
 -- desc: Prints mob's current action to the command user.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "i"
+    parameters = "n"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!getmobaction {mobID}")
-end
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetMob(caller, entity, target)
+    local usage = "!getmobaction {mobID}"
 
-function onTrigger(player, mobId)
-
-    -- validate mobid
-    local targ
-    if (mobId == nil) then
-        targ = player:getCursorTarget()
-        if (not targ:isMob()) then
-            error(player, "You must either provide a mobID or target a mob with your cursor.")
-            return
-        end
-    else
-        targ = GetMobByID(mobId)
-        if (targ == nil) then
-            error(player, "Invalid mobID.")
-            return
-        end
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a valid mobID.", usage)
+        return
     end
 
     -- report mob action
-    player:PrintToPlayer(string.format("%s %i current action ID is %i.", targ:getName(), targ:getID(), targ:getCurrentAction()))
-
+    tpz.commands.print(caller, entity, string.format("%s %i current action ID is %i.", targ:getName(), targ:getID(), targ:getCurrentAction()))
 end

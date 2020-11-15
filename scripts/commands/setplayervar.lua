@@ -3,44 +3,35 @@
 -- desc: Sets a variable on the target player.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "ssi"
+    parameters = "tsi"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setplayervar <player> <variable> <value>")
-end
+function onTrigger(caller, entity, target, variable, value)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!setplayervar <player> <variable> <value>"
 
-function onTrigger(player, target, variable, value)
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        error(player, "You must provide a player name.")
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
         return
-    else
-        targ = GetPlayerByName( target )
-        if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found!", target ) )
-            return
-        end
     end
 
     -- validate var
     if (variable == nil) then
-        error(player, "You must provide a variable name.")
+        tpz.commands.error(caller, entity, "You must provide a variable name.", usage)
         return
     end
 
     -- validate value
     if (value == nil) then
-        error(player, "You must provide a value.")
+        tpz.commands.error(caller, entity, "You must provide a value.", usage)
         return
     end
 
     targ:setCharVar(variable, value)
-    player:PrintToPlayer( string.format( "Set %s's variable '%s' to %i.", targ:getName(), variable, value ) )
+    tpz.commands.print(caller, entity, string.format("Set %s's variable '%s' to %i.", targ:getName(), variable, value))
 end

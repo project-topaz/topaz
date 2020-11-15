@@ -23,6 +23,10 @@
 #include "commandhandler.h"
 #include "entities/charentity.h"
 #include "lua/lua_baseentity.h"
+#include "message.h"
+#include "../common/utils.h"
+#include "utils/zoneutils.h"
+#include "utils/charutils.h"
 
 void CCommandHandler::init(lua_State* L)
 {
@@ -30,15 +34,15 @@ void CCommandHandler::init(lua_State* L)
     m_LState = L;
 }
 
-int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
+int32 CCommandHandler::call(uint32 caller, CBaseEntity* entity, const int8* commandline)
 {
     std::istringstream clstream((char*)commandline);
     std::string cmdname;
     clstream >> cmdname;
 
-    if (!PChar)
+    if (entity == nullptr)
     {
-        ShowError("cmdhandler::call: nullptr character attempted to use command\n");
+        ShowError("cmdhandler::call: nullptr entity attempted to use command\n");
         return -1;
     }
     if (cmdname.empty())
@@ -81,7 +85,7 @@ int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
         return -1;
     }
 
-    int8 permission = (int8)lua_tonumber(m_LState, -1);
+    auto permission = (uint8)lua_tonumber(m_LState, -1);
     lua_pop(m_LState, 1); // pop number..
 
     // Attempt to obtain the command parameters..
@@ -116,10 +120,23 @@ int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
     lua_pop(m_LState, 1); // pop string..
     lua_pop(m_LState, 1); // pop table..
 
-    // Ensure this user can use this command..
-    if (permission > PChar->m_GMlevel)
+    std::string name;
+    uint8 gmLevel;
+
+    if (caller != entity->id)
     {
-        ShowWarning("cmdhandler::call: Character %s attempting to use higher permission command %s\n", PChar->name.c_str(), cmdname.c_str());
+        std::tie(name, gmLevel) = charutils::GetNameAndGMLevel(caller);
+    }
+    else
+    {
+        name = entity->name;
+        gmLevel = ((CCharEntity*)entity)->m_GMlevel;
+    }
+
+    // Ensure this user can use this command..
+    if (permission > gmLevel)
+    {
+        ShowWarning("cmdhandler::call: Character %s attempting to use higher permission command %s\n", name.c_str(), cmdname.c_str());
 
         // Delete the cmdprops table..
         lua_pushnil(m_LState);
@@ -132,7 +149,7 @@ int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
         if (map_config.audit_gm_cmd <= permission && map_config.audit_gm_cmd > 0)
         {
             char escaped_name[16 * 2 + 1];
-            Sql_EscapeString(SqlHandle, escaped_name, PChar->name.c_str());
+            Sql_EscapeString(SqlHandle, escaped_name, name.c_str());
 
             std::string escaped_gm_cmd; escaped_gm_cmd.reserve(cmdname.length() * 2 + 1);
             Sql_EscapeString(SqlHandle, escaped_gm_cmd.data(), (char*)cmdname.c_str());
@@ -162,12 +179,17 @@ int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
         return -1;
     }
 
-    // Push the calling character (if exists)..
-    CLuaBaseEntity LuaCmdCaller(PChar);
     int32 cntparam = 0;
 
+    // Push the caller
+    lua_pushnumber(m_LState, caller);
+    ++cntparam;
+
+    // Push the calling character (if exists)..
+    CLuaBaseEntity LuaCmdCaller(entity);
+
     Lunar<CLuaBaseEntity>::push(m_LState, &LuaCmdCaller);
-    cntparam += 1;
+    ++cntparam;
 
     // Prepare parameters..
     std::string param;
@@ -181,6 +203,54 @@ int32 CCommandHandler::call(CCharEntity* PChar, const int8* commandline)
 
         switch (*parameter)
         {
+        case 'n':
+        {
+            uint32 id = std::stoul(param);
+            auto entity = zoneutils::GetEntity(id, TYPE_MOB | TYPE_NPC | TYPE_PC);
+            if (entity != nullptr)
+            {
+                lua_pushstring(m_LState, param.c_str());
+                ++cntparam;
+            }
+            else
+            {
+                // send a request to message server
+                char buf[245];
+                memset(&buf[0], 0, sizeof(buf));
+                ref<uint32>(&buf, 0) = caller;
+                ref<uint8>(&buf, 4) = TYPE_MOB | TYPE_NPC | TYPE_PC;
+                ref<uint32>(&buf, 5) = id;
+                memcpy(buf + 9, commandline, 236);
+                message::send(MSG_SEND_LUA_ID_COMMAND, &buf, sizeof(buf), nullptr);
+
+                lua_pushnil(m_LState);
+                return 0;
+            }
+
+            break;
+        }
+        case 't':
+        {
+            if (zoneutils::GetCharByName((int8*)param.c_str()))
+            {
+                lua_pushstring(m_LState, param.c_str());
+                ++cntparam;
+            }
+            else
+            {
+                // send a request to message server
+                char buf[255];
+                memset(&buf[0], 0, sizeof(buf));
+                ref<uint32>(&buf, 0) = caller;
+                memcpy(buf + 4, param.c_str(), param.length());
+                memcpy(buf + 19, commandline, 236);
+                message::send(MSG_SEND_LUA_COMMAND, &buf, sizeof(buf), nullptr);
+
+                lua_pushnil(m_LState);
+                return 0;
+            }
+            break;
+        }
         case 'b':
             lua_pushstring(m_LState, (const char*)commandline);
             ++cntparam;

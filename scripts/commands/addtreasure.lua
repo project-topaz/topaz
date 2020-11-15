@@ -3,49 +3,42 @@
 -- desc: Adds an item directly to the treasure pool.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "isi"
+    parameters = "iti"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!addtreasure <itemID> {player} {npcID}")
-end
+function onTrigger(caller, entity, itemId, target, dropper)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!addtreasure <itemID> {player} {npcID}"
 
-function onTrigger(player, itemId, target, dropper)
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
+
     -- validate itemId
     if (itemId ~= nil) then
         itemId = tonumber(itemId)
     end
     if (itemId == nil or itemId == 0) then
-        error(player, "Invalid itemID.")
+        tpz.commands.error(caller, entity, "Invalid itemID.", usage)
         return
-    end
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
     end
 
     -- validate dropper
     if (dropper ~= nil) then
         dropper = GetNPCByID(dropper)
         if (dropper == nil) then
-            error(player, "Invalid npcID.")
+            tpz.commands.error(caller, entity, "Invalid npcID.", usage)
             return
         end
     end
 
     -- add treasure to pool
     targ:addTreasure(itemId, dropper)
-    player:PrintToPlayer(string.format("Item of ID %d was added to the treasure pool of %s or their party/alliance.", itemId, targ:getName()))
+    tpz.commands.print(caller, entity, string.format("Item of ID %d was added to the treasure pool of %s or their party/alliance.", itemId, targ:getName()))
 end

@@ -3,24 +3,22 @@
 -- desc: Sets the players current costume.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
     parameters = "i"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!costume <costumeID>")
-end
-
-function onTrigger(player, costumeId)
+function onTrigger(caller, entity, costumeId)
+    local usage = "!costume <costumeID>"
     -- validate costumeId
     if (costumeId == nil or costumeId < 0) then
-        error(player, "Invalid costumeID.")
+        tpz.commands.error(caller, entity, "Invalid costumeID.", usage)
         return
     end
 
     -- put on costume
-    player:costume( costumeId )
+    entity:costume(costumeId)
 end

@@ -3,39 +3,32 @@
 -- desc: adds the ability to use a spell to the player
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!addspell <spellID> {player}")
-end
+function onTrigger(caller, entity, spellId, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!addspell <spellID> {player}"
 
-function onTrigger(player, spellId, target)
-    -- validate spellId
-    if (spellId == nil) then
-        error(player, "Invalid spellID.")
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
         return
     end
 
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
+    -- validate spellId
+    if (spellId == nil) then
+        tpz.commands.error(caller, entity, "Invalid spellID.", usage)
+        return
     end
 
     -- add spell
     local save = true
     local silent = false
     targ:addSpell(spellId, silent, save)
-    player:PrintToPlayer(string.format("Added spell %i to %s.",spellId,targ:getName()))
+    tpz.commands.print(caller, entity, string.format("Added spell %i to %s.",spellId,targ:getName()))
 end

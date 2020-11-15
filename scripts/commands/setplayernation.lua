@@ -3,29 +3,27 @@
 -- desc: Sets the target players nation.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "ss"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!setplayernation {player} <nation>")
-    player:PrintToPlayer("Nations: 0=San d'Oria 1=Bastok 2=Windurst")
-end
+function onTrigger(caller, entity, target, nation)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!setplayernation <nation> {player}"
 
-function onTrigger(player, arg1, arg2)
-    local targ
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
+
     local nation
 
     -- validate target
     if (arg2 ~= nil) then
-        targ = GetPlayerByName(arg1)
-        if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found!", arg1 ))
-            return
-        end
         nation = tonumber(arg2)
     elseif (arg1 ~= nil) then
         targ = player
@@ -34,7 +32,8 @@ function onTrigger(player, arg1, arg2)
 
     -- validate nation
     if (nation == nil or nation < 0 or nation > 2) then
-        error(player, "Invalid nation ID.")
+        tpz.commands.error(caller, entity, "Invalid nation ID.", usage)
+        tpz.commands.print(caller, entity, "Nations: 0=San d'Oria 1=Bastok 2=Windurst")
         return
     end
 
@@ -45,6 +44,6 @@ function onTrigger(player, arg1, arg2)
     }
 
     -- set nation
-    targ:setNation( nation )
-    player:PrintToPlayer( string.format("Set %s's home nation to %s.", targ:getName(), nationByNum[nation]) )
+    targ:setNation(nation)
+    tpz.commands.print(caller, entity, string.format("Set %s's home nation to %s.", targ:getName(), nationByNum[nation]))
 end

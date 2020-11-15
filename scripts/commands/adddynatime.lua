@@ -3,40 +3,33 @@
 -- desc: Adds an amount of time to the given target. If no target then to the current player.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!adddynatime <minutes> {player}")
-end
-
-function onTrigger(player, minutes, target)
-    -- validate target
-    local targ
-    if target == nil then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if targ == nil then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
+function onTrigger(caller, entity, minutes, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!adddynatime <minutes> {player}"
+    
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
 
     -- target must be in dynamis
     local effect = targ:getStatusEffect(tpz.effect.DYNAMIS)
     if not effect then
-        error(player, string.format("%s is not in Dynamis.", targ:getName()))
+        tpz.commands.error(caller, entity, string.format("%s is not in Dynamis.", targ:getName()), usage)
         return
     end
 
     -- validate amount
     if minutes == nil or minutes < 1 then
-        error(player, "Invalid number of minutes.")
+        tpz.commands.error(caller, entity, "Invalid number of minutes.", usage)
         return
     end
 

@@ -202,6 +202,7 @@ namespace charutils
     bool    AddWeaponSkillPoints(CCharEntity*, SLOTTYPE, int);
 
     int32   GetCharVar(CCharEntity* PChar, const char* var);
+    std::tuple<std::string, uint8> GetNameAndGMLevel(uint32 id);
 };
 
 #endif

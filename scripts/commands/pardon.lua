@@ -3,30 +3,28 @@
 -- desc: Pardons a player from jail. (Mordion Gaol)
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "s"
+    parameters = "t"
 }
 
-function onTrigger(player, target)
-    if (target == nil) then
-        player:PrintToPlayer("You must enter a valid player name.")
-        return
-    end
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!pardon {player}"
 
-    -- Validate the target..
-    local targ = GetPlayerByName( target )
     if (targ == nil) then
-        player:PrintToPlayer( string.format( "Invalid player '%s' given.", target ) )
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
         return
     end
 
-    if (targ:getCharVar( 'inJail' ) >= 1) then
-        local message = string.format( '%s is pardoning %s from jail.', player:getName(), targ:getName() )
-        printf( message )
+    if (targ:getCharVar('inJail') >= 1) then
+        local message = string.format('%s is pardoning %s from jail.', player:getName(), targ:getName())
+        printf(message)
 
-        targ:setCharVar( 'inJail', 0 )
+        targ:setCharVar('inJail', 0)
         targ:warp()
     end
 end

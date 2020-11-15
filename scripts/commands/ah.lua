@@ -9,6 +9,6 @@ cmdprops =
     parameters = ""
 }
 
-function onTrigger(player)
-    player:sendMenu(3)
+function onTrigger(caller, entity)
+    entity:sendMenu(3)
 end

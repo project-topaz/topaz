@@ -3,34 +3,33 @@
 -- desc: Adds a temp item to the players inventory.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
     parameters = "ii"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!addtempitem <itemID> <quantity>")
-end
+function onTrigger(caller, entity, itemId, quantity)
+    local usage = "!addtempitem <itemID> <quantity>"
 
-function onTrigger(player, itemId, quantity)
     -- validate itemId
     if (itemId ~= nil) then
         itemId = tonumber(itemId)
     end
     if (itemId == nil or itemId == 0) then
-        error(player, "Invalid itemID.")
+        tpz.commands.error(caller, entity, "Invalid itemID.", usage)
         return
     end
 
     -- validate quantity
     quantity = tonumber(quantity) or 1
     if (quantity == nil or quantity < 1) then
-        error(player, "Invalid quantity.")
+        tpz.commands.error(caller, entity, "Invalid quantity.", usage)
         return
     end
 
     -- add temp item
-    player:addTempItem(itemId, quantity, 0, 0, 0, 0, 0, 0, 0, 0)
+    entity:addTempItem(itemId, quantity, 0, 0, 0, 0, 0, 0, 0, 0)
 end

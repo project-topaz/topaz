@@ -1,7 +1,9 @@
 ---------------------------------------------------------------------------------------------------
--- func: checkvar <varType> <varName>
+-- func: checkvar <varName> <varType>
 -- desc: checks player or server variable and returns result value.
 ---------------------------------------------------------------------------------------------------
+
+require("scripts/globals/commands")
 
 cmdprops =
 {
@@ -9,53 +11,35 @@ cmdprops =
     parameters = "ss"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!checkvar {'server', or player} <variable name>")
-end
-
-function onTrigger(player, arg1, arg2)
+function onTrigger(caller, entity, varName, target)
     local targ
-    local varName
-
-    if (arg2 == nil) then
-        -- no player provided. shift arguments by one.
-        targ = nil
-        varName = arg1
+    if (string.upper(target) == 'SERVER') then
+        targ = "server"
     else
-        targ = arg1
-        varName = arg2
+        targ = target
     end
+    local usage = "!checkvar <variable name> {'server', or player}"
 
-    -- validate target
     if (targ == nil) then
-        targ = player:getCursorTarget()
-        if (targ == nil or not targ:isPC()) then
-            targ = player
-        end
-    else
-        if (string.upper(targ) == 'SERVER') then
-            targ = 'server'
-        else
-            local target = targ
-            targ = GetPlayerByName(targ)
-            if (targ == nil) then
-                error(player, string.format("Player named '%s' not found!", target))
-                return
-            end
-        end
+        tpz.commands.error(caller, entity, "You must target or enter a player name or provide SERVER.", usage)
+        return
     end
 
     -- validate varName
     if (varName == nil) then
-        error(player, "You must provide a variable name.")
+        tpz.commands.error(caller, entity, "You must provide a variable name.", usage)
         return
     end
 
     -- show variable
     if (targ == "server") then
-        player:PrintToPlayer(string.format("Server variable '%s' : %u ", varName, GetServerVariable(varName)))
+        tpz.commands.print(caller, entity, string.format("Server variable '%s' : %u ", varName, GetServerVariable(varName)))
     else
-        player:PrintToPlayer(string.format("%s's variable '%s' : %u", targ:getName(), varName, targ:getCharVar(varName)))
+        local found, value = GetCharVariable(varName, targ)
+        if (found == true) then
+            tpz.commands.print(caller, entity, string.format("%s's variable '%s' : %u", targ, varName, value))
+        else
+            tpz.commands.error(caller, entity, string.format("variable '%s' not found for player: %s", varName, targ), usage)
+        end
     end
 end

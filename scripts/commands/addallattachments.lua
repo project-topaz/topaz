@@ -3,10 +3,12 @@
 -- desc: Unlocks all attachments
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "s"
+    parameters = "t"
 }
 
 local ValidAttachments = {
@@ -21,21 +23,21 @@ local ValidAttachments = {
   8673, 8674, 8675, 8676, 8677, 8678, 8680, 8681
 }
 
-local function AddAllAttachments(player)
+local function AddAllAttachments(target)
     for i = 1, #ValidAttachments do
-        player:unlockAttachment(ValidAttachments[i])
+        target:unlockAttachment(ValidAttachments[i])
     end
 end
 
-function onTrigger(player, target)
-    if (target == nil) then
-        AddAllAttachments(player)
-    else
-        local targ = GetPlayerByName(target)
-        if (targ == nil) then
-            player:PrintToPlayer(string.format( "Player named '%s' not found!", target ))
-        else
-            AddAllAttachments(targ)
-        end
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "addallattachments {player}"
+    
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
+
+    AddAllAttachments(targ)
+    tpz.commands.print(caller, entity, string.format("%s now has all attachments.",targ:getName()))
 end

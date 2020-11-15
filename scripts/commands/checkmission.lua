@@ -4,51 +4,39 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/missions")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 1,
-    parameters = "ss"
+    parameters = "st"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!checkmission <logID> {player}")
-end
+function onTrigger(caller, entity, logId, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!checkmission <logID> {player}"
 
-function onTrigger(player,logId,target)
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
+    end
 
     -- validate logId
     local logName
     local logInfo = GetMissionLogInfo(logId)
     if (logInfo == nil) then
-        error(player, "Invalid logID.")
+        tpz.commands.error(caller, entity, "Invalid logID.", usage)
         return
     end
     logName = logInfo.full_name
     logId = logInfo.mission_log
 
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player:getCursorTarget()
-        if (targ == nil or not targ:isPC()) then
-            targ = player
-        end
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
-    end
-
     -- report mission
     local currentMission = targ:getCurrentMission(logId)
 
     if ((logId <= 3) and (currentMission == 65535)) then
-        player:PrintToPlayer( string.format( "No current %s mission for %s.", logName, targ:getName() ) )
+        tpz.commands.print(caller, entity, string.format("No current %s mission for %s.", logName, targ:getName()))
     else
-        player:PrintToPlayer( string.format( "Current %s Mission ID is %s for %s.", logName, currentMission, targ:getName() ) )
+        tpz.commands.print(caller, entity, string.format("Current %s Mission ID is %s for %s.", logName, currentMission, targ:getName()))
     end
 end

@@ -3,32 +3,21 @@
 -- desc: Sends raise menu to GM or target player.
 -----------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "ss"
+    parameters = "st"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!raise {power} {player}")
-end
+function onTrigger(caller, entity, power, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!raise {power} {player}"
 
-function onTrigger(player, arg1, arg2)
-    local power
-    local target
-    local targ
-
-    -- decide inputs
-    if (arg2 ~= nil) then
-        power = tonumber(arg1)
-        target = arg2
-    elseif (arg1 ~= nil) then
-        if (GetPlayerByName(arg1) == nil) then
-            power = tonumber(arg1)
-        else
-            target = arg1
-        end
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
 
     -- validate power
@@ -38,24 +27,13 @@ function onTrigger(player, arg1, arg2)
         power = 1
     end
 
-    -- validate target
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found!", target ) )
-            return
-        end
-    end
-
     -- raise target
     if (targ:isDead()) then
         targ:sendRaise(power)
-        if (targ:getID() ~= player:getID()) then
-            player:PrintToPlayer( string.format( "Raise %i sent to %s.", power, targ:getName() ) )
+        if (targ:getID() ~= caller) then
+            tpz.commands.print(caller, entity, string.format("Raise %i sent to %s.", power, targ:getName()))
         end
     else
-        player:PrintToPlayer( string.format( "%s is not dead.", targ:getName() ) )
+        tpz.commands.print(caller, entity, string.format("%s is not dead.", targ:getName()))
     end
 end

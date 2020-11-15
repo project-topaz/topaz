@@ -3,37 +3,29 @@
 -- desc: Allows the player to walk through walls.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "s"
+    parameters = "t"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!wallhack {player}")
-end
+function onTrigger(caller, entity, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!wallhack {player}"
 
-function onTrigger(player, target)
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
 
     -- toggle wallhack for target
     if (targ:checkNameFlags(0x00000200)) then
         targ:setFlag(0x00000200)
-        player:PrintToPlayer( string.format("Toggled %s's wallhack flag OFF.", targ:getName()) )
+        tpz.commands.print(caller, entity, string.format("Toggled %s's wallhack flag OFF.", targ:getName()))
     else
         targ:setFlag(0x00000200)
-        player:PrintToPlayer( string.format("Toggled %s's wallhack flag ON.", targ:getName()) )
+        tpz.commands.print(caller, entity, string.format("Toggled %s's wallhack flag ON.", targ:getName()))
     end
 end

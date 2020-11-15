@@ -1,46 +1,30 @@
 ---------------------------------------------------------------------------------------------------
--- func: addeffect
+-- func: deleffect
 -- desc: Removes the given effect from the given player.
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 1,
-    parameters = "si"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!deleffect {player} <effect>")
-end
+function onTrigger(caller, entity, id, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!deleffect <effect> {player}"
 
-function onTrigger(player, arg1, arg2)
-    local targ
-    local id
-
-    if (arg1 == nil) then
-        error(player, "You must provide an effect ID.")
-        return
-    elseif (arg2 == nil) then
-        targ = player
-        id = arg1
-    else
-        targ = GetPlayerByName(arg1)
-        id = arg2
-    end
-
-    -- validate target
     if (targ == nil) then
-        error(player, string.format("Player named '%s' not found!", arg1))
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
         return
     end
 
     -- validate effect
     id = tonumber(id) or tpz.effect[string.upper(id)]
     if (id == nil) then
-        error(player, "Invalid effect.")
+        tpz.commands.error(caller, entity, "Invalid effect.", usage)
         return
     elseif (id == 0) then
         id = 1
@@ -48,7 +32,7 @@ function onTrigger(player, arg1, arg2)
 
     -- delete status effect
     targ:delStatusEffect(id)
-    if (targ:getID() ~= player:getID()) then
-        player:PrintToPlayer(string.format("Removed effect %i from %s.",id,targ:getName()))
+    if (targ:getID() ~= caller) then
+        tpz.commands.print(caller, entity, string.format("Removed effect %i from %s.", id, targ:getName()))
     end
 end

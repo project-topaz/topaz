@@ -3,35 +3,27 @@
 -- desc: Removes the amount of gil from the given player.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!takegil <amount> {player}")
-end
+function onTrigger(caller, entity, amount, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!takegil <amount> {player}"
 
-function onTrigger(player, amount, target)
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
 
     -- validate amount
     local oldAmount = targ:getGil()
     if (amount == nil or amount < 1) then
-        error(player, "Invalid amount of gil.")
+        tpz.commands.error(caller, entity, "Invalid amount of gil.", usage)
         return
     end
     if (amount > oldAmount) then
@@ -40,6 +32,6 @@ function onTrigger(player, amount, target)
 
     -- remove gil
     targ:delGil(amount)
-    player:PrintToPlayer(string.format("Removed %i gil from %s.  They now have %i gil.", amount, targ:getName(), targ:getGil()))
+    tpz.commands.print(caller, entity, string.format("Removed %i gil from %s. They now have %i gil.", amount, targ:getName(), targ:getGil()))
 
 end

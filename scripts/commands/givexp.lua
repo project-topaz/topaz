@@ -3,38 +3,30 @@
 -- desc: Gives the GM or target player experience points.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!givexp <amount> {player}")
-end
+function onTrigger(caller, entity, amount, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!givexp <amount> {player}"
 
-function onTrigger(player, amount, target)
-
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
 
     -- validate amount
     if (amount == nil or amount < 1) then
-        error(player, "Invalid amount.")
+        tpz.commands.error(caller, entity, "Invalid amount.", usage)
         return
     end
 
     -- give XP to target
     targ:addExp(amount)
-    player:PrintToPlayer( string.format( "Gave %i exp to %s. They are now level %i.", amount, targ:getName(), targ:getMainLvl() ))
+    tpz.commands.print(caller, entity, string.format( "Gave %i exp to %s. They are now level %i.", amount, targ:getName(), targ:getMainLvl()))
 end

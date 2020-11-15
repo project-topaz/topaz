@@ -3,49 +3,39 @@
 -- desc: Sets the GM or target players health.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!hp <amount> {player}")
-end
+function onTrigger(caller, entity, hp, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!hp <amount> {player}"
 
-function onTrigger(player, hp, target)
-    -- validate amount
-    if (hp == nil or tonumber(hp) == nil) then
-        error(player, "You must provide an amount.")
-        return
-    elseif (hp < 0) then
-        error(player, "Invalid amount.")
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
         return
     end
 
-    -- validate target
-    local targ
-    local cursor_target = player:getCursorTarget()
-    if (not target) and (not cursor_target) then
-        targ = player
-    elseif target then
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format( "Player named '%s' not found!", target ) )
-            return
-        end
-    elseif cursor_target then
-        targ = cursor_target
+    -- validate amount
+    if (hp == nil or tonumber(hp) == nil) then
+        tpz.commands.error(caller, entity, "You must provide an amount.", usage)
+        return
+    elseif (hp < 0) then
+        tpz.commands.error(caller, entity, "Invalid amount.", usage)
+        return
     end
 
     -- set hp
     if (targ:getHP() > 0) then
         targ:setHP(hp)
-        if(targ:getID() ~= player:getID()) then
-            player:PrintToPlayer(string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
+        if(targ:getID() ~= caller) then
+            tpz.commands.print(caller, entity, string.format("Set %s's HP to %i.", targ:getName(), targ:getHP()))
         end
     else
-        player:PrintToPlayer(string.format("%s is currently dead.", targ:getName()))
+        tpz.commands.print(caller, entity, string.format("%s is currently dead.", targ:getName()))
     end
 end

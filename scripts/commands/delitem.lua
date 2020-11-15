@@ -4,47 +4,38 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")
+require("scripts/globals/commands")
 
 cmdprops =
 {
     permission = 1,
-    parameters = "is"
+    parameters = "it"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!delitem <itemID> {player}")
-end
+function onTrigger(caller, entity, itemId, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!delitem <itemID> {player}"
 
-function onTrigger(player, itemId, target)
-
-    -- validate itemId
-    if (itemId == nil or itemId < 1) then
-        error(player,"Invalid itemID.")
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
         return
     end
 
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player,string.format("Player named '%s' not found!", target))
-            return
-        end
+    -- validate itemId
+    if (itemId == nil or itemId < 1) then
+        tpz.commands.error(caller, entity,"Invalid itemID.", usage)
+        return
     end
 
     -- search target inventory for item, and delete if found
     for i = tpz.inv.INVENTORY, tpz.inv.WARDROBE4 do -- inventory locations enums
         if (targ:hasItem(itemId, i)) then
             targ:delItem(itemId, 1, i)
-            player:PrintToPlayer(string.format("Item %i was deleted from %s.", itemId, targ:getName()))
+            tpz.commands.print(caller, entity, string.format("Item %i was deleted from %s.", itemId, targ:getName()))
             break
         end
         if (i == tpz.inv.WARDROBE4) then -- Wardrobe 4 is the last inventory location, if it reaches this point then the player does not have the item anywhere.
-            player:PrintToPlayer(string.format("%s does not have item %i.", targ:getName(), itemId))
+            tpz.commands.print(caller, entity, string.format("%s does not have item %i.", targ:getName(), itemId))
         end
     end
 

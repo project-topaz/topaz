@@ -3,24 +3,22 @@
 -- desc: Injects the given packet data.
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
     parameters = "s"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!inject <packet>")
-end
-
-function onTrigger(player, packet)
+function onTrigger(caller, entity, packet)
+    local usage = "!inject <packet>"
     -- validate packet
     if (packet == nil) then
-        error(player, "You must enter a packet file name.")
+        tpz.commands.error(caller, entity, "You must enter a packet file name.", usage)
         return
     end
 
     -- inject packet
-    player:injectPacket( packet )
+    entity:injectPacket(packet)
 end

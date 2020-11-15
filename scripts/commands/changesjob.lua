@@ -4,6 +4,7 @@
 ---------------------------------------------------------------------------------------------------
 
 require("scripts/globals/status")
+require("scripts/globals/commands")
 
 cmdprops =
 {
@@ -11,35 +12,32 @@ cmdprops =
     parameters = "si"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!changesjob <jobID> {level}")
-end
+function onTrigger(caller, entity, jobId, level)
+    local usage = "!changesjob <jobID> {level}"
 
-function onTrigger(player, jobId, level)
     -- validate jobId
     if (jobId == nil) then
-        error(player, "You must enter a job short-name, e.g. WAR, or its equivalent numeric ID.")
+        tpz.commands.error(caller, entity, "You must enter a job short-name, e.g. WAR, or its equivalent numeric ID.", usage)
         return
     end
     jobId = tonumber(jobId) or tpz.job[string.upper(jobId)]
     if (jobId == nil or jobId <= 0 or jobId >= tpz.MAX_JOB_TYPE) then
-        error(player, "Invalid jobID.  Use job short name, e.g. WAR, or its equivalent numeric ID.")
+        tpz.commands.error(caller, entity, "Invalid jobID.  Use job short name, e.g. WAR, or its equivalent numeric ID.", usage)
         return
     end
 
     -- validate level
     if (level ~= nil) then
         if (level < 1 or level > 99) then
-            error(player, "Invalid level. Level must be between 1 and 99!")
+            tpz.commands.error(caller, entity, "Invalid level. Level must be between 1 and 99!", usage)
             return
         end
     end
 
     -- change job and (optionally) level
-    player:changesJob(jobId)
+    entity:changesJob(jobId)
     if (level ~= nil) then
-        player:setsLevel(level)
+        entity:setsLevel(level)
     end
 
     -- invert tpz.job table
@@ -49,5 +47,5 @@ function onTrigger(player, jobId, level)
     end
 
     -- output new job to player
-    player:PrintToPlayer(string.format("You are now a %s%i/%s%i.", jobNameByNum[player:getMainJob()], player:getMainLvl(), jobNameByNum[player:getSubJob()], player:getSubLvl()))
+    tpz.commands.print(caller, entity, string.format("You are now a %s%i/%s%i.", jobNameByNum[entity:getMainJob()], entity:getMainLvl(), jobNameByNum[entity:getSubJob()], entity:getSubLvl()))
 end

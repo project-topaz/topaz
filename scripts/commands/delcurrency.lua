@@ -3,41 +3,34 @@
 -- desc: Removes the specified currency from the player
 ---------------------------------------------------------------------------------------------------
 
+require("scripts/globals/commands")
+
 cmdprops =
 {
     permission = 1,
-    parameters = "sis"
+    parameters = "sit"
 }
 
-function error(player, msg)
-    player:PrintToPlayer(msg)
-    player:PrintToPlayer("!delcurrency <currency type> <amount> {player}")
-end
+function onTrigger(caller, entity, currency, amount, target)
+    local targ = tpz.commands.getTargetPC(caller, entity, target)
+    local usage = "!delcurrency <currency type> <amount> {player}"
 
-function onTrigger(player,currency,amount,target)
-    -- validate target
-    local targ
-    if (target == nil) then
-        targ = player
-    else
-        targ = GetPlayerByName(target)
-        if (targ == nil) then
-            error(player, string.format("Player named '%s' not found!", target))
-            return
-        end
+    if (targ == nil) then
+        tpz.commands.error(caller, entity, "You must target or enter a player name.", usage)
+        return
     end
 
     -- validate currency
     -- note: getCurrency does not ever return nil at the moment.  will work on this in future update.
     if (currency == nil or targ:getCurrency(currency) == nil) then
-        error(player, "Invalid currency type.")
+        tpz.commands.error(caller, entity, "Invalid currency type.", usage)
         return
     end
 
     -- validate amount
     local currentAmount = targ:getCurrency(currency)
     if (amount == nil or amount < 1) then
-        error(player, "Invalid amount.")
+        tpz.commands.error(caller, entity, "Invalid amount.", usage)
         return
     end
     if (amount > currentAmount) then
@@ -45,7 +38,7 @@ function onTrigger(player,currency,amount,target)
     end
 
     -- delete currency
-    targ:delCurrency(currency,amount)
+    targ:delCurrency(currency, amount)
     local newAmount = targ:getCurrency(currency)
-    player:PrintToPlayer(string.format("%i %s was taken from %s, for a total of %i.",amount,currency,targ:getName(),newAmount))
+    tpz.commands.print(caller, entity, string.format("%i %s was taken from %s, for a total of %i.", amount, currency, targ:getName(), newAmount))
 end
