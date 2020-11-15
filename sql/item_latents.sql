@@ -3449,3 +3449,9 @@ INSERT INTO `item_latents` VALUES(27367, 399, 16, 52, 7);   -- Pedagogy Loafers+
 INSERT INTO `item_latents` VALUES(27367, 399, 16, 52, 8);   -- Pedagogy Loafers+1: Weather: Enhances Celerity and Alacrity Effect +16% (DARK)
 INSERT INTO `item_latents` VALUES(28235, 169, 25, 26, 2);   -- Hachiya Kyahan: Dusk to dawn: Movement speed +25%
 INSERT INTO `item_latents` VALUES(28256, 169, 25, 26, 2);   -- Hachiya Kyahan +1: Dusk to dawn: Movement speed +25%
+
+-- -------------------------------------------------------
+-- Kyoshu Kyahan
+-- -------------------------------------------------------
+INSERT INTO `item_latents` VALUES(11405, 23, 20, 44, 406);  -- +20 Att during Footwork, but not during SP
+INSERT INTO `item_latents` VALUES(11405, 25, 20, 44, 406);  -- +20 Acc during Footwork, but not during SP

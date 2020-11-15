@@ -269,6 +269,7 @@ void CLatentEffectContainer::CheckLatentsStatusEffect()
     {
         switch (latentEffect.GetConditionsID())
         {
+        case LATENT_STATUS_ACTIVE_NO_JOBSP:
         case LATENT_STATUS_EFFECT_ACTIVE:
         case LATENT_WEATHER_ELEMENT:
         case LATENT_NATION_CONTROL:
@@ -963,6 +964,10 @@ bool CLatentEffectContainer::ProcessLatentEffect(CLatentEffect& latentEffect)
         break;
     case LATENT_WEAPON_DRAWN_HP_UNDER:
         expression = m_POwner->health.hp < latentEffect.GetConditionsValue() && m_POwner->animation == ANIMATION_ATTACK;
+        break;
+    case LATENT_STATUS_ACTIVE_NO_JOBSP:
+        // Todo: for future re-usability, rework this to be ANY 2hr, not just hundred fists. Would rather check if player is under "a" 2hr effect than seeing if they have each status..
+        expression = m_POwner->StatusEffectContainer->HasStatusEffect((EFFECT)latentEffect.GetConditionsValue()) && !m_POwner->StatusEffectContainer->HasStatusEffect(EFFECT_HUNDRED_FISTS);
         break;
     case LATENT_MP_UNDER_VISIBLE_GEAR:
         //TODO: figure out if this is actually right
