@@ -39,6 +39,10 @@ GOV_REWARD_ALLIANCE = 1 -- Allow Grounds of Valor rewards while being a member o
 ENABLE_ROE = 1
 ENABLE_ROE_TIMED = 1 -- Enable 4-hour timed records
 
+-- Login Campaign (Set to 0 if you don't want to run a Login Campaign)
+-- Please visit scripts/globals/events/login_campaign.lua for assigning the correct campaign.
+ENABLE_LOGIN_CAMPAIGN = 1
+
 -- TREASURE CASKETS
 -- Retail droprate = 0.1 (10%) with no other effects active
 -- Set to 0 to disable caskets.
