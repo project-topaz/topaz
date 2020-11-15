@@ -470,7 +470,7 @@ namespace spell
                     // default radius
                     PSpell->setRadius(10);
                 }
-
+                
                 PSpellList[static_cast<uint16>(PSpell->getID())] = PSpell;
             }
         }
@@ -723,6 +723,13 @@ namespace spell
             if (total > 20){
                 total = 20;
             }
+        }
+
+        if (entity->StatusEffectContainer->HasStatusEffect(EFFECT_THEURGIC_FOCUS) &&
+            (spell->getSpellFamily() >= SPELLFAMILY_FIRE && spell->getSpellFamily() <= SPELLFAMILY_FLOOD) ||
+            (spell->getSpellFamily() >= SPELLFAMILY_FIRA && spell->getSpellFamily() <= SPELLFAMILY_WATERA))
+        {
+            total = total / 2;
         }
 
         return total;
