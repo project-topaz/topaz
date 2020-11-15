@@ -17,9 +17,9 @@ end
 function onMobSpawn(mob)
     mob:SetAutoAttackEnabled(false)
     mob:setMobMod(tpz.mobMod.GA_CHANCE, 25)
-    mob:addStatusEffectEx(tpz.effect.PHYSICAL_SHIELD, 0, 1, 0, 0)
+    mob:addStatusEffectEx(tpz.effect.PHYSICAL_SHIELD, 0, 2, 0, 0)
     mob:addStatusEffectEx(tpz.effect.ARROW_SHIELD, 0, 1, 0, 0)
-    mob:addStatusEffectEx(tpz.effect.MAGIC_SHIELD, 0, 1, 0, 0)
+    mob:addStatusEffectEx(tpz.effect.MAGIC_SHIELD, 0, 2, 0, 0)
 end
 
 function onMobEngaged(mob, target)

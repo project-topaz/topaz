@@ -1,8 +1,8 @@
 ---------------------------------------------
---  Mind Wall
+--  Transmogrification
 --
---  Description: Activates a shield to absorb all incoming magical damage.
---  Type: Magical
+--  Description: Activates a shield to absorb all incoming physical damage.
+--  Type: Physical
 ---------------------------------------------
 require("scripts/globals/monstertpmoves")
 require("scripts/globals/settings")
@@ -19,7 +19,7 @@ end
 
 function onMobWeaponSkill(target, mob, skill)
 
-    MobBuffMove(mob, tpz.effect.PHYSICAL_SHIELD, 2, 0, 30)
+    MobBuffMove(mob, tpz.effect.PHYSICAL_SHIELD, 8, 0, 30)
     skill:setMsg(tpz.msg.basic.NONE)
 
     return 0

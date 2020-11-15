@@ -1644,8 +1644,8 @@ INSERT INTO `item_usable` VALUES (5841,'bottle_of_ascetics_tonic',1,4,0,0,0,0,0,
 INSERT INTO `item_usable` VALUES (5842,'bottle_of_ascetics_gambir',1,4,0,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5843,'bottle_of_champions_tonic',1,4,0,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5844,'bottle_of_champions_gambir',1,4,0,0,0,0,0,0);
-INSERT INTO `item_usable` VALUES (5845,'bottle_of_fanatics_tonic',1,4,0,0,0,0,0,0);
-INSERT INTO `item_usable` VALUES (5846,'bottle_of_fools_tonic',1,4,0,0,0,0,0,0);
+INSERT INTO `item_usable` VALUES (5845,'bottle_of_fanatics_tonic',1,1,0,0,0,0,0,0);
+INSERT INTO `item_usable` VALUES (5846,'bottle_of_fools_tonic',1,1,0,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5847,'pinch_of_fanatics_powder',1,4,0,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5848,'pinch_of_fools_powder',1,4,0,0,0,0,0,0);
 INSERT INTO `item_usable` VALUES (5849,'bottle_of_berserkers_drink',1,4,0,0,0,0,0,0);
