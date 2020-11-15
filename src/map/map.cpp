@@ -1019,13 +1019,15 @@ int32 map_config_default()
     map_config.mount_speed_mod = 0;
     map_config.mob_speed_mod = 0;
     map_config.skillup_chance_multiplier = 1.0f;
-    map_config.craft_chance_multiplier = 1.0f;
+    map_config.craft_chance_multiplier = 1;
     map_config.skillup_amount_multiplier = 1;
     map_config.craft_amount_multiplier = 1;
     map_config.garden_day_matters = false;
     map_config.garden_moonphase_matters = false;
     map_config.garden_pot_matters = false;
     map_config.garden_mh_aura_matters = false;
+    map_config.craft_skillup_new_rules = 1;
+    map_config.craft_multiple_skillup_limit = 600;
     map_config.craft_common_cap = 700;
     map_config.craft_specialization_points = 400;
     map_config.mob_tp_multiplier = 1.0f;
@@ -1318,7 +1320,7 @@ int32 map_config_read(const int8* cfgName)
         }
         else if (strcmp(w1, "craft_chance_multiplier") == 0)
         {
-            map_config.craft_chance_multiplier = (float)atof(w2);
+            map_config.craft_chance_multiplier = atoi(w2);
         }
         else if (strcmp(w1, "skillup_amount_multiplier") == 0)
         {
@@ -1327,6 +1329,14 @@ int32 map_config_read(const int8* cfgName)
         else if (strcmp(w1, "craft_amount_multiplier") == 0)
         {
             map_config.craft_amount_multiplier = (float)atof(w2);
+        }
+        else if (strcmp(w1, "craft_skillup_new_rules") == 0)
+        {
+            map_config.craft_common_cap = atoi(w2);
+        }
+        else if (strcmp(w1, "craft_multiple_skillup_limit") == 0)
+        {
+            map_config.craft_common_cap = atoi(w2);
         }
         else if (strcmp(w1, "craft_common_cap") == 0)
         {

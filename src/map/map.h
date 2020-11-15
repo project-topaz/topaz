@@ -93,14 +93,16 @@ struct map_config_t
     int8   mount_speed_mod;           // Modifier to add to mount speed
     int8   mob_speed_mod;             // Modifier to add to monster speed
     float  skillup_chance_multiplier; // Constant used in the skillup formula that has a strong effect on skill-up rates
-    float  craft_chance_multiplier;   // Constant used in the crafting skill-up formula that has a strong effect on skill-up rates
+    uint8  craft_chance_multiplier;   // Constant used in the crafting skill-up formula that has a strong effect on skill-up rates
     float  skillup_amount_multiplier; // Used to increase the amount of skill gained during skill up
     float  craft_amount_multiplier;   // Used to increase the amount of skill gained during skill up
     bool   garden_day_matters;        // Enable/disable Element day factor in gardening results
     bool   garden_moonphase_matters;  // Enable/disable Moon phase factor in gardening results
     bool   garden_pot_matters;        // Enable/disable Pot element factor in gardening results
     bool   garden_mh_aura_matters;    // Enable/disable Mog house aura factor in gardening results
-    uint16 craft_common_cap;            // Used in crafting, in synthutils.cpp. Defines skill limit before specialization system
+    uint8  craft_skillup_new_rules;   // Defines if we use retail skill up rates and rules or not. 
+    uint16 craft_multiple_skillup_limit; // Used in crafting, in synthutils.cpp. Defines player craft skill limit before skillups over 0.1 stop happening.
+    uint16 craft_common_cap;          // Used in crafting, in synthutils.cpp. Defines player craft skill limit before specialization system is used.
     uint16 craft_specialization_points; // Used in crafting, in synthutils.cpp. Defines the maximum points of the specialization system.
     float  mob_tp_multiplier;         // Multiplies the amount of TP mobs gain on any effect that would grant TP
     float  player_tp_multiplier;      // Multiplies the amount of TP players gain on any effect that would grant TP
