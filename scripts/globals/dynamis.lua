@@ -19,9 +19,9 @@ dynamis = {}
 {
     csBit    = the bit in the Dynamis_Status player variable that records whether player has beaten this dynamis
                this bit number is also given to the start Dynamis event and message.
-    csSand   = event ID for cutscene where Cornelia gives you the vial of shrouded sand
+    csVial   = event ID for cutscene where Cornelia gives you the vial of shrouded sand
     csWin    = event ID for cutscene after you have beaten this Dynamis
-    csDyna   = event ID for entering Dynamis
+    csMenu   = event ID for menu to enter Dynamis
     winVar   = variable used to denote players who have beaten this Dynamis, but not yet viewed the cutscene
     winKI    = key item given as reward for this Dynamis
     enterPos = coordinates where player will be placed when entering this Dynamis
@@ -35,58 +35,70 @@ local entryInfo =
     [tpz.zone.SOUTHERN_SAN_DORIA] =
     {
         csBit = 1,
-        csSand = 686,
+        csVial = 686,
+        csFirst = 692,
         csWin = 698,
-        csDyna = 685,
+        csMenu = 961,
         winVar = "DynaSandoria_Win",
         winKI = tpz.ki.HYDRA_CORPS_COMMAND_SCEPTER,
         enterPos = {161.838, -2.000, 161.673, 93, 185},
-        reqs = function(player) return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) end,
+        reqs = function(player)
+            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
+        end,
     },
     [tpz.zone.BASTOK_MINES] =
     {
         csBit = 2,
-        csSand = 203,
+        csVial = 203,
+        csFirst = 209,
         csWin = 215,
-        csDyna = 201,
+        csMenu = 597,
         winVar = "DynaBastok_Win",
         winKI = tpz.ki.HYDRA_CORPS_EYEGLASS,
         enterPos = {116.482, 0.994, -72.121, 128, 186},
-        reqs = function(player) return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) end,
+        reqs = function(player)
+            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
+        end,
     },
     [tpz.zone.WINDURST_WALLS] =
     {
         csBit = 3,
-        csSand = 455,
+        csVial = 455,
+        csFirst = 459,
         csWin = 465,
-        csDyna = 452,
+        csMenu = 513,
         winVar = "DynaWindurst_Win",
         winKI = tpz.ki.HYDRA_CORPS_LANTERN,
         enterPos = {-221.988, 1.000, -120.184, 0, 187},
-        reqs = function(player) return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) end,
+        reqs = function(player)
+            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
+        end,
     },
     [tpz.zone.RULUDE_GARDENS] =
     {
         csBit = 4,
-        csSand = 10016,
+        csVial = 10016,
+        csFirst = 10020,
         csWin = 10026,
-        csDyna = 10012,
+        csMenu = 10176,
         winVar = "DynaJeuno_Win",
         winKI = tpz.ki.HYDRA_CORPS_TACTICAL_MAP,
         enterPos = {48.930, 10.002, -71.032, 195, 188},
-        reqs = function(player) return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) end,
+        reqs = function(player)
+            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS)
+        end,
     },
     [tpz.zone.BEAUCEDINE_GLACIER] =
     {
         csBit = 5,
+        csFirst = 128,
         csWin = 134,
-        csDyna = 119,
+        csMenu = 229,
         winVar = "DynaBeaucedine_Win",
         winKI = tpz.ki.HYDRA_CORPS_INSIGNIA,
         enterPos = {-284.751, -39.923, -422.948, 235, 134},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasKeyItem(tpz.ki.HYDRA_CORPS_COMMAND_SCEPTER) and
+            return player:hasKeyItem(tpz.ki.HYDRA_CORPS_COMMAND_SCEPTER) and
                    player:hasKeyItem(tpz.ki.HYDRA_CORPS_EYEGLASS) and
                    player:hasKeyItem(tpz.ki.HYDRA_CORPS_LANTERN) and
                    player:hasKeyItem(tpz.ki.HYDRA_CORPS_TACTICAL_MAP)
@@ -95,14 +107,14 @@ local entryInfo =
     [tpz.zone.XARCABARD] =
     {
         csBit = 6,
+        csFirst = 26,
         csWin = 32,
-        csDyna = 16,
+        csMenu = 205,
         winVar = "DynaXarcabard_Win",
         winKI = tpz.ki.HYDRA_CORPS_BATTLE_STANDARD,
         enterPos = {569.312, -0.098, -270.158, 90, 135},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasKeyItem(tpz.ki.HYDRA_CORPS_INSIGNIA)
+            return player:hasKeyItem(tpz.ki.HYDRA_CORPS_INSIGNIA)
         end,
     },
     [tpz.zone.VALKURM_DUNES] =
@@ -110,12 +122,12 @@ local entryInfo =
         csBit = 7,
         csFirst = 33,
         csWin = 39,
-        csDyna = 58,
+        csMenu = 58,
         winVar = "DynaValkurm_Win",
         winKI = tpz.ki.DYNAMIS_VALKURM_SLIVER,
         enterPos = {100, -8, 131, 47, 39},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
+            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS) and
                   (player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) or FREE_COP_DYNAMIS == 1)
         end,
     },
@@ -124,12 +136,12 @@ local entryInfo =
         csBit = 8,
         csFirst = 40,
         csWin = 46,
-        csDyna = 22,
+        csMenu = 64,
         winVar = "DynaBuburimu_Win",
         winKI = tpz.ki.DYNAMIS_BUBURIMU_SLIVER,
         enterPos = {155, -1, -169, 170, 40},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
+            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS) and
                   (player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) or FREE_COP_DYNAMIS == 1)
         end,
     },
@@ -138,12 +150,12 @@ local entryInfo =
         csBit = 9,
         csFirst = 22,
         csWin = 28,
-        csDyna = 3,
+        csMenu = 48,
         winVar = "DynaQufim_Win",
         winKI = tpz.ki.DYNAMIS_QUFIM_SLIVER,
         enterPos = {-19, -17, 104, 253, 41},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
+            return player:hasKeyItem(tpz.ki.PRISMATIC_HOURGLASS) and
                   (player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) or FREE_COP_DYNAMIS == 1)
         end,
     },
@@ -152,16 +164,14 @@ local entryInfo =
         csBit = 10,
         csFirst = 614,
         csWin = 615,
-        csDyna = 588,
+        csMenu = 624,
         winVar = "DynaTavnazia_Win",
         winKI = tpz.ki.DYNAMIS_TAVNAZIA_SLIVER,
         enterPos = {0.1, -7, -21, 190, 42},
         reqs = function(player)
-            return player:hasKeyItem(tpz.ki.VIAL_OF_SHROUDED_SAND) and
-                   player:hasKeyItem(tpz.ki.DYNAMIS_BUBURIMU_SLIVER) and
+            return player:hasKeyItem(tpz.ki.DYNAMIS_BUBURIMU_SLIVER) and
                    player:hasKeyItem(tpz.ki.DYNAMIS_QUFIM_SLIVER) and
-                   player:hasKeyItem(tpz.ki.DYNAMIS_VALKURM_SLIVER) and
-                  (player:hasCompletedMission(COP, tpz.mission.id.cop.DARKNESS_NAMED) or FREE_COP_DYNAMIS == 1)
+                   player:hasKeyItem(tpz.ki.DYNAMIS_VALKURM_SLIVER)
         end,
     },
 }
@@ -275,6 +285,18 @@ local function arg3(player, bit)
     end
 end
 
+local function checkForTimeout(player)
+    local realDay = os.time()
+    if DYNA_MIDNIGHT_RESET then
+        realDay = getMidnight() - 86400
+    end
+    local dynaWaitxDay = player:getCharVar("dynaWaitxDay")
+
+    if (dynaWaitxDay + BETWEEN_2DYNA_WAIT_TIME * 60 * 60) < realDay then
+        player:setCharVar("dynaWaitxDay", realDay)
+    end
+end
+
 -------------------------------------------------
 -- global functions
 -------------------------------------------------
@@ -293,13 +315,19 @@ dynamis.entryNpcOnTrigger = function(player, npc)
     local ID = zones[zoneId]
     local mask = player:getCharVar("Dynamis_Status")
 
-    -- shrouded sand cutscene
-    if info.csSand and utils.mask.getBit(mask, 0) then
-        player:startEvent(info.csSand)
+    -- default message always prints except on first Tavnaza visit or winning cutscenes
+    if
+        not info.winVar == 1 and
+        info.csBit ~= 10 or
+        info.csBit == 10 and utils.mask.getBit(mask, info.csBit) or -- Tavnazia after first visit
+        not info.reqs(player) -- for Tavnazia before having access
+    then
+        player:messageSpecial(ID.text.DYNA_NPC_DEFAULT_MESSAGE)
+    end
 
-    -- first visit cutscene
-    elseif info.csFirst and not utils.mask.getBit(mask, info.csBit) then
-        player:startEvent(info.csFirst)
+    -- shrouded sand cutscene
+    if info.csVial and utils.mask.getBit(mask, 0) then
+        player:startEvent(info.csVial)
 
     -- victory cutscene
     elseif player:getCharVar(info.winVar) == 1 then
@@ -312,17 +340,38 @@ dynamis.entryNpcOnTrigger = function(player, npc)
 
         if player:getMainLvl() < DYNA_LEVEL_MIN then
             player:messageSpecial(ID.text.PLAYERS_HAVE_NOT_REACHED_LEVEL, DYNA_LEVEL_MIN)
-        elseif (dynaWaitxDay + BETWEEN_2DYNA_WAIT_TIME * 60 * 60) < realDay then
-            -- params: bit, cutscene option, Prismatic Hourglass KI, sJob option, junk, Shrouded Sand KI, Timeless Hourglass item ID, Perpetual Hourglass item ID
-            player:startEvent(info.csDyna, info.csBit, arg3(player, info.csBit), tpz.ki.PRISMATIC_HOURGLASS, 1, 0, tpz.ki.VIAL_OF_SHROUDED_SAND, 4236, 4237)
+
+        elseif
+            (dynaWaitxDay + BETWEEN_2DYNA_WAIT_TIME * 60 * 60) < realDay or
+            player:hasKeyItem(tpz.ki.RHAPSODY_IN_AZURE)
+        then
+            -- flag subjob menu instead of classic one
+            local dreamland = 0
+            if info.csBit > 6 then
+                dreamland = 1
+            end
+
+            -- do not show a menu on first Tavnazia visit
+            if info.csBit == 10 and not utils.mask.getBit(mask, info.csBit) then
+
+                player:startEvent(info.csFirst)
+                player:setCharVar("Dynamis_Status", utils.mask.setBit(mask, info.csBit, true))
+                player:setCharVar("Dynamis_subjob", 0)
+                player:setCharVar("Dynamis_Entry", 1)
+                if not player:hasKeyItem(tpz.ki.RHAPSODY_IN_AZURE) then
+                    checkForTimeout(player)
+                end
+
+            -- show menu in any other area and after first Tavnazia visit
+            else
+                -- params: ( csid,  areaBit,  csOption,  requiresThisKI,  sJob,  ??,  cannotEnterWithoutThisKI,  cannotReserveWithThisItem,  cannotReserveWithThisItemEither )
+                player:startEvent(info.csMenu, info.csBit, arg3(player, info.csBit), tpz.ki.PRISMATIC_HOURGLASS, dreamland, 0, tpz.ki.VIAL_OF_SHROUDED_SAND, 4236, 4237)
+            end
+
         else
             local dayRemaining = math.floor(((dynaWaitxDay + BETWEEN_2DYNA_WAIT_TIME * 60 * 60) - realDay) / 3456)
             player:messageSpecial(ID.text.YOU_CANNOT_ENTER_DYNAMIS, dayRemaining, info.csBit)
         end
-
-    -- standard dialog
-    else
-        player:messageSpecial(ID.text.DYNA_NPC_DEFAULT_MESSAGE)
     end
 end
 
@@ -330,41 +379,38 @@ dynamis.entryNpcOnEventFinish = function(player, csid, option)
     local info = entryInfo[player:getZoneID()]
     local mask = player:getCharVar("Dynamis_Status")
 
+    -- move player after Tavnazia first visit cutscene
+    if info.csBit == 10 and csid == info.csFirst then
+        player:setPos(unpack(info.enterPos))
+
     -- shrouded sand cutscene
-    if info.csSand and csid == info.csSand then
+    elseif info.csVial and csid == info.csVial then
         npcUtil.giveKeyItem(player, tpz.ki.VIAL_OF_SHROUDED_SAND)
         player:setCharVar("Dynamis_Status", utils.mask.setBit(mask, 0, false))
-
-    -- first visit cutscene
-    elseif info.csFirst and csid == info.csFirst then
-        player:setCharVar("Dynamis_Status", utils.mask.setBit(mask, info.csBit, true))
 
     -- victory cutscene
     elseif csid == info.csWin then
         player:setCharVar(info.winVar, 0)
 
-    -- dynamis entry
-    elseif csid == info.csDyna then
-        player:setCharVar("Dynamis_Status", utils.mask.setBit(mask, info.csBit, true))
+    -- dynamis entry menu
+    elseif csid == info.csMenu then
 
         if option == 0 or option == 1 then
             player:setCharVar("Dynamis_subjob", option)
             player:setCharVar("Dynamis_Entry", 1)
+            player:setCharVar("Dynamis_Status", utils.mask.setBit(mask, info.csBit, true))
 
-            local realDay = os.time()
-            if DYNA_MIDNIGHT_RESET then
-                realDay = getMidnight() - 86400
+            checkForTimeout(player)
+
+            -- first visit cutscene
+            if not utils.mask.getBit(mask, info.csBit) then
+                player:startEvent(info.csFirst)
+                player:setPos(unpack(info.enterPos))
+            
+            -- subsequent entries
+            else
+                player:setPos(unpack(info.enterPos))
             end
-            local dynaWaitxDay = player:getCharVar("dynaWaitxDay")
-
-            if
-                (dynaWaitxDay + BETWEEN_2DYNA_WAIT_TIME * 60 * 60) < realDay and
-                not player:hasKeyItem(tpz.ki.RHAPSODY_IN_AZURE)
-            then
-                player:setCharVar("dynaWaitxDay", realDay)
-            end
-
-            player:setPos(unpack(info.enterPos))
         end
     end
 end
@@ -411,6 +457,9 @@ dynamis.zoneOnZoneIn = function(player, prevZone)
 
     local cs = -1
 
+    -- TODO: Monthly Adventurer Campaign "Granules of Time"; player receives all TE's upon entering during this period
+    -- https://www.bg-wiki.com/bg/Category:Adventurer_Campaigns#Dynamis_Granules_of_Time_Campaign
+    
     if player:getCharVar("Dynamis_Entry") == 1 or player:getGMLevel() > 0 then
         if player:getCharVar("Dynamis_subjob") == 1 then
             player:timer(5000, function(player) player:messageBasic(tpz.msg.basic.UNABLE_TO_ACCESS_SJ) end)
