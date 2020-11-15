@@ -44,16 +44,16 @@ enum class Mod
     MND                       = 13, // Mind
     CHR                       = 14, // Charisma
 
-    // Elemental Defenses
-    // 128 = 128 / 256 = 50% reduction
-    FIREDEF                   = 15, // Fire Defense
-    ICEDEF                    = 16, // Ice Defense
-    WINDDEF                   = 17, // Wind Defense
-    EARTHDEF                  = 18, // Earth Defense
-    THUNDERDEF                = 19, // Thunder Defense
-    WATERDEF                  = 20, // Water Defense
-    LIGHTDEF                  = 21, // Light Defense
-    DARKDEF                   = 22, // Dark Defense
+    // Elemental Resistances (from things like items) increases your Magic Evasion to that element
+    // For example, Byakko's Haidate is +50 Lightning Defense which is +50 Magic Evasion for Lightning
+    FIRERES                   = 15, // Fire Elemental Resistance
+    ICERES                    = 16, // Ice Elemental Resistance
+    WINDRES                   = 17, // Wind Elemental Resistance
+    EARTHRES                  = 18, // Earth Elemental Resistance
+    THUNDERRES                = 19, // Thunder Elemental Resistance
+    WATERRES                  = 20, // Water Elemental Resistance
+    LIGHTRES                  = 21, // Light Elemental Resistance
+    DARKRES                   = 22, // Dark Elemental Resistance
 
     ATT                       = 23, // Attack
     RATT                      = 24, // Ranged Attack
@@ -89,25 +89,25 @@ enum class Mod
 
     WSACC                     = 48, // Weaponskill Accuracy
 
-    // Resistance to damage type
+    // Specific Damage Taken
     // Value is stored as a percentage of damage reduction (to within 1000)
     // Example: 1000 = 100%, 875= 87.5%
-    SLASHRES                  = 49, // Slash Resistance
-    PIERCERES                 = 50, // Piercing Resistance
-    IMPACTRES                 = 51, // Impact Resistance
-    HTHRES                    = 52, // Hand-To-Hand Resistance
+    SLASHSDT                  = 49, // Slash Specific Damage Taken
+    PIERCESDT                 = 50, // Piercing Specific Damage Taken
+    IMPACTSDT                 = 51, // Impact Specific Damage Taken
+    HTHSDT                    = 52, // Hand-To-Hand Specific Damage Taken
 
     // Damage Reduction to Elements
     // Value is stored as a percentage of damage reduction (to within 1000)
     // Example: 1000 = 100%, 875= 87.5%
-    FIRERES                   = 54, // % Fire Resistance
-    ICERES                    = 55, // % Ice Resistance
-    WINDRES                   = 56, // % Wind Resistance
-    EARTHRES                  = 57, // % Earth Resistance
-    THUNDERRES                = 58, // % Thunder Resistance
-    WATERRES                  = 59, // % Water Resistance
-    LIGHTRES                  = 60, // % Light Resistance
-    DARKRES                   = 61, // % Dark Resistance
+    FIRESDT                   = 54, // % Fire Specific Damage Taken
+    ICESDT                    = 55, // % Ice Specific Damage Taken
+    WINDSDT                   = 56, // % Wind Specific Damage Taken
+    EARTHSDT                  = 57, // % Earth Specific Damage Taken
+    THUNDERSDT                = 58, // % Thunder Specific Damage Taken
+    WATERSDT                  = 59, // % Water Specific Damage Taken
+    LIGHTSDT                  = 60, // % Light Specific Damage Taken
+    DARKSDT                   = 61, // % Dark Specific Damage Taken
 
     ATTP                      = 62, // % Attack
     DEFP                      = 63, // % Defense
@@ -125,6 +125,7 @@ enum class Mod
     STORETP                   = 73, // Increases the rate at which TP is gained
     TACTICAL_PARRY            = 486, // Tactical Parry Tp Bonus
     MAG_BURST_BONUS           = 487, // Magic Burst Bonus Modifier (percent)
+    MAG_BURST_BONUS_TRAIT     = 502, // Magic Burst Bonus Trait (handled separately than above because he is not subjected to cap)
     INHIBIT_TP                = 488, // Inhibits TP Gain (percent)
 
     // Working Skills (weapon combat skills)
@@ -747,6 +748,7 @@ enum class Mod
     BARSPELL_MDEF_BONUS       = 827, // Extra magic defense bonus granted to the bar- spell effect
     RAPTURE_AMOUNT            = 568, // Bonus amount added to Rapture effect
     EBULLIENCE_AMOUNT         = 569, // Bonus amount added to Ebullience effect
+    FOCALIZATION_AMOUNT       = 571,
     AQUAVEIL_COUNT            = 832, // Modifies the amount of hits that Aquaveil absorbs before being removed
     ENH_MAGIC_DURATION        = 890, // Enhancing Magic Duration increase %
     ENHANCES_COURSERS_ROLL    = 891, // Courser's Roll Bonus % chance
@@ -797,6 +799,17 @@ enum class Mod
     CONQUEST_BONUS            = 933, // Conquest points bonus granted (percentage)
     CONQUEST_REGION_BONUS     = 934, // Increases the influence points awarded to the player's nation when receiving conquest points
     CAMPAIGN_BONUS            = 935, // Increases the evaluation for allied forces by percentage
+
+    /// New version for Staff Mods
+    /// https://www.bg-wiki.com/bg/Vulcan%27s_Staff
+    FIRE_MAGIC_POTENCY        = 970,
+    EARTH_MAGIC_POTENCY       = 971,
+    WATER_MAGIC_POTENCY       = 972,
+    WIND_MAGIC_POTENCY        = 973,
+    ICE_MAGIC_POTENCY         = 974,
+    LIGHTNING_MAGIC_POTENCY   = 975,
+    LIGHT_MAGIC_POTENCY       = 976,
+    DARK_MAGIC_POTENCY        = 977,
 
     // The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     // 570 through 825 used by WS DMG mods these are not spares.

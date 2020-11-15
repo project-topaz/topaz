@@ -2,20 +2,52 @@
 -- Area: Temenos E T
 --  Mob: Mystic Avatar
 -----------------------------------
-require("scripts/globals/limbus")
-local ID = require("scripts/zones/Temenos/IDs")
+require("scripts/globals/limbus");
+-----------------------------------
 
-function onMobSpawn(mob)
-    local mobID = mob:getID()
-    if mobID == ID.mob.TEMENOS_C_MOB[2] then --Carbuncle (Central Temenos 2nd Floor)
-        mob:setMod(tpz.mod.FIREDEF, 256)
-        mob:setMod(tpz.mod.ICEDEF, 256)
-        mob:setMod(tpz.mod.WINDDEF, 256)
-        mob:setMod(tpz.mod.EARTHDEF, 256)
-        mob:setMod(tpz.mod.THUNDERDEF, 256)
-        mob:setMod(tpz.mod.WATERDEF, 256)
-        mob:setMod(tpz.mod.LIGHTDEF, 256)
-        mob:setMod(tpz.mod.DARKDEF, -128)
+function onMobEngaged(mob,target)
+    local mobID = mob:getID();
+    if (mobID==16929030) then --Carbuncle (Central Temenos 2nd Floor)
+        GetMobByID(16929032):updateEnmity(target);
+        GetMobByID(16929031):updateEnmity(target);
+        if (IsMobDead(16929033)==true and IsMobDead(16929039)==true) then
+            mob:setMod(tpz.mod.FIRESDT, 875);
+        else
+            mob:setMod(tpz.mod.FIRESDT, 1250);
+        end
+
+        if (IsMobDead(16929034)==true and IsMobDead(16929040)==true) then
+            mob:setMod(tpz.mod.ICESDT, 875);
+        else
+            mob:setMod(tpz.mod.ICESDT, 1250);
+        end
+
+        if (IsMobDead(16929035)==true and IsMobDead(16929041)==true) then
+            mob:setMod(tpz.mod.WINDSDT, 875);
+        else
+            mob:setMod(tpz.mod.WINDSDT, 1250);
+        end
+
+        if (IsMobDead(16929036)==true and IsMobDead(16929042)==true) then
+            mob:setMod(tpz.mod.EARTHSDT, 875);
+        else
+            mob:setMod(tpz.mod.EARTHSDT, 1250);
+        end
+
+        if (IsMobDead(16929037)==true and IsMobDead(16929043)==true) then
+            mob:setMod(tpz.mod.THUNDERSDT, 875);
+        else
+            mob:setMod(tpz.mod.THUNDERSDT, 1250);
+        end
+
+        if (IsMobDead(16929038)==true and IsMobDead(16929044)==true) then
+            mob:setMod(tpz.mod.WATERSDT, 875);
+        else
+            mob:setMod(tpz.mod.WATERSDT, 1250);
+        end
+
+        mob:setMod(tpz.mod.LIGHTSDT, 1250);
+        mob:setMod(tpz.mod.DARKSDT, 875);
     end
 end
 

@@ -816,8 +816,17 @@ tpz.effect =
     DYNAMIS                  = 800,
     MEDITATE                 = 801, -- Dummy effect for SAM Meditate JA
     ELEMENTALRES_DOWN        = 802, -- Elemental resistance down
-    -- PLACEHOLDER           = 803, -- Description
-    -- 803-1022
+    NUKEWALL_FIRE            = 803,
+    NUKEWALL_EARTH           = 804,
+    NUKEWALL_WATER           = 805,
+    NUKEWALL_WIND            = 806,
+    NUKEWALL_ICE             = 807,
+    NUKEWALL_LIGHTNING       = 808,
+    NUKEWALL_LIGHT           = 809,
+    NUKEWALL_DARK            = 810,
+    CUMULATIVE_MAGIC_BONUS   = 811, -- for -ja spells
+    -- PLACEHOLDER              = 812, -- Description
+    -- 802-1022
     -- PLACEHOLDER             = 1023 -- The client dat file seems to have only this many "slots", results of exceeding that are untested.
 }
 
@@ -909,14 +918,14 @@ tpz.mod =
     INT                             = 12,
     MND                             = 13,
     CHR                             = 14,
-    FIREDEF                         = 15,
-    ICEDEF                          = 16,
-    WINDDEF                         = 17,
-    EARTHDEF                        = 18,
-    THUNDERDEF                      = 19,
-    WATERDEF                        = 20,
-    LIGHTDEF                        = 21,
-    DARKDEF                         = 22,
+    FIRERES                         = 15,
+    ICERES                          = 16,
+    WINDRES                         = 17,
+    EARTHRES                        = 18,
+    THUNDERRES                      = 19,
+    WATERRES                        = 20,
+    LIGHTRES                        = 21,
+    DARKRES                         = 22,
     ATT                             = 23,
     RATT                            = 24,
     ACC                             = 25,
@@ -944,18 +953,18 @@ tpz.mod =
     LIGHTACC                        = 46,
     DARKACC                         = 47,
     WSACC                           = 48,
-    SLASHRES                        = 49,
-    PIERCERES                       = 50,
-    IMPACTRES                       = 51,
-    HTHRES                          = 52,
-    FIRERES                         = 54,
-    ICERES                          = 55,
-    WINDRES                         = 56,
-    EARTHRES                        = 57,
-    THUNDERRES                      = 58,
-    WATERRES                        = 59,
-    LIGHTRES                        = 60,
-    DARKRES                         = 61,
+    SLASHSDT                        = 49,
+    PIERCESDT                       = 50,
+    IMPACTSDT                       = 51,
+    HTHSDT                          = 52,
+    FIRESDT                         = 54,
+    ICESDT                          = 55,
+    WINDSDT                         = 56,
+    EARTHSDT                        = 57,
+    THUNDERSDT                      = 58,
+    WATERSDT                        = 59,
+    LIGHTSDT                        = 60,
+    DARKSDT                         = 61,
     ATTP                            = 62,
     DEFP                            = 63,
     COMBAT_SKILLUP_RATE             = 64, -- % increase in skillup combat rate
@@ -1357,6 +1366,7 @@ tpz.mod =
     AUSPICE_EFFECT                  = 484, -- Auspice Subtle Blow Bonus
     TACTICAL_PARRY                  = 486, -- Tactical Parry TP Bonus
     MAG_BURST_BONUS                 = 487, -- Magic Burst Bonus
+    MAG_BURST_BONUS_TRAIT           = 502, -- Magic Burst Bonus Trait (handled separately than above because he is not subjected to cap)
     INHIBIT_TP                      = 488, -- Inhibits TP Gain (percent)
 
     GOV_CLEARS                      = 496, -- Tracks GoV page completion (for 4% bonus on rewards).
@@ -1452,6 +1462,7 @@ tpz.mod =
     BARSPELL_MDEF_BONUS             = 827, -- Extra magic defense bonus granted to the bar- spell effect
     RAPTURE_AMOUNT                  = 568, -- Bonus amount added to Rapture effect
     EBULLIENCE_AMOUNT               = 569, -- Bonus amount added to Ebullience effect
+    FOCALIZATION_AMOUNT             = 571, -- MAC added by Focalization
     WYVERN_EFFECTIVE_BREATH         = 829, -- Increases the threshold for triggering healing breath
     AQUAVEIL_COUNT                  = 832, -- Modifies the amount of hits that Aquaveil absorbs before being removed
     SONG_RECAST_DELAY               = 833, -- Reduces song recast time in seconds.
@@ -1554,6 +1565,17 @@ tpz.mod =
     RADIAL_ARCANA                   = 969,
     CURATIVE_RECANTATION            = 970,
     PRIMEVAL_ZEAL                   = 971,
+
+    -- New version for Staff Mods
+    -- https://www.bg-wiki.com/bg/Vulcan%27s_Staff
+    FIRE_MAGIC_POTENCY        = 970,
+    EARTH_MAGIC_POTENCY       = 971,
+    WATER_MAGIC_POTENCY       = 972,
+    WIND_MAGIC_POTENCY        = 973,
+    ICE_MAGIC_POTENCY         = 974,
+    LIGHTNING_MAGIC_POTENCY   = 975,
+    LIGHT_MAGIC_POTENCY       = 976,
+    DARK_MAGIC_POTENCY        = 977,
 
     -- The spares take care of finding the next ID to use so long as we don't forget to list IDs that have been freed up by refactoring.
     -- 570 - 825 used by WS DMG mods these are not spares.

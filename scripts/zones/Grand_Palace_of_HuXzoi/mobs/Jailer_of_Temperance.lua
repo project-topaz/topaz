@@ -15,10 +15,11 @@ function onMobSpawn(mob)
     -- Change animation to pot
     mob:AnimationSub(0)
     -- Set the damage resists
-    mob:setMod(tpz.mod.HTHRES, 1000)
-    mob:setMod(tpz.mod.SLASHRES, 0)
-    mob:setMod(tpz.mod.PIERCERES, 0)
-    mob:setMod(tpz.mod.IMPACTRES, 1000)
+    mob:setMod(tpz.mod.HTHSDT, 1000);
+    mob:setMod(tpz.mod.SLASHSDT, 0);
+    mob:setMod(tpz.mod.PIERCESDT, 0);
+    mob:setMod(tpz.mod.IMPACTSDT, 1000);
+
     -- Set the magic resists. It always takes no damage from direct magic
     for n =1, #tpz.magic.resistMod, 1 do
         mob:setMod(tpz.magic.resistMod[n], 0)
@@ -40,17 +41,17 @@ function onMobFight(mob)
 
         -- We changed to Poles. Make it only take piercing.
         if (aniChange == 2) then
-            mob:setMod(tpz.mod.HTHRES, 0)
-            mob:setMod(tpz.mod.SLASHRES, 0)
-            mob:setMod(tpz.mod.PIERCERES, 1000)
-            mob:setMod(tpz.mod.IMPACTRES, 0)
-            mob:setLocalVar("changeTime", mob:getBattleTime())
+            mob:setMod(tpz.mod.HTHSDT, 0);
+            mob:setMod(tpz.mod.SLASHSDT, 0);
+            mob:setMod(tpz.mod.PIERCESDT, 1000);
+            mob:setMod(tpz.mod.IMPACTSDT, 0);
+            mob:setLocalVar("changeTime", mob:getBattleTime());
         else -- We changed to Rings. Make it only take slashing.
-            mob:setMod(tpz.mod.HTHRES, 0)
-            mob:setMod(tpz.mod.SLASHRES, 1000)
-            mob:setMod(tpz.mod.PIERCERES, 0)
-            mob:setMod(tpz.mod.IMPACTRES, 0)
-            mob:setLocalVar("changeTime", mob:getBattleTime())
+            mob:setMod(tpz.mod.HTHSDT, 0);
+            mob:setMod(tpz.mod.SLASHSDT, 1000);
+            mob:setMod(tpz.mod.PIERCESDT, 0);
+            mob:setMod(tpz.mod.IMPACTSDT, 0);
+            mob:setLocalVar("changeTime", mob:getBattleTime());
         end
     -- We're in poles, but changing
     elseif (mob:AnimationSub() == 2 and mob:getBattleTime() - changeTime > randomTime) then
@@ -58,19 +59,19 @@ function onMobFight(mob)
 
         -- Changing to Pot, only take Blunt damage
         if (aniChange == 0) then
-            mob:AnimationSub(0)
-            mob:setMod(tpz.mod.HTHRES, 1000)
-            mob:setMod(tpz.mod.SLASHRES, 0)
-            mob:setMod(tpz.mod.PIERCERES, 0)
-            mob:setMod(tpz.mod.IMPACTRES, 1000)
-            mob:setLocalVar("changeTime", mob:getBattleTime())
+            mob:AnimationSub(0);
+            mob:setMod(tpz.mod.HTHSDT, 1000);
+            mob:setMod(tpz.mod.SLASHSDT, 0);
+            mob:setMod(tpz.mod.PIERCESDT, 0);
+            mob:setMod(tpz.mod.IMPACTSDT, 1000);
+            mob:setLocalVar("changeTime", mob:getBattleTime());
         else -- Going to Rings, only take slashing
-            mob:AnimationSub(3)
-            mob:setMod(tpz.mod.HTHRES, 0)
-            mob:setMod(tpz.mod.SLASHRES, 1000)
-            mob:setMod(tpz.mod.PIERCERES, 0)
-            mob:setMod(tpz.mod.IMPACTRES, 0)
-            mob:setLocalVar("changeTime", mob:getBattleTime())
+            mob:AnimationSub(3);
+            mob:setMod(tpz.mod.HTHSDT,0 );
+            mob:setMod(tpz.mod.SLASHSDT, 1000);
+            mob:setMod(tpz.mod.PIERCESDT, 0);
+            mob:setMod(tpz.mod.IMPACTSDT, 0);
+            mob:setLocalVar("changeTime", mob:getBattleTime());
         end
     -- We're in rings, but going to change to pot or poles
     elseif (mob:AnimationSub() == 3 and mob:getBattleTime() - changeTime > randomTime) then
@@ -79,17 +80,17 @@ function onMobFight(mob)
 
         -- We're changing to pot form, only take blunt damage.
         if (aniChange == 0 or aniChange == 1) then
-            mob:setMod(tpz.mod.HTHRES, 1000)
-            mob:setMod(tpz.mod.SLASHRES, 0)
-            mob:setMod(tpz.mod.PIERCERES, 0)
-            mob:setMod(tpz.mod.IMPACTRES, 1000)
-            mob:setLocalVar("changeTime", mob:getBattleTime())
+            mob:setMod(tpz.mod.HTHSDT, 1000);
+            mob:setMod(tpz.mod.SLASHSDT, 0);
+            mob:setMod(tpz.mod.PIERCESDT, 0);
+            mob:setMod(tpz.mod.IMPACTSDT, 1000);
+            mob:setLocalVar("changeTime", mob:getBattleTime());
         else -- Changing to poles, only take piercing
-            mob:setMod(tpz.mod.HTHRES, 0)
-            mob:setMod(tpz.mod.SLASHRES, 0)
-            mob:setMod(tpz.mod.PIERCERES, 1000)
-            mob:setMod(tpz.mod.IMPACTRES, 0)
-            mob:setLocalVar("changeTime", mob:getBattleTime())
+            mob:setMod(tpz.mod.HTHSDT, 0);
+            mob:setMod(tpz.mod.SLASHSDT, 0);
+            mob:setMod(tpz.mod.PIERCESDT, 1000);
+            mob:setMod(tpz.mod.IMPACTSDT, 0);
+            mob:setLocalVar("changeTime", mob:getBattleTime());
         end
     end
 end

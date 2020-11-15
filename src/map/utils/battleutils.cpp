@@ -485,7 +485,7 @@ namespace battleutils
         WEATHER weakWeatherSingle[8] = { WEATHER_RAIN, WEATHER_WIND, WEATHER_THUNDER, WEATHER_SNOW, WEATHER_HOT_SPELL, WEATHER_DUST_STORM, WEATHER_GLOOM, WEATHER_AURORAS };
         WEATHER weakWeatherDouble[8] = { WEATHER_SQUALL, WEATHER_GALES, WEATHER_THUNDERSTORMS, WEATHER_BLIZZARDS, WEATHER_HEAT_WAVE, WEATHER_SAND_STORM, WEATHER_DARKNESS, WEATHER_STELLAR_GLARE };
         uint32 obi[8] = { 15435, 15438, 15440, 15437, 15436, 15439, 15441, 15442 };
-        Mod resistarray[8] = { Mod::FIRERES, Mod::EARTHRES, Mod::WATERRES, Mod::WINDRES, Mod::ICERES, Mod::THUNDERRES, Mod::LIGHTRES, Mod::DARKRES };
+        Mod resistarray[8] = {Mod::FIRERES, Mod::EARTHRES, Mod::WATERRES, Mod::WINDRES, Mod::ICERES, Mod::THUNDERRES, Mod::LIGHTRES, Mod::DARKRES };
         bool obiBonus = false;
 
         double half = (double)(PDefender->getMod(resistarray[element])) / 100;
@@ -1209,7 +1209,7 @@ namespace battleutils
                     damage = std::clamp(damage,0,50);
                     damage += 10; //10~60
                     damage += WELL512::GetRandomNumber(8); //10~67 randomised
-                    damage += (float)damage * ((float)PDefender->getMod(Mod::WINDRES)/-100);
+                    damage += (float)damage * ((float)PDefender->getMod(Mod::WINDSDT)/-100);
 
                     damage = HandleStoneskin(PDefender, damage);
                     //set damage TODO: handle resi st/staff/day
@@ -1254,7 +1254,7 @@ namespace battleutils
                     damage += 10; //10~60
                     damage += WELL512::GetRandomNumber(8); //10~67 randomised
                     //set damage TODO: handle resist/staff/day
-                    damage += (float)damage * ((float)PDefender->getMod(Mod::WATERRES)/-100);
+                    damage += (float)damage * ((float)PDefender->getMod(Mod::WATERSDT)/-100);
                     damage = HandleStoneskin(PDefender, damage);
                     Action->addEffectParam  = damage;
                     PDefender->takeDamage(damage, PAttacker);
@@ -1275,7 +1275,7 @@ namespace battleutils
                     damage += 10; //10~60
                     damage += WELL512::GetRandomNumber(8); //10~67 randomised
                     //set damage TODO: handle resist/staff/day
-                    damage += (float)damage * ((float)PDefender->getMod(Mod::LIGHTRES)/-100);
+                    damage += (float)damage * ((float)PDefender->getMod(Mod::LIGHTSDT)/-100);
                     damage = HandleStoneskin(PDefender, damage);
                     Action->addEffectParam  = damage;
                     PDefender->takeDamage(damage, PAttacker);
@@ -1296,7 +1296,7 @@ namespace battleutils
                     damage += 10; //10~60
                     damage += WELL512::GetRandomNumber(8); //10~67 randomised
                     //set damage TODO: handle resist/staff/day
-                    damage += (float)damage * ((float)PDefender->getMod(Mod::THUNDERRES)/-100);
+                    damage += (float)damage * ((float)PDefender->getMod(Mod::THUNDERSDT)/-100);
                     damage = HandleStoneskin(PDefender, damage);
                     Action->addEffectParam  = damage;
                     PDefender->takeDamage(damage, PAttacker);
@@ -1317,7 +1317,7 @@ namespace battleutils
                     damage += 10; //10~60
                     damage += WELL512::GetRandomNumber(8); //10~67 randomised
                     //set damage TODO: handle resist/staff/day
-                    damage += (float)damage * ((float)PDefender->getMod(Mod::ICERES)/-100);
+                    damage += (float)damage * ((float)PDefender->getMod(Mod::ICESDT)/-100);
                     damage = HandleStoneskin(PDefender, damage);
                     Action->addEffectParam  = damage;
                     PDefender->takeDamage(damage, PAttacker);
@@ -1340,7 +1340,7 @@ namespace battleutils
                     damage += 10; //10~60
                     damage += WELL512::GetRandomNumber(8); //10~67 randomised
                     //set damage TODO: handle resist/staff/day
-                    damage += (float)damage * ((float)PDefender->getMod(Mod::FIRERES)/-100);
+                    damage += (float)damage * ((float)PDefender->getMod(Mod::FIRESDT)/-100);
 
                     if(PAmmo->getID() == 17327){
                         damage *= 2;
@@ -1824,16 +1824,16 @@ namespace battleutils
             {
                 switch (damageType)
                 {
-                    case DAMAGE_PIERCING: damage = (damage * (PDefender->getMod(Mod::PIERCERES))) / 1000; break;
-                    case DAMAGE_SLASHING: damage = (damage * (PDefender->getMod(Mod::SLASHRES))) / 1000; break;
-                    case DAMAGE_IMPACT:   damage = (damage * (PDefender->getMod(Mod::IMPACTRES))) / 1000; break;
-                    case DAMAGE_HTH:      damage = (damage * (PDefender->getMod(Mod::HTHRES))) / 1000; break;
+                    case DAMAGE_PIERCING: damage = (damage * (PDefender->getMod(Mod::PIERCESDT))) / 1000; break;
+                    case DAMAGE_SLASHING: damage = (damage * (PDefender->getMod(Mod::SLASHSDT))) / 1000; break;
+                    case DAMAGE_IMPACT:   damage = (damage * (PDefender->getMod(Mod::IMPACTSDT))) / 1000; break;
+                    case DAMAGE_HTH:      damage = (damage * (PDefender->getMod(Mod::HTHSDT))) / 1000; break;
                     default:
                         break;
                 }
             }
             else
-                damage = (damage * (PDefender->getMod(Mod::HTHRES))) / 1000;
+                damage = (damage * (PDefender->getMod(Mod::HTHSDT))) / 1000;
 
             if (isBlocked)
             {
@@ -2959,25 +2959,25 @@ namespace battleutils
     {
         static const Mod resistances[][4] =
         {
-            {Mod::NONE,       Mod::NONE, Mod::NONE, Mod::NONE}, // SC_NONE
-            {Mod::LIGHTDEF,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_TRANSFIXION
-            {Mod::DARKDEF,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_COMPRESSION
-            {Mod::FIREDEF,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_LIQUEFACTION
-            {Mod::EARTHDEF,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_SCISSION
-            {Mod::WATERDEF,   Mod::NONE, Mod::NONE, Mod::NONE}, // SC_REVERBERATION
-            {Mod::WINDDEF,    Mod::NONE, Mod::NONE, Mod::NONE}, // SC_DETONATION
-            {Mod::ICEDEF,     Mod::NONE, Mod::NONE, Mod::NONE}, // SC_INDURATION
-            {Mod::THUNDERDEF, Mod::NONE, Mod::NONE, Mod::NONE}, // SC_IMPACTION
+            {Mod::NONE,       Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_NONE
+            {Mod::LIGHTSDT,   Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_TRANSFIXION
+            {Mod::DARKRES,    Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_COMPSDTSION
+            {Mod::FIRESDT,    Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_LIQUEFACTION
+            {Mod::EARTHSDT,   Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_SCISSION
+            {Mod::WATERSDT,   Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_REVERBERATION
+            {Mod::WINDSDT,    Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_DETONATION
+            {Mod::ICESDT,     Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_INDURATION
+            {Mod::THUNDERSDT, Mod::NONE,       Mod::NONE,       Mod::NONE}, // SC_IMPACTION
 
-            { Mod::EARTHDEF, Mod::DARKDEF, Mod::NONE, Mod::NONE }, // SC_GRAVITATION
-            { Mod::ICEDEF, Mod::WATERDEF, Mod::NONE, Mod::NONE }, // SC_DISTORTION
-            {Mod::FIREDEF,  Mod::LIGHTDEF,   Mod::NONE, Mod::NONE}, // SC_FUSION
-            {Mod::WINDDEF,  Mod::THUNDERDEF, Mod::NONE, Mod::NONE}, // SC_FRAGMENTATION
+            {Mod::EARTHSDT,   Mod::DARKSDT,    Mod::NONE,       Mod::NONE }, // SC_GRAVITATION
+            {Mod::ICESDT,     Mod::WATERSDT,   Mod::NONE,       Mod::NONE }, // SC_DISTORTION
+            {Mod::FIRESDT,    Mod::LIGHTSDT,   Mod::NONE,       Mod::NONE}, // SC_FUSION
+            {Mod::WINDSDT,    Mod::THUNDERSDT, Mod::NONE,       Mod::NONE}, // SC_FRAGMENTATION
 
-            {Mod::FIREDEF, Mod::WINDDEF,  Mod::THUNDERDEF, Mod::LIGHTDEF}, // SC_LIGHT
-            {Mod::ICEDEF,  Mod::EARTHDEF, Mod::WATERDEF,   Mod::DARKDEF},  // SC_DARKNESS
-            {Mod::FIREDEF, Mod::WINDDEF,  Mod::THUNDERDEF, Mod::LIGHTDEF}, // SC_LIGHT
-            {Mod::ICEDEF,  Mod::EARTHDEF, Mod::WATERDEF,   Mod::DARKDEF},  // SC_DARKNESS_II
+            {Mod::FIRESDT,    Mod::WINDSDT,    Mod::THUNDERSDT, Mod::LIGHTSDT}, // SC_LIGHT
+            {Mod::ICESDT,     Mod::EARTHSDT,   Mod::WATERSDT,   Mod::DARKSDT},  // SC_DARKNESS
+            {Mod::FIRESDT,    Mod::WINDSDT,    Mod::THUNDERSDT, Mod::LIGHTSDT}, // SC_LIGHT
+            {Mod::ICESDT,     Mod::EARTHSDT,   Mod::WATERSDT,   Mod::DARKSDT},  // SC_DARKNESS_II
         };
 
         Mod defMod = Mod::NONE;
@@ -3030,28 +3030,28 @@ namespace battleutils
 
         switch (defMod)
         {
-            case Mod::FIREDEF:
+            case Mod::FIRESDT:
                 *appliedEle = ELEMENT_FIRE;
                 break;
-            case Mod::EARTHDEF:
+            case Mod::EARTHSDT:
                 *appliedEle = ELEMENT_EARTH;
                 break;
-            case Mod::WATERDEF:
+            case Mod::WATERSDT:
                 *appliedEle = ELEMENT_WATER;
                 break;
-            case Mod::WINDDEF:
+            case Mod::WINDSDT:
                 *appliedEle = ELEMENT_WIND;
                 break;
-            case Mod::ICEDEF:
+            case Mod::ICESDT:
                 *appliedEle = ELEMENT_ICE;
                 break;
-            case Mod::THUNDERDEF:
+            case Mod::THUNDERSDT:
                 *appliedEle = ELEMENT_THUNDER;
                 break;
-            case Mod::LIGHTDEF:
+            case Mod::LIGHTSDT:
                 *appliedEle = ELEMENT_LIGHT;
                 break;
-            case Mod::DARKDEF:
+            case Mod::DARKSDT:
                 *appliedEle = ELEMENT_DARK;
                 break;
             default:
@@ -3097,7 +3097,7 @@ namespace battleutils
             if (angle > 86 && angle < 170)
                 damage = (int32)(damage * (1.f + PChar->PMeritPoints->GetMeritValue(MERIT_INNIN_EFFECT, PChar)/100.f));
         }
-        damage = damage * (1000 - resistance) / 1000;
+        damage = (int)((float)damage * ((float)resistance / 100.f));
         damage = MagicDmgTaken(PDefender, damage, appliedEle);
         if (damage > 0)
         {

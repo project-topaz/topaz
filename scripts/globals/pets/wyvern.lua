@@ -102,10 +102,10 @@ function onMobSpawn(mob)
             if math.random(100) <= weaknessTargetChance then
                 local weakness = 0
                 for mod = 0, 5 do
-                    if target:getMod(tpz.mod.FIREDEF + mod) < target:getMod(tpz.mod.FIREDEF + weakness) then
+                    if target:getMod(tpz.mod.FIRERES + mod) < target:getMod(tpz.mod.FIRERES + weakness) then
                         breaths = {}
                         table.insert(breaths, 630 + mod)
-                    elseif target:getMod(tpz.mod.FIREDEF + mod) == target:getMod(tpz.mod.FIREDEF + weakness) then
+                    elseif target:getMod(tpz.mod.FIRERES + mod) == target:getMod(tpz.mod.FIRERES + weakness) then
                         table.insert(breaths, 630 + mod)
                     end
                 end

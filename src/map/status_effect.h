@@ -721,12 +721,21 @@ enum EFFECT
     EFFECT_DYNAMIS                  = 800,
     EFFECT_MEDITATE                 = 801, // Dummy effect for SAM Meditate JA
     EFFECT_ELEMENTALRES_DOWN        = 802, // Elemental resistance down
-    // EFFECT_PLACEHOLDER           = 803 // Description
-    // 803-1022
-    // EFFECT_PLACEHOLDER           = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
+    EFFECT_NUKEWALL_FIRE            = 803,
+    EFFECT_NUKEWALL_EARTH           = 804,
+    EFFECT_NUKEWALL_WATER           = 805,
+    EFFECT_NUKEWALL_WIND            = 806,
+    EFFECT_NUKEWALL_ICE             = 807,
+    EFFECT_NUKEWALL_LIGHTNING       = 808,
+    EFFECT_NUKEWALL_LIGHT           = 809,
+    EFFECT_NUKEWALL_DARK            = 810,
+    EFFECT_CUMULATIVE_MAGIC_BONUS   = 811, // for -ja spells
+    // EFFECT_PLACEHOLDER              = 802 // Description
+    // 811-1022
+    // EFFECT_PLACEHOLDER             = 1023 // The client dat file seems to have only this many "slots", results of exceeding that are untested.
 };
 
-#define MAX_EFFECTID    803  // 768 real + 32 custom
+#define MAX_EFFECTID    812  // 768 real + 44 custom
 
 /************************************************************************
 *                                                                       *

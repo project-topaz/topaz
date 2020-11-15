@@ -76,10 +76,18 @@ CBattleEntity::CBattleEntity()
     StatusEffectContainer = std::make_unique<CStatusEffectContainer>(this);
     PRecastContainer = std::make_unique<CRecastContainer>(this);
 
-    m_modStat[Mod::SLASHRES] = 1000;
-    m_modStat[Mod::PIERCERES] = 1000;
-    m_modStat[Mod::HTHRES] = 1000;
-    m_modStat[Mod::IMPACTRES] = 1000;
+    m_modStat[Mod::SLASHSDT]   = 1000;
+    m_modStat[Mod::PIERCESDT]  = 1000;
+    m_modStat[Mod::HTHSDT]     = 1000;
+    m_modStat[Mod::IMPACTSDT]  = 1000;
+    m_modStat[Mod::FIRESDT]    = 1000;
+    m_modStat[Mod::EARTHSDT]   = 1000;
+    m_modStat[Mod::WATERSDT]   = 1000;
+    m_modStat[Mod::WINDSDT]    = 1000;
+    m_modStat[Mod::ICESDT]     = 1000;
+    m_modStat[Mod::THUNDERSDT] = 1000;
+    m_modStat[Mod::LIGHTSDT]   = 1000;
+    m_modStat[Mod::DARKSDT]    = 1000;
 
     m_Immunity = 0;
     isCharmed = false;
