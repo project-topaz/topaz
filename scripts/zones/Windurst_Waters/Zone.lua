@@ -14,8 +14,7 @@ require("scripts/globals/zone")
 function onInitialize(zone)
     -- Check if we are on Windurst Mission 1-3
     zone:registerRegion(1, 23, -12, -208, 31, -8, -197)
-
-    applyHalloweenNpcCostumes(zone:getID())
+    events.harvest.initZone(zone) -- register regions 2 and 3
 end
 
 function onZoneIn(player, prevZone)
@@ -64,8 +63,17 @@ function onRegionEnter(player, region)
                 player:startEvent(146)
             end
         end,
+        [2] = checkHalloweenRegion(player,1),
+        [3] = checkHalloweenRegion(player,2),
     }
 
+end
+
+function onRegionLeave(player, region)
+    local regionID =region:GetRegionID()
+    if regionID == 2 or regionID == 3 then
+        clearHalloweenRegion(player)
+    end
 end
 
 function onEventUpdate(player, csid, option)

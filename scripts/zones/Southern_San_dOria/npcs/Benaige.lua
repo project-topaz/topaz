@@ -5,10 +5,12 @@
 -- !pos -142 -6 47 230
 -----------------------------------
 local ID = require("scripts/zones/Southern_San_dOria/IDs")
+require("scripts/globals/events/harvest_festivals")
 require("scripts/globals/shop")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onHalloweenTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)

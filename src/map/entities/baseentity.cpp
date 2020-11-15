@@ -153,3 +153,13 @@ uint16 CBaseEntity::GetModelId()
 {
     return look.modelid;
 }
+
+void CBaseEntity::SetLookSize(uint16 size)
+{
+    look.size = size;
+}
+
+uint16 CBaseEntity::GetLookSize()
+{
+    return look.size;
+}

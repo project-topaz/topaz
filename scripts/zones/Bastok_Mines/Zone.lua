@@ -14,8 +14,7 @@ require("scripts/globals/zone")
 
 function onInitialize(zone)
     SetExplorerMoogles(ID.npc.EXPLORER_MOOGLE)
-
-    applyHalloweenNpcCostumes(zone:getID())
+    events.harvest.initZone(zone) --register region 1
     tpz.chocobo.initZone(zone)
 end
 
@@ -56,6 +55,17 @@ function onConquestUpdate(zone, updatetype)
 end
 
 function onRegionEnter(player, region)
+    local regionID =region:GetRegionID()
+    if regionID == 1 then
+        checkHalloweenRegion(player,1)
+    end
+end
+
+function onRegionLeave(player, region)
+    local regionID =region:GetRegionID()
+    if regionID == 1 then
+        clearHalloweenRegion(player)
+    end
 end
 
 function onEventUpdate(player, csid, option)

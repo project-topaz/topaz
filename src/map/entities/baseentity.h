@@ -229,6 +229,8 @@ public:
 
     void            SetModelId(uint16 modelId);     // Set new modelid
     uint16          GetModelId();                   // Get the modelid
+    void            SetLookSize(uint16 size);       // Set new look.size
+    uint16          GetLookSize();                  // Get the look.size
 
     virtual void    HandleErrorMessage(std::unique_ptr<CBasicPacket>&) {};
 

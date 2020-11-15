@@ -2,6 +2,7 @@
 -- Area: Bastok_Mines
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/harvest_festivals")
 -----------------------------------
 
 zones = zones or {}
@@ -80,6 +81,7 @@ zones[tpz.zone.BASTOK_MINES] =
         EMALIVEULAUX_CLOSED_DIALOG     = 12243, -- I'd love to sell you goods imported from the island of Tavnazia, but with the area under foreign control, I can't secure my trade routes...
         COMMON_SENSE_SURVIVAL          = 15998, -- It appears that you have arrived at a new survival guide provided by the Adventurers' Mutual Aid Network. Common sense dictates that you should now be able to teleport here from similar tomes throughout the world.
         TEAR_IN_FABRIC_OF_SPACE        = 16597, -- There appears to be a tear in the fabric of space...
+        MOOGLE_SHOP_DIALOG             = 11462, -- Come one, come all, kupo!
     },
     mob =
     {
@@ -88,11 +90,18 @@ zones[tpz.zone.BASTOK_MINES] =
     {
         HALLOWEEN_SKINS =
         {
-            [17735742] = 41, -- Faustin
-            [17735744] = 43, -- Mille
-            [17735747] = 42, -- Aulavia
-            [17735795] = 40, -- Proud Beard
-            [17735818] = 44, -- Emaliveulaux
+            [17735714] = {  572,  102, events.harvest.skins.quadav },   --Maymunah
+            [17735715] = {  538, 2056, events.harvest.skins.yagudo },   --Odoba
+            [17735722] = {  548, 2058, events.harvest.skins.orc },      --Deegis
+            [17735726] = {  368,  104, events.harvest.skins.ghost },    --Griselda
+            [17735733] = { 1146,  771, events.harvest.skins.shade },    --Neigepance
+            [17735742] = {  572,  769, events.harvest.skins.hound },    --Faustin
+            [17735744] = {  576, 1038, events.harvest.skins.quadav },   --Mille
+            [17735745] = {  535,  526, events.harvest.skins.yagudo },   --Tibelda
+            [17735746] = {  576, 2054, events.harvest.skins.skeleton }, --Galdeo
+            [17735747] = {  576, 1030, events.harvest.skins.ghost },    --Aulavia
+            [17735795] = { 1146, 2050, events.harvest.skins.shade },    --Proud Beard
+            [17735818] = {  542,  774, events.harvest.skins.skeleton }, --Emaliveulaux
         },
         LELEROON_BLUE_DOOR = 17735847,
         EXPLORER_MOOGLE    = 17735856,

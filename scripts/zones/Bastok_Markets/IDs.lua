@@ -2,6 +2,7 @@
 -- Area: Bastok_Markets
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/harvest_festivals")
 -----------------------------------
 
 zones = zones or {}
@@ -72,7 +73,24 @@ zones[tpz.zone.BASTOK_MARKETS] =
         AQUILLINA = 17739784,
         HALLOWEEN_SKINS =
         {
-            [17739805] = 45, -- Olwyn
+            [17739789] = {  548,  103, events.harvest.skins.hound },    --Visala
+            [17739797] = {  368, 2051, events.harvest.skins.orc },      --Belizieg
+            [17739799] = { 1146,   99, events.harvest.skins.quadav },   --Ciqala
+            [17739800] = {  572,  775, events.harvest.skins.yagudo },   --Peritrage
+            [17739802] = {  542,  174, events.harvest.skins.skeleton }, --Charging Chocobo
+            [17739805] = {  368,  527, events.harvest.skins.ghost },    --Olwyn
+            [17739808] = { 1146,    2, events.harvest.skins.shade },    --Harmodios
+            [17739810] = {  576,  100, events.harvest.skins.hound },    --Carmelide
+            [17739895] = {   -1,   -1, events.harvest.skins.skeleton }, --Trick_Shadow
+            [17739896] = {   -1,   -1, events.harvest.skins.ghost },    --Trick_Specter
+            [17739897] = {   -1,   -1, events.harvest.skins.shade },    --Trick_Shade
+            [17739898] = {   -1,   -1, events.harvest.skins.hound },    --Trick_Ghost
+            [17739899] = {   -1,   -1, events.harvest.skins.orc },      --Trick_Spirit
+            [17739900] = {   -1,   -1, events.harvest.skins.quadav },   --Trick_Phantom
+            [17739901] = {   -1,   -1, events.harvest.skins.yagudo },   --Trick_Skeleton
+            [17739902] = {   -1,   -1, events.harvest.skins.skeleton }, --Trick_Wight
+            [17739903] = {   -1,   -1, events.harvest.skins.ghost },    --Trick_Bones
+            [17739904] = {   -1,   -1, events.harvest.skins.shade },    --Trick_Ghast
         },
     },
 }

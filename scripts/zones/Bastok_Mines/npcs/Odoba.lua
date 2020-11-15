@@ -5,12 +5,14 @@
 -- !pos 108.473 5.017 1.089 234
 -----------------------------------
 local ID = require("scripts/zones/Bastok_Mines/IDs")
+require("scripts/globals/events/harvest_festivals")
 require("scripts/globals/shop")
 require("scripts/globals/settings")
 require("scripts/globals/status")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onHalloweenTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)

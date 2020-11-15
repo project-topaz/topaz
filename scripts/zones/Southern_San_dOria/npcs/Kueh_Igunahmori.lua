@@ -7,10 +7,12 @@
 require("scripts/globals/settings")
 require("scripts/globals/shop")
 require("scripts/globals/conquest")
+require("scripts/globals/events/harvest_festivals")
 local ID = require("scripts/zones/Southern_San_dOria/IDs")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onHalloweenTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)

@@ -2,6 +2,7 @@
 -- Area: Windurst_Waters
 -----------------------------------
 require("scripts/globals/zone")
+require("scripts/globals/events/harvest_festivals")
 -----------------------------------
 
 zones = zones or {}
@@ -57,6 +58,7 @@ zones[tpz.zone.WINDURST_WATERS] =
         THANK_YOU                  = 10170, -- Thank you...
         PRESTAPIQ_CLOSED_DIALOG    = 10660, -- Goodebyongo! Wingdorsht tooo fhar awayz fhrum mai hormtowne! Dropt arll goodhys whylle ahn trripp!
         PRESTAPIQ_OPEN_DIALOG      = 10661, -- Helgohelgo! Me's bhrink goodhys arll ja wayz fhrum hormtowne ovf Morvalporlis!
+        MOOGLE_SHOP_DIALOG         = 11462, -- Come one, come all, kupo!
         NESSRUGETOMALL_SHOP_DIALOG = 11465, -- Welcome to the Rarab Tail Hostelry.
         DIABOLOS_UNLOCKED          = 11894, -- You are now able to summon Diabolos!
     },
@@ -65,12 +67,27 @@ zones[tpz.zone.WINDURST_WATERS] =
     },
     npc =
     {
-        HALLOWEEN_SKINS = {
-            [17752097] = 61, -- Ensasa
-            [17752098] = 60, -- Upih Khachla
-            [17752101] = 59, -- Ness Rugetomal
-            [17752102] = 63, -- Maqu Molpih
-            [17752103] = 62, -- Ahyeekih
+        HALLOWEEN_SKINS =
+        {
+            [17752094] = {  368, 1282, events.harvest.skins.orc },      --Orez-Ebrez
+            [17752095] = {  535, 1280, events.harvest.skins.quadav },   --Shohrun-Tuhrun
+            [17752096] = {  542, 1281, events.harvest.skins.yagudo },   --Hilkomu-Makimu
+            [17752097] = {  572, 1536, events.harvest.skins.skeleton }, --Ensasa
+            [17752098] = { 1146, 1794, events.harvest.skins.ghost },    --Upih Khachla
+            [17752101] = {  576, 1792, events.harvest.skins.hound },    --Ness Rugetomal
+            [17752102] = {  368, 1793, events.harvest.skins.orc },      --Maqu Molpih
+            [17752103] = {  548,  258, events.harvest.skins.shade },    --Ahyeekih
+            [17752291] = {   -1,   -1, events.harvest.skins.hound },    --Trick_Shadow
+            [17752292] = {   -1,   -1, events.harvest.skins.orc },      --Trick_Specter
+            [17752293] = {   -1,   -1, events.harvest.skins.quadav },   --Trick_Shade
+            [17752294] = {   -1,   -1, events.harvest.skins.yagudo },   --Trick_Ghost
+            [17752295] = {   -1,   -1, events.harvest.skins.skeleton }, --Trick_Spirit
+            [17752296] = {   -1,   -1, events.harvest.skins.ghost },    --Trick_Phantom
+            [17752297] = {   -1,   -1, events.harvest.skins.shade },    --Trick_Skeleton
+            [17752298] = {   -1,   -1, events.harvest.skins.hound },    --Trick_Wight
+            [17752299] = {   -1,   -1, events.harvest.skins.orc },      --Trick_Bones
+            [17752300] = {   -1,   -1, events.harvest.skins.quadav },   --Trick_Ghast
+            --[17752312] = {,,}--Trick Flan
         },
         LELEROON_GREEN_DOOR = 17752333,
     },

@@ -6,10 +6,12 @@
 -----------------------------------
 require("scripts/globals/settings")
 require("scripts/globals/shop")
+require("scripts/globals/events/harvest_festivals")
 local ID = require("scripts/zones/Bastok_Mines/IDs")
 -----------------------------------
 
 function onTrade(player, npc, trade)
+    onHalloweenTrade(player, trade, npc)
 end
 
 function onTrigger(player, npc)
