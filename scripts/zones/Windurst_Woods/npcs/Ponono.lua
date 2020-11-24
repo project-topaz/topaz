@@ -71,10 +71,12 @@ function onTrigger(player, npc)
     elseif player:getCharVar("moral") == 3 and player:getLocalVar("moralZone") == 0 and player:getCharVar("moralWait") <= os.time() then
         player:startEvent(705)
     elseif expertQuestStatus == 600 then
-        --[[  Feeding the proper parameter currently hangs the client in cutscene. This may
-              possibly be due to an unimplemented packet or function (display recipe?) Work
-              around to present dialog to player to let them know the trade is ready to be
-              received by triggering with lower rank up parameters.  ]]--
+        --[[
+        Feeding the proper parameter currently hangs the client in cutscene. This may
+        possibly be due to an unimplemented packet or function (display recipe?) Work
+        around to present dialog to player to let them know the trade is ready to be
+        received by triggering with lower rank up parameters.
+        --]]
         player:showText(npc, 7339)
         player:showText(npc, 7341)
         player:startEvent(10011, testItem, realSkill, 44, guildMember, 0, 0, 0, 0)
