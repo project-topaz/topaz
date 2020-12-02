@@ -160,7 +160,7 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "packets/menu_raisetractor.h"
 
 uint8 PacketSize[512];
-void(*PacketParser[512])(map_session_data_t*, CCharEntity*, CBasicPacket);
+void(*PacketParser[512])(map_session_data_t* const, CCharEntity* const, CBasicPacket);
 
 /************************************************************************
 *                                                                       *
@@ -198,7 +198,7 @@ void PrintPacket(CBasicPacket data)
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x000(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x000(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     ShowWarning(CL_YELLOW"parse: Unhandled game packet %03hX from user: %s\n" CL_RESET, (data.ref<uint16>(0) & 0x1FF), PChar->GetName());
     return;
@@ -210,7 +210,7 @@ void SmallPacket0x000(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0xFFF(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0xFFF(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     ShowDebug(CL_CYAN"parse: SmallPacket is not implemented Type<%03hX>\n" CL_RESET, (data.ref<uint16>(0) & 0x1FF));
     return;
@@ -224,7 +224,7 @@ void SmallPacket0xFFF(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x00A(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x00A(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     data.ref<uint32>(0x5C) = 0;
@@ -235,28 +235,28 @@ void SmallPacket0x00A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
     {
         if (PChar->loc.zone != nullptr)
         {
-            //remove the char from previous zone, and unset shuttingDown (already in next zone)
-            PacketParser[0x00D](session, PChar, nullptr);
+            // Remove the char from previous zone, and unset shuttingDown (already in next zone)
+            PacketParser[0x00D](PSession, PChar, nullptr);
         }
 
-        session->shuttingDown = 0;
-        session->blowfish.key[4] += 2;
-        session->blowfish.status = BLOWFISH_SENT;
+        PSession->shuttingDown = 0;
+        PSession->blowfish.key[4] += 2;
+        PSession->blowfish.status = BLOWFISH_SENT;
 
-        md5((uint8*)(session->blowfish.key), session->blowfish.hash, 20);
+        md5((uint8*)(PSession->blowfish.key), PSession->blowfish.hash, 20);
 
         for (uint32 i = 0; i < 16; ++i)
         {
-            if (session->blowfish.hash[i] == 0)
+            if (PSession->blowfish.hash[i] == 0)
             {
-                memset(session->blowfish.hash + i, 0, 16 - i);
+                memset(PSession->blowfish.hash + i, 0, 16 - i);
                 break;
             }
         }
-        blowfish_init((int8*)session->blowfish.hash, 16, session->blowfish.P, session->blowfish.S[0]);
+        blowfish_init((int8*)PSession->blowfish.hash, 16, PSession->blowfish.P, PSession->blowfish.S[0]);
 
         char session_key[20 * 2 + 1];
-        bin2hex(session_key, (uint8*)session->blowfish.key, 20);
+        bin2hex(session_key, (uint8*)PSession->blowfish.key, 20);
 
         uint16 destination = PChar->loc.destination;
 
@@ -277,8 +277,7 @@ void SmallPacket0x00A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
         Sql_Query(SqlHandle, fmtQuery,
             PChar->targid,
             session_key,
-            currentZone->GetIP(),
-            session->client_port,
+            currentZone->GetIP(), PSession->client_port,
             PChar->id);
 
         fmtQuery = "SELECT death FROM char_stats WHERE charid = %u;";
@@ -334,7 +333,7 @@ void SmallPacket0x00A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x00C(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x00C(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->pushPacket(new CInventorySizePacket(PChar));
@@ -367,7 +366,7 @@ void SmallPacket0x00C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             }
         }
     }
-    // reset the petZoning info
+    // Reset the petZoning info
     PChar->resetPetZoningInfo();
     return;
 }
@@ -378,10 +377,10 @@ void SmallPacket0x00C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x00D(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x00D(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    session->blowfish.status = BLOWFISH_WAITING;
+    PSession->blowfish.status = BLOWFISH_WAITING;
 
     PChar->TradePending.clean();
     PChar->InvitePending.clean();
@@ -439,12 +438,12 @@ void SmallPacket0x00D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
             PChar->setPetZoningInfo();
         }
 
-        session->shuttingDown = 1;
+        PSession->shuttingDown = 1;
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 0 WHERE charid = %u", PChar->id);
     }
     else
     {
-        session->shuttingDown = 2;
+        PSession->shuttingDown = 2;
         Sql_Query(SqlHandle, "UPDATE char_stats SET zoning = 1 WHERE charid = %u", PChar->id);
         charutils::CheckEquipLogic(PChar, SCRIPT_CHANGEZONE, PChar->getZone());
 
@@ -480,7 +479,7 @@ void SmallPacket0x00D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x00F(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x00F(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     charutils::SendKeyItems(PChar);
@@ -509,10 +508,10 @@ void SmallPacket0x00F(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x011(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x011(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
-    session->blowfish.status = BLOWFISH_ACCEPTED;
+    PSession->blowfish.status = BLOWFISH_ACCEPTED;
 
     PChar->health.tp = 0;
 
@@ -543,7 +542,7 @@ void SmallPacket0x011(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x015(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x015(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     TracyZoneCString("Player Sync");
@@ -603,7 +602,7 @@ void SmallPacket0x015(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x016(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x016(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 targid = data.ref<uint16>(0x04);
@@ -639,7 +638,7 @@ void SmallPacket0x016(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x017(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x017(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 targid = data.ref<uint16>(0x04);
@@ -656,7 +655,7 @@ void SmallPacket0x017(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x01A(map_session_data_t* PSession, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     TracyZoneCString("Player Action");
@@ -983,7 +982,7 @@ void SmallPacket0x01A(map_session_data_t* PSession, CCharEntity* PChar, CBasicPa
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x01B(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x01B(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     // 0 - world pass, 2 - gold world pass; +1 - purchase
@@ -999,7 +998,7 @@ void SmallPacket0x01B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x01C(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x01C(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PrintPacket(data);
@@ -1012,7 +1011,7 @@ void SmallPacket0x01C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x028(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x028(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     int32  quantity = data.ref<uint8>(0x04);
@@ -1062,7 +1061,7 @@ void SmallPacket0x028(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x029(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x029(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint32 quantity = data.ref<uint8>(0x04);
@@ -1172,7 +1171,7 @@ void SmallPacket0x029(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x032(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x032(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint32 charid = data.ref<uint32>(0x04);
@@ -1229,7 +1228,7 @@ void SmallPacket0x032(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x033(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x033(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     CCharEntity* PTarget = (CCharEntity*)PChar->GetEntity(PChar->TradePending.targid, TYPE_PC);
@@ -1332,7 +1331,7 @@ void SmallPacket0x033(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x034(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x034(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint32 quantity = data.ref<uint32>(0x04);
@@ -1421,7 +1420,7 @@ void SmallPacket0x034(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x036(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x036(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint32 npcid = data.ref<uint32>(0x04);
@@ -1471,7 +1470,7 @@ void SmallPacket0x036(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x037(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x037(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     // uint32 EntityID = data.ref<uint32>(0x04);
@@ -1499,7 +1498,7 @@ void SmallPacket0x037(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x03A(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x03A(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     TracyZoneCString("Sort Inventory");
@@ -1578,7 +1577,7 @@ void SmallPacket0x03A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x03C(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x03C(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     ShowWarning(CL_YELLOW"SmallPacket0x03C\n" CL_RESET);
@@ -1591,7 +1590,7 @@ void SmallPacket0x03C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x03D(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x03D(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     const int8* name = (const int8*)(data[0x08]);
@@ -1657,7 +1656,7 @@ void SmallPacket0x03D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x041(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x041(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PrintPacket(data);
@@ -1685,7 +1684,7 @@ void SmallPacket0x041(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x042(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x042(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PrintPacket(data);
@@ -1713,7 +1712,7 @@ void SmallPacket0x042(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x04B(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x04B(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     // uint8   msg_chunk = data.ref<uint8>(0x04); // The current chunk of the message to send.. (1 = start, 2 = rest of message)
@@ -1751,7 +1750,7 @@ void SmallPacket0x04B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x04D(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x04D(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 action = data.ref<uint8>(0x04);
@@ -2396,7 +2395,7 @@ void SmallPacket0x04D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x04E(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x04E(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8  action = data.ref<uint8>(0x04);
@@ -2689,7 +2688,7 @@ void SmallPacket0x04E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x050(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x050(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->status != STATUS_NORMAL)
@@ -2720,7 +2719,7 @@ void SmallPacket0x050(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x051(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x051(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->status != STATUS_NORMAL)
@@ -2749,7 +2748,7 @@ void SmallPacket0x051(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x052(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x052(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     //Im guessing this is here to check if you can use A Item, as it seems useless to have this sent to server
@@ -2769,7 +2768,7 @@ void SmallPacket0x052(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *  LockStyleSet                                                          *
 *                                                                        *
 ************************************************************************/
-void SmallPacket0x053(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x053(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 count = data.ref<uint8>(0x04);
@@ -2849,7 +2848,7 @@ void SmallPacket0x053(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x058(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 skillID    = data.ref<uint16>(0x04);
@@ -2864,7 +2863,7 @@ void SmallPacket0x058(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x059(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x059(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->animation == ANIMATION_SYNTH)
@@ -2880,7 +2879,7 @@ void SmallPacket0x059(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x05A(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x05A(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->pushPacket(new CConquestPacket(PChar));
@@ -2899,7 +2898,7 @@ void SmallPacket0x05A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x05B(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x05B(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     //auto CharID = data.ref<uint32>(0x04);
@@ -2938,7 +2937,7 @@ void SmallPacket0x05B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x05C(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x05C(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     //auto CharID = data.ref<uint32>(0x10);
@@ -2987,7 +2986,7 @@ void SmallPacket0x05C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x05D(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x05D(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (jailutils::InPrison(PChar))
@@ -3045,7 +3044,7 @@ void SmallPacket0x05D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x05E(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x05E(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
 
@@ -3198,7 +3197,7 @@ void SmallPacket0x05E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 
 // zone 245 cs 0x00C7 Password
 
-void SmallPacket0x060(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x060(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     // uint32 charid = data.ref<uint32>(0x04);
@@ -3217,7 +3216,7 @@ void SmallPacket0x060(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x061(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x061(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->pushPacket(new CCharUpdatePacket(PChar));
@@ -3239,7 +3238,7 @@ void SmallPacket0x061(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x063(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x063(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     return;
@@ -3251,7 +3250,7 @@ void SmallPacket0x063(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x064(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x064(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 KeyTable = data.ref<uint8>(0x4A);
@@ -3271,7 +3270,7 @@ void SmallPacket0x064(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x066(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x066(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     //PrintPacket(data);
@@ -3296,7 +3295,7 @@ void SmallPacket0x066(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x06E(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x06E(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint32 charid = data.ref<uint32>(0x04);
@@ -3471,7 +3470,7 @@ void SmallPacket0x06E(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x06F(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x06F(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->PParty)
@@ -3531,7 +3530,7 @@ void SmallPacket0x06F(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x070(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x070(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->PParty && PChar->PParty->GetLeader() == PChar)
@@ -3568,7 +3567,7 @@ void SmallPacket0x070(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x071(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x071(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     switch (data.ref<uint8>(0x0A))
@@ -3720,7 +3719,7 @@ void SmallPacket0x071(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x074(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x074(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     CCharEntity* PInviter = zoneutils::GetCharFromWorld(PChar->InvitePending.id, PChar->InvitePending.targid);
@@ -3836,7 +3835,7 @@ void SmallPacket0x074(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x076(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x076(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->PParty)
@@ -3857,7 +3856,7 @@ void SmallPacket0x076(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x077(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x077(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     switch (data.ref<uint8>(0x14))
@@ -3926,7 +3925,7 @@ void SmallPacket0x077(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x078(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x078(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->pushPacket(new CPartySearchPacket(PChar));
@@ -3939,7 +3938,7 @@ void SmallPacket0x078(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x083(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x083(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8  quantity = data.ref<uint8>(0x04);
@@ -3994,7 +3993,7 @@ void SmallPacket0x083(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x084(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x084(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->animation != ANIMATION_SYNTH)
@@ -4024,7 +4023,7 @@ void SmallPacket0x084(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x085(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x085(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     // Retrieve item-to-sell from last slot of the shop's container
@@ -4071,7 +4070,7 @@ void SmallPacket0x085(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x096(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x096(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (jailutils::InPrison(PChar))
@@ -4130,7 +4129,7 @@ void SmallPacket0x096(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x0AA(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0AA(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 itemID = data.ref<uint16>(0x04);
@@ -4178,7 +4177,7 @@ void SmallPacket0x0AA(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0A2(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0A2(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 diceroll = tpzrand::GetRandomNumber(1000);
@@ -4193,7 +4192,7 @@ void SmallPacket0x0A2(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0AB(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0AB(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->PGuildShop != nullptr)
@@ -4209,7 +4208,7 @@ void SmallPacket0x0AB(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x0AC(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0AC(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->animation != ANIMATION_SYNTH)
@@ -4252,7 +4251,7 @@ void SmallPacket0x0AC(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0AD(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0AD(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->PGuildShop != nullptr)
@@ -4268,7 +4267,7 @@ void SmallPacket0x0AD(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0B5(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (data.ref<uint8>(0x06) == '!' && !jailutils::InPrison(PChar) && CmdHandler.call(PChar, (const int8*)data[7]) == 0)
@@ -4489,7 +4488,7 @@ void SmallPacket0x0B5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0B6(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0B6(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (jailutils::InPrison(PChar))
@@ -4529,7 +4528,7 @@ void SmallPacket0x0B6(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0BE(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0BE(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 operation = data.ref<uint8>(0x05);
@@ -4596,7 +4595,7 @@ void SmallPacket0x0BE(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0C3(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0C3(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 lsNum = data.ref<uint8>(0x05);
@@ -4626,7 +4625,7 @@ void SmallPacket0x0C3(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0C4(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0C4(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 SlotID = data.ref<uint8>(0x06);
@@ -4777,7 +4776,7 @@ void SmallPacket0x0C4(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0CB(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0CB(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (data.ref<uint8>(0x04) == 1)
@@ -4800,7 +4799,7 @@ void SmallPacket0x0CB(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0D2(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0D2(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->ForAlliance([PChar](CBattleEntity* PPartyMember)
@@ -4821,7 +4820,7 @@ void SmallPacket0x0D2(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0D3(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0D3(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     return;
@@ -4833,7 +4832,7 @@ void SmallPacket0x0D3(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0DB(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0DB(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->search.language = data.ref<uint8>(0x24);
@@ -4846,7 +4845,7 @@ void SmallPacket0x0DB(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0DC(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0DC(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     switch (data.ref<uint32>(0x04))
@@ -4957,7 +4956,7 @@ void SmallPacket0x0DC(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0DD(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0DD(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint32 id = data.ref<uint32>(0x04);
@@ -5110,7 +5109,7 @@ void SmallPacket0x0DD(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0DE(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0DE(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->bazaar.message.clear();
@@ -5129,7 +5128,7 @@ void SmallPacket0x0DE(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0E0(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0E0(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->search.message.clear();
@@ -5189,7 +5188,7 @@ void SmallPacket0x0E0(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0E1(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0E1(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 slot = data.ref<uint8>(0x07);
@@ -5210,7 +5209,7 @@ void SmallPacket0x0E1(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0E2(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0E2(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     CItemLinkshell* PItemLinkshell = (CItemLinkshell*)PChar->getEquip(SLOT_LINK1);
@@ -5262,7 +5261,7 @@ void SmallPacket0x0E2(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0E7(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0E7(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->status != STATUS_NORMAL)
@@ -5311,7 +5310,7 @@ void SmallPacket0x0E7(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0E8(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0E8(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->status != STATUS_NORMAL)
@@ -5359,7 +5358,7 @@ void SmallPacket0x0E8(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0EA(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0EA(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->status != STATUS_NORMAL)
@@ -5379,7 +5378,7 @@ void SmallPacket0x0EA(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0EB(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0EB(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->m_event.EventID == -1)
@@ -5395,7 +5394,7 @@ void SmallPacket0x0EB(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0F1(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0F1(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 IconID = data.ref<uint16>(0x04);
@@ -5412,7 +5411,7 @@ void SmallPacket0x0F1(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0F2(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0F2(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->loc.boundary = data.ref<uint16>(0x06);
@@ -5427,7 +5426,7 @@ void SmallPacket0x0F2(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0F4(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0F4(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     TracyZoneCString("Wide Scan");
@@ -5440,7 +5439,7 @@ void SmallPacket0x0F4(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0F5(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0F5(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 TargID = data.ref<uint16>(0x04);
@@ -5471,7 +5470,7 @@ void SmallPacket0x0F5(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0F6(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0F6(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->PWideScanTarget = nullptr;
@@ -5484,7 +5483,7 @@ void SmallPacket0x0F6(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0FA(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0FA(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 ItemID = data.ref<uint16>(0x04);
@@ -5593,7 +5592,7 @@ void SmallPacket0x0FA(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0FB(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0FB(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 ItemID = data.ref<uint16>(0x04);
@@ -5675,7 +5674,7 @@ void SmallPacket0x0FB(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0FC(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0FC(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 potItemID = data.ref<uint16>(0x04);
@@ -5747,7 +5746,7 @@ void SmallPacket0x0FC(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0FD(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0FD(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 itemID = data.ref<uint16>(0x04);
@@ -5804,7 +5803,7 @@ void SmallPacket0x0FD(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0FE(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0FE(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 ItemID = data.ref<uint16>(0x04);
@@ -5869,7 +5868,7 @@ void SmallPacket0x0FE(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x0FF(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x0FF(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint16 itemID = data.ref<uint16>(0x04);
@@ -5906,7 +5905,7 @@ void SmallPacket0x0FF(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x100(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (PChar->loc.zone->CanUseMisc(MISC_MOGMENU) || PChar->m_moghouseID)
@@ -6010,7 +6009,7 @@ void SmallPacket0x100(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x102(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x102(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 job = data.ref<uint8>(0x08);
@@ -6134,7 +6133,7 @@ void SmallPacket0x102(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x104(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x104(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     CCharEntity* PTarget = (CCharEntity*)PChar->GetEntity(PChar->BazaarID.targid, TYPE_PC);
@@ -6160,7 +6159,7 @@ void SmallPacket0x104(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x105(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x105(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     TPZ_DEBUG_BREAK_IF(PChar->BazaarID.id != 0);
@@ -6201,7 +6200,7 @@ void SmallPacket0x105(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x106(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x106(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8 Quantity = data.ref<uint8>(0x08);
@@ -6326,7 +6325,7 @@ void SmallPacket0x106(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x109(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x109(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     CItemContainer* PStorage = PChar->getStorage(LOC_INVENTORY);
@@ -6351,7 +6350,7 @@ void SmallPacket0x109(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x10A(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x10A(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     uint8  slotID = data.ref<uint8>(0x04);
@@ -6384,7 +6383,7 @@ void SmallPacket0x10A(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x10B(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x10B(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     for (uint16 i = 0; i < PChar->BazaarCustomers.size(); ++i)
@@ -6409,7 +6408,7 @@ void SmallPacket0x10B(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x10C(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x10C(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (roeutils::RoeSystem.RoeEnabled)
@@ -6426,7 +6425,7 @@ void SmallPacket0x10C(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x10D(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x10D(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     if (roeutils::RoeSystem.RoeEnabled)
@@ -6443,7 +6442,7 @@ void SmallPacket0x10D(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x10F(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x10F(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->pushPacket(new CCurrencyPacket1(PChar));
@@ -6456,7 +6455,7 @@ void SmallPacket0x10F(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x110(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x110(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     //PrintPacket(data);
@@ -6481,7 +6480,7 @@ void SmallPacket0x110(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x111(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x111(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     charutils::SetStyleLock(PChar, data.ref<uint8>(0x04));
@@ -6495,7 +6494,7 @@ void SmallPacket0x111(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x112(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x112(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     // Send spark updates
@@ -6528,7 +6527,7 @@ void SmallPacket0x112(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *  /sitchair                                                            *
 *                                                                       *
 ************************************************************************/
-void SmallPacket0x113(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x113(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PrintPacket(data);
@@ -6568,7 +6567,7 @@ void SmallPacket0x113(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                       *
 ************************************************************************/
 
-void SmallPacket0x114(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x114(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->pushPacket(new CMapMarkerPacket(PChar));
@@ -6580,7 +6579,7 @@ void SmallPacket0x114(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x115(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x115(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->pushPacket(new CCurrencyPacket2(PChar));
@@ -6594,7 +6593,7 @@ void SmallPacket0x115(map_session_data_t* session, CCharEntity* PChar, CBasicPac
 *                                                                        *
 ************************************************************************/
 
-void SmallPacket0x117(map_session_data_t* session, CCharEntity* PChar, CBasicPacket data)
+void SmallPacket0x117(map_session_data_t* const PSession, CCharEntity* const PChar, CBasicPacket data)
 {
     TracyZoneScoped;
     PChar->pushPacket(new CRoeSparkUpdatePacket(PChar));
