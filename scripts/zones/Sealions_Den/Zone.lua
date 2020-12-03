@@ -42,7 +42,7 @@ function onEventFinish(player, csid, option)
     if (csid == 15) then
         player:setCharVar("PromathiaStatus", 2)
     elseif (csid == 14) then
-        player:setCharVar("PromathiaStatus", 3);
+        player:setCharVar("PromathiaStatus", 3)
     elseif csid == 29 then
         player:setCharVar('ApocalypseNigh', 2)
     end

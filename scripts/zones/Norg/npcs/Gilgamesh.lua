@@ -21,7 +21,7 @@ function onTrade(player, npc, trade)
 end
 
 function onTrigger(player, npc)
-    local ZilartMission = player:getCurrentMission(ZILART);
+    local ZilartMission = player:getCurrentMission(ZILART)
     if (ZilartMission == tpz.mission.id.zilart.KAZAMS_CHIEFTAINESS) then
         player:startEvent(7)
     elseif (ZilartMission == tpz.mission.id.zilart.THE_TEMPLE_OF_UGGALEPIH) then

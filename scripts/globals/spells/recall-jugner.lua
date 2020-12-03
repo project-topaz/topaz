@@ -11,7 +11,7 @@ function onMagicCastingCheck(caster, target, spell)
     return 0
 end
 
-function onSpellCast(caster,target,spell)
+function onSpellCast(caster, target, spell)
     if target:getObjType() == tpz.objType.PC then
         if target:hasKeyItem(tpz.ki.JUGNER_GATE_CRYSTAL) then
             target:addStatusEffectEx(tpz.effect.TELEPORT, 0, tpz.teleport.id.JUGNER, 0, 4.7)

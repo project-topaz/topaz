@@ -5,11 +5,10 @@
 -- Involved in Quest: Riding on the Clouds
 -- !pos 59.959 -17.39 -42.321 237
 -----------------------------------
+require("scripts/globals/keyitems")
+require("scripts/globals/quests")
+require("scripts/globals/missions")
 local ID = require("scripts/zones/Metalworks/IDs")
-require("scripts/globals/keyitems");
-require("scripts/globals/quests");
-require("scripts/globals/missions");
-local ID = require("scripts/zones/Metalworks/IDs");
 -----------------------------------
 
 local function TrustMemory(player)
@@ -51,7 +50,7 @@ function onTrigger(player, npc)
     local Rank6 = player:getRank() >= 6 and 1 or 0
 
     if (player:getCurrentMission(BASTOK) == tpz.mission.id.bastok.JEUNO and player:getCharVar("MissionStatus") == 0) then
-        player:startEvent(322);
+        player:startEvent(322)
     elseif player:hasKeyItem(tpz.ki.BASTOK_TRUST_PERMIT) and not player:hasSpell(903) then
         player:startEvent(986, 0, 0, 0, TrustMemory(player), 0, 0, 0, Rank6)
     else
@@ -65,9 +64,9 @@ end
 
 function onEventFinish(player, csid, option)
     if (csid == 322) then
-        player:setCharVar("MissionStatus", 1);
-        player:addKeyItem(tpz.ki.LETTER_TO_THE_AMBASSADOR);
-        player:messageSpecial(ID.text.KEYITEM_OBTAINED, tpz.ki.LETTER_TO_THE_AMBASSADOR);
+        player:setCharVar("MissionStatus", 1)
+        player:addKeyItem(tpz.ki.LETTER_TO_THE_AMBASSADOR)
+        player:messageSpecial(ID.text.KEYITEM_OBTAINED,tpz.ki.LETTER_TO_THE_AMBASSADOR)
     elseif csid == 986 and option == 2 then
         player:addSpell(903, true, true)
         player:messageSpecial(ID.text.YOU_LEARNED_TRUST, 0, 903)

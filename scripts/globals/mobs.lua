@@ -8,6 +8,7 @@ require("scripts/globals/magic")
 require("scripts/globals/utils")
 require("scripts/globals/zone")
 require("scripts/globals/msg")
+require("scripts/globals/magiantrials")
 require("scripts/globals/npc_util")
 require("scripts/globals/roe")
 -----------------------------------
@@ -40,6 +41,7 @@ function onMobDeathEx(mob, player, isKiller, isWeaponSkillKill)
         end
     end
 
+    tpz.magian.checkMagianTrial(player, {['mob'] = mob})
 end
 
 -------------------------------------------------

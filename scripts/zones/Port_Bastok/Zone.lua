@@ -91,4 +91,4 @@ function onEventFinish(player, csid, option)
         player:completeMission(ROV, tpz.mission.id.rov.FATES_CALL)
         player:addMission(ROV, tpz.mission.id.rov.WHAT_LIES_BEYOND)
     end
-end
+end;

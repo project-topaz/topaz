@@ -27,9 +27,8 @@ function onZoneIn(player, prevZone)
     end
 
     if quests.rainbow.onZoneIn(player) then
-        cs = 3;
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==
-        1) then
+        cs = 3
+    elseif player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1 then
         cs = 5
     end
 

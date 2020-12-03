@@ -35,7 +35,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 1 then
-        player:completeMission(ROV,tpz.mission.id.rov.EDDIES_OF_DESPAIR_I)
-        player:addMission(ROV,tpz.mission.id.rov.A_LAND_AFTER_TIME)
+        player:completeMission(ROV, tpz.mission.id.rov.EDDIES_OF_DESPAIR_I)
+        player:addMission(ROV, tpz.mission.id.rov.A_LAND_AFTER_TIME)
     end
 end

@@ -6,7 +6,7 @@
 local ID = require("scripts/zones/East_Ronfaure/IDs")
 require("scripts/quests/i_can_hear_a_rainbow")
 require("scripts/globals/chocobo_digging")
-require("scripts/globals/conquest");
+require("scripts/globals/conquest")
 require("scripts/globals/quests")
 require("scripts/globals/helm")
 require("scripts/globals/zone")
@@ -28,8 +28,7 @@ function onZoneIn(player, prevZone)
 
     if quests.rainbow.onZoneIn(player) then
         cs = 21
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==
-        1) then
+    elseif player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1 then
         cs = 23
     end
 

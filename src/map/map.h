@@ -108,11 +108,11 @@ struct map_config_t
     float  nm_hp_multiplier;          // Multiplier for max HP of NM.
     float  mob_hp_multiplier;         // Multiplier for max HP pool of mob
     float  player_hp_multiplier;      // Multiplier for max HP pool of player
-    float  alter_ego_hp_multiplier;   // 
+    float  alter_ego_hp_multiplier;   //
     float  nm_mp_multiplier;          // Multiplier for max MP of NM.
     float  mob_mp_multiplier;         // Multiplier for max MP pool of mob
     float  player_mp_multiplier;      // Multiplier for max MP pool of player
-    float  alter_ego_mp_multiplier;   // 
+    float  alter_ego_mp_multiplier;   //
     float  sj_mp_divisor;             // Divisor to use on subjob max MP
     int8   subjob_ratio;              // Modify ratio of subjob-to-mainjob
     bool   include_mob_sj;            // Include mobs in effects of SJ ratio setting

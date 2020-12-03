@@ -20,12 +20,12 @@
 */
 
 #include "navmesh.h"
-#include "../common/detour/DetourNavMeshQuery.h"
-#include <float.h>
-#include <string.h>
+
+#include <cstring>
+#include <cfloat>
 #include <iostream>
 #include <fstream>
-#include "../common/utils.h"
+
 #include "../common/tpzrand.h"
 
 const int8 CNavMesh::ERROR_NEARESTPOLY;
@@ -164,7 +164,6 @@ bool CNavMesh::load(const std::string& filename)
 
 void CNavMesh::outputError(uint32 status)
 {
-
     if (status & DT_WRONG_MAGIC)
     {
         ShowNavError("Detour wrong magic\n");

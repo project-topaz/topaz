@@ -1133,6 +1133,13 @@ tpz.regime.bookOnEventFinish = function(player, option, regimeType)
         return
     end
 
+
+    if option == 7 then
+        tpz.hunts.clearHuntVars(player)
+        return
+    end
+
+
     local cost = opt.cost
 
     -- charges player differently if they hold RoV KeyItem

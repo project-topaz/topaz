@@ -691,6 +691,7 @@ void SmallPacket0x01A(map_session_data_t* const PSession, CCharEntity* const PCh
             // TODO: 0x0c is set to 0x1, not sure if that is relevant or not.
             if (auto* PTrust = dynamic_cast<CTrustEntity*>(PChar->GetEntity(TargID, TYPE_TRUST)))
             {
+                PTrust->animation = ANIMATION_DESPAWN;
                 PChar->RemoveTrust(PTrust);
             }
 

@@ -34,8 +34,7 @@ function onZoneIn(player, prevZone)
         cs = 48;
     elseif quests.rainbow.onZoneIn(player) then
         cs = 50;
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==
-        1) then
+    elseif player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1 then
         cs = 52 -- go north no parameters (0 = north NE 1 E 2 SE 3 S 4 SW 5 W6 NW 7 @ as the 6th parameter)
     elseif (player:getCurrentMission(ASA) == tpz.mission.id.asa.BURGEONING_DREAD and prevZone == tpz.zone.WINDURST_WOODS and
         player:hasStatusEffect(tpz.effect.MOUNTED) == false) then
@@ -77,12 +76,12 @@ function onEventFinish(player, csid, option)
     if (csid == 48) then
         player:setCharVar("MissionStatus", 6)
         -- Remove the glowing orb key items
-        player:delKeyItem(tpz.ki.FIRST_GLOWING_MANA_ORB);
-        player:delKeyItem(tpz.ki.SECOND_GLOWING_MANA_ORB);
-        player:delKeyItem(tpz.ki.THIRD_GLOWING_MANA_ORB);
-        player:delKeyItem(tpz.ki.FOURTH_GLOWING_MANA_ORB);
-        player:delKeyItem(tpz.ki.FIFTH_GLOWING_MANA_ORB);
-        player:delKeyItem(tpz.ki.SIXTH_GLOWING_MANA_ORB);
+        player:delKeyItem(tpz.ki.FIRST_GLOWING_MANA_ORB)
+        player:delKeyItem(tpz.ki.SECOND_GLOWING_MANA_ORB)
+        player:delKeyItem(tpz.ki.THIRD_GLOWING_MANA_ORB)
+        player:delKeyItem(tpz.ki.FOURTH_GLOWING_MANA_ORB)
+        player:delKeyItem(tpz.ki.FIFTH_GLOWING_MANA_ORB)
+        player:delKeyItem(tpz.ki.SIXTH_GLOWING_MANA_ORB)
     elseif (csid == 71) then
         player:completeMission(ASA, tpz.mission.id.asa.BURGEONING_DREAD)
         player:addMission(ASA, tpz.mission.id.asa.THAT_WHICH_CURDLES_BLOOD)

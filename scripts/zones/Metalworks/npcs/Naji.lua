@@ -5,13 +5,13 @@
 -- Involved in Mission: Bastok 6-2
 -- !pos 64 -14 -4 237
 -----------------------------------
-require("scripts/globals/settings");
-require("scripts/globals/keyitems");
-require("scripts/globals/titles");
-require("scripts/globals/quests");
-require("scripts/globals/missions");
+require("scripts/globals/settings")
+require("scripts/globals/keyitems")
+require("scripts/globals/titles")
+require("scripts/globals/quests")
+require("scripts/globals/missions")
 require("scripts/globals/npc_util")
-local ID = require("scripts/zones/Metalworks/IDs");
+local ID = require("scripts/zones/Metalworks/IDs")
 -----------------------------------
 
 local TrustMemory = function(player)
@@ -66,7 +66,7 @@ function onTrigger(player, npc)
         player:setLocalVar("NajiTrustChatFlag", 1)
 
     elseif (player:hasKeyItem(tpz.ki.YASINS_SWORD)) then -- The Doorman, WAR AF1
-        player:startEvent(750);
+        player:startEvent(750)
     elseif (player:getCurrentMission(BASTOK) ~= tpz.mission.id.bastok.NONE) then
         local currentMission = player:getCurrentMission(BASTOK)
 
@@ -144,7 +144,7 @@ function onEventFinish(player, csid, option)
     elseif (csid == 761) then
         player:setCharVar("MissionStatus", 1)
     elseif (csid == 714 or csid == 722 or csid == 762) then
-        finishMissionTimeline(player, 1, csid, option);
+        finishMissionTimeline(player, 1, csid, option)
 
         -- TRUST
     elseif csid == 980 then

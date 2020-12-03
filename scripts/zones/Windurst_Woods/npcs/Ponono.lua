@@ -46,7 +46,6 @@ end
 
 function onTrigger(player, npc)
     local moralManifest = player:getQuestStatus(OTHER_AREAS_LOG, tpz.quest.id.otherAreas.A_MORAL_MANIFEST)
-
     local craftSkill = player:getSkillLevel(tpz.skill.CLOTHCRAFT)
     local testItem = getTestItem(player, npc, tpz.skill.CLOTHCRAFT)
     local guildMember = isGuildMember(player, 3)
@@ -71,7 +70,6 @@ function onTrigger(player, npc)
         player:startEvent(704)
     elseif player:getCharVar("moral") == 3 and player:getLocalVar("moralZone") == 0 and player:getCharVar("moralWait") <= os.time() then
         player:startEvent(705)
-
     elseif expertQuestStatus == 600 then
         --[[
         Feeding the proper parameter currently hangs the client in cutscene. This may

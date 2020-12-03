@@ -21,14 +21,12 @@ local function registerRegionAroundNPC(zone, NPCID, zoneID)
     local y = npc:getYPos()
     local z = npc:getZPos()
     local distance = 7
-    zone:registerRegion(zoneID, 
-        x - distance, y - distance, z - distance,
-        x + distance, y + distance, z + distance)
+    zone:registerRegion(zoneID, x - distance, y - distance, z - distance, x + distance, y + distance, z + distance)
 end
 
 function onInitialize(zone)
-    UpdateNMSpawnPoint(ID.mob.AHTU);
-    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800));
+    UpdateNMSpawnPoint(ID.mob.AHTU)
+    GetMobByID(ID.mob.AHTU):setRespawnTime(math.random(900, 10800))
 
     for i = 0, 7 do
         registerRegionAroundNPC(zone, ID.npc.RAPTOR_FOOD_BASE + i, i + 1)
@@ -37,7 +35,7 @@ function onInitialize(zone)
 end
 
 function onZoneIn(player, prevZone)
-    local cs = -1;
+    local cs = -1
 
     if player:getCharVar("[QUEST]FullSpeedAhead") == 1 then -- Normal Mode
         player:addStatusEffect(tpz.effect.FULL_SPEED_AHEAD, 0, 3, tpz.fsa.duration)
@@ -48,12 +46,13 @@ function onZoneIn(player, prevZone)
     end
 
     if (player:getXPos() == 0 and player:getYPos() == 0 and player:getZPos() == 0) then
-        player:setPos(-693.609, -14.583, 173.59, 30);
+        player:setPos(-693.609, -14.583, 173.59, 30)
     end
 
     if quests.rainbow.onZoneIn(player) then
         cs = 901
-    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") == 1) then
+    elseif (player:getCurrentMission(WINDURST) == tpz.mission.id.windurst.VAIN and player:getCharVar("MissionStatus") ==
+        1) then
         cs = 903
     end
 
@@ -68,7 +67,7 @@ function onRegionEnter(player, region)
     if player:hasStatusEffect(tpz.effect.FULL_SPEED_AHEAD) then
         tpz.fsa.onRegionEnter(player, region:GetRegionID())
     end
-end;
+end
 
 function onEventUpdate(player, csid, option)
     if (csid == 901) then
@@ -78,7 +77,7 @@ end
 
 function onEventFinish(player, csid, option)
     if csid == 903 then
-        if player:getZPos() >  -331 then
+        if player:getZPos() > -331 then
             player:updateEvent(0, 0, 0, 0, 0, 3)
         else
             player:updateEvent(0, 0, 0, 0, 0, 2)

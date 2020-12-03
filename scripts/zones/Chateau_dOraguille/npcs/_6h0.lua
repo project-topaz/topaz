@@ -47,6 +47,7 @@ function onTrigger(player, npc)
     local mLvl = player:getMainLvl()
     local aBoysDream = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.A_BOY_S_DREAM)
     local underOath = player:getQuestStatus(SANDORIA, tpz.quest.id.sandoria.UNDER_OATH)
+    local Rank6 = player:getRank() >= 6
 
     -- "Under Oath" (PLD AF Body)
     if player:getCharVar("UnderOathCS") == 8 then
@@ -64,6 +65,10 @@ function onTrigger(player, npc)
     -- "A Boy's Dream" (PLD AF Feet)
     elseif player:getCharVar("aBoysDreamCS") == 8 then
         player:startEvent(88)
+
+    -- Trust: Trion
+    elseif Rank6 and player:hasKeyItem(tpz.ki.SAN_DORIA_TRUST_PERMIT) and not player:hasSpell(905) then
+        player:startEvent(574, 0, 0, 0, TrustMemory(player))
 
     -- San d'Oria Rank 10 (different default)
     elseif player:getNation() == tpz.nation.SANDORIA and player:getRank() == 10 then

@@ -96,7 +96,7 @@ function onEventFinish(player, csid, option)
     elseif (csid == 98) then
         player:setCharVar("MissionStatus", 2)
     elseif (csid == 172 and bit.band(option, 0x40000000) == 0) then
-        player:setCharVar("ZilartStatus", 1);
+        player:setCharVar("ZilartStatus", 1)
     elseif csid == 276 then
         -- Clear 1-3 flag
         player:setCharVar("RhapsodiesStatus", 0)

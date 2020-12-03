@@ -73,7 +73,7 @@ function onEventFinish(player, csid, option)
     elseif (csid == 700) then
         player:setPos(0, 0, 0, 0, 223)
     elseif (csid == 4) then
-        player:setCharVar("COP_Ulmia_s_Path",2)
+        player:setCharVar("COP_Ulmia_s_Path", 2)
     elseif csid == 30035 then
         player:completeMission(ROV, tpz.mission.id.rov.RHAPSODIES_OF_VANADIEL)
         player:addMission(ROV, tpz.mission.id.rov.RESONACE)
